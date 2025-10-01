@@ -41,7 +41,7 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "react",
     name: "React",
-    count: 100,
+    count: 27, // Updated count
     icon: "react",
   },
   {

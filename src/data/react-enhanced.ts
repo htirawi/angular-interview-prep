@@ -2041,9 +2041,1198 @@ export const REACT_ENHANCED_QUESTIONS: QA[] = [
       "- Next state depends on previous\n" +
       "- Want to extract/test state logic\n" +
       "- Building state machine",
+  },
+  {
+    id: 16,
+    question: "What is React Suspense? How does it work with data fetching and code splitting?",
+    answer:
+      "React Suspense is a mechanism that lets components 'wait' for something before rendering. It's primarily used for code splitting and data fetching, allowing you to declaratively handle loading states.\n\n" +
+      "**How Suspense Works:**\n" +
+      "1. Component throws a Promise during render\n" +
+      "2. Suspense boundary catches the Promise\n" +
+      "3. Shows fallback UI while Promise resolves\n" +
+      "4. Re-renders component when Promise resolves\n\n" +
+      "**Code Splitting Example:**\n" +
+      "```javascript\n" +
+      "import { lazy, Suspense } from 'react';\n\n" +
+      "const LazyComponent = lazy(() => import('./HeavyComponent'));\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <Suspense fallback={<div>Loading...</div>}>\n" +
+      "      <LazyComponent />\n" +
+      "    </Suspense>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Data Fetching with Suspense:**\n" +
+      "```javascript\n" +
+      "// Custom hook that throws Promise\n" +
+      "function useUserData(userId) {\n" +
+      "  const [data, setData] = useState(null);\n" +
+      "  const [error, setError] = useState(null);\n\n" +
+      "  useEffect(() => {\n" +
+      "    let cancelled = false;\n" +
+      "    \n" +
+      "    fetchUser(userId)\n" +
+      "      .then(result => {\n" +
+      "        if (!cancelled) setData(result);\n" +
+      "      })\n" +
+      "      .catch(err => {\n" +
+      "        if (!cancelled) setError(err);\n" +
+      "      });\n\n" +
+      "    return () => { cancelled = true; };\n" +
+      "  }, [userId]);\n\n" +
+      "  if (error) throw error;\n" +
+      "  if (!data) throw new Promise(resolve => setTimeout(resolve, 100));\n" +
+      "  return data;\n" +
+      "}\n\n" +
+      "function UserProfile({ userId }) {\n" +
+      "  const userData = useUserData(userId); // Throws Promise\n" +
+      "  return <div>{userData.name}</div>;\n" +
+      "}\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <Suspense fallback={<UserSkeleton />}>\n" +
+      "      <UserProfile userId={123} />\n" +
+      "    </Suspense>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Declarative loading states\n" +
+      "- No loading prop drilling\n" +
+      "- Automatic error boundaries\n" +
+      "- Better UX with progressive loading\n\n" +
+      "**Limitations:**\n" +
+      "- Still experimental for data fetching\n" +
+      "- Requires compatible data fetching libraries\n" +
+      "- Error handling needs Error Boundaries",
+    category: "Advanced",
+    difficulty: "hard",
+    tags: ["suspense", "code-splitting", "data-fetching", "loading", "async", "patterns"],
+  },
+  {
+    id: 17,
+    question: "Explain React Server Components (RSC). How do they differ from traditional SSR?",
+    answer:
+      "React Server Components (RSC) are a new paradigm that allows React components to run on the server and send their output to the client, enabling better performance and reduced bundle sizes.\n\n" +
+      "**Key Differences from SSR:**\n\n" +
+      "**Traditional SSR:**\n" +
+      "- Server renders HTML string\n" +
+      "- Client hydrates entire tree\n" +
+      "- All components ship to client\n" +
+      "- Full JavaScript bundle required\n\n" +
+      "**Server Components:**\n" +
+      "- Components run on server\n" +
+      "- Send serialized component tree\n" +
+      "- Only Client Components ship to browser\n" +
+      "- Selective hydration\n\n" +
+      "**Example:**\n" +
+      "```javascript\n" +
+      "// Server Component (runs on server)\n" +
+      "async function UserProfile({ userId }) {\n" +
+      "  const user = await fetchUser(userId); // Direct DB access\n" +
+      "  const posts = await fetchUserPosts(userId);\n\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>{user.name}</h1>\n" +
+      "      <PostList posts={posts} />\n" +
+      "      <LikeButton postId={posts[0].id} /> {/* Client Component */}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "// Client Component (runs in browser)\n" +
+      "'use client';\n" +
+      "function LikeButton({ postId }) {\n" +
+      "  const [liked, setLiked] = useState(false);\n" +
+      "  return (\n" +
+      "    <button onClick={() => setLiked(!liked)}>\n" +
+      "      {liked ? '❤️' : '🤍'}\n" +
+      "    </button>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Smaller JavaScript bundles\n" +
+      "- Direct server data access\n" +
+      "- Better SEO and performance\n" +
+      "- Reduced client-server round trips\n\n" +
+      "**Limitations:**\n" +
+      "- No browser APIs in Server Components\n" +
+      "- No state or effects\n" +
+      "- No event handlers\n" +
+      "- Requires compatible framework (Next.js 13+)\n\n" +
+      "**When to Use:**\n" +
+      "- Data fetching components\n" +
+      "- Static content rendering\n" +
+      "- Components that don't need interactivity",
+    category: "Advanced",
+    difficulty: "hard",
+    tags: ["server-components", "ssr", "performance", "nextjs", "architecture", "rsc"],
+  },
+  {
+    id: 18,
+    question:
+      "What are React Concurrent Features? Explain startTransition, useDeferredValue, and useTransition.",
+    answer:
+      "React Concurrent Features are APIs that help manage non-urgent updates, allowing React to keep the UI responsive during heavy computations.\n\n" +
+      "**startTransition:**\n" +
+      "Marks state updates as non-urgent, allowing React to interrupt them for urgent updates.\n\n" +
+      "```javascript\n" +
+      "import { startTransition, useState } from 'react';\n\n" +
+      "function SearchResults({ query }) {\n" +
+      "  const [results, setResults] = useState([]);\n" +
+      "  const [isPending, setIsPending] = useState(false);\n\n" +
+      "  useEffect(() => {\n" +
+      "    if (!query) return;\n\n" +
+      "    setIsPending(true);\n" +
+      "    \n" +
+      "    startTransition(() => {\n" +
+      "      const filtered = heavyFilter(data, query);\n" +
+      "      setResults(filtered);\n" +
+      "      setIsPending(false);\n" +
+      "    });\n" +
+      "  }, [query]);\n\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      {isPending && <Spinner />}\n" +
+      "      {results.map(item => <Item key={item.id} {...item} />)}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useTransition:**\n" +
+      "Hook version of startTransition with pending state.\n\n" +
+      "```javascript\n" +
+      "function App() {\n" +
+      "  const [isPending, startTransition] = useTransition();\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [items, setItems] = useState([]);\n\n" +
+      "  const handleClick = () => {\n" +
+      "    setCount(c => c + 1); // Urgent update\n" +
+      "    \n" +
+      "    startTransition(() => {\n" +
+      "      setItems(createLargeList()); // Non-urgent\n" +
+      "    });\n" +
+      "  };\n\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <button onClick={handleClick}>\n" +
+      "        Count: {count}\n" +
+      "        {isPending && <Spinner />}\n" +
+      "      </button>\n" +
+      "      <ItemList items={items} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useDeferredValue:**\n" +
+      "Defers a value update, keeping the old value during urgent updates.\n\n" +
+      "```javascript\n" +
+      "function SearchResults({ query }) {\n" +
+      "  const deferredQuery = useDeferredValue(query);\n" +
+      "  const results = useMemo(() => {\n" +
+      "    return expensiveSearch(deferredQuery);\n" +
+      "  }, [deferredQuery]);\n\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <SearchInput value={query} /> {/* Always responsive */}\n" +
+      "      <ResultsList results={results} /> {/* May be stale */}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- Keep input responsive during heavy updates\n" +
+      "- Automatic priority management\n" +
+      "- Better perceived performance\n" +
+      "- Graceful degradation\n\n" +
+      "**When to Use:**\n" +
+      "- Heavy filtering/sorting operations\n" +
+      "- Large list updates\n" +
+      "- Non-critical UI updates\n" +
+      "- Search and autocomplete",
+    category: "Performance",
+    difficulty: "hard",
+    tags: [
+      "concurrent",
+      "startTransition",
+      "useTransition",
+      "useDeferredValue",
+      "performance",
+      "priority",
+    ],
+  },
+  {
+    id: 19,
+    question: "How do you implement custom hooks? What are the best practices and common patterns?",
+    answer:
+      "Custom hooks are functions that start with 'use' and can call other hooks. They allow you to extract component logic into reusable functions.\n\n" +
+      "**Basic Custom Hook:**\n" +
+      "```javascript\n" +
+      "function useCounter(initialValue = 0) {\n" +
+      "  const [count, setCount] = useState(initialValue);\n\n" +
+      "  const increment = useCallback(() => {\n" +
+      "    setCount(c => c + 1);\n" +
+      "  }, []);\n\n" +
+      "  const decrement = useCallback(() => {\n" +
+      "    setCount(c => c - 1);\n" +
+      "  }, []);\n\n" +
+      "  const reset = useCallback(() => {\n" +
+      "    setCount(initialValue);\n" +
+      "  }, [initialValue]);\n\n" +
+      "  return { count, increment, decrement, reset };\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "function Counter() {\n" +
+      "  const { count, increment, decrement, reset } = useCounter(10);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <span>{count}</span>\n" +
+      "      <button onClick={increment}>+</button>\n" +
+      "      <button onClick={decrement}>-</button>\n" +
+      "      <button onClick={reset}>Reset</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Data Fetching Hook:**\n" +
+      "```javascript\n" +
+      "function useApi(url) {\n" +
+      "  const [data, setData] = useState(null);\n" +
+      "  const [loading, setLoading] = useState(true);\n" +
+      "  const [error, setError] = useState(null);\n\n" +
+      "  useEffect(() => {\n" +
+      "    let cancelled = false;\n\n" +
+      "    async function fetchData() {\n" +
+      "      try {\n" +
+      "        setLoading(true);\n" +
+      "        setError(null);\n" +
+      "        \n" +
+      "        const response = await fetch(url);\n" +
+      "        if (!response.ok) throw new Error('Failed to fetch');\n" +
+      "        \n" +
+      "        const result = await response.json();\n" +
+      "        \n" +
+      "        if (!cancelled) {\n" +
+      "          setData(result);\n" +
+      "        }\n" +
+      "      } catch (err) {\n" +
+      "        if (!cancelled) {\n" +
+      "          setError(err.message);\n" +
+      "        }\n" +
+      "      } finally {\n" +
+      "        if (!cancelled) {\n" +
+      "          setLoading(false);\n" +
+      "        }\n" +
+      "      }\n" +
+      "    }\n\n" +
+      "    fetchData();\n\n" +
+      "    return () => {\n" +
+      "      cancelled = true;\n" +
+      "    };\n" +
+      "  }, [url]);\n\n" +
+      "  return { data, loading, error };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Local Storage Hook:**\n" +
+      "```javascript\n" +
+      "function useLocalStorage(key, initialValue) {\n" +
+      "  const [storedValue, setStoredValue] = useState(() => {\n" +
+      "    try {\n" +
+      "      const item = window.localStorage.getItem(key);\n" +
+      "      return item ? JSON.parse(item) : initialValue;\n" +
+      "    } catch (error) {\n" +
+      '      console.error(`Error reading localStorage key "${key}":`, error);\n' +
+      "      return initialValue;\n" +
+      "    }\n" +
+      "  });\n\n" +
+      "  const setValue = useCallback((value) => {\n" +
+      "    try {\n" +
+      "      const valueToStore = value instanceof Function ? value(storedValue) : value;\n" +
+      "      setStoredValue(valueToStore);\n" +
+      "      window.localStorage.setItem(key, JSON.stringify(valueToStore));\n" +
+      "    } catch (error) {\n" +
+      '      console.error(`Error setting localStorage key "${key}":`, error);\n' +
+      "    }\n" +
+      "  }, [key, storedValue]);\n\n" +
+      "  return [storedValue, setValue];\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Always start with 'use' prefix\n" +
+      "- Return consistent interface (object or array)\n" +
+      "- Handle cleanup in useEffect\n" +
+      "- Use useCallback for returned functions\n" +
+      "- Handle errors gracefully\n" +
+      "- Consider TypeScript for better DX\n\n" +
+      "**Common Patterns:**\n" +
+      "- Data fetching (useApi, useQuery)\n" +
+      "- Form handling (useForm, useValidation)\n" +
+      "- Local storage (useLocalStorage, useSessionStorage)\n" +
+      "- Debouncing (useDebounce, useDebouncedCallback)\n" +
+      "- Media queries (useMediaQuery)\n" +
+      "- Intersection observer (useIntersectionObserver)",
     category: "Hooks",
     difficulty: "intermediate",
-    tags: ["useState", "useReducer", "state-management", "hooks", "patterns", "testing"],
+    tags: ["custom-hooks", "reusability", "patterns", "best-practices", "composition", "api"],
+  },
+  {
+    id: 20,
+    question:
+      "What is React Context and when should you use it vs other state management solutions?",
+    answer:
+      "React Context provides a way to pass data through the component tree without having to pass props down manually at every level. It's React's built-in solution for sharing state across components.\n\n" +
+      "**Basic Context Usage:**\n" +
+      "```javascript\n" +
+      "// Create context\n" +
+      "const ThemeContext = createContext();\n\n" +
+      "// Provider component\n" +
+      "function ThemeProvider({ children }) {\n" +
+      "  const [theme, setTheme] = useState('light');\n\n" +
+      "  const toggleTheme = useCallback(() => {\n" +
+      "    setTheme(prev => prev === 'light' ? 'dark' : 'light');\n" +
+      "  }, []);\n\n" +
+      "  const value = useMemo(() => ({\n" +
+      "    theme,\n" +
+      "    toggleTheme\n" +
+      "  }), [theme, toggleTheme]);\n\n" +
+      "  return (\n" +
+      "    <ThemeContext.Provider value={value}>\n" +
+      "      {children}\n" +
+      "    </ThemeContext.Provider>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "// Custom hook for consuming context\n" +
+      "function useTheme() {\n" +
+      "  const context = useContext(ThemeContext);\n" +
+      "  if (!context) {\n" +
+      "    throw new Error('useTheme must be used within ThemeProvider');\n" +
+      "  }\n" +
+      "  return context;\n" +
+      "}\n\n" +
+      "// Usage in components\n" +
+      "function Header() {\n" +
+      "  const { theme, toggleTheme } = useTheme();\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <header className={`header-${theme}`}>\n" +
+      "      <button onClick={toggleTheme}>\n" +
+      "        Switch to {theme === 'light' ? 'dark' : 'light'} theme\n" +
+      "      </button>\n" +
+      "    </header>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Multiple Contexts Pattern:**\n" +
+      "```javascript\n" +
+      "// Separate contexts for different concerns\n" +
+      "const UserContext = createContext();\n" +
+      "const SettingsContext = createContext();\n" +
+      "const NotificationContext = createContext();\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <UserProvider>\n" +
+      "      <SettingsProvider>\n" +
+      "        <NotificationProvider>\n" +
+      "          <MainApp />\n" +
+      "        </NotificationProvider>\n" +
+      "      </SettingsProvider>\n" +
+      "    </UserProvider>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Context:**\n" +
+      "- **Theme/UI state** (dark mode, language)\n" +
+      "- **User authentication** (user info, permissions)\n" +
+      "- **Global settings** (preferences, configuration)\n" +
+      "- **Avoiding prop drilling** for deeply nested data\n\n" +
+      "**When NOT to Use Context:**\n" +
+      "- **Frequently changing data** (causes unnecessary re-renders)\n" +
+      "- **Large amounts of state** (use Redux/Zustand instead)\n" +
+      "- **Complex state logic** (useReducer or external state manager)\n" +
+      "- **Performance-critical components** (consider alternatives)\n\n" +
+      "**Context vs Other Solutions:**\n\n" +
+      "| Feature | Context | Redux | Zustand | Jotai |\n" +
+      "|---------|---------|-------|---------|-------|\n" +
+      "| Bundle Size | Built-in | Large | Small | Small |\n" +
+      "| Learning Curve | Easy | Steep | Easy | Medium |\n" +
+      "| DevTools | Basic | Excellent | Good | Good |\n" +
+      "| Performance | Poor for frequent updates | Good | Good | Excellent |\n" +
+      "| TypeScript | Good | Excellent | Excellent | Excellent |\n\n" +
+      "**Performance Optimization:**\n" +
+      "```javascript\n" +
+      "// Split context to avoid unnecessary re-renders\n" +
+      "const UserStateContext = createContext();\n" +
+      "const UserActionsContext = createContext();\n\n" +
+      "function UserProvider({ children }) {\n" +
+      "  const [user, setUser] = useState(null);\n" +
+      "  \n" +
+      "  const actions = useMemo(() => ({\n" +
+      "    login: (userData) => setUser(userData),\n" +
+      "    logout: () => setUser(null),\n" +
+      "    updateProfile: (updates) => setUser(prev => ({ ...prev, ...updates }))\n" +
+      "  }), []);\n\n" +
+      "  return (\n" +
+      "    <UserStateContext.Provider value={user}>\n" +
+      "      <UserActionsContext.Provider value={actions}>\n" +
+      "        {children}\n" +
+      "      </UserActionsContext.Provider>\n" +
+      "    </UserStateContext.Provider>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Takeaways:**\n" +
+      "- Use Context for global, rarely changing data\n" +
+      "- Split contexts by concern to optimize performance\n" +
+      "- Consider external state management for complex apps\n" +
+      "- Always provide meaningful error messages for missing providers",
+    category: "State Management",
+    difficulty: "intermediate",
+    tags: [
+      "context",
+      "state-management",
+      "prop-drilling",
+      "performance",
+      "patterns",
+      "global-state",
+    ],
+  },
+  {
+    id: 21,
+    question: "What are React Error Boundaries? How do you implement and test them?",
+    answer:
+      "Error Boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of crashing the entire app.\n\n" +
+      "**Basic Error Boundary:**\n" +
+      "```javascript\n" +
+      "class ErrorBoundary extends React.Component {\n" +
+      "  constructor(props) {\n" +
+      "    super(props);\n" +
+      "    this.state = { hasError: false, error: null, errorInfo: null };\n" +
+      "  }\n\n" +
+      "  static getDerivedStateFromError(error) {\n" +
+      "    return { hasError: true };\n" +
+      "  }\n\n" +
+      "  componentDidCatch(error, errorInfo) {\n" +
+      "    console.error('Error caught by boundary:', error, errorInfo);\n" +
+      "    this.setState({ error, errorInfo });\n" +
+      "  }\n\n" +
+      "  render() {\n" +
+      "    if (this.state.hasError) {\n" +
+      "      return (\n" +
+      '        <div className="error-boundary">\n' +
+      "          <h2>Something went wrong.</h2>\n" +
+      "          <button onClick={() => this.setState({ hasError: false })}>\n" +
+      "            Try again\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "      );\n" +
+      "    }\n" +
+      "    return this.props.children;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**What Error Boundaries CAN'T Catch:**\n" +
+      "- Errors in event handlers\n" +
+      "- Errors in async code (setTimeout, promises)\n" +
+      "- Errors during server-side rendering\n" +
+      "- Errors in the error boundary itself\n\n" +
+      "**Best Practices:**\n" +
+      "- Place error boundaries strategically\n" +
+      "- Always log errors for debugging\n" +
+      "- Provide meaningful fallback UI\n" +
+      "- Consider recovery mechanisms",
+    category: "Error Handling",
+    difficulty: "intermediate",
+    tags: ["error-boundaries", "error-handling", "testing", "recovery", "logging", "fallback"],
+  },
+  {
+    id: 22,
+    question: "What is React's createRoot API? How does it differ from ReactDOM.render?",
+    answer:
+      "The createRoot API is React 18's new way to render React applications, replacing the legacy ReactDOM.render method. It enables concurrent features and provides better performance.\n\n" +
+      "**Legacy ReactDOM.render:**\n" +
+      "```javascript\n" +
+      "import ReactDOM from 'react-dom';\n" +
+      "import App from './App';\n\n" +
+      "// Old way (React 17 and earlier)\n" +
+      "ReactDOM.render(<App />, document.getElementById('root'));\n" +
+      "```\n\n" +
+      "**New createRoot API:**\n" +
+      "```javascript\n" +
+      "import { createRoot } from 'react-dom/client';\n" +
+      "import App from './App';\n\n" +
+      "// New way (React 18+)\n" +
+      "const container = document.getElementById('root');\n" +
+      "const root = createRoot(container);\n" +
+      "root.render(<App />);\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- **Concurrent Features**: Automatic batching, Suspense improvements\n" +
+      "- **Better Performance**: More efficient rendering\n" +
+      "- **Future-Proof**: Enables upcoming React features\n" +
+      "- **Cleaner API**: More explicit root management\n\n" +
+      "**Automatic Batching Example:**\n" +
+      "```javascript\n" +
+      "function App() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [flag, setFlag] = useState(false);\n\n" +
+      "  const handleClick = () => {\n" +
+      "    // These are automatically batched in React 18\n" +
+      "    setCount(c => c + 1);\n" +
+      "    setFlag(f => !f);\n" +
+      "    // Only one re-render happens\n" +
+      "  };\n\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <button onClick={handleClick}>\n" +
+      "        Count: {count}, Flag: {flag.toString()}\n" +
+      "      </button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```",
+    category: "Core Concepts",
+    difficulty: "intermediate",
+    tags: ["createRoot", "react18", "concurrent", "rendering", "migration", "performance"],
+  },
+  {
+    id: 23,
+    question:
+      "How do you implement React forms with validation? Compare controlled vs uncontrolled components.",
+    answer:
+      "React forms can be implemented using controlled or uncontrolled components, each with different trade-offs for validation and user experience.\n\n" +
+      "**Controlled Components:**\n" +
+      "```javascript\n" +
+      "function ContactForm() {\n" +
+      "  const [formData, setFormData] = useState({\n" +
+      "    name: '',\n" +
+      "    email: '',\n" +
+      "    message: ''\n" +
+      "  });\n" +
+      "  const [errors, setErrors] = useState({});\n" +
+      "  const [isSubmitting, setIsSubmitting] = useState(false);\n\n" +
+      "  const validateForm = () => {\n" +
+      "    const newErrors = {};\n" +
+      "    \n" +
+      "    if (!formData.name.trim()) {\n" +
+      "      newErrors.name = 'Name is required';\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (!formData.email.trim()) {\n" +
+      "      newErrors.email = 'Email is required';\n" +
+      "    } else if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(formData.email)) {\n" +
+      "      newErrors.email = 'Invalid email format';\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (!formData.message.trim()) {\n" +
+      "      newErrors.message = 'Message is required';\n" +
+      "    }\n" +
+      "    \n" +
+      "    setErrors(newErrors);\n" +
+      "    return Object.keys(newErrors).length === 0;\n" +
+      "  };\n\n" +
+      "  const handleChange = (e) => {\n" +
+      "    const { name, value } = e.target;\n" +
+      "    setFormData(prev => ({\n" +
+      "      ...prev,\n" +
+      "      [name]: value\n" +
+      "    }));\n" +
+      "    \n" +
+      "    // Clear error when user starts typing\n" +
+      "    if (errors[name]) {\n" +
+      "      setErrors(prev => ({\n" +
+      "        ...prev,\n" +
+      "        [name]: ''\n" +
+      "      }));\n" +
+      "    }\n" +
+      "  };\n\n" +
+      "  const handleSubmit = async (e) => {\n" +
+      "    e.preventDefault();\n" +
+      "    \n" +
+      "    if (!validateForm()) return;\n" +
+      "    \n" +
+      "    setIsSubmitting(true);\n" +
+      "    try {\n" +
+      "      await submitForm(formData);\n" +
+      "      // Reset form\n" +
+      "      setFormData({ name: '', email: '', message: '' });\n" +
+      "    } catch (error) {\n" +
+      "      console.error('Submission error:', error);\n" +
+      "    } finally {\n" +
+      "      setIsSubmitting(false);\n" +
+      "    }\n" +
+      "  };\n\n" +
+      "  return (\n" +
+      "    <form onSubmit={handleSubmit}>\n" +
+      "      <div>\n" +
+      '        <label htmlFor="name">Name:</label>\n' +
+      "        <input\n" +
+      '          type="text"\n' +
+      '          id="name"\n' +
+      '          name="name"\n' +
+      "          value={formData.name}\n" +
+      "          onChange={handleChange}\n" +
+      "          className={errors.name ? 'error' : ''}\n" +
+      "        />\n" +
+      '        {errors.name && <span className="error-message">{errors.name}</span>}\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <div>\n" +
+      '        <label htmlFor="email">Email:</label>\n' +
+      "        <input\n" +
+      '          type="email"\n' +
+      '          id="email"\n' +
+      '          name="email"\n' +
+      "          value={formData.email}\n" +
+      "          onChange={handleChange}\n" +
+      "          className={errors.email ? 'error' : ''}\n" +
+      "        />\n" +
+      '        {errors.email && <span className="error-message">{errors.email}</span>}\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <div>\n" +
+      '        <label htmlFor="message">Message:</label>\n' +
+      "        <textarea\n" +
+      '          id="message"\n' +
+      '          name="message"\n' +
+      "          value={formData.message}\n" +
+      "          onChange={handleChange}\n" +
+      "          className={errors.message ? 'error' : ''}\n" +
+      "        />\n" +
+      '        {errors.message && <span className="error-message">{errors.message}</span>}\n' +
+      "      </div>\n" +
+      "      \n" +
+      '      <button type="submit" disabled={isSubmitting}>\n' +
+      "        {isSubmitting ? 'Submitting...' : 'Submit'}\n" +
+      "      </button>\n" +
+      "    </form>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Uncontrolled Components with useRef:**\n" +
+      "```javascript\n" +
+      "function UncontrolledForm() {\n" +
+      "  const nameRef = useRef();\n" +
+      "  const emailRef = useRef();\n" +
+      "  const messageRef = useRef();\n" +
+      "  const [errors, setErrors] = useState({});\n\n" +
+      "  const validateForm = () => {\n" +
+      "    const newErrors = {};\n" +
+      "    const name = nameRef.current.value;\n" +
+      "    const email = emailRef.current.value;\n" +
+      "    const message = messageRef.current.value;\n\n" +
+      "    if (!name.trim()) newErrors.name = 'Name is required';\n" +
+      "    if (!email.trim()) newErrors.email = 'Email is required';\n" +
+      "    if (!message.trim()) newErrors.message = 'Message is required';\n\n" +
+      "    setErrors(newErrors);\n" +
+      "    return Object.keys(newErrors).length === 0;\n" +
+      "  };\n\n" +
+      "  const handleSubmit = (e) => {\n" +
+      "    e.preventDefault();\n" +
+      "    \n" +
+      "    if (!validateForm()) return;\n" +
+      "    \n" +
+      "    const formData = {\n" +
+      "      name: nameRef.current.value,\n" +
+      "      email: emailRef.current.value,\n" +
+      "      message: messageRef.current.value\n" +
+      "    };\n" +
+      "    \n" +
+      "    console.log('Form data:', formData);\n" +
+      "  };\n\n" +
+      "  return (\n" +
+      "    <form onSubmit={handleSubmit}>\n" +
+      "      <input\n" +
+      "        ref={nameRef}\n" +
+      '        type="text"\n' +
+      '        placeholder="Name"\n' +
+      "        className={errors.name ? 'error' : ''}\n" +
+      "      />\n" +
+      '      {errors.name && <span className="error-message">{errors.name}</span>}\n' +
+      "      \n" +
+      "      <input\n" +
+      "        ref={emailRef}\n" +
+      '        type="email"\n' +
+      '        placeholder="Email"\n' +
+      "        className={errors.email ? 'error' : ''}\n" +
+      "      />\n" +
+      '      {errors.email && <span className="error-message">{errors.email}</span>}\n' +
+      "      \n" +
+      "      <textarea\n" +
+      "        ref={messageRef}\n" +
+      '        placeholder="Message"\n' +
+      "        className={errors.message ? 'error' : ''}\n" +
+      "      />\n" +
+      '      {errors.message && <span className="error-message">{errors.message}</span>}\n' +
+      "      \n" +
+      '      <button type="submit">Submit</button>\n' +
+      "    </form>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Comparison:**\n\n" +
+      "| Feature | Controlled | Uncontrolled |\n" +
+      "|---------|------------|--------------|\n" +
+      "| State Management | React state | DOM state |\n" +
+      "| Validation | Real-time | On submit |\n" +
+      "| Performance | More re-renders | Fewer re-renders |\n" +
+      "| Form Libraries | Easy integration | Requires refs |\n" +
+      "| Testing | Easier to test | Harder to test |\n" +
+      "| Accessibility | Better | Requires more work |\n\n" +
+      "**Best Practices:**\n" +
+      "- Use controlled components for most forms\n" +
+      "- Implement real-time validation\n" +
+      "- Provide clear error messages\n" +
+      "- Consider form libraries (React Hook Form, Formik)\n" +
+      "- Test form validation thoroughly",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["forms", "validation", "controlled", "uncontrolled", "refs", "best-practices"],
+  },
+  {
+    id: 24,
+    question: "What is React Testing Library? How do you test React components effectively?",
+    answer:
+      "React Testing Library (RTL) is a testing utility that encourages testing components the way users interact with them, focusing on behavior rather than implementation details.\n\n" +
+      "**Core Principles:**\n" +
+      "- Test behavior, not implementation\n" +
+      "- Query elements like users would\n" +
+      "- Avoid testing internal state\n" +
+      "- Focus on accessibility\n\n" +
+      "**Basic Testing Example:**\n" +
+      "```javascript\n" +
+      "import { render, screen, fireEvent, waitFor } from '@testing-library/react';\n" +
+      "import userEvent from '@testing-library/user-event';\n" +
+      "import Counter from './Counter';\n\n" +
+      "test('increments counter when button is clicked', async () => {\n" +
+      "  const user = userEvent.setup();\n" +
+      "  render(<Counter />);\n" +
+      "  \n" +
+      "  const button = screen.getByRole('button', { name: /increment/i });\n" +
+      "  const count = screen.getByText('Count: 0');\n" +
+      "  \n" +
+      "  expect(count).toBeInTheDocument();\n" +
+      "  \n" +
+      "  await user.click(button);\n" +
+      "  \n" +
+      "  expect(screen.getByText('Count: 1')).toBeInTheDocument();\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Query Priority (Best to Worst):**\n" +
+      "1. **getByRole** - Most accessible\n" +
+      "2. **getByLabelText** - Form inputs\n" +
+      "3. **getByPlaceholderText** - Input placeholders\n" +
+      "4. **getByText** - Text content\n" +
+      "5. **getByDisplayValue** - Form values\n" +
+      "6. **getByAltText** - Images\n" +
+      "7. **getByTitle** - Title attributes\n" +
+      "8. **getByTestId** - Last resort\n\n" +
+      "**Testing Async Operations:**\n" +
+      "```javascript\n" +
+      "test('loads user data on mount', async () => {\n" +
+      "  const mockFetch = jest.fn().mockResolvedValue({\n" +
+      "    json: () => Promise.resolve({ name: 'John Doe' })\n" +
+      "  });\n" +
+      "  global.fetch = mockFetch;\n\n" +
+      "  render(<UserProfile userId={123} />);\n" +
+      "  \n" +
+      "  expect(screen.getByText('Loading...')).toBeInTheDocument();\n" +
+      "  \n" +
+      "  await waitFor(() => {\n" +
+      "    expect(screen.getByText('John Doe')).toBeInTheDocument();\n" +
+      "  });\n" +
+      "  \n" +
+      "  expect(mockFetch).toHaveBeenCalledWith('/api/users/123');\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Testing Forms:**\n" +
+      "```javascript\n" +
+      "test('submits form with valid data', async () => {\n" +
+      "  const user = userEvent.setup();\n" +
+      "  const mockSubmit = jest.fn();\n" +
+      "  \n" +
+      "  render(<ContactForm onSubmit={mockSubmit} />);\n" +
+      "  \n" +
+      "  await user.type(screen.getByLabelText(/name/i), 'John Doe');\n" +
+      "  await user.type(screen.getByLabelText(/email/i), 'john@example.com');\n" +
+      "  await user.type(screen.getByLabelText(/message/i), 'Hello world');\n" +
+      "  \n" +
+      "  await user.click(screen.getByRole('button', { name: /submit/i }));\n" +
+      "  \n" +
+      "  expect(mockSubmit).toHaveBeenCalledWith({\n" +
+      "    name: 'John Doe',\n" +
+      "    email: 'john@example.com',\n" +
+      "    message: 'Hello world'\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Testing Custom Hooks:**\n" +
+      "```javascript\n" +
+      "import { renderHook, act } from '@testing-library/react';\n" +
+      "import { useCounter } from './useCounter';\n\n" +
+      "test('useCounter hook', () => {\n" +
+      "  const { result } = renderHook(() => useCounter(0));\n" +
+      "  \n" +
+      "  expect(result.current.count).toBe(0);\n" +
+      "  \n" +
+      "  act(() => {\n" +
+      "    result.current.increment();\n" +
+      "  });\n" +
+      "  \n" +
+      "  expect(result.current.count).toBe(1);\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use semantic queries (getByRole, getByLabelText)\n" +
+      "- Test user interactions, not implementation\n" +
+      "- Use userEvent over fireEvent\n" +
+      "- Mock external dependencies\n" +
+      "- Test error states and edge cases\n" +
+      "- Keep tests simple and focused",
+    category: "Testing",
+    difficulty: "intermediate",
+    tags: ["testing", "rtl", "jest", "user-event", "accessibility", "best-practices"],
+  },
+  {
+    id: 25,
+    question:
+      "What are React's built-in hooks? Explain useCallback, useMemo, and useRef in detail.",
+    answer:
+      "React provides several built-in hooks for different purposes. Understanding when and how to use them is crucial for writing efficient React applications.\n\n" +
+      "**useCallback - Memoizing Functions:**\n" +
+      "```javascript\n" +
+      "function Parent() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [items, setItems] = useState([]);\n\n" +
+      "  // Without useCallback - creates new function every render\n" +
+      "  const handleAddItem = useCallback((item) => {\n" +
+      "    setItems(prev => [...prev, item]);\n" +
+      "  }, []); // Empty dependency array - function never changes\n\n" +
+      "  // With dependencies - function changes when deps change\n" +
+      "  const handleFilterItems = useCallback((filter) => {\n" +
+      "    return items.filter(item => item.category === filter);\n" +
+      "  }, [items]); // Function changes when items change\n\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <button onClick={() => setCount(c => c + 1)}>\n" +
+      "        Count: {count}\n" +
+      "      </button>\n" +
+      "      <ItemList items={items} onAddItem={handleAddItem} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "const ItemList = React.memo(function ItemList({ items, onAddItem }) {\n" +
+      "  console.log('ItemList rendered');\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      {items.map(item => <Item key={item.id} item={item} />)}\n" +
+      "      <button onClick={() => onAddItem({ id: Date.now(), name: 'New' })}>\n" +
+      "        Add Item\n" +
+      "      </button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "});\n" +
+      "```\n\n" +
+      "**useMemo - Memoizing Values:**\n" +
+      "```javascript\n" +
+      "function ExpensiveComponent({ items, filter }) {\n" +
+      "  // Expensive calculation - only runs when items or filter change\n" +
+      "  const filteredItems = useMemo(() => {\n" +
+      "    console.log('Filtering items...');\n" +
+      "    return items.filter(item => {\n" +
+      "      return item.name.toLowerCase().includes(filter.toLowerCase());\n" +
+      "    });\n" +
+      "  }, [items, filter]);\n\n" +
+      "  // Another expensive calculation\n" +
+      "  const sortedItems = useMemo(() => {\n" +
+      "    console.log('Sorting items...');\n" +
+      "    return [...filteredItems].sort((a, b) => a.name.localeCompare(b.name));\n" +
+      "  }, [filteredItems]);\n\n" +
+      "  return (\n" +
+      "    <ul>\n" +
+      "      {sortedItems.map(item => (\n" +
+      "        <li key={item.id}>{item.name}</li>\n" +
+      "      ))}\n" +
+      "    </ul>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useRef - Mutable References:**\n" +
+      "```javascript\n" +
+      "function RefExamples() {\n" +
+      "  // 1. DOM element reference\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  // 2. Mutable value that doesn't trigger re-renders\n" +
+      "  const renderCount = useRef(0);\n" +
+      "  const previousValue = useRef();\n" +
+      "  \n" +
+      "  // 3. Timer reference\n" +
+      "  const timerRef = useRef();\n" +
+      "  \n" +
+      "  const [value, setValue] = useState('');\n" +
+      "  \n" +
+      "  // Track render count\n" +
+      "  renderCount.current += 1;\n" +
+      "  \n" +
+      "  // Store previous value\n" +
+      "  useEffect(() => {\n" +
+      "    previousValue.current = value;\n" +
+      "  });\n" +
+      "  \n" +
+      "  const focusInput = () => {\n" +
+      "    inputRef.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  const startTimer = () => {\n" +
+      "    timerRef.current = setInterval(() => {\n" +
+      "      console.log('Timer tick');\n" +
+      "    }, 1000);\n" +
+      "  };\n" +
+      "  \n" +
+      "  const stopTimer = () => {\n" +
+      "    if (timerRef.current) {\n" +
+      "      clearInterval(timerRef.current);\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input\n" +
+      "        ref={inputRef}\n" +
+      "        value={value}\n" +
+      "        onChange={(e) => setValue(e.target.value)}\n" +
+      '        placeholder="Type something"\n' +
+      "      />\n" +
+      "      <button onClick={focusInput}>Focus Input</button>\n" +
+      "      <button onClick={startTimer}>Start Timer</button>\n" +
+      "      <button onClick={stopTimer}>Stop Timer</button>\n" +
+      "      <p>Current: {value}</p>\n" +
+      "      <p>Previous: {previousValue.current}</p>\n" +
+      "      <p>Renders: {renderCount.current}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Each Hook:**\n\n" +
+      "**useCallback:**\n" +
+      "- Passing functions to memoized components\n" +
+      "- Functions used in useEffect dependencies\n" +
+      "- Event handlers passed to child components\n\n" +
+      "**useMemo:**\n" +
+      "- Expensive calculations\n" +
+      "- Creating objects/arrays that are dependencies\n" +
+      "- Filtering/sorting large datasets\n\n" +
+      "**useRef:**\n" +
+      "- DOM element references\n" +
+      "- Storing mutable values that don't trigger re-renders\n" +
+      "- Timer/interval references\n" +
+      "- Previous value tracking\n\n" +
+      "**Common Pitfalls:**\n" +
+      "- Overusing useCallback/useMemo (measure first!)\n" +
+      "- Missing dependencies in dependency arrays\n" +
+      "- Using useRef for values that should trigger re-renders\n" +
+      "- Not cleaning up refs in useEffect cleanup",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["hooks", "useCallback", "useMemo", "useRef", "optimization", "performance"],
+  },
+  {
+    id: 26,
+    question:
+      "What is React Router? How do you implement client-side routing in React applications?",
+    answer:
+      "React Router is the standard routing library for React applications. It enables client-side routing, allowing you to create single-page applications with navigation that doesn't require full page reloads.\n\n" +
+      "**Basic Setup:**\n" +
+      "```javascript\n" +
+      "import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <BrowserRouter>\n" +
+      "      <nav>\n" +
+      '        <Link to="/">Home</Link>\n' +
+      '        <Link to="/about">About</Link>\n' +
+      '        <Link to="/contact">Contact</Link>\n' +
+      "      </nav>\n" +
+      "      \n" +
+      "      <Routes>\n" +
+      '        <Route path="/" element={<Home />} />\n' +
+      '        <Route path="/about" element={<About />} />\n' +
+      '        <Route path="/contact" element={<Contact />} />\n' +
+      '        <Route path="*" element={<NotFound />} />\n' +
+      "      </Routes>\n" +
+      "    </BrowserRouter>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Dynamic Routes:**\n" +
+      "```javascript\n" +
+      "import { useParams, useNavigate } from 'react-router-dom';\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <BrowserRouter>\n" +
+      "      <Routes>\n" +
+      '        <Route path="/users" element={<UserList />} />\n' +
+      '        <Route path="/users/:id" element={<UserProfile />} />\n' +
+      '        <Route path="/users/:id/posts" element={<UserPosts />} />\n' +
+      "      </Routes>\n" +
+      "    </BrowserRouter>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "function UserProfile() {\n" +
+      "  const { id } = useParams();\n" +
+      "  const navigate = useNavigate();\n" +
+      "  \n" +
+      "  const handleGoBack = () => {\n" +
+      "    navigate(-1); // Go back one step\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleEdit = () => {\n" +
+      "    navigate(`/users/${id}/edit`);\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>User Profile: {id}</h1>\n" +
+      "      <button onClick={handleGoBack}>Back</button>\n" +
+      "      <button onClick={handleEdit}>Edit</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Nested Routes:**\n" +
+      "```javascript\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <BrowserRouter>\n" +
+      "      <Routes>\n" +
+      '        <Route path="/dashboard" element={<Dashboard />}>\n' +
+      "          <Route index element={<DashboardHome />} />\n" +
+      '          <Route path="settings" element={<Settings />} />\n' +
+      '          <Route path="profile" element={<Profile />} />\n' +
+      "        </Route>\n" +
+      "      </Routes>\n" +
+      "    </BrowserRouter>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "function Dashboard() {\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>Dashboard</h1>\n" +
+      "      <nav>\n" +
+      '        <Link to="/dashboard">Home</Link>\n' +
+      '        <Link to="/dashboard/settings">Settings</Link>\n' +
+      '        <Link to="/dashboard/profile">Profile</Link>\n' +
+      "      </nav>\n" +
+      "      <Outlet /> {/* Renders child routes */}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Protected Routes:**\n" +
+      "```javascript\n" +
+      "import { Navigate } from 'react-router-dom';\n\n" +
+      "function ProtectedRoute({ children }) {\n" +
+      "  const isAuthenticated = useAuth();\n" +
+      "  \n" +
+      '  return isAuthenticated ? children : <Navigate to="/login" replace />;\n' +
+      "}\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <BrowserRouter>\n" +
+      "      <Routes>\n" +
+      '        <Route path="/login" element={<Login />} />\n' +
+      "        <Route \n" +
+      '          path="/dashboard" \n' +
+      "          element={\n" +
+      "            <ProtectedRoute>\n" +
+      "              <Dashboard />\n" +
+      "            </ProtectedRoute>\n" +
+      "          } \n" +
+      "        />\n" +
+      "      </Routes>\n" +
+      "    </BrowserRouter>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Programmatic Navigation:**\n" +
+      "```javascript\n" +
+      "import { useNavigate, useLocation } from 'react-router-dom';\n\n" +
+      "function LoginForm() {\n" +
+      "  const navigate = useNavigate();\n" +
+      "  const location = useLocation();\n" +
+      "  \n" +
+      "  const handleLogin = async (credentials) => {\n" +
+      "    try {\n" +
+      "      await login(credentials);\n" +
+      "      \n" +
+      "      // Redirect to intended page or dashboard\n" +
+      "      const from = location.state?.from?.pathname || '/dashboard';\n" +
+      "      navigate(from, { replace: true });\n" +
+      "    } catch (error) {\n" +
+      "      console.error('Login failed:', error);\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <form onSubmit={handleLogin}>\n" +
+      "      {/* Form fields */}\n" +
+      "    </form>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**URL Parameters and Search:**\n" +
+      "```javascript\n" +
+      "import { useSearchParams } from 'react-router-dom';\n\n" +
+      "function ProductList() {\n" +
+      "  const [searchParams, setSearchParams] = useSearchParams();\n" +
+      "  const category = searchParams.get('category');\n" +
+      "  const page = searchParams.get('page') || '1';\n" +
+      "  \n" +
+      "  const updateFilters = (newFilters) => {\n" +
+      "    setSearchParams(prev => {\n" +
+      "      const newParams = new URLSearchParams(prev);\n" +
+      "      Object.entries(newFilters).forEach(([key, value]) => {\n" +
+      "        if (value) {\n" +
+      "          newParams.set(key, value);\n" +
+      "        } else {\n" +
+      "          newParams.delete(key);\n" +
+      "        }\n" +
+      "      });\n" +
+      "      return newParams;\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>Products</h1>\n" +
+      "      <p>Category: {category || 'All'}</p>\n" +
+      "      <p>Page: {page}</p>\n" +
+      "      <button onClick={() => updateFilters({ category: 'electronics' })}>\n" +
+      "        Filter Electronics\n" +
+      "      </button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Features:**\n" +
+      "- Client-side routing without page reloads\n" +
+      "- Dynamic route parameters\n" +
+      "- Nested routing support\n" +
+      "- Programmatic navigation\n" +
+      "- URL state management\n" +
+      "- Route protection and guards\n\n" +
+      "**Best Practices:**\n" +
+      "- Use semantic route names\n" +
+      "- Implement route protection\n" +
+      "- Handle 404 cases\n" +
+      "- Use relative navigation when possible\n" +
+      "- Consider code splitting with lazy loading",
+    category: "Routing",
+    difficulty: "intermediate",
+    tags: ["routing", "react-router", "navigation", "spa", "url", "programmatic"],
   },
 ];
 
