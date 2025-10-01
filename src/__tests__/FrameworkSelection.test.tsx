@@ -27,11 +27,13 @@ describe("FrameworkSelection Landing Page", () => {
   it("shows question counts", () => {
     renderWithRouter();
     const counts = screen.getAllByText("100");
-    expect(counts.length).toBeGreaterThanOrEqual(2); // 2 frameworks with 100 questions (Next.js, Redux)
+    expect(counts.length).toBeGreaterThanOrEqual(1); // 1 framework with 100 questions (Redux)
     const angularCount = screen.getByText("115"); // Angular has 115 questions
     expect(angularCount).toBeInTheDocument();
     const reactCount = screen.getByText("27"); // React has 27 questions
     expect(reactCount).toBeInTheDocument();
+    const nextjsCount = screen.getByText("10"); // Next.js has 10 questions
+    expect(nextjsCount).toBeInTheDocument();
   });
 
   it("shows feature highlights", () => {
