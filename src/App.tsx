@@ -276,8 +276,15 @@ export default function App() {
           currentFramework={selectedFramework}
         />
 
-        {/* Toast Notifications */}
-        <Toast toasts={toasts} onClose={removeToast} />
+        {/* Toast Notifications are handled by useToast hook */}
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            onClose={() => removeToast(toast.id)}
+          />
+        ))}
       </div>
     </ErrorBoundary>
   );
