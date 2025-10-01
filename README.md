@@ -1,253 +1,136 @@
-# 🎯 Interview Prep Platform
+# Frontend Interview Prep
 
-> **400+ Senior-Level Questions** for Angular • React • Next.js • Redux<br/>
-> Professional study platform with routing, progress tracking, PWA support & enterprise architecture
+A professional, multi-framework interview preparation application built with React, TypeScript, and Tailwind CSS. Practice with curated questions for Angular, React, Next.js, and Redux.
 
-[![CI](https://github.com/htirawi/frontend-interview-prep/workflows/CI/badge.svg)](https://github.com/htirawi/frontend-interview-prep/actions)
-[![Tests](https://img.shields.io/badge/tests-58%20passing-brightgreen.svg)](https://github.com/htirawi/frontend-interview-prep)
-[![TypeScript](https://img.shields.io/badge/TypeScript-89.7%25-blue.svg)](https://www.typescriptlang.org/)
-[![Coverage](https://img.shields.io/badge/coverage-70%25+-green.svg)](https://github.com/htirawi/frontend-interview-prep)
-[![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://reactjs.org/)
-[![Bundle](https://img.shields.io/badge/bundle-375KB-orange.svg)](https://github.com/htirawi/frontend-interview-prep)
-[![PWA](https://img.shields.io/badge/PWA-enabled-purple.svg)](https://github.com/htirawi/frontend-interview-prep)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](.github/CONTRIBUTING.md)
+## 🚀 Features
 
-[**Live Demo →**](https://frontend-interview-prep.vercel.app) | [**Docs →**](docs/) | [**Architecture →**](docs/ARCHITECTURE.md) | [**Contributing →**](.github/CONTRIBUTING.md)
-
----
-
-## 🌟 What Makes This Special
-
-**400+ Questions** across 4 frameworks • **Landing Page** with beautiful UI • **Per-Framework Progress** tracking • **Clean URLs** (`/angular`, `/react`, `/nextjs`, `/redux`) • **Enterprise Architecture** (types/, pages/, routing) • **58 Tests** (100% passing) • **CI/CD Pipeline** (automated) • **PWA Ready** (offline support)
-
----
-
-## ✨ Features
-
-### 🎨 Professional UI/UX
-
-- Modern gradient design with smooth animations
-- Dark mode with system preference detection
-- Fully responsive (mobile, tablet, desktop)
-- Accessible (WCAG 2.1 AA compliant)
-
-### 🔍 Smart Search & Filtering
-
-- Real-time search across questions, answers, and tags
-- Filter by 15+ categories (Architecture, RxJS, Forms, NgRx, etc.)
-- Filter by difficulty (Intermediate, Advanced, Expert)
-- Smart auto-categorization
-
-### 📊 Progress Tracking
-
-- Visual statistics dashboard
-- Track completed questions
-- Progress percentage
-- Persistent across sessions
-
-### ⭐ Study Features
-
-- **Sequential Mode** - Linear progression
-- **Random Mode** - Shuffled questions for practice
-- **Bookmarked Mode** - Save and review favorites
-- Keyboard shortcuts (← → A B)
-
-### 🚀 Production Ready
-
-- PWA installable (works offline)
-- SEO optimized
-- Deployment configs (Vercel, Netlify, Docker)
-- Security headers configured
-- Performance optimized (Lighthouse 95+)
-
----
-
-## 🚀 Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/YOUR_USERNAME/frontend-interview-prep.git
-cd frontend-interview-prep
-
-# Install dependencies
-pnpm install
-
-# Start development server
-pnpm dev
-
-# Open http://localhost:5173
-```
-
----
-
-## 📦 Available Scripts
-
-```bash
-pnpm dev        # Start development server
-pnpm build      # Build for production
-pnpm preview    # Preview production build
-pnpm test       # Run tests
-pnpm lint       # Lint code
-pnpm format     # Format code with Prettier
-```
-
----
-
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut  | Action                   |
-| --------- | ------------------------ |
-| `←` / `→` | Navigate questions       |
-| `A`       | Toggle answer visibility |
-| `B`       | Bookmark question        |
-| `Esc`     | Clear search             |
-
----
-
-## 📚 Question Coverage
-
-100 curated questions covering:
-
-- 🏗️ **Architecture** - Framework design, DI, standalone components
-- ⚡ **Reactive Programming** - Signals, RxJS, Observables
-- 🔄 **Change Detection** - OnPush, performance, rendering
-- 📝 **Forms** - Reactive forms, validation, CVA
-- 🌐 **HTTP & API** - Interceptors, error handling, caching
-- 🧭 **Routing** - Guards, resolvers, lazy loading
-- 📦 **State Management** - NgRx, selectors, effects
-- 🧪 **Testing** - Unit tests, component tests, harnesses
-- ⚡ **Performance** - Optimization, metrics, LCP/TBT
-- 🔒 **Security** - Authentication, authorization, XSS
-- 📡 **Real-time** - WebSockets, SignalR, SSE
-- 🖥️ **SSR & Hydration** - Server-side rendering
-- ♿ **Accessibility** - a11y, ARIA, keyboard navigation
-- 🎨 **Components** - Lifecycle, communication, patterns
-- 💉 **Dependency Injection** - Providers, tokens, scoping
-
----
-
-## 🎯 How to Use
-
-### For First-Time Study
-
-1. Start with **Sequential Mode**
-2. Read each question carefully
-3. Try to answer before revealing
-4. Bookmark challenging questions
-
-### For Interview Prep
-
-1. Use **Random Mode** to simulate interviews
-2. Filter by difficulty level
-3. Focus on bookmarked questions
-4. Practice explaining answers out loud
-
-### For Quick Review
-
-1. Switch to **Bookmarked Mode**
-2. Use search to find specific topics
-3. Filter by category
-4. Track your progress
-
----
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-```bash
-npm i -g vercel
-vercel
-```
-
-### Netlify
-
-```bash
-npm i -g netlify-cli
-netlify deploy --prod
-```
-
-### Docker
-
-```bash
-docker build -t frontend-interview-prep .
-docker run -p 3000:80 frontend-interview-prep
-```
-
-### GitHub Pages
-
-Push to `main` branch - auto-deploys via GitHub Actions!
-
----
+- **Multi-Framework Support**: Practice questions for Angular, React, Next.js, and Redux
+- **Enhanced Question Cards**: Rich markdown rendering with syntax highlighting
+- **Study Features**: Bookmarks, notes, progress tracking, and study timer
+- **Responsive Design**: Optimized for desktop and mobile devices
+- **Dark Mode**: Toggle between light and dark themes
+- **PWA Support**: Install as a Progressive Web App
+- **Keyboard Shortcuts**: Navigate efficiently with keyboard controls
 
 ## 🛠️ Tech Stack
 
-- **Framework**: React 19 + TypeScript
-- **Build Tool**: Vite 5
-- **Styling**: Tailwind CSS 3
-- **Testing**: Vitest + React Testing Library
-- **Code Quality**: ESLint + Prettier
-- **State**: LocalStorage with custom hooks
-- **PWA**: Web App Manifest
+- **Frontend**: React 19, TypeScript, Tailwind CSS
+- **Build Tool**: Vite
+- **Testing**: Vitest, Testing Library
+- **Code Quality**: ESLint, Prettier, Husky
+- **Deployment**: Vercel, Netlify ready
 
----
+## 📁 Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+├── pages/              # Main application pages
+├── data/               # Question data and framework definitions
+├── features/           # Feature-specific components (notes, study)
+├── hooks/              # Custom React hooks
+├── shared/             # Shared utilities, components, and constants
+├── types/              # TypeScript type definitions
+├── utils/               # Utility functions
+└── styles/             # Global styles and animations
+
+docs/                   # Documentation
+├── guides/             # Setup and usage guides
+├── management/         # Project management docs
+└── status/             # Project status and completion docs
+
+scripts/                # Development and deployment scripts
+questions/              # Question data files (CSV, JSON)
+```
+
+## 🚀 Quick Start
+
+1. **Install dependencies**:
+
+   ```bash
+   pnpm install
+   ```
+
+2. **Start development server**:
+
+   ```bash
+   pnpm dev
+   ```
+
+3. **Build for production**:
+   ```bash
+   pnpm build
+   ```
+
+## 🎯 Usage
+
+1. **Select Framework**: Choose from Angular, React, Next.js, or Redux
+2. **Practice Questions**: Navigate through questions with keyboard shortcuts
+3. **Track Progress**: Bookmark questions and add personal notes
+4. **Study Modes**: Sequential, random, or bookmarked-only practice
+
+## ⌨️ Keyboard Shortcuts
+
+- `←` `→` Navigate between questions
+- `A` Toggle answer visibility
+- `B` Bookmark/unbookmark question
+
+## 🧪 Testing
+
+```bash
+# Run tests
+pnpm test
+
+# Run tests with UI
+pnpm test:ui
+
+# Run tests with coverage
+pnpm test:coverage
+```
+
+## 🔧 Development
+
+```bash
+# Lint code
+pnpm lint
+
+# Fix linting issues
+pnpm lint:fix
+
+# Format code
+pnpm format
+
+# Type check
+pnpm type-check
+
+# Validate everything
+pnpm validate
+```
+
+## 📚 Documentation
+
+- **[📖 Complete Documentation](./docs/README.md)** - Comprehensive documentation index
+- [Architecture](./docs/development/ARCHITECTURE.md) - System design and architecture
+- [Features](./docs/development/FEATURES.md) - Detailed feature documentation
+- [Deployment](./docs/deployment/DEPLOYMENT.md) - Deployment guides
+- [Project Structure](./docs/development/PROJECT-STRUCTURE.md) - Detailed project organization
 
 ## 🤝 Contributing
 
-Contributions welcome! Here's how:
-
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing`)
-5. Open a Pull Request
-
-### Adding Questions
-
-Edit `src/data/questions.ts`:
-
-```typescript
-{
-  id: 101,
-  question: "Your question here",
-  answer: "Detailed answer with examples...",
-  category: "Category Name",
-  difficulty: "advanced",
-  tags: ["tag1", "tag2"]
-}
-```
-
----
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
 
 ## 📄 License
 
-MIT License - feel free to use for your interview prep!
+MIT License - see [LICENSE](./LICENSE) for details.
+
+## 👨‍💻 Author
+
+**Hussein Tirawi** - [GitHub](https://github.com/htirawi)
 
 ---
 
-## 🌟 Star History
-
-If this helped you ace your Angular interview, give it a star! ⭐
-
----
-
-## 💡 Interview Tips
-
-1. **Understand Concepts** - Don't just memorize
-2. **Practice Explaining** - Talk through answers
-3. **Know Tradeoffs** - Understand alternatives
-4. **Stay Current** - Questions cover Angular 16-19
-5. **Build Projects** - Hands-on experience matters
-
----
-
-## 📧 Contact
-
-Questions or feedback? Open an issue!
-
----
-
-**Good luck with your interview!** 🚀
-
-_Built with ❤️ for developers preparing for Angular, React, Next.js & Redux interviews_
+Built with ❤️ for the frontend developer community.

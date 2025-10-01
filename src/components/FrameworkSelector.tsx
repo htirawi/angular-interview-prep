@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { QUESTION_SETS } from "../data";
 import type { FrameworkId } from "../types";
+import { FrameworkIcon } from "./icons/FrameworkIcon";
 
 interface FrameworkSelectorProps {
   isOpen: boolean;
@@ -98,7 +99,9 @@ export default function FrameworkSelector({
                   )}
 
                   {/* Icon */}
-                  <div className="mb-4 text-5xl">{set.icon}</div>
+                  <div className="mb-4 flex justify-center">
+                    <FrameworkIcon framework={set.icon} size={40} />
+                  </div>
 
                   {/* Name */}
                   <h3

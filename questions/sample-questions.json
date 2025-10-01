@@ -1,0 +1,28 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is Angular 18?",
+      "answer": "Angular 18 is the latest version of the Angular framework that introduces several new features and improvements:\n\n**Key Features:**\n- Enhanced Signals API\n- Improved performance\n- Better TypeScript support\n- New CLI features\n\n**Benefits:**\n- Faster development\n- Better debugging\n- Improved developer experience",
+      "category": "Angular 18",
+      "difficulty": "intermediate",
+      "tags": ["angular-18", "new-features", "overview"]
+    },
+    {
+      "id": 2,
+      "question": "How do you implement lazy loading in Angular 18?",
+      "answer": "Lazy loading in Angular 18 can be implemented using several approaches:\n\n**1. Route-based Lazy Loading:**\n```typescript\nconst routes: Routes = [\n  {\n    path: 'feature',\n    loadComponent: () => import('./feature/feature.component').then(m => m.FeatureComponent)\n  }\n];\n```\n\n**2. Standalone Component Lazy Loading:**\n```typescript\n// Load standalone component\nloadComponent: () => import('./standalone.component').then(m => m.StandaloneComponent)\n```\n\n**Benefits:**\n- Reduced initial bundle size\n- Better performance\n- Faster initial load time",
+      "category": "Angular 18",
+      "difficulty": "hard",
+      "tags": ["lazy-loading", "routing", "performance", "angular-18"]
+    },
+    {
+      "id": 3,
+      "question": "What are the new Signals features in Angular 18?",
+      "answer": "Angular 18 introduces several enhancements to the Signals API:\n\n**1. Signal Inputs:**\n```typescript\n@Component({...})\nexport class MyComponent {\n  // Signal-based inputs\n  data = input<string>();\n  count = input<number>(0);\n}\n```\n\n**2. Signal Outputs:**\n```typescript\n@Component({...})\nexport class MyComponent {\n  // Signal-based outputs\n  dataChange = output<string>();\n  countChange = output<number>();\n}\n```\n\n**3. Computed Signals:**\n```typescript\n// Derived state\nconst fullName = computed(() => `${firstName()} ${lastName()}`);\n```\n\n**Benefits:**\n- Better performance\n- Automatic change detection\n- Type safety\n- Simplified state management",
+      "category": "Angular 18",
+      "difficulty": "hard",
+      "tags": ["signals", "reactivity", "angular-18", "state-management"]
+    }
+  ]
+}

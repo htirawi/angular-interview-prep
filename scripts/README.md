@@ -1,116 +1,64 @@
-# 🔧 Scripts Directory
+# Scripts Directory
 
-Utility scripts for the Angular Interview Prep project.
+This directory contains development scripts organized into two main categories for better management and safety.
 
----
+## 📁 Directory Structure
 
-## 📜 Available Scripts
+### 🔧 Tools (`tools/`)
 
-### **activate-enhanced.sh**
+Development and deployment tools for regular use:
 
-Activates the enhanced version with all features.
+- **Activation Scripts**: Mode switching utilities
+- **GitHub Management**: Repository and deployment tools
+- **Deployment**: Production deployment scripts
 
-```bash
-./scripts/activate-enhanced.sh
-```
+### 🔒 Internal (`internal/`)
 
-**What it does:**
+Internal development scripts for question management:
 
-- Backs up current version
-- Switches to enhanced App.tsx with all features
-- Shows what's new
+- **Question Management**: Add, edit, and manage questions
+- **Data Processing**: CSV parsing and data conversion
+- **Cleanup Tools**: Data cleanup and maintenance scripts
 
----
+## 🚨 Important Notice
 
-### **activate-pro-ui.sh**
+**Internal scripts are for development use only:**
 
-Activates the professional UI with sidebar layout.
+- ❌ Do not use in production
+- ❌ Do not distribute to end users
+- ✅ Use only for development and content management
+- ✅ Always test and backup before use
 
-```bash
-./scripts/activate-pro-ui.sh
-```
+## 📚 Documentation
 
-**What it does:**
+- **[Tools Documentation](./tools/README.md)** - Development and deployment tools
+- **[Internal Scripts Documentation](./internal/README.md)** - Question management scripts
+- **[Script Evaluation Report](./internal/EVALUATION-REPORT.md)** - Safety and usability evaluation
 
-- Backs up current version
-- Switches to professional UI (sidebar + focused content)
-- Answer hidden by default
-- Expert UX design
+## 🛠️ Quick Start
 
-**Recommended!** ⭐ This is the best UX version.
-
----
-
-### **push-to-github.sh**
-
-Automated GitHub repository setup and push.
+### For Development Tools
 
 ```bash
-./scripts/push-to-github.sh YOUR_GITHUB_USERNAME
+# Make scripts executable
+chmod +x scripts/tools/*.sh
+
+# Activate professional UI (recommended)
+./scripts/tools/activate-pro-ui.sh
+
+# Push to GitHub
+./scripts/tools/push-to-github.sh YOUR_USERNAME
 ```
 
-**What it does:**
-
-- Validates prerequisites
-- Runs tests
-- Initializes git
-- Creates initial commit
-- Pushes to GitHub
-- Shows next steps
-
-**Example:**
+### For Internal Scripts
 
 ```bash
-./scripts/push-to-github.sh htirawi
+# Read documentation first
+cat scripts/internal/README.md
+
+# Test scripts safely
+node scripts/internal/script-name.js --test
 ```
-
----
-
-### **convert-md-to-ts.cjs** ⚡ **New!**
-
-Converts markdown interview questions to TypeScript.
-
-```bash
-node scripts/convert-md-to-ts.cjs
-```
-
-**What it does:**
-
-- Parses markdown question files (\*.md)
-- Extracts questions and answers
-- Generates TypeScript files with proper types
-- Creates one .ts file per framework
-
-**Input format:**
-
-```markdown
-### 1) Question here?
-
-**Answer (senior-level):**
-
-- Point 1
-- Point 2
-```
-
-**Output format:**
-
-```typescript
-export const FRAMEWORK_QUESTIONS: QA[] = [
-  {
-    id: 1,
-    question: `Question here?`,
-    answer: `Point 1\nPoint 2`,
-  },
-];
-```
-
-**Supported frameworks:**
-
-- Next.js → `nextjs.ts`
-- React → `react.ts`
-- Redux → `redux.ts`
-
----
 
 ## 🎯 Which Script Should I Use?
 
@@ -118,234 +66,220 @@ export const FRAMEWORK_QUESTIONS: QA[] = [
 
 ```bash
 # 1. Activate professional UI (recommended)
-./scripts/activate-pro-ui.sh
+./scripts/tools/activate-pro-ui.sh
 
 # 2. Test locally
 pnpm dev
 
 # 3. If you haven't pushed to GitHub yet
-./scripts/push-to-github.sh YOUR_USERNAME
+./scripts/tools/push-to-github.sh YOUR_USERNAME
+```
+
+### Adding New Questions
+
+```bash
+# 1. Use internal question management scripts
+node scripts/internal/add-questions.js
+
+# 2. Or convert from markdown
+node scripts/internal/convert-md-to-ts.cjs
 ```
 
 ### Already on GitHub?
 
 ```bash
 # Just activate the pro UI
-./scripts/activate-pro-ui.sh
+./scripts/tools/activate-pro-ui.sh
 pnpm dev
 ```
 
-### Adding New Questions?
+## 🔍 Available Scripts
 
-```bash
-# 1. Add/edit markdown file in src/data/*.md
-# 2. Run converter
-node scripts/convert-md-to-ts.cjs
-# 3. TypeScript files auto-generated!
-```
+### Development Tools (`tools/`)
 
----
-
-## 🔍 Script Details
-
-### activate-enhanced.sh
-
-- **Purpose**: Feature-rich version (all features visible)
-- **Best for**: Showcasing all features
-- **UI**: All controls in main area
-- **Backup**: Creates `src/App-enhanced-backup.tsx`
-
-### activate-pro-ui.sh ⭐ **Recommended**
+#### `activate-pro-ui.sh` ⭐ **Recommended**
 
 - **Purpose**: Professional, distraction-free design
 - **Best for**: Actual studying & portfolio showcase
 - **UI**: Sidebar + focused question area
-- **Backup**: Creates `src/App-current-backup.tsx`
-- **Benefits**:
-  - Better learning (answer hidden)
-  - Less cognitive load
-  - Professional appearance
-  - Mobile-friendly
+- **Benefits**: Better learning, less cognitive load, professional appearance
 
-### push-to-github.sh
+#### `activate-enhanced.sh`
+
+- **Purpose**: Feature-rich version (all features visible)
+- **Best for**: Showcasing all features
+- **UI**: All controls in main area
+
+#### `activate-multi-framework.sh`
+
+- **Purpose**: Multi-framework mode activation
+- **Best for**: Testing multiple frameworks
+
+#### `push-to-github.sh`
 
 - **Purpose**: One-command GitHub setup
 - **Best for**: Initial repository setup
-- **Requires**: GitHub repo already created
-- **Automated**:
-  - Git initialization
-  - Comprehensive commit message
-  - Push to remote
-  - Success confirmation
+- **Automated**: Git initialization, comprehensive commit, push to remote
 
-### convert-md-to-ts.cjs
+#### `setup-github-repo.sh`
 
-- **Purpose**: Convert markdown questions to TypeScript
-- **Best for**: Adding new question sets (frameworks)
-- **Automated**:
-  - Parse markdown format
-  - Generate typed TypeScript
-  - Handle 100+ questions per file
-  - Proper escaping of special characters
+- **Purpose**: GitHub repository setup
+- **Best for**: Initial repository configuration
 
----
+#### `update-github-about.sh`
+
+- **Purpose**: Update GitHub about page
+- **Best for**: Repository metadata management
+
+### Internal Scripts (`internal/`)
+
+#### `add-questions.js` ✅ **Safe**
+
+- **Purpose**: Add new questions to database
+- **Safety**: Safe for internal use
+- **Usage**: `node scripts/internal/add-questions.js`
+
+#### `csv-parser.js` ✅ **Safe**
+
+- **Purpose**: Parse CSV files into question format
+- **Safety**: Safe for internal use
+- **Usage**: `node scripts/internal/csv-parser.js input.csv`
+
+#### `csv-inspector.js` ✅ **Safe**
+
+- **Purpose**: Inspect and validate CSV files
+- **Safety**: Read-only operation, completely safe
+- **Usage**: `node scripts/internal/csv-inspector.js file.csv`
+
+#### `convert-md-to-ts.cjs` ✅ **Safe**
+
+- **Purpose**: Convert Markdown to TypeScript
+- **Safety**: Safe for internal use
+- **Usage**: `node scripts/internal/convert-md-to-ts.cjs`
+
+#### `advanced-question-manager.js` ⚠️ **Review Required**
+
+- **Purpose**: Advanced question management
+- **Safety**: Requires review before use
+- **Complexity**: High complexity with multiple features
+
+#### `angular-cleanup.js` ⚠️ **Use with Caution**
+
+- **Purpose**: Clean up Angular-specific data
+- **Safety**: Data modification script, backup required
+- **Risk**: Could modify production data
+
+#### `csv-recovery.js` ⚠️ **Use with Caution**
+
+- **Purpose**: Recover corrupted CSV files
+- **Safety**: Data recovery script, backup required
+- **Risk**: Could modify file structure
+
+## ⚠️ Safety Guidelines
+
+### Before Running Any Script
+
+1. ✅ **Read documentation** before using any script
+2. ✅ **Test in safe environment** before production use
+3. ✅ **Backup important data** before running data-modifying scripts
+4. ✅ **Review script code** for understanding and safety
+5. ✅ **Use proper permissions** and authentication
+
+### High-Risk Scripts
+
+- **Backup Strategy**: Always backup data before running
+- **Testing Environment**: Test in isolated environment first
+- **Rollback Plan**: Have rollback procedures ready
+- **Monitoring**: Monitor script execution closely
+
+## 🔧 Prerequisites
+
+### Required Tools
+
+- **Git**: Version control
+- **GitHub CLI**: For GitHub management scripts (`brew install gh`)
+- **Bash**: For shell scripts
+- **Node.js**: For JavaScript tools
+
+### Installation
+
+```bash
+# Install GitHub CLI
+brew install gh  # macOS
+# or
+sudo apt install gh  # Ubuntu
+
+# Authenticate with GitHub
+gh auth login
+```
 
 ## 🛠️ Making Scripts Executable
 
 If scripts aren't executable:
 
 ```bash
-chmod +x scripts/*.sh
+# All tools scripts
+chmod +x scripts/tools/*.sh
+
+# Individual scripts
+chmod +x scripts/tools/activate-pro-ui.sh
+chmod +x scripts/tools/push-to-github.sh
 ```
 
-Or individually:
+## 📊 Script Statistics
 
-```bash
-chmod +x scripts/activate-pro-ui.sh
-chmod +x scripts/push-to-github.sh
 ```
-
----
-
-## 📝 Adding New Scripts
-
-When adding new scripts:
-
-1. **Create in `scripts/` folder**
-
-   ```bash
-   touch scripts/my-script.sh
-   ```
-
-2. **Add shebang** at the top
-
-   ```bash
-   #!/bin/bash
-   ```
-
-3. **Make executable**
-
-   ```bash
-   chmod +x scripts/my-script.sh
-   ```
-
-4. **Document it** here in this README
-
-5. **Test it** before committing
-
----
-
-## 🔧 Adding New Question Sets
-
-Want to add TypeScript, Vue, or other framework questions?
-
-1. **Create markdown file** in `src/data/`
-
-   ```bash
-   # Format: framework-100-questions.md
-   touch src/data/typescript-100-questions.md
-   ```
-
-2. **Follow this format:**
-
-   ````markdown
-   # Framework Name — 100 Mock Interview Questions
-
-   ---
-
-   ### 1) First question?
-
-   **Answer (senior-level):**
-
-   - Answer point 1
-   - Answer point 2
-
-   ### 2) Second question?
-
-   **Answer (senior-level):**
-
-   - Answer here
-
-   ```
-
-   ```
-   ````
-
-3. **Update converter script** (`convert-md-to-ts.cjs`):
-
-   ```javascript
-   const frameworks = [
-     { name: "angular", file: "angular-100-questions.md" },
-     { name: "typescript", file: "typescript-100-questions.md" }, // Add this
-   ];
-   ```
-
-4. **Run converter:**
-
-   ```bash
-   node scripts/convert-md-to-ts.cjs
-   ```
-
-5. **Update `src/data/index.ts`** to export new questions
-
----
+Total Scripts:        15
+Tools Scripts:        7
+Internal Scripts:     8
+Shell Scripts:        7
+Node.js Scripts:      8
+Lines of Code:        ~2000
+Questions Processed:  500+ (across all frameworks)
+Time Saved:          Hours of manual work!
+```
 
 ## 🔒 Security
 
 These scripts:
 
 - ✅ Run locally only
-- ✅ No external downloads
+- ✅ No external downloads (except GitHub CLI)
 - ✅ No secrets required
-- ✅ Safe to execute
+- ✅ Safe to execute (with proper precautions)
 - ✅ Can be reviewed (plain text)
-
----
 
 ## 🎯 Recommended Workflow
 
 ```bash
 # 1. Clone repo
-git clone https://github.com/htirawi/angular-interview-prep.git
-cd angular-interview-prep
+git clone https://github.com/htirawi/frontend-interview-prep.git
+cd frontend-interview-prep
 
 # 2. Install dependencies
 pnpm install
 
 # 3. Activate professional UI
-./scripts/activate-pro-ui.sh
+./scripts/tools/activate-pro-ui.sh
 
 # 4. Start development
 pnpm dev
 
-# 5. Add new questions (optional)
-# Edit src/data/new-framework-100-questions.md
-node scripts/convert-md-to-ts.cjs
+# 5. Add new questions (if needed)
+# Read internal scripts documentation first
+cat scripts/internal/README.md
+node scripts/internal/add-questions.js
 
 # 6. Make changes, test, commit, push
 # (pre-push validation runs automatically!)
 ```
 
----
-
-## 📊 Script Statistics
-
-```
-Total Scripts:        4
-Shell Scripts:        3
-Node.js Scripts:      1
-Lines of Code:        ~250
-Questions Processed:  300+ (100 per framework)
-Time Saved:          Hours of manual typing!
-```
-
----
-
 ## 📖 Related Documentation
 
-- `../docs/START-HERE.md` - Quick start guide
-- `../docs/ARCHITECTURE.md` - Technical architecture
-- `../.husky/` - Git hooks (automated scripts)
+- **[Tools Documentation](./tools/README.md)** - Detailed tools information
+- **[Internal Scripts](./internal/README.md)** - Question management scripts
+- **[Script Evaluation](./internal/EVALUATION-REPORT.md)** - Safety evaluation
+- **[Project Documentation](../docs/README.md)** - Complete project docs
 
 ---
 

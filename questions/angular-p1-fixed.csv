@@ -1,0 +1,305 @@
+question,answer,category,difficulty,tags
+Do you prefer declarative or imperative programming?,"You might say this is a theoretical question, and it is, but I like to ask it because it reveals how candidates think about code structure and maintainability. Most candidates respond with, “I don't know the difference”.
+If you Google this question, you'll see something like: “Declarative programming focuses on what needs to be done, while imperative programming focuses on how to do it”.
+In Angular terms, here's one way to think about it. Imperative programming involves mutating variables in multiple places, often with manual logic to track side effects. Declarative programming, by contrast, involves defining a value or behavior in one place, often through computed, signal, or RxJS streams. I highly recommend checking out Joshua Morony's video on this topic. Here is a coding example:
+```ts
+// Imperative Programming
+@Component({ template: ` ... ` })
+export class ChildComponent {
+  private readonly wsService = inject(WsService);
+  private readonly apiService = inject(ApiService);
+  displayedData = signal<string[]>([]);
+  constructor(){
+    // load existing data
+    this.apiService.existingData$.subscribe((data: string[]) => {
+      this.displayedData.set(data);
+    });
+    // listen on WS new data push
+    this.wsService.newData$.subscribe((data: string) => {
+      this.displayedData.update((current) => [...current, data]);
+    });
+  }
+}
+```
+TypeScript
+```ts
+// Declarative Programming
+@Component({ template: ` ... ` })
+export class ChildComponent {
+  private readonly wsService = inject(WsService);
+  private readonly apiService = inject(ApiService);
+  displayedData = toSignal(
+    merge(this.apiService.existingData$, this.wsService.newData$).pipe(
+      scan((acc: string[], curr: string) => [...acc, curr], [] as string[])
+    ),
+    { initialValue: [] });
+}
+```
+TypeScript
+The imperative version manually subscribes to two streams (existingData$ and newData$) and mutates the displayedData signal in separate steps. Each data source is handled independently, which can lead to duplicated logic and harder maintenance as complexity grows.
+In contrast, the declarative version merges both streams and uses scan to build up the displayedData in a single, unified expression. It avoids manual subscriptions and keeps logic in one place. This makes the code more predictable, easier to test, and less errors. Overall, the declarative approach describes what should happen, while the imperative one controls how it happens.
+",Architecture & Style,intermediate,declarative;imperative;signals;rxjs;architecture
+Would you use a state management library or a custom implementation?,"The question is designed to brainstorm with the candidate. Some developers lean toward libraries like NgRx, Akita, or NGXS, while others prefer simpler, custom built state solutions using services, RxJS or signals. Both approaches are valid. What I'm really curious about is whether the candidate can justify their choice, present some trade-offs, and mention potential drawbacks of the alternative.
+A senior developer should articulate decisions clearly, even when their opinion differs from their peers or contradicts the tech stack we are currently using. The provided answer will not change how I look at the candidate, I just want to see how can they argue toward one solution they see fit.
+",State Management,intermediate,ngrx;akita;ngxs;signals;rxjs;services;trade-offs
+How would you achieve a parent - child component communication ?,"A simple question with a catch. Most candidates mention @Input()/@Output() bindings, or using a shared service with a Subject or a signal for communication.
+```ts
+// Input/Output example
+@Component({ selector: 'app-child', template: ` ... ` })
+export class ChildComponent<T> {
+  cSelected = output<T>();
+  cData = input<T[]>();
+}
+@Component({
+  imports: [ChildComponent],
+  template: `<app-child 
+      [cData]=""pData()"" 
+      (cSelected)=""pSelected.set($event)"" />`
+})
+export class ParentComponent {
+  pData = signal<string[]>(['a', 'b', 'c']);
+  pSelected = signal<string>('');
+}
+```
+TypeScript
+```ts
+// Shared Service example
+@Injectable({ providedIn: 'root' })
+export class SharedService<T> {
+  store = signal<T | undefined>(undefined);
+}
+@Component({ selector: 'app-child', template: ` ... ` })
+export class ChildComponent {
+  service = inject(SharedService<string[]>);
+  onPushData(){
+    this.service.store.set(['a', 'b', 'c']);
+  }
+}
+@Component({ imports: [ChildComponent], template: `<app-child />` })
+export class ParentComponent {
+  storedData = inject(SharedService<string[]>).store
+}
+```
+TypeScript
+These are valid answers, but not enough for a senior level developer. I expect to also hear about:
+Custom two-way binding
+Model inputs
+Control Value Accessor
+Custom two-way binding is achieved when the child component has an input and an output with the same property name, but the output uses the Change suffix. This syntax enables the “banana-in-a-box” [(data)] binding in the template. When the child emits a value via cDataChange.emit('something'), it directly updates the parent's pData signal or property.
+```ts
+@Component({ selector: 'app-child', template: ` ... ` })
+export class ChildComponent {
+  cData = input<string>('');
+  cDataChange = output<string>();
+  onDataChange(){
+    this.cDataChange.emit('something');
+  }
+}
+@Component({ 
+  imports: [ChildComponent], 
+  template: `<app-child [(cData)]=""pData"" />`
+})
+export class ParentComponent {
+  pData = signal('Hello World');
+}
+```
+TypeScript
+Model inputs offer syntactic sugar over manual two-way binding. Instead of defining two separate properties (@Input and @Output) and emitting values manually, you can use model() to bind once and let Angular handle the rest. The model() binding works both with signals and non signal properties passed from the parent.
+```ts
+@Component({
+  selector: 'app-child',
+  imports: [FormsModule],
+  template: `<input [(ngModel)]=""cData"" />  `
+})
+export class ChildComponent {
+  cData = model<string>('');
+}
+@Component({
+  imports: [ChildComponent],
+  template: `<app-child [(cData)]=""pData"" />`,
+})
+export class ParentComponent {
+  pData = signal('Hello World');
+}
+```
+TypeScript
+Control Value Accessor (CVA) is ideal when the child component acts as a custom form control. Implementing ControlValueAccessor allows the component to integrate with Angular's forms APIs, either reactive or template-driven.
+```ts
+@Component({
+  selector: 'app-custom-input',
+  imports: [FormsModule],
+  template: `<input [ngModel]=""value"" (ngModelChange)=""onInput($event)""/>`,
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => CustomInputComponent),
+    multi: true
+  }]
+})
+export class CustomInputComponent implements ControlValueAccessor {
+  value = '';
+  private onChange = (value: string) => {};
+  private onTouched = () => {};
+  onInput(value: string): void {
+    this.value = value;
+    this.onChange(this.value);
+    this.onTouched();
+  }
+  writeValue(value: string): void {
+    this.value = value;
+  }
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+}
+```
+TypeScript
+```ts
+@Component({
+  selector: 'app-parent',
+  imports: [ReactiveFormsModule, CustomInputComponent],
+  template: `
+    <app-custom-input [formControl]=""pDataControl"" />
+    <p>Parent value: {{ pDataControl.value }}</p>
+  `
+})
+export class ParentComponent {
+  pDataControl = new FormControl('Hello World');
+}
+```
+TypeScript
+Worth mentioning, that some candidates also bring up using viewChild() to reference the child component from parent, or using local storage or cookies to pass data, which are valid answers, but I would avoid these solutions in production.
+",Angular General,intermediate,inputs;outputs;signals;model;two-way-binding;CVA;services
+"What is the role of NgZone in Angular, and when would you opt out of Angular's change detection?","The answer on this question can really demonstrate the candidate skills and the level of projects he has work on. You rarely run code outside of Angular's change detection, you consider it when you run into performance issues.
+NgZone is a wrapper around JavaScript's event loop that allows Angular to know when to trigger change detection. Angular patches async operations like setTimeout, Promise, XHR, etc. using zone.js, so when those operations complete, Angular automatically runs change detection to update the view. This occasionally leads into performance issues if you're running lots of non UI related or high frequency code (scroll, setInterval). In those cases, you can opt out of Angular's change detection using NgZone.runOutsideAngular(), and manually re-enter with NgZone.run() only if needed.
+Practical example (running passive listeners outside Angular):
+```ts
+@Injectable({ providedIn: 'root' })
+export class ListenerService {
+  private trackerService = inject(TrackerService);
+  private document = inject(DOCUMENT);
+  private ngZone = inject(NgZone);
+  constructor() {
+    this.ngZone.runOutsideAngular(() => {
+        this.document.addEventListener('change', (event) => {
+            const target = event.target as HTMLElement;
+            if (target.tagName === 'INPUT') {
+                this.trackerService.createLog({
+                    type: 'INPUT',
+                    value: (target as HTMLInputElement).value,
+                });
+            }
+        }, true);
+    });
+  }
+}
+```
+",Performance & Change Detection,advanced,NgZone;change-detection;runOutsideAngular;event-loop;performance
+What is and when to use an Injection Token ?,"An InjectionToken is like a unique identifier or a name tag that Angular uses to locate and provide a specific value or service during dependency injection. You typically use new InjectionToken() when you want to provide a value that isn't a class such as a configuration object, primitive value, or interface-based dependency.
+A common case today is replacing deprecated APP_INITIALIZER with provideAppInitializer:
+```ts
+bootstrapApplication(App, {
+  providers: [
+    provideAppInitializer(() => {
+      // init languages, read cookies, setup sentry, etc.
+    }),
+  ],
+});
+```
+Custom library configuration via tokens:
+```ts
+// in library
+export const API_ENDPOINT = new InjectionToken<string>('API_ENDPOINT');
+// in app
+bootstrapApplication(AppComponent, {
+  providers: [{ provide: API_ENDPOINT, useValue: '/prod/api' }]
+});
+```
+",Dependency Injection,intermediate,InjectionToken;provideAppInitializer;tokens;configuration
+What are resolution modifiers and how to use them ?,"When injecting a dependency using inject(), Angular lets you pass resolution modifiers: optional, self, skipSelf, and host.
+Basic shape:
+```ts
+const service = inject(SomeService, {
+  host: true,
+  optional: true,
+  self: true,
+  skipSelf: true
+});
+```
+- **optional()** — dependency may be missing (e.g., APP_INITIALIZER).  
+- **self()** — resolve only on current injector (useful in directives like marking required fields via NgControl).  
+- **skipSelf()** — skip current injector, search parent (e.g., FormControlName seeking parent ControlContainer).  
+- **host()** — limit resolution to host component/directive (don’t climb past host).
+Examples demonstrate typical uses with Reactive Forms directives and custom directives.
+",Dependency Injection,advanced,optional;self;skipSelf;host;inject;providers
+Why would you use a track function in a for-loop and how it works ?,"Tracking stabilizes DOM updates for lists. Without it, reloading an array recreates DOM nodes, causing flicker and wasted work.
+Old *ngFor with trackBy:
+```ts
+<ng-container *ngFor=""let item of items(); trackBy: identify"">
+</ng-container>
+identify(i: number, item: { id: string }) { return item.id; }
+```
+New @for requires a track key for the same reason. Avoid two mistakes:
+- Tracking by object reference (`track item`) — references change; forces rerenders.  
+- Tracking by `$index` — removing an item shifts indexes; forces rerenders in the tail.
+Always prefer a stable unique key like `item.id`.
+",Templates & Performance,intermediate,trackBy;@for;ngFor;performance;DOM
+What is the the difference between providers and viewProviders ? Can you provide an example when to use either of them ?,"**providers** scope to the component, its template, children, and projected content.  
+**viewProviders** scope only to the component’s view (not projected content).
+Dynamic example: choose payment implementation at runtime by creating a component with an injector that provides either `PaypalService` or `StripeService` for an abstract `PaymentService`, then (re)create the button with that injector. This overrides any global singleton and yields per-instance behavior.
+",Dependency Injection / Providers,advanced,providers;viewProviders;scope;dynamic-injector;payment-example
+"Why pipes are considered safe in a template, but regular function calls (not signals) are not ?","Pure pipes run only when their inputs change and internally cache results, making them efficient in templates. Regular function calls execute each change detection cycle, potentially many times per second.
+Example: `{{ name | uppercase }}` is cheap; `{{ computeHeavyThing() }}` is not. Pipes are pure by default, so their evaluation is bounded by input changes and a cache lookup (≈O(1)).
+",Templates & Performance,intermediate,pipes;pure;change-detection;caching;template-performance
+How would you convince your team to migrate a project from Observables to signals ?,"“Angular—and the wider ecosystem—is moving toward signals (there’s even a TC39 proposal). New Angular APIs (e.g., Resource API) are signal-first. Signals simplify state, letting you subscribe and synchronously read current values. Migration reduces boilerplate and avoids common Rx pitfalls while interoperating where RxJS still shines.”
+",Signals,intermediate,signals;migration;state-management;resource-api;tc39
+Can you explain the diamond problem in Observables and why it doesn't occur with signals?,"With RxJS, graphs using shared dependencies (e.g., `combineLatest`) emit once per dependency change; batched updates can cause duplicate emissions (diamond problem).
+Signals batch synchronously; an `effect()` reading multiple signals runs once per batch, preventing duplicate logs for a single logical update.
+Example sketch:
+```ts
+effect(() => console.log(prop1(), prop2())); // logs once after both set
+combineLatest([toObservable(prop1), toObservable(prop2)])
+  .subscribe(([a,b]) => console.log(a,b));   // logs twice during sequential sets
+```
+",Signals vs RxJS,advanced,diamond-problem;combineLatest;batching;effects;signals
+When to use effect and untracked in a signal based application ?,"Use `effect` when one side is reactive and the other is not (DOM APIs, analytics, non-reactive libs). To prevent feedback loops, wrap non-dependency reads/writes in `untracked`. For DOM timing, `afterRenderEffect` runs post-render.
+Example: toggle edit mode and focus an input after render using `viewChild`, `afterRenderEffect`, and `untracked` to avoid accidental dependencies.
+",Signals,advanced,effect;untracked;afterRenderEffect;viewChild;DOM
+Are life-cycle hooks still needed in a fully signal based application ?,"Many hooks can be replaced:
+- `OnInit` → constructor/effect for init.  
+- `OnChanges` → computed/effect reacting to inputs.  
+- `AfterViewInit`/`AfterContentInit` → effect/afterNextRender with view/content child signals.  
+- `After*Checked` → `afterRenderEffect`.  
+- `OnDestroy` → `DestroyRef` with `onDestroy` for cleanups.
+Signals + new primitives cover most scenarios with more precise, reactive timing.
+",Signals,intermediate,lifecycle;effects;afterNextRender;DestroyRef;signals
+What is a higher-order observable and how they differ ?,"Higher‑order operators control how inner observables are subscribed:
+- **switchMap** — cancel previous, keep latest (ideal for typeahead).  
+- **mergeMap** — run all in parallel (good for logging).  
+- **concatMap** — queue sequentially, preserve order (form steps).  
+- **exhaustMap** — ignore new while active (prevent double‑submit).
+",RxJS,intermediate,switchMap;mergeMap;concatMap;exhaustMap;typeahead
+What is the difference between share() and shareReplay() ?,"Both multicasts to multiple subscribers and avoid duplicate side effects.
+- **share()** — no replay; future subscribers only.  
+- **shareReplay({bufferSize:1, refCount:true})** — cache & replay latest to new subscribers; useful for HTTP result caching and stable navigation.
+",RxJS,intermediate,multicasting;caching;hot;cold;share;shareReplay
+What does this code do ? - scan() + expand(),"Implements recursive, paged loading with accumulation:
+- `exhaustMap` blocks new triggers until current load completes.  
+- `expand` chains further page requests (e.g., two extra pages).  
+- `scan` appends results into one list.  
+- `catchError` guards the stream.  
+- `startWith` provides an initial empty state.  
+- `toSignal` exposes it as a signal for templates.
+",RxJS,advanced,scan;expand;pagination;exhaustMap;startWith;catchError;toSignal
+What other notable questions may be?,"- Describe a time you had to refactor legacy code in Angular, how did you approach it?
+- How do you handle code scalability and performance in large Angular apps?
+- What is OnPush change detection and when would you use it?
+- What's the difference between combineLatest, withLatestFrom, and forkJoin and how would you decide which to use?
+- What is you approach to testing, what mocking library do you use?
+- How would you migrate an existing app to standalone components and Signals gradually?
+- What is hydration, how you enable it, why is it needed?
+Most important closing question:
+“Can you tell us about some more complex feature you have worked on in the past 1–2 years? What was the problem, and how did you solve it?”
+",Meta,easy,interview;topics;angular;wrap-up

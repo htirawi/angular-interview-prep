@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import QuestionCardPro from "../components/QuestionCard-pro";
+import QuestionCard from "../components/QuestionCard";
 import Sidebar from "../components/Sidebar";
-import {
-  QUESTIONS,
-  NEXTJS_QUESTIONS,
-  REACT_QUESTIONS,
-  REDUX_QUESTIONS,
-  QUESTION_SETS,
-} from "../data";
+import { REDUX_QUESTIONS, QUESTION_SETS } from "../data";
+import { ANGULAR_ENHANCED_QUESTIONS } from "../data/angular-enhanced";
+import { REACT_ENHANCED_QUESTIONS } from "../data/react-enhanced";
+import { NEXTJS_ENHANCED_QUESTIONS } from "../data/nextjs-enhanced";
+import { FrameworkIcon } from "../components/icons/FrameworkIcon";
 import type { Question, FrameworkId, PracticeMode } from "../types";
 import { enrichQuestions } from "../utils/questionMetadata";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -35,17 +33,39 @@ export default function InterviewPage() {
     }
   }, [isValidFramework, navigate]);
 
+  // Update browser tab title based on framework
+  useEffect(() => {
+    const getFrameworkTitle = (framework: FrameworkId): string => {
+      switch (framework) {
+        case "angular":
+          return "Angular Senior Interview Prep";
+        case "react":
+          return "React Senior Interview Prep";
+        case "nextjs":
+          return "Next.js Senior Interview Prep";
+        case "redux":
+          return "Redux Senior Interview Prep";
+        default:
+          return "Senior Interview Prep";
+      }
+    };
+
+    document.title = getFrameworkTitle(selectedFramework);
+  }, [selectedFramework]);
+
   // Get questions for selected framework
   const allFrameworkQuestions = useMemo(() => {
     switch (selectedFramework) {
+      case "angular":
+        return ANGULAR_ENHANCED_QUESTIONS; // Use enhanced!
       case "nextjs":
-        return NEXTJS_QUESTIONS;
+        return NEXTJS_ENHANCED_QUESTIONS; // Use enhanced!
       case "react":
-        return REACT_QUESTIONS;
+        return REACT_ENHANCED_QUESTIONS; // Use enhanced!
       case "redux":
         return REDUX_QUESTIONS;
       default:
-        return QUESTIONS;
+        return ANGULAR_ENHANCED_QUESTIONS; // Default to enhanced Angular
     }
   }, [selectedFramework]);
 
@@ -188,6 +208,7 @@ export default function InterviewPage() {
   );
 
   const handleReset = useCallback(() => {
+    // eslint-disable-next-line no-alert
     if (window.confirm(`Reset all progress for ${selectedFramework}? This cannot be undone.`)) {
       setCompleted(new Set());
       setBookmarks(new Set());
@@ -218,6 +239,7 @@ export default function InterviewPage() {
         <Sidebar
           isOpen={sidebarOpen}
           onToggle={() => setSidebarOpen(!sidebarOpen)}
+          currentFramework={selectedFramework}
           totalQuestions={enrichedQuestions.length}
           completed={completed.size}
           bookmarked={bookmarks.size}
@@ -267,7 +289,7 @@ export default function InterviewPage() {
                   }`}
                   title={set.name}
                 >
-                  <div className="text-xl">{set.icon}</div>
+                  <FrameworkIcon framework={set.icon} size={20} />
                   <div
                     className={`text-[10px] font-medium ${set.id === selectedFramework ? "text-blue-600 dark:text-blue-400" : "text-gray-600 dark:text-gray-400"}`}
                   >
@@ -282,7 +304,7 @@ export default function InterviewPage() {
         <main className="min-h-screen flex-1 lg:ml-80">
           <div className="mx-auto max-w-4xl px-4 py-8">
             {item ? (
-              <QuestionCardPro
+              <QuestionCard
                 item={item}
                 index={safeIndex}
                 total={total}

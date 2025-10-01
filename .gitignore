@@ -52,13 +52,19 @@ lerna-debug.log*
 Thumbs.db
 .DS_Store
 
-# Documentation in root (keep only README.md and PROJECT-STRUCTURE.md)
+# Documentation in root (keep only README.md)
 # All other docs are in docs/ folder
-PROJECT-STRUCTURE.md
+*.md
+!README.md
 
-# Backups and enhanced versions (keep -enhanced files, exclude -original)
-*-original.tsx
-*-original.ts
+# Backup files
+*-backup.*
+*-original.*
+*-current-backup.*
+*-enhanced-part2.*
+
+# Internal development scripts (keep in repo but mark as internal)
+# Note: Internal scripts are kept in repo but should not be used in production
 
 # Optional: Local environment
 .vercel

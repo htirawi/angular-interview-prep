@@ -3,12 +3,15 @@ import SearchBar from "./SearchBar";
 import FilterPanel from "./FilterPanel";
 import StatsPanel from "./StatsPanel";
 import type { QA } from "../data/questions";
+import type { FrameworkId } from "../types/framework";
 
 type Mode = "sequential" | "random" | "bookmarked";
 
 type Props = {
   isOpen: boolean;
   onToggle: () => void;
+  // Framework
+  currentFramework: FrameworkId;
   // Stats
   totalQuestions: number;
   completed: number;
@@ -36,6 +39,7 @@ type Props = {
 export default function Sidebar({
   isOpen,
   onToggle,
+  currentFramework,
   totalQuestions,
   completed,
   bookmarked,
@@ -55,6 +59,22 @@ export default function Sidebar({
   questionList,
   children,
 }: Props) {
+  // Get framework display name
+  const getFrameworkDisplayName = (framework: FrameworkId): string => {
+    switch (framework) {
+      case "angular":
+        return "Angular Interview Prep";
+      case "react":
+        return "React Interview Prep";
+      case "nextjs":
+        return "Next.js Interview Prep";
+      case "redux":
+        return "Redux Interview Prep";
+      default:
+        return "Interview Prep";
+    }
+  };
+
   return (
     <>
       {/* Mobile Toggle Button */}
@@ -92,7 +112,7 @@ export default function Sidebar({
           {/* Header */}
           <div className="mb-6">
             <h1 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
-              Angular Interview Prep
+              {getFrameworkDisplayName(currentFramework)}
             </h1>
             <p className="text-xs text-gray-600 dark:text-gray-400">100 Senior-Level Questions</p>
           </div>

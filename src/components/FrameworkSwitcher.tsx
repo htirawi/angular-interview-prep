@@ -1,5 +1,6 @@
 import { QUESTION_SETS } from "../data";
 import type { FrameworkId } from "../types";
+import { FrameworkIcon } from "./icons/FrameworkIcon";
 
 interface FrameworkSwitcherProps {
   currentFramework: FrameworkId;
@@ -29,7 +30,9 @@ export default function FrameworkSwitcher({
 
       {/* Current Framework Display */}
       <div className="mb-3 flex items-center gap-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 p-3 dark:from-blue-900/20 dark:to-purple-900/20">
-        <div className="text-3xl">{current?.icon}</div>
+        <div className="flex items-center justify-center">
+          <FrameworkIcon framework={current?.icon || "angular"} size={32} />
+        </div>
         <div className="flex-1">
           <div className="font-bold text-gray-900 dark:text-white">{current?.name}</div>
           <div className="text-xs text-gray-600 dark:text-gray-400">{current?.count} questions</div>
@@ -63,7 +66,7 @@ export default function FrameworkSwitcher({
               aria-label={`Switch to ${set.name}`}
               aria-pressed={isCurrent}
             >
-              <div className="text-xl">{set.icon}</div>
+              <FrameworkIcon framework={set.icon} size={20} />
               <div
                 className={`text-[10px] font-medium ${
                   isCurrent

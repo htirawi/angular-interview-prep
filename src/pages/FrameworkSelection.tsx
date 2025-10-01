@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { QUESTION_SETS } from "../data";
+import { FrameworkIcon } from "../components/icons/FrameworkIcon";
 
 export default function FrameworkSelection() {
   const navigate = useNavigate();
@@ -40,8 +41,8 @@ export default function FrameworkSelection() {
               className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-8 text-center transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-2xl dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600"
             >
               {/* Icon */}
-              <div className="mb-6 text-7xl transition-transform duration-300 group-hover:scale-110">
-                {framework.icon}
+              <div className="mb-6 flex justify-center transition-transform duration-300 group-hover:scale-110">
+                <FrameworkIcon framework={framework.icon} size={64} />
               </div>
 
               {/* Name */}

@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Professional Angular senior interview preparation with 100 curated questions",
+  "description": "Professional frontend interview preparation with curated questions for Angular, React, Next.js, and Redux",
   "author": "Hussein Tirawi",
   "license": "MIT",
   "repository": {
