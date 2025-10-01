@@ -43,7 +43,8 @@
 }
 
 @keyframes pulse-subtle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -82,24 +83,14 @@
 }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 25%,
-    #e0e0e0 50%,
-    #f0f0f0 75%
-  );
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
 }
 
 /* Dark mode skeleton */
 .dark .skeleton {
-  background: linear-gradient(
-    90deg,
-    #2d2d2d 25%,
-    #3d3d3d 50%,
-    #2d2d2d 75%
-  );
+  background: linear-gradient(90deg, #2d2d2d 25%, #3d3d3d 50%, #2d2d2d 75%);
   background-size: 1000px 100%;
 }
 
@@ -110,7 +101,9 @@
 
 /* Micro-interactions */
 .hover-lift {
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
 }
 
 .hover-lift:hover {
@@ -138,4 +131,3 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
-

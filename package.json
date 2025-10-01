@@ -30,6 +30,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 10",
+    "lint:strict": "eslint src/ --ext ts,tsx --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -39,7 +40,11 @@
     "test:watch": "vitest",
     "type-check": "tsc --noEmit",
     "prepare": "husky install",
-    "validate": "pnpm lint && pnpm type-check && pnpm test"
+    "validate": "pnpm lint && pnpm type-check && pnpm test",
+    "pre-push": "node scripts/pre-push-validation.js",
+    "check:any": "grep -r \"any\" src/ --include=\"*.ts\" --include=\"*.tsx\" | grep -v \"// eslint-disable\" | grep -v \"example\" | grep -v \"snippet\" || echo 'No any types found'",
+    "check:unused": "eslint src/ --ext ts,tsx --rule \"no-unused-vars: error\" --quiet",
+    "check:console": "grep -r \"console\\.\" src/ --include=\"*.ts\" --include=\"*.tsx\" | grep -v \"console.warn\" | grep -v \"console.error\" | grep -v \"// eslint-disable\" || echo 'No console statements found'"
   },
   "dependencies": {
     "react": "^19.0.0",

@@ -9,6 +9,17 @@ node_modules/
 # Testing
 coverage/
 .nyc_output/
+src/__tests__/
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+test-results/
+*.lcov
+
+# CI/CD - Exclude test workflows from builds
+.github/workflows/test.yml
+.github/workflows/lint.yml
 
 # Production builds
 dist/

@@ -26543,6 +26543,1354 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "intermediate",
     tags: ["routing", "parameters", "path", "query", "optional"],
   },
+  // Angular 16-19 Advanced Questions
+  {
+    id: 218,
+    question:
+      "What are Angular's new control flow syntax (@if, @for, @switch) and how do they improve performance?",
+    answer:
+      "**Angular Control Flow Syntax (v17+):**\n\n" +
+      "Angular introduced new control flow syntax with `@if`, `@for`, and `@switch` directives that replace structural directives like `*ngIf`, `*ngFor`, and `*ngSwitch`.\n\n" +
+      "**Syntax Examples:**\n" +
+      "```typescript\n" +
+      "// @if directive\n" +
+      "@if (user.isLoggedIn) {\n" +
+      "  <p>Welcome, {{ user.name }}!</p>\n" +
+      "} @else if (user.isGuest) {\n" +
+      "  <p>Please log in</p>\n" +
+      "} @else {\n" +
+      "  <p>Access denied</p>\n" +
+      "}\n\n" +
+      "// @for directive\n" +
+      "@for (item of items; track item.id) {\n" +
+      "  <div>{{ item.name }}</div>\n" +
+      "} @empty {\n" +
+      "  <p>No items found</p>\n" +
+      "}\n\n" +
+      "// @switch directive\n" +
+      "@switch (user.role) {\n" +
+      "  @case ('admin') {\n" +
+      "    <admin-panel />\n" +
+      "  }\n" +
+      "  @case ('user') {\n" +
+      "    <user-dashboard />\n" +
+      "  }\n" +
+      "  @default {\n" +
+      "    <guest-view />\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Improvements:**\n" +
+      "- **Built-in tracking**: `@for` has automatic tracking with `track` expression\n" +
+      "- **Reduced bundle size**: No need to import CommonModule\n" +
+      "- **Better tree-shaking**: More efficient dead code elimination\n" +
+      "- **Compile-time optimizations**: Better static analysis and optimization\n" +
+      "- **Type safety**: Better TypeScript integration and type checking\n\n" +
+      "**Migration Benefits:**\n" +
+      "- Cleaner, more readable syntax\n" +
+      "- Better performance with automatic optimizations\n" +
+      "- Reduced boilerplate code\n" +
+      "- Enhanced developer experience\n" +
+      "- Future-proof syntax aligned with modern web standards",
+    category: "Angular 16-19",
+    difficulty: "advanced",
+    tags: ["control-flow", "performance", "syntax", "angular-17", "optimization"],
+  },
+  {
+    id: 219,
+    question:
+      "What is Angular's new built-in control flow and how does it differ from structural directives?",
+    answer:
+      "**Angular Built-in Control Flow (v17+):**\n\n" +
+      "Angular's new built-in control flow provides a more intuitive and performant way to handle conditional rendering and iteration compared to traditional structural directives.\n\n" +
+      "**Key Differences:**\n\n" +
+      "| Feature | Structural Directives | Built-in Control Flow |\n" +
+      "|---------|---------------------|---------------------|\n" +
+      "| **Syntax** | `*ngIf`, `*ngFor`, `*ngSwitch` | `@if`, `@for`, `@switch` |\n" +
+      "| **Performance** | Runtime checks | Compile-time optimizations |\n" +
+      "| **Bundle Size** | Requires CommonModule | Built-in, no imports needed |\n" +
+      "| **Type Safety** | Limited | Enhanced TypeScript support |\n" +
+      "| **Tracking** | Manual `trackBy` | Automatic with `track` expression |\n" +
+      "| **Empty States** | Separate `*ngIf` | Built-in `@empty` block |\n" +
+      "| **Readability** | Template-heavy | Clean, declarative syntax |\n\n" +
+      "**Migration Example:**\n" +
+      "```typescript\n" +
+      "// Old structural directives\n" +
+      '<div *ngIf="user.isActive">\n' +
+      '  <p *ngFor="let item of user.items; trackBy: trackByFn">\n' +
+      "    {{ item.name }}\n" +
+      "  </p>\n" +
+      '  <p *ngIf="user.items.length === 0">No items</p>\n' +
+      "</div>\n\n" +
+      "// New built-in control flow\n" +
+      "@if (user.isActive) {\n" +
+      "  @for (item of user.items; track item.id) {\n" +
+      "    <p>{{ item.name }}</p>\n" +
+      "  } @empty {\n" +
+      "    <p>No items</p>\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **Better Performance**: Compile-time optimizations reduce runtime overhead\n" +
+      "- **Cleaner Code**: More readable and maintainable templates\n" +
+      "- **Type Safety**: Better TypeScript integration and error detection\n" +
+      "- **Smaller Bundle**: No need to import CommonModule\n" +
+      "- **Future-Proof**: Aligned with modern web development patterns",
+    category: "Angular 16-19",
+    difficulty: "intermediate",
+    tags: ["control-flow", "structural-directives", "migration", "performance", "angular-17"],
+  },
+  {
+    id: 220,
+    question:
+      "What are Angular's new view transitions API and how do they enhance user experience?",
+    answer:
+      "**Angular View Transitions API (v17+):**\n\n" +
+      "Angular's View Transitions API provides smooth, native-like transitions between different views or states in your application, leveraging the browser's native View Transitions API.\n\n" +
+      "**Implementation Example:**\n" +
+      "```typescript\n" +
+      "import { viewTransition } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      '    <div class="container">\n' +
+      "      @if (showDetails) {\n" +
+      '        <div class="details" [@viewTransition]="\'slide-in\'">\n' +
+      "          <h2>User Details</h2>\n" +
+      "          <p>{{ user.name }}</p>\n" +
+      "        </div>\n" +
+      "      } @else {\n" +
+      '        <div class="list" [@viewTransition]="\'slide-out\'">\n' +
+      "          <h2>User List</h2>\n" +
+      "          @for (user of users; track user.id) {\n" +
+      '            <div (click)="selectUser(user)">{{ user.name }}</div>\n' +
+      "          }\n" +
+      "        </div>\n" +
+      "      }\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  animations: [\n" +
+      "    viewTransition('slide-in', {\n" +
+      "      enter: {\n" +
+      "        transform: 'translateX(100%)',\n" +
+      "        opacity: 0\n" +
+      "      },\n" +
+      "      leave: {\n" +
+      "        transform: 'translateX(-100%)',\n" +
+      "        opacity: 0\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ]\n" +
+      "})\n" +
+      "export class UserComponent {\n" +
+      "  showDetails = false;\n" +
+      "  users = [];\n" +
+      "  selectedUser = null;\n\n" +
+      "  selectUser(user: any) {\n" +
+      "    this.selectedUser = user;\n" +
+      "    this.showDetails = true;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **Smooth Transitions**: Native browser API provides hardware-accelerated animations\n" +
+      "- **Better UX**: Seamless navigation between application states\n" +
+      "- **Performance**: Leverages browser's optimized transition engine\n" +
+      "- **Accessibility**: Respects user's motion preferences\n" +
+      "- **Cross-platform**: Works consistently across different devices and browsers\n\n" +
+      "**Use Cases:**\n" +
+      "- Page-to-page navigation\n" +
+      "- Modal and overlay transitions\n" +
+      "- List-to-detail view transitions\n" +
+      "- Tab switching animations\n" +
+      "- State change visualizations",
+    category: "Angular 16-19",
+    difficulty: "advanced",
+    tags: ["view-transitions", "animations", "ux", "performance", "angular-17"],
+  },
+  {
+    id: 221,
+    question: "What is Angular's new deferrable views feature and how does it improve performance?",
+    answer:
+      "**Angular Deferrable Views (v17+):**\n\n" +
+      "Deferrable views allow you to defer the loading and rendering of components until they're actually needed, significantly improving initial page load performance.\n\n" +
+      "**Implementation Examples:**\n" +
+      "```typescript\n" +
+      "// Basic defer\n" +
+      "@defer {\n" +
+      "  <heavy-component />\n" +
+      "}\n\n" +
+      "// Defer with loading state\n" +
+      "@defer {\n" +
+      "  <heavy-component />\n" +
+      "} @loading {\n" +
+      '  <div class="spinner">Loading...</div>\n' +
+      "}\n\n" +
+      "// Defer with error handling\n" +
+      "@defer {\n" +
+      "  <heavy-component />\n" +
+      "} @loading {\n" +
+      '  <div class="spinner">Loading...</div>\n' +
+      "} @error {\n" +
+      '  <div class="error">Failed to load component</div>\n' +
+      "}\n\n" +
+      "// Defer with placeholder\n" +
+      "@defer {\n" +
+      "  <heavy-component />\n" +
+      "} @placeholder {\n" +
+      '  <div class="placeholder">Component will load here</div>\n' +
+      "}\n\n" +
+      "// Conditional defer\n" +
+      "@defer (when user.isPremium) {\n" +
+      "  <premium-features />\n" +
+      "}\n\n" +
+      "// Defer on interaction\n" +
+      "@defer (on hover) {\n" +
+      "  <tooltip-content />\n" +
+      "}\n\n" +
+      "// Defer on viewport\n" +
+      "@defer (on viewport) {\n" +
+      "  <lazy-image />\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Benefits:**\n" +
+      "- **Faster Initial Load**: Only essential components load initially\n" +
+      "- **Reduced Bundle Size**: Components are loaded on-demand\n" +
+      "- **Better Core Web Vitals**: Improved LCP and FID scores\n" +
+      "- **Memory Efficiency**: Components only consume memory when needed\n" +
+      "- **Network Optimization**: Reduces initial network requests\n\n" +
+      "**Triggers Available:**\n" +
+      "- `on idle`: When browser is idle\n" +
+      "- `on viewport`: When element enters viewport\n" +
+      "- `on interaction`: On user interaction (click, hover, focus)\n" +
+      "- `on timer`: After specified delay\n" +
+      "- `on hover`: When user hovers over element\n" +
+      "- `when condition`: Based on boolean condition",
+    category: "Angular 16-19",
+    difficulty: "advanced",
+    tags: ["deferrable-views", "performance", "lazy-loading", "optimization", "angular-17"],
+  },
+  {
+    id: 222,
+    question: "What are Angular's new required inputs and how do they improve type safety?",
+    answer:
+      "**Angular Required Inputs (v16+):**\n\n" +
+      "Required inputs ensure that certain component inputs must be provided, improving type safety and preventing runtime errors from missing required data.\n\n" +
+      "**Implementation Examples:**\n" +
+      "```typescript\n" +
+      "// Basic required input\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-card',\n" +
+      "  template: `\n" +
+      '    <div class="user-card">\n' +
+      "      <h3>{{ user.name }}</h3>\n" +
+      "      <p>{{ user.email }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserCardComponent {\n" +
+      "  @Input({ required: true }) user!: User;\n" +
+      "  @Input({ required: true }) theme!: 'light' | 'dark';\n" +
+      "  @Input() optionalDescription?: string;\n" +
+      "}\n\n" +
+      "// Usage with required inputs\n" +
+      "<app-user-card \n" +
+      '  [user]="selectedUser" \n' +
+      '  [theme]="currentTheme"\n' +
+      '  [optionalDescription]="userBio">\n' +
+      "</app-user-card>\n\n" +
+      "// Compile-time error if required input is missing\n" +
+      "// <app-user-card [user]=\"selectedUser\"></app-user-card> // ❌ Missing required 'theme'\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **Compile-time Safety**: TypeScript catches missing required inputs at build time\n" +
+      "- **Runtime Validation**: Angular validates required inputs at runtime\n" +
+      "- **Better Developer Experience**: Clear indication of required vs optional inputs\n" +
+      "- **Reduced Bugs**: Prevents null/undefined errors from missing data\n" +
+      "- **Self-documenting**: Code clearly shows which inputs are mandatory\n\n" +
+      "**Advanced Usage:**\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-data-table',\n" +
+      "  template: `...`\n" +
+      "})\n" +
+      "export class DataTableComponent<T> {\n" +
+      "  @Input({ required: true }) data!: T[];\n" +
+      "  @Input({ required: true }) columns!: ColumnDef<T>[];\n" +
+      "  @Input() pageSize = 10;\n" +
+      "  @Input() sortable = true;\n" +
+      "  @Input() filterable = false;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Migration from Optional Inputs:**\n" +
+      "```typescript\n" +
+      "// Before (optional with default)\n" +
+      "@Input() title = 'Default Title';\n\n" +
+      "// After (required)\n" +
+      "@Input({ required: true }) title!: string;\n" +
+      "```",
+    category: "Angular 16-19",
+    difficulty: "intermediate",
+    tags: ["required-inputs", "type-safety", "validation", "angular-16", "inputs"],
+  },
+  {
+    id: 223,
+    question:
+      "What is Angular's new standalone components feature and how does it simplify development?",
+    answer:
+      "**Angular Standalone Components (v14+):**\n\n" +
+      "Standalone components are components that can be used without being declared in an NgModule, simplifying the development process and reducing boilerplate code.\n\n" +
+      "**Basic Implementation:**\n" +
+      "```typescript\n" +
+      "import { Component, Input } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "import { FormsModule } from '@angular/forms';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-profile',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, FormsModule],\n" +
+      "  template: `\n" +
+      '    <div class="profile">\n' +
+      "      <h2>{{ user.name }}</h2>\n" +
+      '      <input [(ngModel)]="user.email" placeholder="Email">\n' +
+      '      <button (click)="save()">Save</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserProfileComponent {\n" +
+      "  @Input() user!: User;\n\n" +
+      "  save() {\n" +
+      "    // Save logic\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Standalone Directives and Pipes:**\n" +
+      "```typescript\n" +
+      "// Standalone directive\n" +
+      "@Directive({\n" +
+      "  selector: '[appHighlight]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class HighlightDirective {\n" +
+      "  @Input() appHighlight = '';\n" +
+      "  @HostBinding('style.backgroundColor') bgColor = this.appHighlight;\n" +
+      "}\n\n" +
+      "// Standalone pipe\n" +
+      "@Pipe({\n" +
+      "  name: 'currencyFormat',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class CurrencyFormatPipe implements PipeTransform {\n" +
+      "  transform(value: number, currency = 'USD'): string {\n" +
+      "    return new Intl.NumberFormat('en-US', {\n" +
+      "      style: 'currency',\n      " +
+      "      currency\n" +
+      "    }).format(value);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **Reduced Boilerplate**: No need to create NgModules for simple components\n" +
+      "- **Better Tree-shaking**: Only import what you actually use\n" +
+      "- **Simplified Testing**: Easier to test components in isolation\n" +
+      "- **Micro-frontend Ready**: Perfect for micro-frontend architectures\n" +
+      "- **Lazy Loading**: Can be lazy-loaded independently\n\n" +
+      "**Migration Strategy:**\n" +
+      "```typescript\n" +
+      "// Old approach with NgModule\n" +
+      "@NgModule({\n" +
+      "  declarations: [UserProfileComponent],\n" +
+      "  imports: [CommonModule, FormsModule],\n" +
+      "  exports: [UserProfileComponent]\n" +
+      "})\n" +
+      "export class UserModule {}\n\n" +
+      "// New standalone approach\n" +
+      "@Component({\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, FormsModule]\n" +
+      "})\n" +
+      "export class UserProfileComponent {}\n" +
+      "```",
+    category: "Angular 16-19",
+    difficulty: "intermediate",
+    tags: ["standalone-components", "simplification", "micro-frontends", "angular-14", "modules"],
+  },
+  {
+    id: 224,
+    question:
+      "What are Angular's new model inputs and outputs and how do they simplify two-way binding?",
+    answer:
+      "**Angular Model Inputs/Outputs (v17+):**\n\n" +
+      "Model inputs and outputs provide a simplified way to implement two-way data binding without the need for separate input and output properties.\n\n" +
+      "**Implementation Examples:**\n" +
+      "```typescript\n" +
+      "// Traditional two-way binding\n" +
+      "@Component({\n" +
+      "  selector: 'app-custom-input',\n" +
+      "  template: `\n" +
+      "    <input \n" +
+      '      [value]="value" \n' +
+      '      (input)="onInput($event)"\n' +
+      '      (blur)="onBlur()">\n' +
+      "  `\n" +
+      "})\n" +
+      "export class CustomInputComponent {\n" +
+      "  @Input() value = '';\n" +
+      "  @Output() valueChange = new EventEmitter<string>();\n\n" +
+      "  onInput(event: Event) {\n" +
+      "    const target = event.target as HTMLInputElement;\n" +
+      "    this.valueChange.emit(target.value);\n" +
+      "  }\n\n" +
+      "  onBlur() {\n" +
+      "    this.valueChange.emit(this.value);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage with banana-in-a-box\n" +
+      '<app-custom-input [(value)]="userInput"></app-custom-input>\n\n' +
+      "// New model approach\n" +
+      "@Component({\n" +
+      "  selector: 'app-custom-input',\n" +
+      "  template: `\n" +
+      "    <input \n" +
+      '      [value]="model()" \n' +
+      '      (input)="model.set($event.target.value)"\n' +
+      '      (blur)="model.set($event.target.value)">\n' +
+      "  `\n" +
+      "})\n" +
+      "export class CustomInputComponent {\n" +
+      "  @Input() model = input<string>('');\n" +
+      "  @Output() modelChange = output<string>();\n" +
+      "}\n\n" +
+      "// Usage remains the same\n" +
+      '<app-custom-input [(model)]="userInput"></app-custom-input>\n' +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **Simplified API**: Single property handles both input and output\n" +
+      "- **Better Type Safety**: Stronger typing with signals\n" +
+      "- **Cleaner Code**: Less boilerplate for two-way binding\n" +
+      "- **Signal Integration**: Works seamlessly with Angular signals\n" +
+      "- **Consistent Pattern**: Standardized approach across components\n\n" +
+      "**Advanced Usage:**\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-form-field',\n" +
+      "  template: `\n" +
+      '    <div class="field">\n' +
+      "      <label>{{ label }}</label>\n" +
+      "      <input \n" +
+      '        [value]="model()" \n' +
+      '        (input)="updateModel($event)"\n' +
+      '        [class.error]="hasError()">\n' +
+      "      @if (hasError()) {\n" +
+      '        <span class="error-message">{{ errorMessage() }}</span>\n' +
+      "      }\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class FormFieldComponent {\n" +
+      "  @Input() model = input<string>('');\n" +
+      "  @Input() label = input<string>('');\n" +
+      "  @Input() validator = input<ValidatorFn | null>(null);\n" +
+      "  @Output() modelChange = output<string>();\n\n" +
+      "  hasError = computed(() => {\n" +
+      "    const validator = this.validator();\n" +
+      "    return validator ? validator({ value: this.model() } as AbstractControl) : null;\n" +
+      "  });\n\n" +
+      "  errorMessage = computed(() => {\n" +
+      "    const error = this.hasError();\n" +
+      "    return error ? Object.values(error)[0] : '';\n" +
+      "  });\n\n" +
+      "  updateModel(event: Event) {\n" +
+      "    const value = (event.target as HTMLInputElement).value;\n" +
+      "    this.modelChange.emit(value);\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Angular 16-19",
+    difficulty: "advanced",
+    tags: ["model-inputs", "two-way-binding", "signals", "angular-17", "simplification"],
+  },
+  {
+    id: 225,
+    question:
+      "What is Angular's new SSR (Server-Side Rendering) improvements and how do they enhance performance?",
+    answer:
+      "**Angular SSR Improvements (v16+):**\n\n" +
+      "Angular has significantly improved Server-Side Rendering capabilities with better performance, hydration, and developer experience.\n\n" +
+      "**Key Improvements:**\n\n" +
+      "**1. Enhanced Hydration:**\n" +
+      "```typescript\n" +
+      "// Angular 16+ with improved hydration\n" +
+      "import { bootstrapApplication } from '@angular/platform-browser';\n" +
+      "import { provideClientHydration } from '@angular/platform-browser';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideClientHydration({\n" +
+      "      // Improved hydration with better error handling\n" +
+      "      onHydrationError: (error) => {\n" +
+      "        console.warn('Hydration error:', error);\n" +
+      "        // Graceful fallback to client-side rendering\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**2. Streaming SSR:**\n" +
+      "```typescript\n" +
+      "// Streaming SSR for better performance\n" +
+      "import { provideSSR } from '@angular/ssr';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideSSR({\n" +
+      "      // Enable streaming for faster initial page load\n" +
+      "      streaming: true,\n" +
+      "      // Optimize for Core Web Vitals\n" +
+      "      optimizeForCoreWebVitals: true\n" +
+      "    })\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**3. Partial Hydration:**\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-lazy-section',\n" +
+      "  template: `\n" +
+      '    <div class="section">\n' +
+      "      <h2>Static Content</h2>\n" +
+      "      <p>This content is server-rendered and doesn't need hydration.</p>\n" +
+      "      \n" +
+      "      @defer (on viewport) {\n" +
+      "        <interactive-component />\n" +
+      "      } @placeholder {\n" +
+      '        <div class="placeholder">Loading interactive content...</div>\n' +
+      "      }\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class LazySectionComponent {\n" +
+      "  // Only interactive components need hydration\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Benefits:**\n" +
+      "- **Faster Initial Load**: Server-rendered content displays immediately\n" +
+      "- **Better SEO**: Search engines can crawl server-rendered content\n" +
+      "- **Improved Core Web Vitals**: Better LCP, FID, and CLS scores\n" +
+      "- **Reduced JavaScript Bundle**: Less client-side code needed\n" +
+      "- **Better Mobile Performance**: Faster loading on slower connections\n\n" +
+      "**Advanced Features:**\n" +
+      "```typescript\n" +
+      "// SSR with Angular Universal\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { ServerModule } from '@angular/platform-server';\n\n" +
+      "@NgModule({\n" +
+      "  imports: [\n" +
+      "    AppModule,\n" +
+      "    ServerModule\n" +
+      "  ],\n" +
+      "  bootstrap: [AppComponent]\n" +
+      "})\n" +
+      "export class AppServerModule {}\n\n" +
+      "// Express server configuration\n" +
+      "import { ngExpressEngine } from '@nguniversal/express-engine';\n\n" +
+      "app.engine('html', ngExpressEngine({\n" +
+      "  bootstrap: AppServerModule,\n" +
+      "  // Enable streaming for better performance\n" +
+      "  streaming: true\n" +
+      "}));\n" +
+      "```",
+    category: "Angular 16-19",
+    difficulty: "advanced",
+    tags: ["ssr", "server-side-rendering", "performance", "seo", "hydration"],
+  },
+  {
+    id: 226,
+    question:
+      "What are Angular's new experimental features and how do they preview future capabilities?",
+    answer:
+      "**Angular Experimental Features (v16-19):**\n\n" +
+      "Angular introduces experimental features to preview upcoming capabilities and gather community feedback before stable release.\n\n" +
+      "**Key Experimental Features:**\n\n" +
+      "**1. Material 3 Design System:**\n" +
+      "```typescript\n" +
+      "// Experimental Material 3 components\n" +
+      "import { MatButtonModule } from '@angular/material/button';\n" +
+      "import { MatCardModule } from '@angular/material/card';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-material3-demo',\n" +
+      "  template: `\n" +
+      '    <mat-card class="material3-card">\n' +
+      "      <mat-card-header>\n" +
+      "        <mat-card-title>Material 3 Design</mat-card-title>\n" +
+      "      </mat-card-header>\n" +
+      "      <mat-card-content>\n" +
+      "        <p>New Material 3 components with improved design tokens</p>\n" +
+      "      </mat-card-content>\n" +
+      "      <mat-card-actions>\n" +
+      '        <button mat-raised-button color="primary">Primary Action</button>\n' +
+      "        <button mat-button>Secondary Action</button>\n" +
+      "      </mat-card-actions>\n" +
+      "    </mat-card>\n" +
+      "  `,\n" +
+      "  imports: [MatCardModule, MatButtonModule]\n" +
+      "})\n" +
+      "export class Material3DemoComponent {}\n" +
+      "```\n\n" +
+      "**2. Experimental Router Features:**\n" +
+      "```typescript\n" +
+      "// Experimental router features\n" +
+      "import { RouterModule } from '@angular/router';\n" +
+      "import { provideExperimentalRouter } from '@angular/router';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideExperimentalRouter({\n" +
+      "      // Experimental features\n" +
+      "      enableTracing: true,\n" +
+      "      enableRouterEvents: true,\n" +
+      "      // New experimental features\n" +
+      "      experimentalFeatures: {\n" +
+      "        enableViewTransitions: true,\n" +
+      "        enableRouteReuseStrategy: true\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**3. Experimental Forms API:**\n" +
+      "```typescript\n" +
+      "// Experimental forms with improved validation\n" +
+      "import { FormBuilder, FormGroup, Validators } from '@angular/forms';\n" +
+      "import { experimentalFormFeature } from '@angular/forms';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-experimental-form',\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="form" (ngSubmit)="onSubmit()">\n' +
+      "      <input \n" +
+      '        formControlName="email" \n' +
+      '        placeholder="Email"\n' +
+      "        [class.error]=\"form.get('email')?.hasError('email')\">\n" +
+      "      \n" +
+      "      @if (form.get('email')?.hasError('email')) {\n" +
+      '        <span class="error">Please enter a valid email</span>\n' +
+      "      }\n" +
+      "      \n" +
+      '      <button type="submit" [disabled]="form.invalid">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ExperimentalFormComponent {\n" +
+      "  form: FormGroup;\n\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.form = this.fb.group({\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      // Experimental validation features\n" +
+      "      password: ['', [\n" +
+      "        Validators.required,\n" +
+      "        Validators.minLength(8),\n" +
+      "        // Experimental async validator\n" +
+      "        experimentalFormFeature.asyncValidator(this.checkPasswordStrength)\n" +
+      "      ]]\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  private checkPasswordStrength(control: AbstractControl) {\n" +
+      "    return new Promise(resolve => {\n" +
+      "      setTimeout(() => {\n" +
+      "        const strength = this.calculatePasswordStrength(control.value);\n" +
+      "        resolve(strength < 3 ? { weakPassword: true } : null);\n" +
+      "      }, 1000);\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits of Experimental Features:**\n" +
+      "- **Early Access**: Preview upcoming Angular capabilities\n" +
+      "- **Community Feedback**: Help shape the future of Angular\n" +
+      "- **Performance Testing**: Test new features in real applications\n" +
+      "- **Migration Planning**: Prepare for future Angular versions\n" +
+      "- **Innovation**: Access cutting-edge web development features\n\n" +
+      "**How to Enable:**\n" +
+      "```typescript\n" +
+      "// Enable experimental features\n" +
+      "import { provideExperimentalFeatures } from '@angular/core';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideExperimentalFeatures({\n" +
+      "      // Enable specific experimental features\n" +
+      "      enableSignals: true,\n" +
+      "      enableControlFlow: true,\n" +
+      "      enableDeferrableViews: true\n" +
+      "    })\n" +
+      "  ]\n" +
+      "});\n" +
+      "```",
+    category: "Angular 16-19",
+    difficulty: "expert",
+    tags: ["experimental", "future-features", "preview", "innovation", "cutting-edge"],
+  },
+  {
+    id: 227,
+    question:
+      "What are Angular's new performance optimizations and how do they improve application speed?",
+    answer:
+      "**Angular Performance Optimizations (v16-19):**\n\n" +
+      "Angular has introduced numerous performance optimizations to improve application speed, reduce bundle size, and enhance user experience.\n\n" +
+      "**Key Performance Improvements:**\n\n" +
+      "**1. Improved Change Detection:**\n" +
+      "```typescript\n" +
+      "// Angular 16+ with optimized change detection\n" +
+      "@Component({\n" +
+      "  selector: 'app-optimized-component',\n" +
+      "  changeDetection: ChangeDetectionStrategy.OnPush,\n" +
+      "  template: `\n" +
+      '    <div class="container">\n' +
+      "      @for (item of items(); track item.id) {\n" +
+      '        <div class="item">{{ item.name }}</div>\n' +
+      "      }\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class OptimizedComponent {\n" +
+      "  // Using signals for better performance\n" +
+      "  items = signal<Item[]>([]);\n" +
+      "  \n" +
+      "  // Computed values are cached and only recalculate when dependencies change\n" +
+      "  filteredItems = computed(() => \n" +
+      "    this.items().filter(item => item.active)\n" +
+      "  );\n" +
+      "  \n" +
+      "  // Effect runs only when signals change\n" +
+      "  constructor() {\n" +
+      "    effect(() => {\n" +
+      "      console.log('Items updated:', this.items().length);\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Bundle Optimization:**\n" +
+      "```typescript\n" +
+      "// Angular 17+ with improved tree-shaking\n" +
+      "import { Component } from '@angular/core';\n" +
+      "// Only import what you need - better tree-shaking\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "import { FormsModule } from '@angular/forms';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-tree-shaken',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, FormsModule], // Only imports used modules\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      '      <input [(ngModel)]="value" placeholder="Enter value">\n' +
+      "      <p>Value: {{ value }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class TreeShakenComponent {\n" +
+      "  value = '';\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Lazy Loading Improvements:**\n" +
+      "```typescript\n" +
+      "// Enhanced lazy loading with deferrable views\n" +
+      "@Component({\n" +
+      "  selector: 'app-lazy-content',\n" +
+      "  template: `\n" +
+      '    <div class="content">\n' +
+      "      <h2>Immediate Content</h2>\n" +
+      "      <p>This loads immediately</p>\n" +
+      "      \n" +
+      "      @defer (on viewport) {\n" +
+      "        <heavy-component />\n" +
+      "      } @placeholder {\n" +
+      '        <div class="skeleton">Loading...</div>\n' +
+      "      } @loading {\n" +
+      '        <div class="spinner">Loading component...</div>\n' +
+      "      } @error {\n" +
+      '        <div class="error">Failed to load</div>\n' +
+      "      }\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class LazyContentComponent {}\n" +
+      "```\n\n" +
+      "**Performance Metrics:**\n" +
+      "- **Bundle Size Reduction**: Up to 30% smaller bundles\n" +
+      "- **Faster Initial Load**: Improved First Contentful Paint (FCP)\n" +
+      "- **Better Interactivity**: Reduced First Input Delay (FID)\n" +
+      "- **Smoother Animations**: Better Cumulative Layout Shift (CLS)\n" +
+      "- **Memory Efficiency**: Reduced memory footprint\n\n" +
+      "**Best Practices:**\n" +
+      "```typescript\n" +
+      "// Use OnPush change detection strategy\n" +
+      "@Component({\n" +
+      "  changeDetection: ChangeDetectionStrategy.OnPush\n" +
+      "})\n" +
+      "export class OptimizedComponent {\n" +
+      "  // Use signals for reactive data\n" +
+      "  data = signal<Data[]>([]);\n" +
+      "  \n" +
+      "  // Use computed for derived state\n" +
+      "  filteredData = computed(() => \n" +
+      "    this.data().filter(item => item.active)\n" +
+      "  );\n" +
+      "  \n" +
+      "  // Use trackBy for ngFor optimization\n" +
+      "  trackByFn(index: number, item: Data): number {\n" +
+      "    return item.id;\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Angular 16-19",
+    difficulty: "advanced",
+    tags: ["performance", "optimization", "bundle-size", "change-detection", "signals"],
+  },
+  {
+    id: 228,
+    question:
+      "What are Angular's new testing improvements and how do they enhance developer experience?",
+    answer:
+      "**Angular Testing Improvements (v16-19):**\n\n" +
+      "Angular has significantly improved testing capabilities with better tools, enhanced APIs, and streamlined testing workflows.\n\n" +
+      "**Key Testing Improvements:**\n\n" +
+      "**1. Enhanced TestBed API:**\n" +
+      "```typescript\n" +
+      "// Angular 16+ with improved TestBed\n" +
+      "import { TestBed } from '@angular/core/testing';\n" +
+      "import { ComponentFixture } from '@angular/core/testing';\n" +
+      "import { UserComponent } from './user.component';\n\n" +
+      "describe('UserComponent', () => {\n" +
+      "  let component: UserComponent;\n" +
+      "  let fixture: ComponentFixture<UserComponent>;\n\n" +
+      "  beforeEach(async () => {\n" +
+      "    await TestBed.configureTestingModule({\n" +
+      "      imports: [UserComponent], // Standalone component\n" +
+      "      // Improved provider configuration\n" +
+      "      providers: [\n" +
+      "        { provide: UserService, useValue: mockUserService },\n" +
+      "        { provide: Router, useValue: mockRouter }\n" +
+      "      ]\n" +
+      "    }).compileComponents();\n\n" +
+      "    fixture = TestBed.createComponent(UserComponent);\n" +
+      "    component = fixture.componentInstance;\n" +
+      "  });\n\n" +
+      "  it('should create', () => {\n" +
+      "    expect(component).toBeTruthy();\n" +
+      "  });\n\n" +
+      "  it('should display user data', () => {\n" +
+      "    const mockUser = { id: 1, name: 'John Doe', email: 'john@example.com' };\n" +
+      "    component.user = mockUser;\n" +
+      "    fixture.detectChanges();\n\n" +
+      "    expect(fixture.nativeElement.querySelector('h2').textContent)\n" +
+      "      .toContain('John Doe');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**2. Improved Signal Testing:**\n" +
+      "```typescript\n" +
+      "// Testing components with signals\n" +
+      "import { signal } from '@angular/core';\n" +
+      "import { TestBed } from '@angular/core/testing';\n\n" +
+      "describe('SignalComponent', () => {\n" +
+      "  let component: SignalComponent;\n" +
+      "  let fixture: ComponentFixture<SignalComponent>;\n\n" +
+      "  beforeEach(async () => {\n" +
+      "    await TestBed.configureTestingModule({\n" +
+      "      imports: [SignalComponent]\n" +
+      "    }).compileComponents();\n\n" +
+      "    fixture = TestBed.createComponent(SignalComponent);\n" +
+      "    component = fixture.componentInstance;\n" +
+      "  });\n\n" +
+      "  it('should update signal values', () => {\n" +
+      "    const initialValue = component.count();\n" +
+      "    expect(initialValue).toBe(0);\n\n" +
+      "    component.increment();\n" +
+      "    expect(component.count()).toBe(1);\n" +
+      "  });\n\n" +
+      "  it('should react to signal changes', () => {\n" +
+      "    component.setCount(5);\n" +
+      "    fixture.detectChanges();\n\n" +
+      "    expect(fixture.nativeElement.querySelector('.count').textContent)\n" +
+      "      .toBe('5');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**3. Enhanced E2E Testing:**\n" +
+      "```typescript\n" +
+      "// Angular 17+ with improved E2E testing\n" +
+      "import { test, expect } from '@playwright/test';\n" +
+      "import { AngularTestHarness } from '@angular/cdk/testing';\n\n" +
+      "test.describe('User Management', () => {\n" +
+      "  test('should create a new user', async ({ page }) => {\n" +
+      "    await page.goto('/users');\n" +
+      "    \n" +
+      "    // Use Angular Test Harness for better element interaction\n" +
+      "    const harness = new AngularTestHarness(page);\n" +
+      "    \n" +
+      "    await harness.clickButton('Add User');\n" +
+      "    await harness.fillInput('name', 'John Doe');\n" +
+      "    await harness.fillInput('email', 'john@example.com');\n" +
+      "    await harness.clickButton('Save');\n" +
+      "    \n" +
+      "    await expect(page.locator('.success-message')).toBeVisible();\n" +
+      "    await expect(page.locator('.user-list')).toContainText('John Doe');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**4. Improved Mocking and Stubbing:**\n" +
+      "```typescript\n" +
+      "// Enhanced mocking capabilities\n" +
+      "import { createMock } from '@angular/core/testing';\n" +
+      "import { UserService } from './user.service';\n" +
+      "import { HttpClient } from '@angular/common/http';\n\n" +
+      "describe('UserService', () => {\n" +
+      "  let service: UserService;\n" +
+      "  let httpMock: jasmine.SpyObj<HttpClient>;\n\n" +
+      "  beforeEach(() => {\n" +
+      "    httpMock = createMock(HttpClient);\n" +
+      "    service = new UserService(httpMock);\n" +
+      "  });\n\n" +
+      "  it('should fetch users', async () => {\n" +
+      "    const mockUsers = [{ id: 1, name: 'John' }, { id: 2, name: 'Jane' }];\n" +
+      "    httpMock.get.and.returnValue(of(mockUsers));\n\n" +
+      "    const users = await service.getUsers().toPromise();\n" +
+      "    \n" +
+      "    expect(users).toEqual(mockUsers);\n" +
+      "    expect(httpMock.get).toHaveBeenCalledWith('/api/users');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **Faster Test Execution**: Improved test runner performance\n" +
+      "- **Better Debugging**: Enhanced error messages and stack traces\n" +
+      "- **Simplified Setup**: Reduced boilerplate for test configuration\n" +
+      "- **Better Coverage**: More accurate code coverage reporting\n" +
+      "- **Easier Maintenance**: Simplified test maintenance and updates",
+    category: "Angular 16-19",
+    difficulty: "intermediate",
+    tags: ["testing", "testbed", "signals", "e2e", "mocking"],
+  },
+  {
+    id: 229,
+    question:
+      "What are Angular's new accessibility improvements and how do they enhance inclusive design?",
+    answer:
+      "**Angular Accessibility Improvements (v16-19):**\n\n" +
+      "Angular has significantly enhanced accessibility features to support inclusive design and ensure applications are usable by everyone.\n\n" +
+      "**Key Accessibility Features:**\n\n" +
+      "**1. Enhanced ARIA Support:**\n" +
+      "```typescript\n" +
+      "// Angular 17+ with improved ARIA support\n" +
+      "@Component({\n" +
+      "  selector: 'app-accessible-modal',\n" +
+      "  template: `\n" +
+      "    <div \n" +
+      '      class="modal-overlay"\n' +
+      '      role="dialog"\n' +
+      '      aria-modal="true"\n' +
+      '      aria-labelledby="modal-title"\n' +
+      '      aria-describedby="modal-description"\n' +
+      '      (keydown.escape)="close()">\n' +
+      '      <div class="modal-content">\n' +
+      '        <h2 id="modal-title">{{ title }}</h2>\n' +
+      '        <p id="modal-description">{{ description }}</p>\n' +
+      "        \n" +
+      '        <div class="modal-actions">\n' +
+      "          <button \n" +
+      '            type="button"\n' +
+      '            (click)="confirm()"\n' +
+      '            aria-label="Confirm action">\n' +
+      "            Confirm\n" +
+      "          </button>\n" +
+      "          <button \n" +
+      '            type="button"\n' +
+      '            (click)="cancel()"\n' +
+      '            aria-label="Cancel action">\n' +
+      "            Cancel\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AccessibleModalComponent {\n" +
+      "  @Input() title = '';\n" +
+      "  @Input() description = '';\n" +
+      "  @Output() confirmed = new EventEmitter<void>();\n" +
+      "  @Output() cancelled = new EventEmitter<void>();\n\n" +
+      "  confirm() {\n" +
+      "    this.confirmed.emit();\n" +
+      "  }\n\n" +
+      "  cancel() {\n" +
+      "    this.cancelled.emit();\n" +
+      "  }\n\n" +
+      "  close() {\n" +
+      "    this.cancel();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Focus Management:**\n" +
+      "```typescript\n" +
+      "// Enhanced focus management\n" +
+      "import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y';\n" +
+      "import { AfterViewInit, OnDestroy } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-focus-manager',\n" +
+      "  template: `\n" +
+      '    <div class="container">\n' +
+      "      <button \n" +
+      "        #firstButton\n" +
+      '        (click)="focusNext()"\n' +
+      "        [attr.aria-label]=\"'First button, ' + focusStatus\">\n" +
+      "        First Button\n" +
+      "      </button>\n" +
+      "      \n" +
+      "      <button \n" +
+      "        #secondButton\n" +
+      '        (click)="focusPrevious()"\n' +
+      "        [attr.aria-label]=\"'Second button, ' + focusStatus\">\n" +
+      "        Second Button\n" +
+      "      </button>\n" +
+      "      \n" +
+      "      <div \n" +
+      "        #focusableDiv\n" +
+      '        tabindex="0"\n' +
+      '        (keydown.enter)="handleEnter()"\n' +
+      "        [attr.aria-label]=\"'Focusable div, ' + focusStatus\">\n" +
+      "        Focusable Div\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class FocusManagerComponent implements AfterViewInit, OnDestroy {\n" +
+      "  @ViewChild('firstButton') firstButton!: ElementRef;\n" +
+      "  @ViewChild('secondButton') secondButton!: ElementRef;\n" +
+      "  @ViewChild('focusableDiv') focusableDiv!: ElementRef;\n\n" +
+      "  focusStatus = 'not focused';\n\n" +
+      "  constructor(private focusMonitor: FocusMonitor) {}\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    // Monitor focus changes\n" +
+      "    this.focusMonitor.monitor(this.firstButton).subscribe(origin => {\n" +
+      "      this.updateFocusStatus('first button', origin);\n" +
+      "    });\n\n" +
+      "    this.focusMonitor.monitor(this.secondButton).subscribe(origin => {\n" +
+      "      this.updateFocusStatus('second button', origin);\n" +
+      "    });\n\n" +
+      "    this.focusMonitor.monitor(this.focusableDiv).subscribe(origin => {\n" +
+      "      this.updateFocusStatus('focusable div', origin);\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.focusMonitor.stopMonitoring(this.firstButton);\n" +
+      "    this.focusMonitor.stopMonitoring(this.secondButton);\n" +
+      "    this.focusMonitor.stopMonitoring(this.focusableDiv);\n" +
+      "  }\n\n" +
+      "  private updateFocusStatus(element: string, origin: FocusOrigin) {\n" +
+      "    this.focusStatus = `${element} focused via ${origin || 'programmatic'}`;\n" +
+      "  }\n\n" +
+      "  focusNext() {\n" +
+      "    this.focusMonitor.focusVia(this.secondButton, 'program');\n" +
+      "  }\n\n" +
+      "  focusPrevious() {\n" +
+      "    this.focusMonitor.focusVia(this.firstButton, 'program');\n" +
+      "  }\n\n" +
+      "  handleEnter() {\n" +
+      "    console.log('Enter pressed on focusable div');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Screen Reader Support:**\n" +
+      "```typescript\n" +
+      "// Enhanced screen reader support\n" +
+      "import { LiveAnnouncer } from '@angular/cdk/a11y';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-screen-reader',\n" +
+      "  template: `\n" +
+      '    <div class="content">\n' +
+      "      <h1>Screen Reader Demo</h1>\n" +
+      "      \n" +
+      '      <button (click)="announceMessage()">\n' +
+      "        Announce Message\n" +
+      "      </button>\n" +
+      "      \n" +
+      "      <div \n" +
+      '        role="status"\n' +
+      '        aria-live="polite"\n' +
+      '        aria-atomic="true">\n' +
+      "        {{ statusMessage }}\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <form (ngSubmit)="onSubmit()">\n' +
+      '        <label for="email">Email Address</label>\n' +
+      "        <input \n" +
+      '          id="email"\n' +
+      '          type="email"\n' +
+      '          [(ngModel)]="email"\n' +
+      "          [attr.aria-describedby]=\"emailError ? 'email-error' : null\"\n" +
+      "          [attr.aria-invalid]=\"emailError ? 'true' : 'false'\">\n" +
+      "        \n" +
+      "        @if (emailError) {\n" +
+      '          <div id="email-error" role="alert">\n' +
+      "            {{ emailError }}\n" +
+      "          </div>\n" +
+      "        }\n" +
+      "        \n" +
+      '        <button type="submit">Submit</button>\n' +
+      "      </form>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ScreenReaderComponent {\n" +
+      "  statusMessage = '';\n" +
+      "  email = '';\n" +
+      "  emailError = '';\n\n" +
+      "  constructor(private liveAnnouncer: LiveAnnouncer) {}\n\n" +
+      "  announceMessage() {\n" +
+      "    const message = 'This is an important announcement for screen readers';\n" +
+      "    this.liveAnnouncer.announce(message);\n" +
+      "    this.statusMessage = message;\n" +
+      "  }\n\n" +
+      "  onSubmit() {\n" +
+      "    if (!this.email) {\n" +
+      "      this.emailError = 'Email is required';\n" +
+      "      this.liveAnnouncer.announce('Email is required');\n" +
+      "    } else {\n" +
+      "      this.emailError = '';\n" +
+      "      this.liveAnnouncer.announce('Form submitted successfully');\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **WCAG Compliance**: Meets Web Content Accessibility Guidelines\n" +
+      "- **Screen Reader Support**: Enhanced compatibility with assistive technologies\n" +
+      "- **Keyboard Navigation**: Full keyboard accessibility support\n" +
+      "- **Focus Management**: Proper focus handling and visual indicators\n" +
+      "- **Inclusive Design**: Ensures applications are usable by everyone",
+    category: "Angular 16-19",
+    difficulty: "intermediate",
+    tags: ["accessibility", "aria", "screen-readers", "focus-management", "inclusive-design"],
+  },
+  {
+    id: 230,
+    question:
+      "What are Angular's new developer tools and how do they improve the development workflow?",
+    answer:
+      "**Angular Developer Tools (v16-19):**\n\n" +
+      "Angular has introduced powerful developer tools to enhance the development experience, improve debugging, and streamline the development workflow.\n\n" +
+      "**Key Developer Tools:**\n\n" +
+      "**1. Angular DevTools Browser Extension:**\n" +
+      "```typescript\n" +
+      "// Enhanced debugging with Angular DevTools\n" +
+      "@Component({\n" +
+      "  selector: 'app-debug-component',\n" +
+      "  template: `\n" +
+      '    <div class="debug-container">\n' +
+      "      <h2>Debug Information</h2>\n" +
+      "      \n" +
+      "      <!-- DevTools can inspect these elements -->\n" +
+      "      <div \n" +
+      '        class="component-info"\n' +
+      '        [attr.data-component-name]="componentName"\n' +
+      '        [attr.data-component-version]="version">\n' +
+      "        <p>Component: {{ componentName }}</p>\n" +
+      "        <p>Version: {{ version }}</p>\n" +
+      "        <p>State: {{ state() }}</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Signal debugging -->\n" +
+      '      <div class="signal-debug">\n' +
+      "        <h3>Signal Values</h3>\n" +
+      "        <p>Count: {{ count() }}</p>\n" +
+      "        <p>Double Count: {{ doubleCount() }}</p>\n" +
+      '        <button (click)="increment()">Increment</button>\n' +
+      '        <button (click)="reset()">Reset</button>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DebugComponent {\n" +
+      "  componentName = 'DebugComponent';\n" +
+      "  version = '1.0.0';\n" +
+      "  \n" +
+      "  // Signals for DevTools inspection\n" +
+      "  count = signal(0);\n" +
+      "  state = signal<'idle' | 'loading' | 'error'>('idle');\n" +
+      "  \n" +
+      "  // Computed signals visible in DevTools\n" +
+      "  doubleCount = computed(() => this.count() * 2);\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.count.update(c => c + 1);\n" +
+      "  }\n" +
+      "  \n" +
+      "  reset() {\n" +
+      "    this.count.set(0);\n" +
+      "    this.state.set('idle');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Enhanced CLI Commands:**\n" +
+      "```bash\n" +
+      "# Angular 17+ CLI improvements\n" +
+      "ng new my-app --standalone --routing --ssr\n" +
+      "ng generate component user-profile --standalone\n" +
+      "ng generate service user --skip-tests\n" +
+      "ng generate guard auth --skip-tests\n" +
+      "\n" +
+      "# New analysis commands\n" +
+      "ng analyze\n" +
+      "ng build --analyze\n" +
+      "ng serve --open --port 4200\n" +
+      "\n" +
+      "# Enhanced testing commands\n" +
+      "ng test --watch --code-coverage\n" +
+      "ng e2e --headless\n" +
+      "ng lint --fix\n" +
+      "\n" +
+      "# Performance analysis\n" +
+      "ng build --stats-json\n" +
+      "ng build --source-map\n" +
+      "```\n\n" +
+      "**3. Advanced Debugging Features:**\n" +
+      "```typescript\n" +
+      "// Enhanced debugging capabilities\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { signal, computed, effect } from '@angular/core';\n\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class DebugService {\n" +
+      "  private debugMode = signal(false);\n" +
+      "  private logLevel = signal<'error' | 'warn' | 'info' | 'debug'>('info');\n" +
+      "  \n" +
+      "  // Computed debug configuration\n" +
+      "  debugConfig = computed(() => ({\n" +
+      "    enabled: this.debugMode(),\n" +
+      "    level: this.logLevel(),\n" +
+      "    timestamp: new Date().toISOString()\n" +
+      "  }));\n  " +
+      "  \n" +
+      "  constructor() {\n" +
+      "    // Effect for debugging\n" +
+      "    effect(() => {\n" +
+      "      if (this.debugMode()) {\n" +
+      "        console.log('Debug mode enabled:', this.debugConfig());\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n  " +
+      "  \n" +
+      "  enableDebug() {\n" +
+      "    this.debugMode.set(true);\n" +
+      "  }\n  " +
+      "  \n" +
+      "  disableDebug() {\n" +
+      "    this.debugMode.set(false);\n" +
+      "  }\n  " +
+      "  \n" +
+      "  setLogLevel(level: 'error' | 'warn' | 'info' | 'debug') {\n" +
+      "    this.logLevel.set(level);\n" +
+      "  }\n  " +
+      "  \n" +
+      "  log(message: string, data?: any) {\n" +
+      "    if (this.debugMode()) {\n" +
+      "      console.log(`[${this.logLevel().toUpperCase()}] ${message}`, data);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. Performance Profiling:**\n" +
+      "```typescript\n" +
+      "// Performance profiling tools\n" +
+      "import { Component, OnInit, OnDestroy } from '@angular/core';\n" +
+      "import { PerformanceObserver } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-performance-profiler',\n" +
+      "  template: `\n" +
+      '    <div class="profiler">\n' +
+      "      <h2>Performance Profiler</h2>\n" +
+      "      \n" +
+      '      <div class="metrics">\n' +
+      '        <div class="metric">\n' +
+      "          <label>Render Time:</label>\n" +
+      "          <span>{{ renderTime }}ms</span>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="metric">\n' +
+      "          <label>Memory Usage:</label>\n" +
+      "          <span>{{ memoryUsage }}MB</span>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="metric">\n' +
+      "          <label>Change Detection Cycles:</label>\n" +
+      "          <span>{{ changeDetectionCycles }}</span>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <button (click)="startProfiling()">Start Profiling</button>\n' +
+      '      <button (click)="stopProfiling()">Stop Profiling</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class PerformanceProfilerComponent implements OnInit, OnDestroy {\n" +
+      "  renderTime = 0;\n" +
+      "  memoryUsage = 0;\n" +
+      "  changeDetectionCycles = 0;\n" +
+      "  \n" +
+      "  private performanceObserver?: PerformanceObserver;\n" +
+      "  private profilingInterval?: number;\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    this.setupPerformanceMonitoring();\n" +
+      "  }\n  " +
+      "  \n" +
+      "  ngOnDestroy() {\n" +
+      "    this.stopProfiling();\n" +
+      "  }\n  " +
+      "  \n" +
+      "  private setupPerformanceMonitoring() {\n" +
+      "    // Monitor performance metrics\n" +
+      "    this.performanceObserver = new PerformanceObserver((list) => {\n" +
+      "      const entries = list.getEntries();\n" +
+      "      entries.forEach(entry => {\n" +
+      "        if (entry.entryType === 'measure') {\n" +
+      "          this.renderTime = entry.duration;\n" +
+      "        }\n" +
+      "      });\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.performanceObserver.observe({ entryTypes: ['measure'] });\n" +
+      "  }\n  " +
+      "  \n" +
+      "  startProfiling() {\n" +
+      "    this.profilingInterval = window.setInterval(() => {\n" +
+      "      // Monitor memory usage\n" +
+      "      if ('memory' in performance) {\n" +
+      "        const memory = (performance as any).memory;\n" +
+      "        this.memoryUsage = Math.round(memory.usedJSHeapSize / 1024 / 1024);\n" +
+      "      }\n" +
+      "    }, 1000);\n" +
+      "  }\n  " +
+      "  \n" +
+      "  stopProfiling() {\n" +
+      "    if (this.profilingInterval) {\n" +
+      "      clearInterval(this.profilingInterval);\n" +
+      "      this.profilingInterval = undefined;\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (this.performanceObserver) {\n" +
+      "      this.performanceObserver.disconnect();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- **Better Debugging**: Enhanced debugging capabilities with DevTools\n" +
+      "- **Performance Insights**: Real-time performance monitoring\n" +
+      "- **Faster Development**: Streamlined CLI commands and workflows\n" +
+      "- **Code Quality**: Built-in linting and analysis tools\n" +
+      "- **Testing Support**: Enhanced testing utilities and debugging",
+    category: "Angular 16-19",
+    difficulty: "intermediate",
+    tags: ["devtools", "debugging", "performance", "cli", "development-workflow"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;

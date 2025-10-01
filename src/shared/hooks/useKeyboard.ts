@@ -52,5 +52,5 @@ export function useKeyboard(keyMap: KeyMap, deps: DependencyList = []) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [keyMap, ...deps]);
+  }, [keyMap, deps]);
 }

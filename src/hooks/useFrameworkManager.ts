@@ -6,7 +6,7 @@ import { REACT_ENHANCED_QUESTIONS } from "../data/react-enhanced";
 import { NEXTJS_ENHANCED_QUESTIONS } from "../data/nextjs-enhanced";
 import { RANDOM_ENHANCED_QUESTIONS } from "../data/random-enhanced";
 import { enrichQuestions } from "../utils/questionMetadata";
-import type { FrameworkId, Question } from "../types";
+import type { FrameworkId } from "../types";
 
 /**
  * Custom hook for managing framework-related logic

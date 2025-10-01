@@ -60,6 +60,7 @@ export default [
           argsIgnorePattern: "^_",
           varsIgnorePattern: "^_",
           caughtErrorsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
         },
       ],
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -98,4 +99,3 @@ export default [
     },
   },
 ];
-

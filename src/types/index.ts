@@ -22,7 +22,7 @@ export type {
 export type { FrameworkId, QuestionSetId, FrameworkMetadata } from "./framework";
 
 // Practice types
-export type { PracticeMode, Mode, ProgressData, StudySession } from "./practice";
+export type { PracticeMode, ProgressData, StudySession } from "./practice";
 
 // UI component types
 export type {
