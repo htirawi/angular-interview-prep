@@ -1,8 +1,9 @@
-import { QUESTION_SETS, type QuestionSetId } from "../data";
+import { QUESTION_SETS } from "../data";
+import type { FrameworkId } from "../types";
 
 interface FrameworkSwitcherProps {
-  currentFramework: QuestionSetId;
-  onSwitch: (framework: QuestionSetId) => void;
+  currentFramework: FrameworkId;
+  onSwitch: (framework: FrameworkId) => void;
   onOpenModal: () => void;
 }
 

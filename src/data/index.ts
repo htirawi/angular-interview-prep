@@ -1,12 +1,15 @@
 // Central export for all interview question sets
 
-export { QUESTIONS, type QA } from "./questions";
+import type { FrameworkMetadata } from "../types/framework";
+
+export { QUESTIONS } from "./questions";
 export { NEXTJS_QUESTIONS } from "./nextjs";
 export { REACT_QUESTIONS } from "./react";
 export { REDUX_QUESTIONS } from "./redux";
 
-// Type alias for convenience
-export type { QA as Question } from "./questions";
+// Re-export types
+export type { Question, QA } from "../types/question";
+export type { FrameworkId as QuestionSetId } from "../types/framework";
 
 // Combined questions export
 export const ALL_QUESTIONS = {
@@ -17,11 +20,9 @@ export const ALL_QUESTIONS = {
 } as const;
 
 // Metadata
-export const QUESTION_SETS = [
+export const QUESTION_SETS: FrameworkMetadata[] = [
   { id: "angular", name: "Angular", count: 100, icon: "⚡" },
   { id: "nextjs", name: "Next.js", count: 100, icon: "▲" },
   { id: "react", name: "React", count: 100, icon: "⚛️" },
   { id: "redux", name: "Redux", count: 100, icon: "🔄" },
-] as const;
-
-export type QuestionSetId = (typeof QUESTION_SETS)[number]["id"];
+];

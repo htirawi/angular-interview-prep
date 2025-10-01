@@ -7,10 +7,9 @@ import {
   NEXTJS_QUESTIONS,
   REACT_QUESTIONS,
   REDUX_QUESTIONS,
-  type QA,
-  type QuestionSetId,
   QUESTION_SETS,
 } from "../data";
+import type { Question, FrameworkId, PracticeMode } from "../types";
 import { enrichQuestions } from "../utils/questionMetadata";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { ErrorBoundary } from "../core/components/ErrorBoundary";
@@ -18,13 +17,11 @@ import { useToast } from "../shared/hooks/useToast";
 import Toast from "../shared/components/Toast";
 import { STORAGE_KEYS } from "../shared/constants/app";
 
-type Mode = "sequential" | "random" | "bookmarked";
-
 // Framework-specific storage keys
-const getFrameworkKey = (framework: QuestionSetId, key: string) => `${framework}_${key}`;
+const getFrameworkKey = (framework: FrameworkId, key: string) => `${framework}_${key}`;
 
 export default function InterviewPage() {
-  const { framework } = useParams<{ framework: QuestionSetId }>();
+  const { framework } = useParams<{ framework: FrameworkId }>();
   const navigate = useNavigate();
 
   // Validate framework from URL
@@ -70,7 +67,7 @@ export default function InterviewPage() {
     getFrameworkKey(selectedFramework, STORAGE_KEYS.BOOKMARKS),
     new Set()
   );
-  const [mode, setMode] = useLocalStorage<Mode>(
+  const [mode, setMode] = useLocalStorage<PracticeMode>(
     getFrameworkKey(selectedFramework, STORAGE_KEYS.MODE),
     "sequential"
   );
@@ -97,7 +94,7 @@ export default function InterviewPage() {
 
   // Handle framework change via navigation
   const handleFrameworkChange = useCallback(
-    (newFramework: QuestionSetId) => {
+    (newFramework: FrameworkId) => {
       navigate(`/${newFramework}`);
       success(`Switched to ${newFramework}! 🎉`);
     },
@@ -143,7 +140,7 @@ export default function InterviewPage() {
 
   const total = currentQuestionList.length;
   const safeIndex = Math.min(Math.max(0, index), total - 1);
-  const item: QA | undefined = currentQuestionList[safeIndex];
+  const item: Question | undefined = currentQuestionList[safeIndex];
 
   useEffect(() => {
     if (safeIndex !== index) {

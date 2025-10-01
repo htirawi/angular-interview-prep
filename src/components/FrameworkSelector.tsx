@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { QUESTION_SETS, type QuestionSetId } from "../data";
+import { QUESTION_SETS } from "../data";
+import type { FrameworkId } from "../types";
 
 interface FrameworkSelectorProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (framework: QuestionSetId) => void;
-  currentFramework?: QuestionSetId;
+  onSelect: (framework: FrameworkId) => void;
+  currentFramework?: FrameworkId;
 }
 
 export default function FrameworkSelector({
@@ -14,7 +15,7 @@ export default function FrameworkSelector({
   onSelect,
   currentFramework,
 }: FrameworkSelectorProps) {
-  const [selectedFramework, setSelectedFramework] = useState<QuestionSetId>(
+  const [selectedFramework, setSelectedFramework] = useState<FrameworkId>(
     currentFramework || "angular"
   );
 
@@ -24,7 +25,7 @@ export default function FrameworkSelector({
     }
   }, [currentFramework]);
 
-  const handleSelect = (framework: QuestionSetId) => {
+  const handleSelect = (framework: FrameworkId) => {
     setSelectedFramework(framework);
   };
 
