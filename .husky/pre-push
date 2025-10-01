@@ -25,12 +25,12 @@ fi
 echo "✅ No linting errors"
 echo ""
 
-# Check for 'any' types
+# Check for 'any' types (only type annotations, not strings)
 echo "🚫 Checking for 'any' type usage..."
-ANY_COUNT=$(grep -r ": any" src/ --include="*.ts" --include="*.tsx" | grep -v "as any" | grep -v "// @ts" | grep -v "test" | wc -l | xargs)
+ANY_COUNT=$(grep -rE "(: any[^a-zA-Z]|: any\$|<any>|Array<any)" src/ --include="*.ts" --include="*.tsx" | grep -v "as any" | grep -v "// @ts" | grep -v "test" | grep -v ".test." | grep -v "__tests__" | wc -l | xargs)
 if [ "$ANY_COUNT" -gt 0 ]; then
-  echo "⚠️  Warning: Found $ANY_COUNT usage(s) of 'any' type:"
-  grep -rn ": any" src/ --include="*.ts" --include="*.tsx" | grep -v "as any" | grep -v "// @ts" | grep -v "test" | head -5
+  echo "⚠️  Warning: Found $ANY_COUNT usage(s) of 'any' type annotation:"
+  grep -rnE "(: any[^a-zA-Z]|: any\$|<any>|Array<any)" src/ --include="*.ts" --include="*.tsx" | grep -v "as any" | grep -v "// @ts" | grep -v "test" | grep -v ".test." | grep -v "__tests__" | head -5
   echo ""
   read -p "Continue anyway? (y/n) " -n 1 -r
   echo ""
