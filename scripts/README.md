@@ -66,6 +66,52 @@ Automated GitHub repository setup and push.
 
 ---
 
+### **convert-md-to-ts.cjs** ⚡ **New!**
+
+Converts markdown interview questions to TypeScript.
+
+```bash
+node scripts/convert-md-to-ts.cjs
+```
+
+**What it does:**
+
+- Parses markdown question files (\*.md)
+- Extracts questions and answers
+- Generates TypeScript files with proper types
+- Creates one .ts file per framework
+
+**Input format:**
+
+```markdown
+### 1) Question here?
+
+**Answer (senior-level):**
+
+- Point 1
+- Point 2
+```
+
+**Output format:**
+
+```typescript
+export const FRAMEWORK_QUESTIONS: QA[] = [
+  {
+    id: 1,
+    question: `Question here?`,
+    answer: `Point 1\nPoint 2`,
+  },
+];
+```
+
+**Supported frameworks:**
+
+- Next.js → `nextjs.ts`
+- React → `react.ts`
+- Redux → `redux.ts`
+
+---
+
 ## 🎯 Which Script Should I Use?
 
 ### First Time Setup
@@ -87,6 +133,15 @@ pnpm dev
 # Just activate the pro UI
 ./scripts/activate-pro-ui.sh
 pnpm dev
+```
+
+### Adding New Questions?
+
+```bash
+# 1. Add/edit markdown file in src/data/*.md
+# 2. Run converter
+node scripts/convert-md-to-ts.cjs
+# 3. TypeScript files auto-generated!
 ```
 
 ---
@@ -122,6 +177,16 @@ pnpm dev
   - Comprehensive commit message
   - Push to remote
   - Success confirmation
+
+### convert-md-to-ts.cjs
+
+- **Purpose**: Convert markdown questions to TypeScript
+- **Best for**: Adding new question sets (frameworks)
+- **Automated**:
+  - Parse markdown format
+  - Generate typed TypeScript
+  - Handle 100+ questions per file
+  - Proper escaping of special characters
 
 ---
 
@@ -170,6 +235,61 @@ When adding new scripts:
 
 ---
 
+## 🔧 Adding New Question Sets
+
+Want to add TypeScript, Vue, or other framework questions?
+
+1. **Create markdown file** in `src/data/`
+
+   ```bash
+   # Format: framework-100-questions.md
+   touch src/data/typescript-100-questions.md
+   ```
+
+2. **Follow this format:**
+
+   ````markdown
+   # Framework Name — 100 Mock Interview Questions
+
+   ---
+
+   ### 1) First question?
+
+   **Answer (senior-level):**
+
+   - Answer point 1
+   - Answer point 2
+
+   ### 2) Second question?
+
+   **Answer (senior-level):**
+
+   - Answer here
+
+   ```
+
+   ```
+   ````
+
+3. **Update converter script** (`convert-md-to-ts.cjs`):
+
+   ```javascript
+   const frameworks = [
+     { name: "angular", file: "angular-100-questions.md" },
+     { name: "typescript", file: "typescript-100-questions.md" }, // Add this
+   ];
+   ```
+
+4. **Run converter:**
+
+   ```bash
+   node scripts/convert-md-to-ts.cjs
+   ```
+
+5. **Update `src/data/index.ts`** to export new questions
+
+---
+
 ## 🔒 Security
 
 These scripts:
@@ -198,8 +318,25 @@ pnpm install
 # 4. Start development
 pnpm dev
 
-# 5. Make changes, test, commit, push
+# 5. Add new questions (optional)
+# Edit src/data/new-framework-100-questions.md
+node scripts/convert-md-to-ts.cjs
+
+# 6. Make changes, test, commit, push
 # (pre-push validation runs automatically!)
+```
+
+---
+
+## 📊 Script Statistics
+
+```
+Total Scripts:        4
+Shell Scripts:        3
+Node.js Scripts:      1
+Lines of Code:        ~250
+Questions Processed:  300+ (100 per framework)
+Time Saved:          Hours of manual typing!
 ```
 
 ---
