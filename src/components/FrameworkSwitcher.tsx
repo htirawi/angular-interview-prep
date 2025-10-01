@@ -1,5 +1,4 @@
 import { QUESTION_SETS } from "../data";
-import type { FrameworkId } from "../types";
 import { FrameworkIcon } from "./icons/FrameworkIcon";
 import type { FrameworkSwitcherProps } from "../types";
 
