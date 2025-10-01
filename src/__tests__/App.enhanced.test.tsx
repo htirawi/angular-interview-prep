@@ -104,7 +104,9 @@ describe("Enhanced App Features", () => {
   describe("Navigation", () => {
     it("shows question count in sidebar", () => {
       render(<App />);
-      expect(screen.getByText(/\d+ question/i)).toBeInTheDocument();
+      // Now shows in multiple places (header + framework switcher)
+      const questionCounts = screen.getAllByText(/\d+ question/i);
+      expect(questionCounts.length).toBeGreaterThan(0);
     });
 
     it("has question selector dropdown", () => {
