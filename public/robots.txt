@@ -1,5 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://angular-interview-prep.vercel.app/sitemap.xml
-

@@ -13,505 +13,586 @@ export interface QA {
 export const REDUX_QUESTIONS: QA[] = [
   {
     id: 1,
-    question: `Why Redux in modern apps? When is it overkill?`,
-    answer: `Predictable transitions & tooling; great for large teams and cross-cutting workflows.
-Overkill for localized UI state—prefer component state or light stores.`,
+    question: "Why use Redux in 2025 and when not to?",
+    answer:
+      "Use Redux for predictable global state, devtools, and cross-cutting workflows; skip it for local, view-only state where component or small store suffices.",
   },
   {
     id: 2,
-    question: `Redux Toolkit—what problems does it solve?`,
-    answer: `Reduces boilerplate; safe immutability via Immer; standard patterns for store setup and async flows.`,
+    question: "Core Redux principles?",
+    answer:
+      "Single store, read-only state, changes via pure reducers; enables time-travel and predictable transitions.",
   },
   {
     id: 3,
-    question: `Immer in reducers—how does it work?`,
-    answer: `Draft state proxies record mutations and produce immutable next state; reducers remain pure and testable.`,
+    question: "What problems does Redux Toolkit solve?",
+    answer:
+      "Boilerplate reduction, safer immutable updates with Immer, standard store setup, typed patterns.",
   },
   {
     id: 4,
-    question: `Selectors & memoization?`,
-    answer: `Derived data in one place; memo avoids recompute and re-renders; test selectors cheaply.`,
+    question: "configureStore advantages?",
+    answer:
+      "Applies good defaults: devtools, thunk, immutability/serializability checks, and typed dispatch/getState.",
   },
   {
     id: 5,
-    question: `RTK Query vs. thunks?`,
-    answer: `RTKQ for fetching/caching/invalidations; thunks for arbitrary side-effects and workflows.`,
+    question: "createSlice benefits?",
+    answer:
+      "Co-locates actions and reducers, auto-generates action creators and types, reduces boilerplate.",
   },
   {
     id: 6,
-    question: `Designing slice boundaries?`,
-    answer: `Group by domain; keep actions semantic; avoid tight coupling; normalize entities.`,
+    question: "When to split slices?",
+    answer:
+      "When domains are independent, ownership differs, or update frequencies differ; avoid giant monolith slices.",
   },
   {
     id: 7,
-    question: `Normalization & entity adapters?`,
-    answer: `Use \`createEntityAdapter\` for CRUD; selectors for lookup & memoization; IDs in UI state.`,
+    question: "How to model normalized entities?",
+    answer:
+      "Store by id in `entities` with `ids` array; avoid duplicating records in multiple places—reference by id.",
   },
   {
     id: 8,
-    question: `Middleware—top use cases?`,
-    answer: `Logging, analytics, feature flags, auth refresh, websocket bridges; keep deterministic.`,
+    question: "createEntityAdapter—why and how?",
+    answer:
+      "Provides CRUD reducers and memoized selectors; define `selectId` and `sortComparer` to standardize entity access.",
   },
   {
     id: 9,
-    question: `Performance with Redux?`,
-    answer: `Narrow \`useSelector\` scopes; stable references; memoized selectors; avoid massive root subscriptions.`,
+    question: "Selectors role and benefits?",
+    answer:
+      "Centralize derived data, memoize computations, reduce re-renders, and simplify components.",
   },
   {
     id: 10,
-    question: `Testing reducers, thunks, and middleware?`,
-    answer: `Reducers: pure snapshots; thunks/middleware: mocked store, fake timers/events, assert dispatched actions.`,
+    question: "Reselect memoization pitfalls?",
+    answer:
+      "Memoization breaks if inputs aren’t referentially stable; avoid inline objects and new arrays as selector inputs.",
   },
   {
     id: 11,
-    question: `Error handling strategy?`,
-    answer: `Represent error states in slices; map to user-facing messages; centralize retry/backoff policy.`,
+    question: "Selector factories—when?",
+    answer:
+      "When per-component props affect selection; create a new selector per instance to isolate memo caches.",
   },
   {
     id: 12,
-    question: `Code splitting & lazy reducers?`,
-    answer: `Inject reducers on route mount; eject on unmount if appropriate; keep store lean.`,
+    question: "Where to put derived UI state?",
+    answer:
+      "Prefer selectors for derivable data; only store non-derivable UI flags (e.g., modal open) in state.",
   },
   {
     id: 13,
-    question: `Persistence & migrations?`,
-    answer: `Persist selected slices; version schemas and write migrations; encrypt sensitive data.`,
+    question: "Thunk vs. RTK Query—choose which?",
+    answer:
+      "RTKQ for fetching/caching boilerplate-free data; thunks for workflows and side effects not tied to HTTP.",
   },
   {
     id: 14,
-    question: `WebSocket + Redux architecture?`,
-    answer: `Middleware translating socket events <-> actions; debounce bursts; handle reconnection.`,
+    question: "fetchBaseQuery customization?",
+    answer: "Add baseUrl, headers, auth token injection, and error handling; use `prepareHeaders`.",
   },
   {
     id: 15,
-    question: `RSC/Next.js integration?`,
-    answer: `Hydrate store from server payload; minimize client bundle by code-splitting slices and using RTKQ for data.`,
+    question: "RTKQ tags overview?",
+    answer:
+      "Use `providesTags` and `invalidatesTags` to relate queries and mutations for precise cache invalidation.",
   },
   {
     id: 16,
-    question: `Advanced Redux scenario #16: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Cache lifetime tuning in RTKQ?",
+    answer:
+      "`keepUnusedDataFor` controls how long unused cache entries persist before garbage collection.",
   },
   {
     id: 17,
-    question: `Advanced Redux scenario #17: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Optimistic updates pattern?",
+    answer:
+      "Update cache or slice before server response; rollback in `onQueryStarted` catch block if it fails.",
   },
   {
     id: 18,
-    question: `Advanced Redux scenario #18: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "serializeQueryArgs purpose?",
+    answer:
+      "Create stable cache keys for complex params to prevent redundant cache entries and refetch storms.",
   },
   {
     id: 19,
-    question: `Advanced Redux scenario #19: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Polling with RTKQ?",
+    answer:
+      "Use `pollingInterval` for periodic refresh or manual `refetch`; ensure dedupe to avoid overlapping requests.",
   },
   {
     id: 20,
-    question: `Advanced Redux scenario #20: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Streaming data with Redux?",
+    answer:
+      "Use middleware to connect WebSocket/SSE and dispatch actions on events; buffer and backoff reconnects.",
   },
   {
     id: 21,
-    question: `Advanced Redux scenario #21: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Handling auth refresh in RTKQ?",
+    answer:
+      "Intercept 401, perform single refresh flow, retry failed queries using a queue to avoid stampede.",
   },
   {
     id: 22,
-    question: `Advanced Redux scenario #22: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Where to keep tokens?",
+    answer:
+      "Avoid storing tokens in Redux if possible; prefer HttpOnly cookies; if stored, limit exposure and clear on logout.",
   },
   {
     id: 23,
-    question: `Advanced Redux scenario #23: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Serializability checks—why and when to disable?",
+    answer:
+      "Ensure time-travel and stability; disable for known non-serializable values (e.g., file blobs) near slice boundaries.",
   },
   {
     id: 24,
-    question: `Advanced Redux scenario #24: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Error handling strategy across app?",
+    answer:
+      "Normalize error shapes in slices, show user-friendly messages, and avoid raw server errors in state.",
   },
   {
     id: 25,
-    question: `Advanced Redux scenario #25: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Cross-slice communication?",
+    answer:
+      "Dispatch domain events other slices react to, or use selectors; avoid direct imports of other slices’ state.",
   },
   {
     id: 26,
-    question: `Advanced Redux scenario #26: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Listener middleware—use cases?",
+    answer:
+      "Centralize reactions to actions, orchestrate side effects, debounce/search, and analytics without scattering thunks.",
   },
   {
     id: 27,
-    question: `Advanced Redux scenario #27: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Middleware vs. enhancers?",
+    answer:
+      "Middleware wraps dispatch pipeline; enhancers wrap store creation (e.g., devtools, persistence).",
   },
   {
     id: 28,
-    question: `Advanced Redux scenario #28: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Designing action names?",
+    answer:
+      "Intent-based (`cart/itemAdded`) not transport-based; clearer logs and less churn when APIs change.",
   },
   {
     id: 29,
-    question: `Advanced Redux scenario #29: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Batching actions—benefits?",
+    answer:
+      "Reduces re-renders and middleware overhead; dispatch one composite action or use batching helpers.",
   },
   {
     id: 30,
-    question: `Advanced Redux scenario #30: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Avoiding store bloat?",
+    answer:
+      "Keep state minimal, normalized, and serializable; compute derived data in selectors, purge caches on logout.",
   },
   {
     id: 31,
-    question: `Advanced Redux scenario #31: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "SSR hydration with Redux?",
+    answer:
+      "Dehydrate store into HTML, hydrate on client, avoid duplicate client fetch by checking cached state.",
   },
   {
     id: 32,
-    question: `Advanced Redux scenario #32: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Persisting Redux state safely?",
+    answer:
+      "Persist non-sensitive slices, version schemas, migrate on load, and encrypt if needed.",
   },
   {
     id: 33,
-    question: `Advanced Redux scenario #33: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Migrations for persisted state?",
+    answer:
+      "Write versioned transforms for structural changes; handle removed fields and set defaults.",
   },
   {
     id: 34,
-    question: `Advanced Redux scenario #34: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Performance tuning useSelector?",
+    answer:
+      "Return primitives or memoized objects, use shallowEqual, and avoid passing new lambdas/objects.",
   },
   {
     id: 35,
-    question: `Advanced Redux scenario #35: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Equality function caveats?",
+    answer:
+      "Custom equality must be fast and correct; shallowEqual is usually enough for plain objects.",
   },
   {
     id: 36,
-    question: `Advanced Redux scenario #36: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Why single store is preferred?",
+    answer:
+      "Simplifies devtools/time-travel and global coordination; multiple stores complicate cross-feature flows.",
   },
   {
     id: 37,
-    question: `Advanced Redux scenario #37: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "When might multiple stores be justified?",
+    answer:
+      "Microfrontends isolation or embedded widgets; ensure clear boundaries and avoid cross-store coupling.",
   },
   {
     id: 38,
-    question: `Advanced Redux scenario #38: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Action payload design best practices?",
+    answer:
+      "Use minimal, normalized payloads with IDs and metadata; avoid large nested structures.",
   },
   {
     id: 39,
-    question: `Advanced Redux scenario #39: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Time-travel debugging tips?",
+    answer:
+      "Ensure serializable state, reduce noisy actions, and inspect diffs/selectors to spot unintended changes.",
   },
   {
     id: 40,
-    question: `Advanced Redux scenario #40: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Preventing accidental state mutation in reducers?",
+    answer:
+      "Immer in RTK prevents mutation; in classic reducers, copy and spread arrays/objects carefully.",
   },
   {
     id: 41,
-    question: `Advanced Redux scenario #41: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Testing reducers effectively?",
+    answer:
+      "Assert pure transitions: given prev state + action, expect next state; test edge cases and invariants.",
   },
   {
     id: 42,
-    question: `Advanced Redux scenario #42: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Testing thunks?",
+    answer:
+      "Mock APIs, assert dispatched action sequence, test success/error/cancel paths with fake timers.",
   },
   {
     id: 43,
-    question: `Advanced Redux scenario #43: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Testing selectors?",
+    answer:
+      "Construct test states and verify derived outputs; include memo cache behavior with identical inputs.",
   },
   {
     id: 44,
-    question: `Advanced Redux scenario #44: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Testing middleware/listeners?",
+    answer:
+      "Simulate dispatches and assert side effects and subsequent actions; avoid hitting real network.",
   },
   {
     id: 45,
-    question: `Advanced Redux scenario #45: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "EntityAdapter advanced usage?",
+    answer:
+      "Use `upsertMany`, custom `selectIds`, and `selectTotal` for efficient lists and counts.",
   },
   {
     id: 46,
-    question: `Advanced Redux scenario #46: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Paginated lists with EntityAdapter?",
+    answer:
+      "Keep `idsByPage` map and merge entities via adapter; never duplicate entities per page.",
   },
   {
     id: 47,
-    question: `Advanced Redux scenario #47: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Form state in Redux—when justified?",
+    answer:
+      "Complex multi-step flows or server-driven validation; otherwise prefer local or form libs.",
   },
   {
     id: 48,
-    question: `Advanced Redux scenario #48: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Undo/redo with Redux?",
+    answer:
+      "Keep history stacks of past/future states or actions; scope to slices to limit memory.",
   },
   {
     id: 49,
-    question: `Advanced Redux scenario #49: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Feature flags integration?",
+    answer:
+      "Middleware/selector gates to alter behavior; flags come from config slice or environment.",
   },
   {
     id: 50,
-    question: `Advanced Redux scenario #50: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Analytics with Redux?",
+    answer:
+      "Middleware logs action lifecycles; include correlation IDs for tracing requests across layers.",
   },
   {
     id: 51,
-    question: `Advanced Redux scenario #51: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Handling WebSocket bursts?",
+    answer:
+      "Throttle/debounce in middleware, coalesce actions, and limit store churn with derived selectors.",
   },
   {
     id: 52,
-    question: `Advanced Redux scenario #52: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Backpressure strategies?",
+    answer: "Drop or buffer low-priority events, batch updates, and announce rate limit to UI.",
   },
   {
     id: 53,
-    question: `Advanced Redux scenario #53: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Large tables performance with Redux?",
+    answer:
+      "Select only visible row IDs, virtualize UI, memoize row selectors, and avoid passing large arrays.",
   },
   {
     id: 54,
-    question: `Advanced Redux scenario #54: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Dealing with non-determinism in tests?",
+    answer: "Inject clocks/random seeds; mock Date/Math.random; keep reducers pure.",
   },
   {
     id: 55,
-    question: `Advanced Redux scenario #55: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Security considerations for state logs?",
+    answer: "Redact PII and tokens; avoid logging sensitive payloads; enforce log size limits.",
   },
   {
     id: 56,
-    question: `Advanced Redux scenario #56: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Clearing sensitive state on logout?",
+    answer: "Reset relevant slices and RTKQ caches; clear persisted storage and in-memory tokens.",
   },
   {
     id: 57,
-    question: `Advanced Redux scenario #57: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Cross-tab sync strategies?",
+    answer:
+      "BroadcastChannel/localStorage events to sync logout, theme, and cache invalidation across tabs.",
   },
   {
     id: 58,
-    question: `Advanced Redux scenario #58: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Refactoring legacy reducers to RTK?",
+    answer:
+      "Move cases into createSlice, introduce Immer updates, keep action types stable via createAction.",
   },
   {
     id: 59,
-    question: `Advanced Redux scenario #59: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Entity relationships modeling?",
+    answer:
+      "Store foreign keys and derive joins in selectors; avoid embedding nested objects across slices.",
   },
   {
     id: 60,
-    question: `Advanced Redux scenario #60: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Retry with exponential backoff?",
+    answer: "Implement in thunks or baseQuery; stop on 4xx; jitter to avoid thundering herd.",
   },
   {
     id: 61,
-    question: `Advanced Redux scenario #61: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Debounce search with listener middleware?",
+    answer:
+      "React to `queryChanged` with debounce, cancel pending fetch on new input, dispatch fetch when idle.",
   },
   {
     id: 62,
-    question: `Advanced Redux scenario #62: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Cancelable thunks?",
+    answer:
+      "Use AbortController from thunkAPI.signal; pass to fetch and check `signal.aborted` before updates.",
   },
   {
     id: 63,
-    question: `Advanced Redux scenario #63: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Deduplicating requests?",
+    answer:
+      "Keep an in-flight map in middleware or rely on RTKQ’s request dedupe; avoid duplicate thunks.",
   },
   {
     id: 64,
-    question: `Advanced Redux scenario #64: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Domain events vs. CRUD actions?",
+    answer:
+      "Domain events convey intent and decouple from transport; CRUD leaks HTTP concerns into UI.",
   },
   {
     id: 65,
-    question: `Advanced Redux scenario #65: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Error boundary slice?",
+    answer:
+      "Centralize user-visible errors; allow toasts/alerts to subscribe to this slice for consistent UX.",
   },
   {
     id: 66,
-    question: `Advanced Redux scenario #66: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "RTKQ transformResponse use cases?",
+    answer:
+      "Normalize responses, compute totals, or massage shapes before caching for consistent selectors.",
   },
   {
     id: 67,
-    question: `Advanced Redux scenario #67: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "RTKQ `selectFromResult` benefits?",
+    answer: "Pick minimal data from query state, lowering re-renders and improving performance.",
   },
   {
     id: 68,
-    question: `Advanced Redux scenario #68: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "RTKQ conditional queries?",
+    answer:
+      "Use `skip`/`skipToken` until prerequisites exist (e.g., userId), avoiding premature network calls.",
   },
   {
     id: 69,
-    question: `Advanced Redux scenario #69: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Schema evolution without breakage?",
+    answer:
+      "Keep backward-compatible fields, migrations for persisted clients, selectors tolerant to missing fields.",
   },
   {
     id: 70,
-    question: `Advanced Redux scenario #70: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Multi-tenant state design?",
+    answer:
+      "Namespace by tenant ID; clear tenant slices on switch; scope selectors/actions per tenant context.",
   },
   {
     id: 71,
-    question: `Advanced Redux scenario #71: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Optimizing dev vs. prod store config?",
+    answer:
+      "Enable checks and logs only in dev; disable in prod for performance; keep feature flags.",
   },
   {
     id: 72,
-    question: `Advanced Redux scenario #72: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Minimizing bundle size?",
+    answer:
+      "Code-split slices and heavy features; lazy-inject reducers; avoid shipping dev-only middleware.",
   },
   {
     id: 73,
-    question: `Advanced Redux scenario #73: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Using `prepare` callbacks in createSlice?",
+    answer:
+      "Format payloads, add metadata like correlation IDs, and validate inputs before reducer logic.",
   },
   {
     id: 74,
-    question: `Advanced Redux scenario #74: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Queueing optimistic tasks offline?",
+    answer: "Persist queued actions, replay when online, resolve conflicts on server responses.",
   },
   {
     id: 75,
-    question: `Advanced Redux scenario #75: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Monitoring selector performance?",
+    answer:
+      "Track recomputations with custom memoization logs or devtools plugins; optimize hotspots.",
   },
   {
     id: 76,
-    question: `Advanced Redux scenario #76: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Store size limits?",
+    answer:
+      "Evict stale data, paginate, and avoid storing giant blobs; derive instead of duplicating.",
   },
   {
     id: 77,
-    question: `Advanced Redux scenario #77: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Why avoid putting derived collections in state?",
+    answer: "They drift from source of truth and cause sync bugs; compute with selectors instead.",
   },
   {
     id: 78,
-    question: `Advanced Redux scenario #78: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Security for RTKQ file uploads?",
+    answer: "Whitelist types/sizes, sign URLs server-side, and avoid keeping blobs in Redux state.",
   },
   {
     id: 79,
-    question: `Advanced Redux scenario #79: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "GraphQL with Redux/RTKQ?",
+    answer:
+      "Use custom baseQuery for GraphQL or a separate client; still leverage tags for invalidation.",
   },
   {
     id: 80,
-    question: `Advanced Redux scenario #80: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "RTKQ + WebSockets integration?",
+    answer: "Use extraEndpoints or middleware to update cache entries from socket events.",
   },
   {
     id: 81,
-    question: `Advanced Redux scenario #81: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Local-first patterns with Redux?",
+    answer:
+      "Stage writes in slices, mark dirty, sync in background, reconcile on server acceptance.",
   },
   {
     id: 82,
-    question: `Advanced Redux scenario #82: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Avoiding hydration tearing issues?",
+    answer:
+      "Hydrate once, avoid mismatched defaults, and gate client-only slices until after mount.",
   },
   {
     id: 83,
-    question: `Advanced Redux scenario #83: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Action-driven navigation?",
+    answer:
+      "Dispatch high-level intent actions; handle navigation in middleware with router integration.",
   },
   {
     id: 84,
-    question: `Advanced Redux scenario #84: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Unit boundaries for slices?",
+    answer:
+      "Slices own domain state + reducers + selectors; side effects live in middleware/listeners.",
   },
   {
     id: 85,
-    question: `Advanced Redux scenario #85: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Detecting unknown actions in reducers?",
+    answer:
+      "Return previous state for unknown actions; never throw—other slices may dispatch unrelated actions.",
   },
   {
     id: 86,
-    question: `Advanced Redux scenario #86: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Preventing accidental deep copies in reducers?",
+    answer:
+      "Immer handles it; otherwise only copy the paths you change—avoid JSON.parse/stringify.",
   },
   {
     id: 87,
-    question: `Advanced Redux scenario #87: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Comparing Redux to Zustand/Jotai.",
+    answer:
+      "Redux excels at tooling, constraints, and ecosystem; others trade constraints for simplicity and size.",
   },
   {
     id: 88,
-    question: `Advanced Redux scenario #88: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Migrating from context-based state.",
+    answer:
+      "Start by moving hot/global state to Redux; keep local UI state in components; incrementally adopt RTKQ.",
   },
   {
     id: 89,
-    question: `Advanced Redux scenario #89: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "RTKQ endpoint design for pagination.",
+    answer: "Use cursor-based args, transformResponse to merge, and tags for precise invalidation.",
   },
   {
     id: 90,
-    question: `Advanced Redux scenario #90: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Handling 429/Rate limits.",
+    answer: "Dispatch backoff and display retry-after; slow down polling or queue writes.",
   },
   {
     id: 91,
-    question: `Advanced Redux scenario #91: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Preventing infinite retry loops.",
+    answer: "Stop on certain status codes, cap attempts, and require manual retry after limit.",
   },
   {
     id: 92,
-    question: `Advanced Redux scenario #92: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "A/B flags impacting caching.",
+    answer: "Include flag state in query args or tag derivation so caches separate by variant.",
   },
   {
     id: 93,
-    question: `Advanced Redux scenario #93: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Feature ownership and slice boundaries.",
+    answer:
+      "Each team owns slices and endpoints; contracts are selectors/actions, not internal state shape.",
   },
   {
     id: 94,
-    question: `Advanced Redux scenario #94: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "When to trigger global refetch on login.",
+    answer:
+      "After auth change, invalidate sensitive tags and clear caches to avoid leaking data across users.",
   },
   {
     id: 95,
-    question: `Advanced Redux scenario #95: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Store instrumentation for audits.",
+    answer:
+      "Record action timings, payload sizes, and reducer durations to detect hotspots/regressions.",
   },
   {
     id: 96,
-    question: `Advanced Redux scenario #96: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Avoiding action storms from UI.",
+    answer: "Throttle UI events in middleware, coalesce updates, and prefer final-state actions.",
   },
   {
     id: 97,
-    question: `Advanced Redux scenario #97: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Redux in microfrontends.",
+    answer:
+      "Namespace actions, avoid shared global store unless necessary, and use events for cross-app comms.",
   },
   {
     id: 98,
-    question: `Advanced Redux scenario #98: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Graceful feature rollback.",
+    answer:
+      "Guard with flags, maintain backward-compatible schema, and keep migrations reversible.",
   },
   {
     id: 99,
-    question: `Advanced Redux scenario #99: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Documenting slice contracts.",
+    answer: "Document selectors/actions/events; keep reducers private; expose stable APIs.",
   },
   {
     id: 100,
-    question: `Advanced Redux scenario #100: orchestration and performance in a large feature.`,
-    answer: `Define slices, RTKQ endpoints, invalidation, and middleware; demonstrate selector-driven rendering and code-splitting.`,
+    question: "Choosing between RTK createApi vs multiple APIs.",
+    answer:
+      "Use injectEndpoints for modularity; share baseQuery and tags while keeping domains isolated.",
   },
 ];
-
 export default REDUX_QUESTIONS;
