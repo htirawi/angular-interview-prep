@@ -1970,6 +1970,3542 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "hard",
     tags: ["di", "providers", "injection-tokens", "services"],
   },
+  {
+    id: 17,
+    question:
+      "What are Standalone Components (Angular 14+)? How do they differ from NgModule-based components?",
+    answer:
+      "Standalone components simplify Angular by eliminating the need for NgModules.\n\n" +
+      "**Traditional NgModule Approach:**\n\n" +
+      "```typescript\n" +
+      "// Component\n" +
+      "@Component({ selector: 'app-user', template: '...' })\n" +
+      "export class UserComponent {}\n\n" +
+      "// Must declare in NgModule\n" +
+      "@NgModule({\n" +
+      "  declarations: [UserComponent],\n" +
+      "  imports: [CommonModule, FormsModule],\n" +
+      "  exports: [UserComponent]\n" +
+      "})\n" +
+      "export class UserModule {}\n" +
+      "```\n\n" +
+      "**Standalone Approach:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-user',\n" +
+      "  standalone: true, // Key flag\n" +
+      "  imports: [CommonModule, FormsModule], // Direct imports\n" +
+      "  template: '...'\n" +
+      "})\n" +
+      "export class UserComponent {}\n\n" +
+      "// No NgModule needed!\n" +
+      "// Use directly in other components or routes\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "1. Less boilerplate (no NgModule ceremony)\n" +
+      "2. Clearer dependencies (imports in component)\n" +
+      "3. Better tree-shaking\n" +
+      "4. Simpler mental model\n" +
+      "5. Easier lazy loading\n\n" +
+      "**Migration Pattern:**\n\n" +
+      "```typescript\n" +
+      "// Standalone routes (Angular 15+)\n" +
+      "const routes: Routes = [\n" +
+      "  {\n" +
+      "    path: 'user',\n" +
+      "    loadComponent: () => import('./user.component').then(m => m.UserComponent)\n" +
+      "  }\n" +
+      "];\n\n" +
+      "// Standalone bootstrap (Angular 14+)\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideRouter(routes),\n" +
+      "    provideHttpClient()\n" +
+      "  ]\n" +
+      "});\n" +
+      "```",
+    category: "Architecture",
+    difficulty: "intermediate",
+    tags: ["standalone", "angular14+", "architecture", "modules"],
+  },
+  {
+    id: 18,
+    question: "Explain @ViewChild and @ContentChild. When do you use each?",
+    answer:
+      "**@ViewChild - Query Component's View:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    <input #nameInput />\n" +
+      "    <app-child #childComp></app-child>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class Parent implements AfterViewInit {\n" +
+      "  @ViewChild('nameInput') input: ElementRef;\n" +
+      "  @ViewChild('childComp') child: ChildComponent;\n" +
+      "  @ViewChild(ChildComponent) childByType: ChildComponent;\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    // Available here!\n" +
+      "    this.input.nativeElement.focus();\n" +
+      "    this.child.someMethod();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**@ContentChild - Query Projected Content:**\n\n" +
+      "```typescript\n" +
+      "// Child component\n" +
+      "@Component({\n" +
+      "  selector: 'app-card',\n" +
+      "  template: '<div><ng-content></ng-content></div>'\n" +
+      "})\n" +
+      "export class CardComponent implements AfterContentInit {\n" +
+      "  @ContentChild(HeaderComponent) header: HeaderComponent;\n\n" +
+      "  ngAfterContentInit() {\n" +
+      "    // Projected content available here\n" +
+      "    if (this.header) {\n" +
+      "      this.header.highlight();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Parent usage\n" +
+      "<app-card>\n" +
+      "  <app-header>Title</app-header>\n" +
+      "  <p>Content</p>\n" +
+      "</app-card>\n" +
+      "```\n\n" +
+      "**Key Difference:**\n" +
+      "- @ViewChild: Query component's own template\n" +
+      "- @ContentChild: Query content projected via ng-content",
+    category: "Component Queries",
+    difficulty: "intermediate",
+    tags: ["viewchild", "contentchild", "queries", "dom-access"],
+  },
+  {
+    id: 19,
+    question:
+      "What are Directives in Angular? Explain structural vs attribute directives with custom examples.",
+    answer:
+      "Directives are classes that add behavior to elements.\n\n" +
+      "**Three Types:**\n" +
+      "1. Components (directives with templates)\n" +
+      "2. Structural directives (change DOM structure)\n" +
+      "3. Attribute directives (change appearance/behavior)\n\n" +
+      "**Structural Directives:**\n\n" +
+      "```typescript\n" +
+      "// Built-in: *ngIf, *ngFor, *ngSwitch\n" +
+      '<div *ngIf="isVisible">Content</div>\n' +
+      '<div *ngFor="let item of items">{{ item }}</div>\n\n' +
+      "// Custom structural directive\n" +
+      "@Directive({\n" +
+      "  selector: '[appUnless]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class UnlessDirective {\n" +
+      "  constructor(\n" +
+      "    private templateRef: TemplateRef<any>,\n" +
+      "    private viewContainer: ViewContainerRef\n" +
+      "  ) {}\n\n" +
+      "  @Input() set appUnless(condition: boolean) {\n" +
+      "    if (!condition) {\n" +
+      "      this.viewContainer.createEmbeddedView(this.templateRef);\n" +
+      "    } else {\n" +
+      "      this.viewContainer.clear();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n\n" +
+      '// Usage: <div *appUnless="isHidden">Shown when isHidden is false</div>\n' +
+      "```\n\n" +
+      "**Attribute Directives:**\n\n" +
+      "```typescript\n" +
+      "// Built-in: ngClass, ngStyle, ngModel\n" +
+      '<div [ngClass]="{ active: isActive }"></div>\n\n' +
+      "// Custom attribute directive\n" +
+      "@Directive({\n" +
+      "  selector: '[appHighlight]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class HighlightDirective {\n" +
+      "  constructor(private el: ElementRef) {}\n\n" +
+      "  @Input() appHighlight = 'yellow';\n\n" +
+      "  @HostListener('mouseenter') onMouseEnter() {\n" +
+      "    this.highlight(this.appHighlight);\n" +
+      "  }\n\n" +
+      "  @HostListener('mouseleave') onMouseLeave() {\n" +
+      "    this.highlight('');\n" +
+      "  }\n\n" +
+      "  private highlight(color: string) {\n" +
+      "    this.el.nativeElement.style.backgroundColor = color;\n" +
+      "  }\n" +
+      "}\n\n" +
+      '// Usage: <div appHighlight="lightblue">Hover me</div>\n' +
+      "```",
+    category: "Directives",
+    difficulty: "intermediate",
+    tags: ["directives", "structural", "attribute", "dom"],
+  },
+  {
+    id: 20,
+    question: "How do you test Angular components and services? Explain TestBed and async testing.",
+    answer:
+      "**Testing a Component:**\n\n" +
+      "```typescript\n" +
+      "import { TestBed, ComponentFixture } from '@angular/core/testing';\n\n" +
+      "describe('UserComponent', () => {\n" +
+      "  let component: UserComponent;\n" +
+      "  let fixture: ComponentFixture<UserComponent>;\n\n" +
+      "  beforeEach(async () => {\n" +
+      "    await TestBed.configureTestingModule({\n" +
+      "      imports: [UserComponent] // Standalone\n" +
+      "    }).compileComponents();\n\n" +
+      "    fixture = TestBed.createComponent(UserComponent);\n" +
+      "    component = fixture.componentInstance;\n" +
+      "    fixture.detectChanges();\n" +
+      "  });\n\n" +
+      "  it('should create', () => {\n" +
+      "    expect(component).toBeTruthy();\n" +
+      "  });\n\n" +
+      "  it('should display user name', () => {\n" +
+      "    component.user = { name: 'John', email: 'john@example.com' };\n" +
+      "    fixture.detectChanges(); // Trigger change detection\n" +
+      "    \n" +
+      "    const compiled = fixture.nativeElement;\n" +
+      "    expect(compiled.querySelector('h1').textContent).toContain('John');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Testing Services:**\n\n" +
+      "```typescript\n" +
+      "import { TestBed } from '@angular/core/testing';\n" +
+      "import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';\n\n" +
+      "describe('UserService', () => {\n" +
+      "  let service: UserService;\n" +
+      "  let httpMock: HttpTestingController;\n\n" +
+      "  beforeEach(() => {\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      imports: [HttpClientTestingModule],\n" +
+      "      providers: [UserService]\n" +
+      "    });\n\n" +
+      "    service = TestBed.inject(UserService);\n" +
+      "    httpMock = TestBed.inject(HttpTestingController);\n" +
+      "  });\n\n" +
+      "  afterEach(() => {\n" +
+      "    httpMock.verify(); // No outstanding requests\n" +
+      "  });\n\n" +
+      "  it('should fetch users', () => {\n" +
+      "    const mockUsers = [{ id: 1, name: 'John' }];\n\n" +
+      "    service.getUsers().subscribe(users => {\n" +
+      "      expect(users).toEqual(mockUsers);\n" +
+      "    });\n\n" +
+      "    const req = httpMock.expectOne('/api/users');\n" +
+      "    expect(req.request.method).toBe('GET');\n" +
+      "    req.flush(mockUsers);\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Async Testing:**\n\n" +
+      "```typescript\n" +
+      "import { fakeAsync, tick, flush } from '@angular/core/testing';\n\n" +
+      "// fakeAsync - control time\n" +
+      "it('should debounce search', fakeAsync(() => {\n" +
+      "  component.search('test');\n" +
+      "  tick(299); // Just before debounce\n" +
+      "  expect(component.results).toEqual([]);\n" +
+      "  \n" +
+      "  tick(1); // After 300ms debounce\n" +
+      "  expect(component.results.length).toBeGreaterThan(0);\n" +
+      "}));\n\n" +
+      "// waitForAsync - handle async operations\n" +
+      "it('should load data', waitForAsync(() => {\n" +
+      "  component.ngOnInit();\n" +
+      "  fixture.whenStable().then(() => {\n" +
+      "    expect(component.data).toBeDefined();\n" +
+      "  });\n" +
+      "}));\n" +
+      "```",
+    category: "Testing",
+    difficulty: "hard",
+    tags: ["testing", "testbed", "jasmine", "async", "http-testing"],
+  },
+  {
+    id: 21,
+    question:
+      "Explain RxJS higher-order operators: switchMap, mergeMap, concatMap, exhaustMap. When to use each?",
+    answer:
+      "Higher-order operators handle observables that emit observables (flattening).\n\n" +
+      "**switchMap - Cancel Previous:**\n\n" +
+      "```typescript\n" +
+      "// Search - cancel old search when new query arrives\n" +
+      "searchControl.valueChanges.pipe(\n" +
+      "  debounceTime(300),\n" +
+      "  switchMap(query => this.searchService.search(query))\n" +
+      ").subscribe(results => this.results = results);\n\n" +
+      "// Query: 'ang' → starts search\n" +
+      "// Query: 'angu' → CANCELS 'ang' search, starts new\n" +
+      "// Query: 'angular' → CANCELS 'angu', starts new\n" +
+      "// Only last search completes\n" +
+      "```\n\n" +
+      "**mergeMap - Run All Concurrently:**\n\n" +
+      "```typescript\n" +
+      "// Process all items in parallel\n" +
+      "from([1, 2, 3]).pipe(\n" +
+      "  mergeMap(id => this.http.get(`/api/user/${id}`))\n" +
+      ").subscribe(user => console.log(user));\n\n" +
+      "// All 3 requests run simultaneously\n" +
+      "// Results arrive in completion order (not input order)\n" +
+      "```\n\n" +
+      "**concatMap - Run Sequentially:**\n\n" +
+      "```typescript\n" +
+      "// Process one at a time, in order\n" +
+      "from([1, 2, 3]).pipe(\n" +
+      "  concatMap(id => this.http.get(`/api/user/${id}`))\n" +
+      ").subscribe(user => console.log(user));\n\n" +
+      "// Waits for request 1 to complete before starting 2\n" +
+      "// Maintains order\n" +
+      "```\n\n" +
+      "**exhaustMap - Ignore New Until Current Completes:**\n\n" +
+      "```typescript\n" +
+      "// Save button - ignore clicks while saving\n" +
+      "saveButton.clicks$.pipe(\n" +
+      "  exhaustMap(() => this.http.post('/api/save', data))\n" +
+      ").subscribe();\n\n" +
+      "// Click 1 → starts save\n" +
+      "// Click 2 (while saving) → IGNORED\n" +
+      "// Click 3 (while saving) → IGNORED\n" +
+      "// After save completes, new clicks work\n" +
+      "```\n\n" +
+      "**Use Cases:**\n" +
+      "- switchMap: Search, autocomplete, typeahead\n" +
+      "- mergeMap: Parallel independent requests\n" +
+      "- concatMap: Sequential operations (upload queue)\n" +
+      "- exhaustMap: Prevent duplicate submissions",
+    category: "RxJS",
+    difficulty: "hard",
+    tags: ["rxjs", "operators", "switchmap", "mergemap", "concatmap", "exhaustmap"],
+  },
+  {
+    id: 22,
+    question: "How do you implement lazy loading in Angular? What are the benefits?",
+    answer:
+      "Lazy loading loads feature modules on-demand, reducing initial bundle size.\n\n" +
+      "**Lazy Loading with Standalone (Angular 14+):**\n\n" +
+      "```typescript\n" +
+      "const routes: Routes = [\n" +
+      "  {\n" +
+      "    path: 'admin',\n" +
+      "    loadComponent: () => import('./admin/admin.component')\n" +
+      "      .then(m => m.AdminComponent)\n" +
+      "  },\n" +
+      "  {\n" +
+      "    path: 'users',\n" +
+      "    loadChildren: () => import('./users/users.routes')\n" +
+      "      .then(m => m.USERS_ROUTES)\n" +
+      "  }\n" +
+      "];\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "1. Smaller initial bundle\n" +
+      "2. Faster initial load\n" +
+      "3. Load features on-demand\n" +
+      "4. Better code splitting\n\n" +
+      "**Preloading Strategy:**\n\n" +
+      "```typescript\n" +
+      "import { PreloadAllModules } from '@angular/router';\n\n" +
+      "provideRouter(routes, \n" +
+      "  withPreloading(PreloadAllModules) // Preload in background\n" +
+      ")\n" +
+      "```",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["lazy-loading", "performance", "routing", "code-splitting"],
+  },
+  {
+    id: 23,
+    question:
+      "What is Angular's inject() function (Angular 14+)? How does it compare to constructor injection?",
+    answer:
+      "**inject() Function - Modern DI:**\n\n" +
+      "```typescript\n" +
+      "import { inject } from '@angular/core';\n\n" +
+      "// Functional approach\n" +
+      "export const authGuard: CanActivateFn = (route, state) => {\n" +
+      "  const authService = inject(AuthService); // No constructor!\n" +
+      "  const router = inject(Router);\n\n" +
+      "  return authService.isAuthenticated() \n" +
+      "    ? true \n" +
+      "    : router.createUrlTree(['/login']);\n" +
+      "};\n\n" +
+      "// In components\n" +
+      "@Component({...})\n" +
+      "export class MyComponent {\n" +
+      "  private userService = inject(UserService);\n" +
+      "  private router = inject(Router);\n\n" +
+      "  // No constructor needed!\n" +
+      "}\n" +
+      "```\n\n" +
+      "**vs Constructor Injection:**\n\n" +
+      "```typescript\n" +
+      "// Traditional\n" +
+      "@Component({...})\n" +
+      "export class MyComponent {\n" +
+      "  constructor(\n" +
+      "    private userService: UserService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits of inject():**\n" +
+      "1. Use in functional guards/interceptors\n" +
+      "2. Conditional injection\n" +
+      "3. Cleaner code\n" +
+      "4. Works outside constructors",
+    category: "Dependency Injection",
+    difficulty: "intermediate",
+    tags: ["inject", "di", "angular14+", "functional"],
+  },
+  {
+    id: 24,
+    question:
+      "What is Zone.js and how does it enable automatic change detection? What is Zoneless Angular?",
+    answer:
+      "**Zone.js:**\n" +
+      "Library that patches browser async APIs to notify Angular of changes.\n\n" +
+      "**What it Patches:**\n" +
+      "```typescript\n" +
+      "// Zone.js intercepts:\n" +
+      "- setTimeout/setInterval\n" +
+      "- Promise.then\n" +
+      "- addEventListener\n" +
+      "- XMLHttpRequest/fetch\n" +
+      "- requestAnimationFrame\n" +
+      "```\n\n" +
+      "**How it Works:**\n" +
+      "```typescript\n" +
+      "// When async completes, Zone.js notifies Angular\n" +
+      "button.addEventListener('click', () => {\n" +
+      "  this.count++; // Zone detects this\n" +
+      "  // Zone triggers change detection automatically\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Zoneless Angular (Angular 18+):**\n\n" +
+      "```typescript\n" +
+      "// Bootstrap without Zone.js\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideExperimentalZonelessChangeDetection()\n" +
+      "  ]\n" +
+      "});\n\n" +
+      "// Use Signals for reactivity\n" +
+      "@Component({...})\n" +
+      "export class MyComponent {\n" +
+      "  count = signal(0);\n\n" +
+      "  increment() {\n" +
+      "    this.count.update(c => c + 1); // Auto-updates view\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits of Zoneless:**\n" +
+      "- Better performance (no patching overhead)\n" +
+      "- Smaller bundle (no Zone.js)\n" +
+      "- More predictable\n" +
+      "- Explicit reactivity with Signals",
+    category: "Core Concepts",
+    difficulty: "hard",
+    tags: ["zonejs", "change-detection", "zoneless", "signals", "performance"],
+  },
+  {
+    id: 25,
+    question: "What is Content Projection (ng-content)? Explain single and multi-slot projection.",
+    answer:
+      "Content projection allows components to accept and display external content.\n\n" +
+      "**Single Slot:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-card',\n" +
+      "  template: `\n" +
+      '    <div class="card">\n' +
+      "      <ng-content></ng-content>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class CardComponent {}\n\n" +
+      "// Usage\n" +
+      "<app-card>\n" +
+      "  <h1>Title</h1>\n" +
+      "  <p>Content here</p>\n" +
+      "</app-card>\n" +
+      "```\n\n" +
+      "**Multi-Slot (select attribute):**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-card',\n" +
+      "  template: `\n" +
+      '    <div class="card">\n' +
+      '      <div class="header">\n' +
+      '        <ng-content select="[card-header]"></ng-content>\n' +
+      "      </div>\n" +
+      '      <div class="body">\n' +
+      '        <ng-content select="[card-body]"></ng-content>\n' +
+      "      </div>\n" +
+      '      <div class="footer">\n' +
+      '        <ng-content select="[card-footer]"></ng-content>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class CardComponent {}\n\n" +
+      "// Usage\n" +
+      "<app-card>\n" +
+      "  <div card-header>Header Content</div>\n" +
+      "  <div card-body>Body Content</div>\n" +
+      "  <div card-footer>Footer Content</div>\n" +
+      "</app-card>\n" +
+      "```\n\n" +
+      "**Use Cases:**\n" +
+      "- Reusable layout components\n" +
+      "- Custom dialogs\n" +
+      "- Tab panels\n" +
+      "- Accordion items",
+    category: "Component Patterns",
+    difficulty: "intermediate",
+    tags: ["content-projection", "ng-content", "slots", "composition"],
+  },
+  {
+    id: 26,
+    question: "How do you optimize Angular application performance? List key strategies.",
+    answer:
+      "**Key Optimization Strategies:**\n\n" +
+      "**1. OnPush Change Detection:**\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  changeDetection: ChangeDetectionStrategy.OnPush\n" +
+      "})\n" +
+      "```\n\n" +
+      "**2. TrackBy Functions:**\n" +
+      "```typescript\n" +
+      '<div *ngFor="let item of items; trackBy: trackById">\n' +
+      "trackById(index: number, item: Item) {\n" +
+      "  return item.id;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Lazy Loading Modules:**\n" +
+      "```typescript\n" +
+      "loadChildren: () => import('./feature/feature.routes')\n" +
+      "```\n\n" +
+      "**4. Pure Pipes:**\n" +
+      "```typescript\n" +
+      "@Pipe({ name: 'filter', pure: true })\n" +
+      "```\n\n" +
+      "**5. Async Pipe (No Manual Subscriptions):**\n" +
+      "```typescript\n" +
+      "users$ = this.userService.getUsers();\n" +
+      "// Template: {{ users$ | async }}\n" +
+      "```\n\n" +
+      "**6. Virtual Scrolling:**\n" +
+      "```typescript\n" +
+      "import { ScrollingModule } from '@angular/cdk/scrolling';\n\n" +
+      '<cdk-virtual-scroll-viewport itemSize="50" class="viewport">\n' +
+      '  <div *cdkVirtualFor="let item of items" class="item">\n' +
+      "    {{ item.name }}\n" +
+      "  </div>\n" +
+      "</cdk-virtual-scroll-viewport>\n" +
+      "```\n\n" +
+      "**7. Detach Change Detection:**\n" +
+      "```typescript\n" +
+      "constructor(private cdr: ChangeDetectorRef) {}\n\n" +
+      "ngOnInit() {\n" +
+      "  this.cdr.detach();\n" +
+      "  // Manually trigger when needed\n" +
+      "  this.cdr.detectChanges();\n" +
+      "}\n" +
+      "```\n\n" +
+      "**8. Run Outside Zone:**\n" +
+      "```typescript\n" +
+      "this.ngZone.runOutsideAngular(() => {\n" +
+      "  // Heavy computation\n" +
+      "});\n" +
+      "```\n\n" +
+      "**9. Preload Strategy:**\n" +
+      "```typescript\n" +
+      "provideRouter(routes, withPreloading(PreloadAllModules))\n" +
+      "```\n\n" +
+      "**10. Build Optimization:**\n" +
+      "```bash\n" +
+      "ng build --configuration production\n" +
+      "# Enables: AOT, tree-shaking, minification, bundling\n" +
+      "```",
+    category: "Performance",
+    difficulty: "hard",
+    tags: ["performance", "optimization", "best-practices", "bundle-size"],
+  },
+  {
+    id: 27,
+    question: "What are Custom Validators in Angular? Implement sync and async validators.",
+    answer:
+      "**Synchronous Validator:**\n\n" +
+      "```typescript\n" +
+      "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n\n" +
+      "export function passwordStrength(): ValidatorFn {\n" +
+      "  return (control: AbstractControl): ValidationErrors | null => {\n" +
+      "    const value = control.value;\n" +
+      "    if (!value) return null;\n\n" +
+      "    const hasNumber = /[0-9]/.test(value);\n" +
+      "    const hasUpper = /[A-Z]/.test(value);\n" +
+      "    const hasLower = /[a-z]/.test(value);\n" +
+      "    const hasSpecial = /[!@#$%^&*]/.test(value);\n\n" +
+      "    const valid = hasNumber && hasUpper && hasLower && hasSpecial;\n" +
+      "    return valid ? null : { \n" +
+      "      passwordStrength: {\n" +
+      "        hasNumber,\n" +
+      "        hasUpper,\n" +
+      "        hasLower,\n" +
+      "        hasSpecial\n" +
+      "      }\n" +
+      "    };\n" +
+      "  };\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "this.form = this.fb.group({\n" +
+      "  password: ['', [Validators.required, passwordStrength()]]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Async Validator (Check Email Uniqueness):**\n\n" +
+      "```typescript\n" +
+      "import { AsyncValidatorFn } from '@angular/forms';\n" +
+      "import { map, catchError, debounceTime, take } from 'rxjs/operators';\n\n" +
+      "export function emailExistsValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n\n" +
+      "    return userService.checkEmailExists(control.value).pipe(\n" +
+      "      debounceTime(300), // Wait for user to stop typing\n" +
+      "      take(1),\n" +
+      "      map(exists => exists ? { emailExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "this.form = this.fb.group({\n" +
+      "  email: [\n" +
+      "    '',\n" +
+      "    [Validators.required, Validators.email], // Sync\n" +
+      "    [emailExistsValidator(this.userService)] // Async\n" +
+      "  ]\n" +
+      "});\n\n" +
+      "// Check status\n" +
+      "if (this.form.get('email').pending) {\n" +
+      "  // Async validation in progress\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Cross-Field Validator:**\n\n" +
+      "```typescript\n" +
+      "export const passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {\n" +
+      "  const password = group.get('password');\n" +
+      "  const confirm = group.get('confirmPassword');\n\n" +
+      "  return password && confirm && password.value === confirm.value \n" +
+      "    ? null \n" +
+      "    : { passwordMismatch: true };\n" +
+      "};\n\n" +
+      "// Apply to FormGroup\n" +
+      "this.form = this.fb.group({\n" +
+      "  password: [''],\n" +
+      "  confirmPassword: ['']\n" +
+      "}, { validators: [passwordMatchValidator] });\n" +
+      "```",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["validation", "forms", "async-validators", "custom-validators"],
+  },
+  {
+    id: 28,
+    question: "How do you handle errors in Angular applications? Implement global error handling.",
+    answer:
+      "**Global Error Handler:**\n\n" +
+      "```typescript\n" +
+      "import { ErrorHandler, Injectable, Injector } from '@angular/core';\n\n" +
+      "@Injectable()\n" +
+      "export class GlobalErrorHandler implements ErrorHandler {\n" +
+      "  constructor(private injector: Injector) {}\n\n" +
+      "  handleError(error: Error | HttpErrorResponse) {\n" +
+      "    const notificationService = this.injector.get(NotificationService);\n\n" +
+      "    if (error instanceof HttpErrorResponse) {\n" +
+      "      // Server error\n" +
+      "      console.error('Server error:', error);\n" +
+      "      notificationService.showError(`Server error: ${error.message}`);\n" +
+      "    } else {\n" +
+      "      // Client error\n" +
+      "      console.error('Client error:', error);\n" +
+      "      notificationService.showError(`Error: ${error.message}`);\n" +
+      "    }\n\n" +
+      "    // Log to monitoring service\n" +
+      "    this.logError(error);\n" +
+      "  }\n\n" +
+      "  private logError(error: any) {\n" +
+      "    // Send to Sentry, LogRocket, etc.\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Register\n" +
+      "providers: [\n" +
+      "  { provide: ErrorHandler, useClass: GlobalErrorHandler }\n" +
+      "]\n" +
+      "```\n\n" +
+      "**HTTP Error Interceptor:**\n\n" +
+      "```typescript\n" +
+      "export const errorInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  return next(req).pipe(\n" +
+      "    retry(2),\n" +
+      "    catchError((error: HttpErrorResponse) => {\n" +
+      "      if (error.status === 401) {\n" +
+      "        inject(Router).navigate(['/login']);\n" +
+      "      }\n" +
+      "      return throwError(() => error);\n" +
+      "    })\n" +
+      "  );\n" +
+      "};\n" +
+      "```",
+    category: "Error Handling",
+    difficulty: "intermediate",
+    tags: ["error-handling", "global-error-handler", "http-errors"],
+  },
+  {
+    id: 29,
+    question: "What is AOT compilation? How does it differ from JIT and what are the benefits?",
+    answer:
+      "**AOT (Ahead-of-Time) Compilation:**\n" +
+      "Templates compiled during build, before browser downloads code.\n\n" +
+      "**JIT (Just-in-Time) Compilation:**\n" +
+      "Templates compiled in browser at runtime.\n\n" +
+      "**Comparison:**\n\n" +
+      "| Feature | AOT | JIT |\n" +
+      "|---------|-----|-----|\n" +
+      "| Compilation | Build time | Runtime |\n" +
+      "| Bundle size | Smaller | Larger (includes compiler) |\n" +
+      "| Load time | Faster | Slower |\n" +
+      "| Template errors | Build time | Runtime |\n" +
+      "| Production | Yes | No |\n" +
+      "| Development | Slower builds | Faster builds |\n\n" +
+      "**AOT Benefits:**\n\n" +
+      "1. **Faster Rendering:** Pre-compiled templates\n" +
+      "2. **Smaller Bundles:** No compiler in bundle\n" +
+      "3. **Earlier Error Detection:** Template errors at build\n" +
+      "4. **Better Security:** No eval() or new Function()\n" +
+      "5. **Tree-Shaking:** Unused code removed\n\n" +
+      "**Angular CLI:**\n\n" +
+      "```bash\n" +
+      "# Development (JIT by default)\n" +
+      "ng serve\n\n" +
+      "# Production (AOT by default)\n" +
+      "ng build --configuration production\n" +
+      "```",
+    category: "Build & Compilation",
+    difficulty: "intermediate",
+    tags: ["aot", "jit", "compilation", "performance", "build"],
+  },
+  {
+    id: 30,
+    question: "What are Angular Animations? Provide basic and advanced examples.",
+    answer:
+      "**Basic Animation:**\n\n" +
+      "```typescript\n" +
+      "import { trigger, state, style, transition, animate } from '@angular/animations';\n\n" +
+      "@Component({\n" +
+      "  animations: [\n" +
+      "    trigger('openClose', [\n" +
+      "      state('open', style({\n" +
+      "        height: '200px',\n" +
+      "        opacity: 1\n" +
+      "      })),\n" +
+      "      state('closed', style({\n" +
+      "        height: '100px',\n" +
+      "        opacity: 0.5\n" +
+      "      })),\n" +
+      "      transition('open <=> closed', [\n" +
+      "        animate('0.3s ease-in-out')\n" +
+      "      ])\n" +
+      "    ])\n" +
+      "  ]\n" +
+      "})\n" +
+      "export class AnimatedComponent {\n" +
+      "  isOpen = true;\n" +
+      "}\n\n" +
+      "// Template\n" +
+      "<div [@openClose]=\"isOpen ? 'open' : 'closed'\">Content</div>\n" +
+      '<button (click)="isOpen = !isOpen">Toggle</button>\n' +
+      "```\n\n" +
+      "**Enter/Leave Animations:**\n\n" +
+      "```typescript\n" +
+      "trigger('fadeIn', [\n" +
+      "  transition(':enter', [\n" +
+      "    style({ opacity: 0 }),\n" +
+      "    animate('300ms', style({ opacity: 1 }))\n" +
+      "  ]),\n" +
+      "  transition(':leave', [\n" +
+      "    animate('300ms', style({ opacity: 0 }))\n" +
+      "  ])\n" +
+      "])\n\n" +
+      "// Template\n" +
+      '<div *ngIf="isVisible" @fadeIn>Fades in/out</div>\n' +
+      "```\n\n" +
+      "**List Animations:**\n\n" +
+      "```typescript\n" +
+      "import { query, stagger } from '@angular/animations';\n\n" +
+      "trigger('listAnimation', [\n" +
+      "  transition('* => *', [\n" +
+      "    query(':enter', [\n" +
+      "      style({ opacity: 0, transform: 'translateY(-10px)' }),\n" +
+      "      stagger(100, [\n" +
+      "        animate('300ms', style({ opacity: 1, transform: 'translateY(0)' }))\n" +
+      "      ])\n" +
+      "    ], { optional: true })\n" +
+      "  ])\n" +
+      "])\n\n" +
+      '<div *ngFor="let item of items" @listAnimation>{{ item }}</div>\n' +
+      "```",
+    category: "Animations",
+    difficulty: "intermediate",
+    tags: ["animations", "transitions", "ui", "user-experience"],
+  },
+  {
+    id: 31,
+    question:
+      "Explain Dynamic Component Loading in Angular. How do you create and destroy components programmatically?",
+    answer:
+      "Dynamic components are created programmatically at runtime, not declared in templates.\n\n" +
+      "**Dynamic Component Loading:**\n\n" +
+      "```typescript\n" +
+      "import { Component, ViewChild, ViewContainerRef, ComponentRef } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-container',\n" +
+      "  template: '<ng-container #dynamicContainer></ng-container>'\n" +
+      "})\n" +
+      "export class ContainerComponent {\n" +
+      "  @ViewChild('dynamicContainer', { read: ViewContainerRef }) \n" +
+      "  container: ViewContainerRef;\n\n" +
+      "  private componentRef: ComponentRef<any>;\n\n" +
+      "  loadComponent() {\n" +
+      "    // Clear existing\n" +
+      "    this.container.clear();\n\n" +
+      "    // Create component\n" +
+      "    this.componentRef = this.container.createComponent(DynamicComponent);\n\n" +
+      "    // Set inputs\n" +
+      "    this.componentRef.instance.data = { title: 'Dynamic' };\n\n" +
+      "    // Subscribe to outputs\n" +
+      "    this.componentRef.instance.action.subscribe(event => {\n" +
+      "      console.log('Event from dynamic component:', event);\n" +
+      "    });\n\n" +
+      "    // Trigger change detection\n" +
+      "    this.componentRef.changeDetectorRef.detectChanges();\n" +
+      "  }\n\n" +
+      "  destroyComponent() {\n" +
+      "    if (this.componentRef) {\n" +
+      "      this.componentRef.destroy();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Use Cases:**\n" +
+      "- Modal dialogs\n" +
+      "- Toast notifications\n" +
+      "- Dynamic forms\n" +
+      "- Plugin architecture\n" +
+      "- Dashboard widgets\n\n" +
+      "**Modal Service Example:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class ModalService {\n" +
+      "  constructor(\n" +
+      "    private appRef: ApplicationRef,\n" +
+      "    private injector: Injector\n" +
+      "  ) {}\n\n" +
+      "  open(component: Type<any>, data?: any): ComponentRef<any> {\n" +
+      "    // Create component\n" +
+      "    const componentRef = createComponent(component, {\n" +
+      "      environmentInjector: this.appRef.injector\n" +
+      "    });\n\n" +
+      "    // Set data\n" +
+      "    if (data) {\n" +
+      "      Object.assign(componentRef.instance, data);\n" +
+      "    }\n\n" +
+      "    // Attach to DOM\n" +
+      "    this.appRef.attachView(componentRef.hostView);\n" +
+      "    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0];\n" +
+      "    document.body.appendChild(domElem);\n\n" +
+      "    return componentRef;\n" +
+      "  }\n\n" +
+      "  close(componentRef: ComponentRef<any>) {\n" +
+      "    this.appRef.detachView(componentRef.hostView);\n" +
+      "    componentRef.destroy();\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "const modalRef = this.modalService.open(ConfirmDialogComponent, {\n" +
+      "  message: 'Are you sure?'\n" +
+      "});\n\n" +
+      "modalRef.instance.confirmed.subscribe(() => {\n" +
+      "  console.log('Confirmed!');\n" +
+      "  this.modalService.close(modalRef);\n" +
+      "});\n" +
+      "```",
+    category: "Advanced Patterns",
+    difficulty: "hard",
+    tags: ["dynamic-components", "viewcontainerref", "componentref", "advanced"],
+  },
+  {
+    id: 32,
+    question:
+      "What is ViewEncapsulation in Angular? Explain Emulated, ShadowDom, and None strategies.",
+    answer:
+      "ViewEncapsulation controls how component styles are scoped and applied.\n\n" +
+      "**Three Strategies:**\n\n" +
+      "**1. Emulated (Default):**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-user',\n" +
+      "  styles: [`\n" +
+      "    h1 { color: blue; }\n" +
+      "  `],\n" +
+      "  encapsulation: ViewEncapsulation.Emulated // Default\n" +
+      "})\n" +
+      "export class UserComponent {}\n\n" +
+      "// Angular adds unique attributes:\n" +
+      "// <h1 _ngcontent-abc-123>Title</h1>\n" +
+      "// h1[_ngcontent-abc-123] { color: blue; }\n" +
+      "// Styles scoped to component only\n" +
+      "```\n\n" +
+      "**2. ShadowDom (Native):**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  encapsulation: ViewEncapsulation.ShadowDom\n" +
+      "})\n" +
+      "// Uses native Shadow DOM\n" +
+      "// True style isolation\n" +
+      "// Doesn't work in older browsers\n" +
+      "```\n\n" +
+      "**3. None (Global):**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  encapsulation: ViewEncapsulation.None\n" +
+      "})\n" +
+      "// Styles applied globally\n" +
+      "// Can affect other components\n" +
+      "// Use for theme overrides\n" +
+      "```\n\n" +
+      "**When to Use Each:**\n" +
+      "- Emulated: Default, best for most cases\n" +
+      "- ShadowDom: True isolation, web components\n" +
+      "- None: Global styles, third-party lib overrides",
+    category: "Styling",
+    difficulty: "intermediate",
+    tags: ["view-encapsulation", "styles", "shadow-dom", "css"],
+  },
+  {
+    id: 33,
+    question: "What are Template Reference Variables in Angular? How do you use them?",
+    answer:
+      "Template reference variables (#var) reference DOM elements or components in templates.\n\n" +
+      "**Basic Usage:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    <!-- Reference input element -->\n" +
+      '    <input #nameInput type="text" />\n' +
+      '    <button (click)="nameInput.focus()">Focus Input</button>\n' +
+      "    <p>Value: {{ nameInput.value }}</p>\n\n" +
+      "    <!-- Reference form -->\n" +
+      '    <form #myForm="ngForm">\n' +
+      '      <input name="email" ngModel required />\n' +
+      '      <button [disabled]="myForm.invalid">Submit</button>\n' +
+      "      <p>Valid: {{ myForm.valid }}</p>\n" +
+      "    </form>\n\n" +
+      "    <!-- Reference component -->\n" +
+      "    <app-child #childComp></app-child>\n" +
+      '    <button (click)="childComp.doSomething()">Call Child Method</button>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class TemplateRefComponent {}\n" +
+      "```\n\n" +
+      "**Access in Component Class:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: '<input #myInput />'\n" +
+      "})\n" +
+      "export class Component implements AfterViewInit {\n" +
+      "  @ViewChild('myInput') input: ElementRef;\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    this.input.nativeElement.focus();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Common Patterns:**\n\n" +
+      "```typescript\n" +
+      "// Pass to child component\n" +
+      "<input #searchInput />\n" +
+      '<app-search-results [input]="searchInput"></app-search-results>\n\n' +
+      "// Call methods\n" +
+      '<video #videoPlayer src="movie.mp4"></video>\n' +
+      '<button (click)="videoPlayer.play()">Play</button>\n' +
+      '<button (click)="videoPlayer.pause()">Pause</button>\n\n' +
+      "// Check state\n" +
+      '<form #f="ngForm">\n' +
+      '  <div *ngIf="f.submitted && f.invalid">\n' +
+      "    Please fix errors\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```",
+    category: "Templates",
+    difficulty: "easy",
+    tags: ["template-reference", "dom-access", "templates"],
+  },
+  {
+    id: 34,
+    question:
+      "What is Renderer2 in Angular? Why should you use it instead of direct DOM manipulation?",
+    answer:
+      "Renderer2 is Angular's abstraction for safe, platform-agnostic DOM manipulation.\n\n" +
+      "**Why Not Direct DOM Manipulation:**\n\n" +
+      "```typescript\n" +
+      "// ❌ BAD - Direct DOM access\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  @ViewChild('div') div: ElementRef;\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    // Breaks SSR, Web Workers, doesn't work in all platforms\n" +
+      "    this.div.nativeElement.style.color = 'red';\n" +
+      "    this.div.nativeElement.addEventListener('click', this.onClick);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**✅ Good - Use Renderer2:**\n\n" +
+      "```typescript\n" +
+      "import { Renderer2 } from '@angular/core';\n\n" +
+      "@Component({...})\n" +
+      "export class Component implements AfterViewInit, OnDestroy {\n" +
+      "  @ViewChild('div') div: ElementRef;\n" +
+      "  private listeners: (() => void)[] = [];\n\n" +
+      "  constructor(private renderer: Renderer2) {}\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    const el = this.div.nativeElement;\n\n" +
+      "    // Set styles\n" +
+      "    this.renderer.setStyle(el, 'color', 'red');\n" +
+      "    this.renderer.setStyle(el, 'font-size', '20px');\n\n" +
+      "    // Add/remove classes\n" +
+      "    this.renderer.addClass(el, 'active');\n" +
+      "    this.renderer.removeClass(el, 'inactive');\n\n" +
+      "    // Set attributes\n" +
+      "    this.renderer.setAttribute(el, 'data-id', '123');\n" +
+      "    this.renderer.removeAttribute(el, 'disabled');\n\n" +
+      "    // Create elements\n" +
+      "    const span = this.renderer.createElement('span');\n" +
+      "    const text = this.renderer.createText('Hello');\n" +
+      "    this.renderer.appendChild(span, text);\n" +
+      "    this.renderer.appendChild(el, span);\n\n" +
+      "    // Event listeners (returns cleanup function)\n" +
+      "    const unlisten = this.renderer.listen(el, 'click', (event) => {\n" +
+      "      console.log('Clicked!', event);\n" +
+      "    });\n" +
+      "    this.listeners.push(unlisten);\n\n" +
+      "    // Set properties\n" +
+      "    this.renderer.setProperty(el, 'innerHTML', '<strong>Bold</strong>');\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    // Clean up listeners\n" +
+      "    this.listeners.forEach(unlisten => unlisten());\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "1. Platform-agnostic (works in SSR, Web Workers)\n" +
+      "2. Safer (prevents XSS when used correctly)\n" +
+      "3. Testable\n" +
+      "4. Future-proof\n\n" +
+      "**Custom Directive with Renderer2:**\n\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[appTooltip]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class TooltipDirective implements OnInit, OnDestroy {\n" +
+      "  @Input() appTooltip: string;\n" +
+      "  private tooltipElement: HTMLElement;\n\n" +
+      "  constructor(\n" +
+      "    private el: ElementRef,\n" +
+      "    private renderer: Renderer2\n" +
+      "  ) {}\n\n" +
+      "  @HostListener('mouseenter') onMouseEnter() {\n" +
+      "    this.show();\n" +
+      "  }\n\n" +
+      "  @HostListener('mouseleave') onMouseLeave() {\n" +
+      "    this.hide();\n" +
+      "  }\n\n" +
+      "  private show() {\n" +
+      "    this.tooltipElement = this.renderer.createElement('div');\n" +
+      "    const text = this.renderer.createText(this.appTooltip);\n" +
+      "    \n" +
+      "    this.renderer.appendChild(this.tooltipElement, text);\n" +
+      "    this.renderer.addClass(this.tooltipElement, 'tooltip');\n" +
+      "    this.renderer.setStyle(this.tooltipElement, 'position', 'absolute');\n" +
+      "    \n" +
+      "    this.renderer.appendChild(document.body, this.tooltipElement);\n" +
+      "  }\n\n" +
+      "  private hide() {\n" +
+      "    if (this.tooltipElement) {\n" +
+      "      this.renderer.removeChild(document.body, this.tooltipElement);\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.hide();\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "DOM Manipulation",
+    difficulty: "hard",
+    tags: ["renderer2", "dom", "ssr", "directives", "safe-dom"],
+  },
+  {
+    id: 35,
+    question:
+      "What is FormArray in Angular? How do you implement dynamic forms with add/remove functionality?",
+    answer:
+      "FormArray manages a dynamic array of form controls, useful for dynamic forms.\n\n" +
+      "**Dynamic Form with FormArray:**\n\n" +
+      "```typescript\n" +
+      "import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';\n\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="form" (ngSubmit)="onSubmit()">\n' +
+      '      <div formArrayName="skills">\n' +
+      '        <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i">\n' +
+      '          <input formControlName="name" placeholder="Skill name" />\n' +
+      '          <select formControlName="level">\n' +
+      '            <option value="beginner">Beginner</option>\n' +
+      '            <option value="intermediate">Intermediate</option>\n' +
+      '            <option value="expert">Expert</option>\n' +
+      "          </select>\n" +
+      '          <input formControlName="years" type="number" placeholder="Years" />\n' +
+      '          <button type="button" (click)="removeSkill(i)">Remove</button>\n' +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <button type="button" (click)="addSkill()">Add Skill</button>\n' +
+      '      <button type="submit" [disabled]="form.invalid">Submit</button>\n' +
+      "    </form>\n" +
+      "    \n" +
+      "    <pre>{{ form.value | json }}</pre>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DynamicFormComponent {\n" +
+      "  form: FormGroup;\n\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.form = this.fb.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      skills: this.fb.array([]) // Empty array initially\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  get skills(): FormArray {\n" +
+      "    return this.form.get('skills') as FormArray;\n" +
+      "  }\n\n" +
+      "  createSkillForm(): FormGroup {\n" +
+      "    return this.fb.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      level: ['beginner'],\n" +
+      "      years: [0, [Validators.required, Validators.min(0)]]\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  addSkill() {\n" +
+      "    this.skills.push(this.createSkillForm());\n" +
+      "  }\n\n" +
+      "  removeSkill(index: number) {\n" +
+      "    this.skills.removeAt(index);\n" +
+      "  }\n\n" +
+      "  onSubmit() {\n" +
+      "    if (this.form.valid) {\n" +
+      "      console.log(this.form.value);\n" +
+      "      // Output: { name: 'John', skills: [{ name: 'Angular', level: 'expert', years: 3 }] }\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Validation:**\n\n" +
+      "```typescript\n" +
+      "// Array-level validation\n" +
+      "this.form = this.fb.group({\n" +
+      "  skills: this.fb.array([], Validators.minLength(1)) // At least 1 skill\n" +
+      "});\n\n" +
+      "// Access errors\n" +
+      "if (this.skills.hasError('minLength')) {\n" +
+      "  console.log('Add at least one skill');\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Patch Values:**\n\n" +
+      "```typescript\n" +
+      "// Load existing data\n" +
+      "ngOnInit() {\n" +
+      "  const userData = {\n" +
+      "    name: 'John',\n" +
+      "    skills: [\n" +
+      "      { name: 'Angular', level: 'expert', years: 3 },\n" +
+      "      { name: 'TypeScript', level: 'intermediate', years: 2 }\n" +
+      "    ]\n" +
+      "  };\n\n" +
+      "  // Clear and repopulate\n" +
+      "  this.skills.clear();\n" +
+      "  userData.skills.forEach(skill => {\n" +
+      "    this.skills.push(this.fb.group(skill));\n" +
+      "  });\n" +
+      "}\n" +
+      "```",
+    category: "Forms",
+    difficulty: "hard",
+    tags: ["formarray", "dynamic-forms", "reactive-forms", "validation"],
+  },
+  {
+    id: 36,
+    question: "Explain @HostListener and @HostBinding decorators. Provide practical examples.",
+    answer:
+      "@HostListener listens to host element events. @HostBinding binds to host element properties.\n\n" +
+      "**@HostListener - Event Handling:**\n\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[appClickOutside]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class ClickOutsideDirective {\n" +
+      "  @Output() clickOutside = new EventEmitter<void>();\n\n" +
+      "  @HostListener('document:click', ['$event'])\n" +
+      "  onClick(event: MouseEvent) {\n" +
+      "    const clickedInside = this.el.nativeElement.contains(event.target);\n" +
+      "    if (!clickedInside) {\n" +
+      "      this.clickOutside.emit();\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  constructor(private el: ElementRef) {}\n" +
+      "}\n\n" +
+      '// Usage: <div appClickOutside (clickOutside)="closeMenu()">Menu</div>\n' +
+      "```\n\n" +
+      "**@HostBinding - Property Binding:**\n\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[appHighlight]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class HighlightDirective {\n" +
+      "  @Input() appHighlight = 'yellow';\n" +
+      "  @HostBinding('style.backgroundColor') backgroundColor: string;\n" +
+      "  @HostBinding('class.highlighted') isHighlighted = false;\n\n" +
+      "  @HostListener('mouseenter')\n" +
+      "  onMouseEnter() {\n" +
+      "    this.backgroundColor = this.appHighlight;\n" +
+      "    this.isHighlighted = true;\n" +
+      "  }\n\n" +
+      "  @HostListener('mouseleave')\n" +
+      "  onMouseLeave() {\n" +
+      "    this.backgroundColor = '';\n" +
+      "    this.isHighlighted = false;\n" +
+      "  }\n" +
+      "}\n\n" +
+      '// Usage: <div appHighlight="lightblue">Hover me</div>\n' +
+      '// Result: <div class="highlighted" style="background-color: lightblue">Hover me</div>\n' +
+      "```\n\n" +
+      "**Complex Example - Draggable:**\n\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[appDraggable]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class DraggableDirective {\n" +
+      "  @HostBinding('style.position') position = 'absolute';\n" +
+      "  @HostBinding('style.left.px') left = 0;\n" +
+      "  @HostBinding('style.top.px') top = 0;\n" +
+      "  @HostBinding('style.cursor') cursor = 'move';\n\n" +
+      "  private isDragging = false;\n" +
+      "  private startX = 0;\n" +
+      "  private startY = 0;\n\n" +
+      "  @HostListener('mousedown', ['$event'])\n" +
+      "  onMouseDown(event: MouseEvent) {\n" +
+      "    this.isDragging = true;\n" +
+      "    this.startX = event.clientX - this.left;\n" +
+      "    this.startY = event.clientY - this.top;\n" +
+      "    event.preventDefault();\n" +
+      "  }\n\n" +
+      "  @HostListener('document:mousemove', ['$event'])\n" +
+      "  onMouseMove(event: MouseEvent) {\n" +
+      "    if (this.isDragging) {\n" +
+      "      this.left = event.clientX - this.startX;\n" +
+      "      this.top = event.clientY - this.startY;\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  @HostListener('document:mouseup')\n" +
+      "  onMouseUp() {\n" +
+      "    this.isDragging = false;\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage: <div appDraggable>Drag me!</div>\n" +
+      "```",
+    category: "Directives",
+    difficulty: "intermediate",
+    tags: ["hostlistener", "hostbinding", "directives", "events"],
+  },
+  {
+    id: 37,
+    question: "What is Angular Universal (SSR)? How do you implement server-side rendering?",
+    answer:
+      "Angular Universal enables server-side rendering (SSR) for faster initial loads and better SEO.\n\n" +
+      "**Setup:**\n\n" +
+      "```bash\n" +
+      "ng add @nguniversal/express-engine\n" +
+      "```\n\n" +
+      "**Server Configuration:**\n\n" +
+      "```typescript\n" +
+      "// server.ts\n" +
+      "import { APP_BASE_HREF } from '@angular/common';\n" +
+      "import { CommonEngine } from '@angular/ssr';\n" +
+      "import express from 'express';\n\n" +
+      "const app = express();\n" +
+      "const commonEngine = new CommonEngine();\n\n" +
+      "app.get('*', (req, res) => {\n" +
+      "  commonEngine\n" +
+      "    .render({\n" +
+      "      bootstrap: AppServerModule,\n" +
+      "      documentFilePath: indexHtml,\n" +
+      "      url: req.url,\n" +
+      "      publicPath: distFolder,\n" +
+      "      providers: [\n" +
+      "        { provide: APP_BASE_HREF, useValue: req.baseUrl }\n" +
+      "      ]\n" +
+      "    })\n" +
+      "    .then(html => res.send(html))\n" +
+      "    .catch(err => res.status(500).send(err));\n" +
+      "});\n\n" +
+      "app.listen(4000, () => {\n" +
+      "  console.log('Server listening on http://localhost:4000');\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Platform-Agnostic Code:**\n\n" +
+      "```typescript\n" +
+      "import { isPlatformBrowser } from '@angular/common';\n" +
+      "import { PLATFORM_ID, inject } from '@angular/core';\n\n" +
+      "@Component({...})\n" +
+      "export class Component implements OnInit {\n" +
+      "  private platformId = inject(PLATFORM_ID);\n\n" +
+      "  ngOnInit() {\n" +
+      "    // ❌ Breaks SSR\n" +
+      "    localStorage.setItem('key', 'value');\n" +
+      "    window.addEventListener('resize', this.onResize);\n\n" +
+      "    // ✅ Check platform first\n" +
+      "    if (isPlatformBrowser(this.platformId)) {\n" +
+      "      localStorage.setItem('key', 'value');\n" +
+      "      window.addEventListener('resize', this.onResize);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "1. Faster First Contentful Paint\n" +
+      "2. Better SEO (crawlers see full HTML)\n" +
+      "3. Social media preview (og:tags)\n" +
+      "4. Works without JavaScript\n\n" +
+      "**Challenges:**\n" +
+      "- No browser APIs (window, document, localStorage)\n" +
+      "- Different lifecycle on server\n" +
+      "- Must handle async data carefully\n" +
+      "- Increased server costs",
+    category: "SSR",
+    difficulty: "hard",
+    tags: ["ssr", "universal", "seo", "performance", "server"],
+  },
+  {
+    id: 38,
+    question:
+      "How do you implement internationalization (i18n) in Angular? Explain runtime vs compile-time i18n.",
+    answer:
+      "**Angular Built-in i18n (Compile-Time):**\n\n" +
+      "```html\n" +
+      "<!-- Mark text for translation -->\n" +
+      "<h1 i18n>Hello</h1>\n" +
+      '<p i18n="User greeting">Welcome, {{name}}</p>\n\n' +
+      "<!-- With description and meaning -->\n" +
+      '<button i18n="Delete button|Button to delete item@@deleteButton">\n' +
+      "  Delete\n" +
+      "</button>\n\n" +
+      "<!-- Attributes -->\n" +
+      '<img [src]="logo" i18n-title title="Company Logo" />\n' +
+      "```\n\n" +
+      "**Extract Messages:**\n\n" +
+      "```bash\n" +
+      "ng extract-i18n --output-path src/locale\n" +
+      "# Generates: messages.xlf (source file)\n" +
+      "```\n\n" +
+      "**Build for Each Locale:**\n\n" +
+      "```bash\n" +
+      "ng build --localize\n" +
+      "# Builds: dist/en/, dist/fr/, dist/es/\n" +
+      "```\n\n" +
+      "**Runtime i18n (ngx-translate):**\n\n" +
+      "```typescript\n" +
+      "import { TranslateModule, TranslateLoader } from '@ngx-translate/core';\n\n" +
+      "@Component({\n" +
+      "  imports: [TranslateModule],\n" +
+      "  template: `\n" +
+      "    <h1>{{ 'HELLO' | translate }}</h1>\n" +
+      "    <p>{{ 'WELCOME' | translate:{ name: userName } }}</p>\n" +
+      "    \n" +
+      '    <select (change)="switchLanguage($event)">\n' +
+      '      <option value="en">English</option>\n' +
+      '      <option value="fr">Français</option>\n' +
+      "    </select>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  constructor(private translate: TranslateService) {\n" +
+      "    translate.setDefaultLang('en');\n" +
+      "    translate.use('en');\n" +
+      "  }\n\n" +
+      "  switchLanguage(event: any) {\n" +
+      "    this.translate.use(event.target.value);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Translation Files:**\n\n" +
+      "```json\n" +
+      "// assets/i18n/en.json\n" +
+      "{\n" +
+      '  "HELLO": "Hello",\n' +
+      '  "WELCOME": "Welcome, {{name}}"\n' +
+      "}\n\n" +
+      "// assets/i18n/fr.json\n" +
+      "{\n" +
+      '  "HELLO": "Bonjour",\n' +
+      '  "WELCOME": "Bienvenue, {{name}}"\n' +
+      "}\n" +
+      "```",
+    category: "Internationalization",
+    difficulty: "intermediate",
+    tags: ["i18n", "internationalization", "localization", "translation"],
+  },
+  {
+    id: 39,
+    question: "What is the Angular CDK (Component Dev Kit)? Explain key modules and use cases.",
+    answer:
+      "Angular CDK provides behavior primitives for building UI components without Material Design styling.\n\n" +
+      "**Key CDK Modules:**\n\n" +
+      "**1. Virtual Scrolling:**\n\n" +
+      "```typescript\n" +
+      "import { ScrollingModule } from '@angular/cdk/scrolling';\n\n" +
+      "@Component({\n" +
+      "  imports: [ScrollingModule],\n" +
+      "  template: `\n" +
+      '    <cdk-virtual-scroll-viewport itemSize="50" class="viewport">\n' +
+      '      <div *cdkVirtualFor="let item of items" class="item">\n' +
+      "        {{ item.name }}\n" +
+      "      </div>\n" +
+      "    </cdk-virtual-scroll-viewport>\n" +
+      "  `,\n" +
+      "  styles: ['.viewport { height: 400px; }']\n" +
+      "})\n" +
+      "export class VirtualListComponent {\n" +
+      "  items = Array.from({ length: 10000 }, (_, i) => ({ \n" +
+      "    id: i, \n" +
+      "    name: `Item ${i}` \n" +
+      "  }));\n" +
+      "}\n" +
+      "// Only renders visible items - handles 100k+ items smoothly\n" +
+      "```\n\n" +
+      "**2. Drag and Drop:**\n\n" +
+      "```typescript\n" +
+      "import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';\n\n" +
+      "@Component({\n" +
+      "  imports: [DragDropModule],\n" +
+      "  template: `\n" +
+      '    <div cdkDropList (cdkDropListDropped)="drop($event)">\n' +
+      '      <div *ngFor="let item of items" cdkDrag>\n' +
+      "        {{ item }}\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DragDropComponent {\n" +
+      "  items = ['Item 1', 'Item 2', 'Item 3'];\n\n" +
+      "  drop(event: CdkDragDrop<string[]>) {\n" +
+      "    moveItemInArray(this.items, event.previousIndex, event.currentIndex);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Overlay (Modals, Dropdowns):**\n\n" +
+      "```typescript\n" +
+      "import { Overlay, OverlayRef } from '@angular/cdk/overlay';\n" +
+      "import { ComponentPortal } from '@angular/cdk/portal';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class DialogService {\n" +
+      "  private overlayRef: OverlayRef;\n\n" +
+      "  constructor(private overlay: Overlay) {}\n\n" +
+      "  open(component: Type<any>) {\n" +
+      "    const positionStrategy = this.overlay\n" +
+      "      .position()\n" +
+      "      .global()\n" +
+      "      .centerHorizontally()\n" +
+      "      .centerVertically();\n\n" +
+      "    this.overlayRef = this.overlay.create({\n" +
+      "      hasBackdrop: true,\n" +
+      "      backdropClass: 'dark-backdrop',\n" +
+      "      positionStrategy\n" +
+      "    });\n\n" +
+      "    const portal = new ComponentPortal(component);\n" +
+      "    this.overlayRef.attach(portal);\n\n" +
+      "    // Close on backdrop click\n" +
+      "    this.overlayRef.backdropClick().subscribe(() => this.close());\n" +
+      "  }\n\n" +
+      "  close() {\n" +
+      "    this.overlayRef?.dispose();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Other CDK Modules:**\n" +
+      "- Accessibility (A11y, FocusTrap)\n" +
+      "- Layout (Breakpoint Observer)\n" +
+      "- Clipboard\n" +
+      "- Platform detection\n" +
+      "- Bi-directionality (RTL support)",
+    category: "CDK",
+    difficulty: "hard",
+    tags: ["cdk", "virtual-scroll", "drag-drop", "overlay", "angular-material"],
+  },
+  {
+    id: 40,
+    question:
+      "How do you implement accessibility (a11y) in Angular applications? Provide ARIA examples.",
+    answer:
+      "Accessibility ensures your app works for all users, including those using assistive technologies.\n\n" +
+      "**ARIA Attributes:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    <!-- Semantic HTML first -->\n" +
+      '    <button (click)="save()">Save</button> <!-- Better than <div> -->\n\n' +
+      "    <!-- ARIA labels -->\n" +
+      '    <button aria-label="Close dialog" (click)="close()">\n' +
+      '      <span aria-hidden="true">&times;</span>\n' +
+      "    </button>\n\n" +
+      "    <!-- ARIA roles -->\n" +
+      '    <div role="alert" *ngIf="error">{{ error }}</div>\n\n' +
+      "    <!-- ARIA live regions -->\n" +
+      '    <div aria-live="polite" aria-atomic="true">\n' +
+      "      {{ statusMessage }}\n" +
+      "    </div>\n\n" +
+      "    <!-- Form labels -->\n" +
+      '    <label for="email">Email:</label>\n' +
+      '    <input id="email" type="email" aria-required="true" />\n' +
+      '    <span id="email-error" role="alert">{{ emailError }}</span>\n' +
+      '    <input aria-describedby="email-error" />\n\n' +
+      "    <!-- Expandable sections -->\n" +
+      "    <button \n" +
+      '      (click)="toggle()"\n' +
+      '      [attr.aria-expanded]="isExpanded"\n' +
+      '      aria-controls="content"\n' +
+      "    >\n" +
+      "      Toggle\n" +
+      "    </button>\n" +
+      '    <div id="content" [hidden]="!isExpanded">\n' +
+      "      Content here\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "```\n\n" +
+      "**Focus Management:**\n\n" +
+      "```typescript\n" +
+      "import { FocusMonitor } from '@angular/cdk/a11y';\n\n" +
+      "@Component({...})\n" +
+      "export class DialogComponent implements AfterViewInit, OnDestroy {\n" +
+      "  @ViewChild('closeButton') closeButton: ElementRef;\n" +
+      "  private previousActiveElement: HTMLElement;\n\n" +
+      "  constructor(private focusMonitor: FocusMonitor) {}\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    // Save currently focused element\n" +
+      "    this.previousActiveElement = document.activeElement as HTMLElement;\n\n" +
+      "    // Focus first element in modal\n" +
+      "    this.closeButton.nativeElement.focus();\n\n" +
+      "    // Monitor focus\n" +
+      "    this.focusMonitor.monitor(this.closeButton);\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    // Restore focus\n" +
+      "    if (this.previousActiveElement) {\n" +
+      "      this.previousActiveElement.focus();\n" +
+      "    }\n" +
+      "    this.focusMonitor.stopMonitoring(this.closeButton);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Keyboard Navigation:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class MenuComponent {\n" +
+      "  selectedIndex = 0;\n\n" +
+      "  @HostListener('keydown', ['$event'])\n" +
+      "  handleKeyboard(event: KeyboardEvent) {\n" +
+      "    switch(event.key) {\n" +
+      "      case 'ArrowDown':\n" +
+      "        this.selectedIndex++;\n" +
+      "        event.preventDefault();\n" +
+      "        break;\n" +
+      "      case 'ArrowUp':\n" +
+      "        this.selectedIndex--;\n" +
+      "        event.preventDefault();\n" +
+      "        break;\n" +
+      "      case 'Enter':\n" +
+      "        this.selectItem(this.selectedIndex);\n" +
+      "        break;\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Accessibility",
+    difficulty: "intermediate",
+    tags: ["accessibility", "a11y", "aria", "keyboard", "focus"],
+  },
+  {
+    id: 41,
+    question:
+      "Explain Angular security best practices. How do you prevent XSS, CSRF, and other attacks?",
+    answer:
+      "Angular has built-in security features, but you must use them correctly.\n\n" +
+      "**XSS Prevention:**\n\n" +
+      "```typescript\n" +
+      "import { DomSanitizer, SafeHtml } from '@angular/platform-browser';\n\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  userInput: string;\n\n" +
+      "  constructor(private sanitizer: DomSanitizer) {}\n\n" +
+      "  // ❌ DANGEROUS - XSS vulnerability\n" +
+      "  get unsafeHtml() {\n" +
+      "    return this.userInput; // If contains <script>, will execute!\n" +
+      "  }\n\n" +
+      "  // ✅ Safe - Angular auto-sanitizes\n" +
+      "  // Template: <div>{{ userInput }}</div>\n" +
+      "  // Angular escapes HTML automatically\n\n" +
+      "  // If you MUST use innerHTML:\n" +
+      "  get safeHtml(): SafeHtml {\n" +
+      "    return this.sanitizer.sanitize(SecurityContext.HTML, this.userInput);\n" +
+      "  }\n" +
+      '  // Template: <div [innerHTML]="safeHtml"></div>\n' +
+      "}\n" +
+      "```\n\n" +
+      "**CSRF Protection:**\n\n" +
+      "```typescript\n" +
+      "// Angular's HttpClient includes CSRF protection\n" +
+      "import { provideHttpClient, withXsrfConfiguration } from '@angular/common/http';\n\n" +
+      "providers: [\n" +
+      "  provideHttpClient(\n" +
+      "    withXsrfConfiguration({\n" +
+      "      cookieName: 'XSRF-TOKEN',\n" +
+      "      headerName: 'X-XSRF-TOKEN'\n" +
+      "    })\n" +
+      "  )\n" +
+      "]\n\n" +
+      "// Server must:\n" +
+      "// 1. Set XSRF-TOKEN cookie\n" +
+      "// 2. Verify X-XSRF-TOKEN header matches\n" +
+      "```\n\n" +
+      "**Content Security Policy (CSP):**\n\n" +
+      "```html\n" +
+      "<!-- index.html -->\n" +
+      '<meta http-equiv="Content-Security-Policy" \n' +
+      "      content=\"default-src 'self'; \n" +
+      "               script-src 'self'; \n" +
+      "               style-src 'self' 'unsafe-inline'; \n" +
+      "               img-src 'self' data: https:;\">\n" +
+      "```\n\n" +
+      "**URL Sanitization:**\n\n" +
+      "```typescript\n" +
+      "// ❌ Dangerous\n" +
+      '<a [href]="userProvidedUrl">Link</a>\n\n' +
+      "// ✅ Safe\n" +
+      "get safeUrl() {\n" +
+      "  return this.sanitizer.sanitize(SecurityContext.URL, this.userProvidedUrl);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Security Checklist:**\n" +
+      "1. Never use innerHTML with untrusted content\n" +
+      "2. Always sanitize user input\n" +
+      "3. Use HttpOnly cookies for tokens\n" +
+      "4. Enable CSRF protection\n" +
+      "5. Set CSP headers\n" +
+      "6. Validate on server AND client\n" +
+      "7. Use HTTPS only\n" +
+      "8. Keep Angular updated",
+    category: "Security",
+    difficulty: "hard",
+    tags: ["security", "xss", "csrf", "sanitization", "csp"],
+  },
+  {
+    id: 42,
+    question:
+      "What are RxJS creation operators? Explain of, from, interval, fromEvent with examples.",
+    answer:
+      "Creation operators create observables from various sources.\n\n" +
+      "**of - From Values:**\n\n" +
+      "```typescript\n" +
+      "import { of } from 'rxjs';\n\n" +
+      "// Emit values immediately, then complete\n" +
+      "of(1, 2, 3).subscribe(val => console.log(val));\n" +
+      "// Output: 1, 2, 3\n\n" +
+      "// Use case: Testing, default values\n" +
+      "getUser(id: number): Observable<User> {\n" +
+      "  if (id === 0) {\n" +
+      "    return of({ id: 0, name: 'Guest' }); // Immediate value\n" +
+      "  }\n" +
+      "  return this.http.get<User>(`/api/users/${id}`);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**from - From Array/Promise:**\n\n" +
+      "```typescript\n" +
+      "import { from } from 'rxjs';\n\n" +
+      "// From array\n" +
+      "from([1, 2, 3]).subscribe(val => console.log(val));\n" +
+      "// Output: 1, 2, 3 (one at a time)\n\n" +
+      "// From Promise\n" +
+      "from(fetch('/api/data').then(r => r.json()))\n" +
+      "  .subscribe(data => console.log(data));\n\n" +
+      "// From async iterator\n" +
+      "async function* generate() {\n" +
+      "  yield 1;\n" +
+      "  yield 2;\n" +
+      "}\n" +
+      "from(generate()).subscribe(val => console.log(val));\n" +
+      "```\n\n" +
+      "**interval - Timer:**\n\n" +
+      "```typescript\n" +
+      "import { interval } from 'rxjs';\n" +
+      "import { take } from 'rxjs/operators';\n\n" +
+      "// Emit every 1000ms\n" +
+      "interval(1000).pipe(\n" +
+      "  take(5) // Only 5 emissions\n" +
+      ").subscribe(val => console.log(val));\n" +
+      "// Output: 0, 1, 2, 3, 4 (one per second)\n\n" +
+      "// Use case: Polling\n" +
+      "interval(5000).pipe(\n" +
+      "  switchMap(() => this.http.get('/api/status'))\n" +
+      ").subscribe(status => this.status = status);\n" +
+      "```\n\n" +
+      "**fromEvent - DOM Events:**\n\n" +
+      "```typescript\n" +
+      "import { fromEvent } from 'rxjs';\n" +
+      "import { debounceTime, map } from 'rxjs/operators';\n\n" +
+      "@Component({...})\n" +
+      "export class Component implements OnInit, OnDestroy {\n" +
+      "  private subscription: Subscription;\n\n" +
+      "  ngOnInit() {\n" +
+      "    // Window resize\n" +
+      "    this.subscription = fromEvent(window, 'resize').pipe(\n" +
+      "      debounceTime(300),\n" +
+      "      map(() => window.innerWidth)\n" +
+      "    ).subscribe(width => {\n" +
+      "      console.log('Window width:', width);\n" +
+      "    });\n\n" +
+      "    // Scroll events\n" +
+      "    fromEvent(window, 'scroll').pipe(\n" +
+      "      debounceTime(100)\n" +
+      "    ).subscribe(() => {\n" +
+      "      this.onScroll();\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.subscription.unsubscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "RxJS",
+    difficulty: "intermediate",
+    tags: ["rxjs", "creation-operators", "of", "from", "interval", "fromevent"],
+  },
+  {
+    id: 43,
+    question:
+      "What are RxJS combination operators? Explain combineLatest, forkJoin, merge, concat with use cases.",
+    answer:
+      "Combination operators combine multiple observables into one.\n\n" +
+      "**combineLatest - Latest from All:**\n\n" +
+      "```typescript\n" +
+      "import { combineLatest } from 'rxjs';\n\n" +
+      "// Wait for all to emit at least once, then emit whenever ANY emits\n" +
+      "const age$ = of(25);\n" +
+      "const name$ = of('John');\n" +
+      "const city$ = of('NYC');\n\n" +
+      "combineLatest([age$, name$, city$]).subscribe(([age, name, city]) => {\n" +
+      "  console.log(`${name}, ${age}, from ${city}`);\n" +
+      "});\n\n" +
+      "// Use case: Form with multiple dropdowns\n" +
+      "combineLatest([\n" +
+      "  this.countryControl.valueChanges,\n" +
+      "  this.stateControl.valueChanges,\n" +
+      "  this.cityControl.valueChanges\n" +
+      "]).subscribe(([country, state, city]) => {\n" +
+      "  this.updateAddress(country, state, city);\n" +
+      "});\n" +
+      "```\n\n" +
+      "**forkJoin - Wait for All to Complete:**\n\n" +
+      "```typescript\n" +
+      "import { forkJoin } from 'rxjs';\n\n" +
+      "// Like Promise.all - waits for all to complete\n" +
+      "forkJoin({\n" +
+      "  user: this.http.get('/api/user'),\n" +
+      "  posts: this.http.get('/api/posts'),\n" +
+      "  comments: this.http.get('/api/comments')\n" +
+      "}).subscribe(({ user, posts, comments }) => {\n" +
+      "  console.log('All loaded:', user, posts, comments);\n" +
+      "});\n\n" +
+      "// Use case: Load multiple resources before showing page\n" +
+      "ngOnInit() {\n" +
+      "  forkJoin([\n" +
+      "    this.userService.getUser(id),\n" +
+      "    this.postService.getPosts(id),\n" +
+      "    this.settingsService.getSettings()\n" +
+      "  ]).subscribe(([user, posts, settings]) => {\n" +
+      "    this.user = user;\n" +
+      "    this.posts = posts;\n" +
+      "    this.settings = settings;\n" +
+      "    this.loading = false;\n" +
+      "  });\n" +
+      "}\n" +
+      "```\n\n" +
+      "**merge - Merge Multiple Streams:**\n\n" +
+      "```typescript\n" +
+      "import { merge } from 'rxjs';\n\n" +
+      "// Emit from any source as soon as it emits\n" +
+      "const click$ = fromEvent(button, 'click');\n" +
+      "const keypress$ = fromEvent(document, 'keypress');\n\n" +
+      "merge(click$, keypress$).subscribe(() => {\n" +
+      "  console.log('User interaction!');\n" +
+      "});\n" +
+      "```\n\n" +
+      "**concat - Sequential:**\n\n" +
+      "```typescript\n" +
+      "import { concat } from 'rxjs';\n\n" +
+      "// Subscribe to each in order, wait for complete\n" +
+      "concat(\n" +
+      "  this.http.post('/api/user', user),\n" +
+      "  this.http.post('/api/profile', profile),\n" +
+      "  this.http.post('/api/settings', settings)\n" +
+      ").subscribe(result => console.log(result));\n" +
+      "// Creates user, THEN profile, THEN settings\n" +
+      "```",
+    category: "RxJS",
+    difficulty: "hard",
+    tags: ["rxjs", "combinelatest", "forkjoin", "merge", "concat", "combination-operators"],
+  },
+  {
+    id: 44,
+    question:
+      "What is the difference between providedIn: 'root' vs 'any' vs 'platform'? Explain service scoping.",
+    answer:
+      "**providedIn Strategies:**\n\n" +
+      "**1. 'root' (Singleton):**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class UserService {}\n\n" +
+      "// Single instance across entire app\n" +
+      "// Tree-shakeable (removed if not used)\n" +
+      "// Best for most services\n" +
+      "```\n\n" +
+      "**2. 'any' (Multiple Instances):**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'any' })\n" +
+      "export class LoggerService {}\n\n" +
+      "// New instance for each lazy-loaded module\n" +
+      "// Each module gets its own instance\n" +
+      "// Use for: isolated module state\n" +
+      "```\n\n" +
+      "**3. 'platform' (Cross-App Singleton):**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'platform' })\n" +
+      "export class ConfigService {}\n\n" +
+      "// Shared across multiple Angular apps\n" +
+      "// Rare use case\n" +
+      "```\n\n" +
+      "**Component-Level Provider:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-user',\n" +
+      "  providers: [UserService] // New instance per component\n" +
+      "})\n" +
+      "export class UserComponent {}\n\n" +
+      "// Each component instance gets new service instance\n" +
+      "// Use for: component-specific state\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- root: Most services (auth, http, state)\n" +
+      "- any: Module-specific services\n" +
+      "- platform: Shared across apps (rare)\n" +
+      "- Component: Isolated component state",
+    category: "Dependency Injection",
+    difficulty: "intermediate",
+    tags: ["di", "providers", "scoping", "singleton", "services"],
+  },
+  {
+    id: 45,
+    question:
+      "What are Advanced RxJS operators? Explain switchMap, mergeMap, concatMap, exhaustMap with real-world scenarios.",
+    answer:
+      "These higher-order operators flatten inner observables differently.\n\n" +
+      "**switchMap - Cancel Previous:**\n\n" +
+      "```typescript\n" +
+      "// Use case: Search (cancel previous search on new input)\n" +
+      "this.searchControl.valueChanges.pipe(\n" +
+      "  debounceTime(300),\n" +
+      "  switchMap(query => this.searchService.search(query))\n" +
+      ").subscribe(results => this.results = results);\n\n" +
+      '// User types: "ang" -> request1 starts\n' +
+      '// User types: "angular" -> request1 CANCELLED, request2 starts\n' +
+      "// Only latest request matters\n" +
+      "```\n\n" +
+      "**mergeMap - Run All Concurrently:**\n\n" +
+      "```typescript\n" +
+      "// Use case: Load details for multiple items\n" +
+      "from([1, 2, 3]).pipe(\n" +
+      "  mergeMap(id => this.http.get(`/api/user/${id}`))\n" +
+      ").subscribe(user => console.log(user));\n\n" +
+      "// All 3 requests run simultaneously\n" +
+      "// Results come back in any order\n" +
+      "// Good for: parallel operations\n" +
+      "```\n\n" +
+      "**concatMap - Sequential (Wait for Each):**\n\n" +
+      "```typescript\n" +
+      "// Use case: Sequential operations (order matters)\n" +
+      "from([1, 2, 3]).pipe(\n" +
+      "  concatMap(id => this.http.post(`/api/process/${id}`))\n" +
+      ").subscribe(result => console.log(result));\n\n" +
+      "// Request 1 completes, THEN request 2, THEN request 3\n" +
+      "// Maintains order\n" +
+      "// Good for: dependent operations, rate limiting\n" +
+      "```\n\n" +
+      "**exhaustMap - Ignore While Busy:**\n\n" +
+      "```typescript\n" +
+      "// Use case: Prevent double-submit\n" +
+      "@Component({\n" +
+      "  template: '<button (click)=\"save$.next()\">Save</button>'\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  save$ = new Subject<void>();\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.save$.pipe(\n" +
+      "      exhaustMap(() => this.http.post('/api/save', this.data))\n" +
+      "    ).subscribe(() => console.log('Saved!'));\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// User clicks 5 times rapidly\n" +
+      "// Only first click triggers request\n" +
+      "// Other clicks ignored until first completes\n" +
+      "```\n\n" +
+      "**Decision Matrix:**\n" +
+      "- switchMap: Cancel previous (search, autocomplete)\n" +
+      "- mergeMap: Run all (independent operations)\n" +
+      "- concatMap: Sequential (order matters)\n" +
+      "- exhaustMap: Ignore while busy (prevent double-submit)",
+    category: "RxJS",
+    difficulty: "hard",
+    tags: ["rxjs", "switchmap", "mergemap", "concatmap", "exhaustmap", "higher-order"],
+  },
+  {
+    id: 46,
+    question: "What is Angular Module Federation? How do you implement micro-frontends in Angular?",
+    answer:
+      "Module Federation allows loading remote modules at runtime, enabling micro-frontends.\n\n" +
+      "**Setup (webpack.config.js):**\n\n" +
+      "```javascript\n" +
+      "// Host App (Shell)\n" +
+      "const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');\n\n" +
+      "module.exports = {\n" +
+      "  plugins: [\n" +
+      "    new ModuleFederationPlugin({\n" +
+      "      name: 'host',\n" +
+      "      remotes: {\n" +
+      "        mfe1: 'mfe1@http://localhost:4201/remoteEntry.js',\n" +
+      "        mfe2: 'mfe2@http://localhost:4202/remoteEntry.js'\n" +
+      "      },\n" +
+      "      shared: {\n" +
+      "        '@angular/core': { singleton: true, strictVersion: true },\n" +
+      "        '@angular/common': { singleton: true, strictVersion: true },\n" +
+      "        '@angular/router': { singleton: true, strictVersion: true }\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ]\n" +
+      "};\n\n" +
+      "// Remote App (Micro-frontend)\n" +
+      "module.exports = {\n" +
+      "  plugins: [\n" +
+      "    new ModuleFederationPlugin({\n" +
+      "      name: 'mfe1',\n" +
+      "      filename: 'remoteEntry.js',\n" +
+      "      exposes: {\n" +
+      "        './Module': './src/app/feature/feature.module.ts'\n" +
+      "      },\n" +
+      "      shared: {\n" +
+      "        '@angular/core': { singleton: true },\n" +
+      "        '@angular/common': { singleton: true }\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ]\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Loading Remote Module:**\n\n" +
+      "```typescript\n" +
+      "// Host routing\n" +
+      "const routes: Routes = [\n" +
+      "  {\n" +
+      "    path: 'mfe1',\n" +
+      "    loadChildren: () =>\n" +
+      "      import('mfe1/Module').then(m => m.FeatureModule)\n" +
+      "  }\n" +
+      "];\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Independent deployment\n" +
+      "- Team autonomy\n" +
+      "- Technology diversity\n" +
+      "- Faster builds\n\n" +
+      "**Challenges:**\n" +
+      "- Shared state management\n" +
+      "- Version conflicts\n" +
+      "- Routing coordination\n" +
+      "- Testing complexity",
+    category: "Architecture",
+    difficulty: "hard",
+    tags: ["module-federation", "micro-frontends", "webpack", "architecture"],
+  },
+  {
+    id: 47,
+    question:
+      "How do you optimize Angular bundle size? Explain tree-shaking, lazy loading, and build optimizations.",
+    answer:
+      "**1. Lazy Loading:**\n\n" +
+      "```typescript\n" +
+      "// Instead of eager loading:\n" +
+      "import { FeatureModule } from './feature/feature.module';\n\n" +
+      "// Use lazy loading:\n" +
+      "const routes: Routes = [\n" +
+      "  {\n" +
+      "    path: 'feature',\n" +
+      "    loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule)\n" +
+      "  }\n" +
+      "];\n" +
+      "// Reduces initial bundle size\n" +
+      "```\n\n" +
+      "**2. Tree-Shaking (Remove Unused Code):**\n\n" +
+      "```typescript\n" +
+      "// ❌ Bad - imports entire library\n" +
+      "import * as _ from 'lodash';\n" +
+      "_.debounce(fn, 300);\n\n" +
+      "// ✅ Good - imports only needed function\n" +
+      "import { debounce } from 'lodash-es';\n" +
+      "debounce(fn, 300);\n\n" +
+      "// Use standalone components (Angular 14+)\n" +
+      "@Component({\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule] // Only what's needed\n" +
+      "})\n" +
+      "```\n\n" +
+      "**3. Production Build Optimizations:**\n\n" +
+      "```bash\n" +
+      "ng build --configuration production\n" +
+      "\n" +
+      "# Enables:\n" +
+      "# - AOT compilation\n" +
+      "# - Minification\n" +
+      "# - Tree-shaking\n" +
+      "# - Dead code elimination\n" +
+      "# - Bundle compression\n" +
+      "```\n\n" +
+      "**4. Analyze Bundle:**\n\n" +
+      "```bash\n" +
+      "npm install -D webpack-bundle-analyzer\n" +
+      "ng build --stats-json\n" +
+      "npx webpack-bundle-analyzer dist/stats.json\n" +
+      "```\n\n" +
+      "**5. Optimize Dependencies:**\n\n" +
+      "```typescript\n" +
+      "// Use CDN for large libs\n" +
+      "// Replace moment.js (large) with date-fns (small)\n" +
+      "import { format } from 'date-fns'; // 2KB vs 70KB\n\n" +
+      "// Remove unused Angular modules\n" +
+      "// Use providedIn: 'root' for tree-shakeable services\n" +
+      "```\n\n" +
+      "**6. Budget Configuration:**\n\n" +
+      "```json\n" +
+      "// angular.json\n" +
+      '"budgets": [\n' +
+      "  {\n" +
+      '    "type": "initial",\n' +
+      '    "maximumWarning": "500kb",\n' +
+      '    "maximumError": "1mb"\n' +
+      "  }\n" +
+      "]\n" +
+      "```",
+    category: "Performance",
+    difficulty: "hard",
+    tags: ["bundle-size", "tree-shaking", "lazy-loading", "optimization", "performance"],
+  },
+  {
+    id: 48,
+    question: "What are Custom Validators in Angular? How do you create async validators?",
+    answer:
+      "Custom validators enforce business-specific validation rules.\n\n" +
+      "**Sync Custom Validator:**\n\n" +
+      "```typescript\n" +
+      "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n\n" +
+      "// Function validator\n" +
+      "export function passwordStrengthValidator(): ValidatorFn {\n" +
+      "  return (control: AbstractControl): ValidationErrors | null => {\n" +
+      "    const value = control.value;\n" +
+      "    if (!value) return null;\n\n" +
+      "    const hasNumber = /[0-9]/.test(value);\n" +
+      "    const hasUpper = /[A-Z]/.test(value);\n" +
+      "    const hasLower = /[a-z]/.test(value);\n" +
+      "    const hasSpecial = /[!@#$%^&*]/.test(value);\n\n" +
+      "    const valid = hasNumber && hasUpper && hasLower && hasSpecial;\n\n" +
+      "    return valid ? null : {\n" +
+      "      passwordStrength: {\n" +
+      "        hasNumber,\n" +
+      "        hasUpper,\n" +
+      "        hasLower,\n" +
+      "        hasSpecial\n" +
+      "      }\n" +
+      "    };\n" +
+      "  };\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "this.form = this.fb.group({\n" +
+      "  password: ['', [Validators.required, passwordStrengthValidator()]]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Cross-Field Validator:**\n\n" +
+      "```typescript\n" +
+      "export function passwordMatchValidator(): ValidatorFn {\n" +
+      "  return (formGroup: AbstractControl): ValidationErrors | null => {\n" +
+      "    const password = formGroup.get('password')?.value;\n" +
+      "    const confirmPassword = formGroup.get('confirmPassword')?.value;\n\n" +
+      "    return password === confirmPassword ? null : { passwordMismatch: true };\n" +
+      "  };\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "this.form = this.fb.group({\n" +
+      "  password: ['', Validators.required],\n" +
+      "  confirmPassword: ['', Validators.required]\n" +
+      "}, { validators: passwordMatchValidator() });\n" +
+      "```\n\n" +
+      "**Async Validator (Backend Check):**\n\n" +
+      "```typescript\n" +
+      "import { AsyncValidatorFn } from '@angular/forms';\n" +
+      "import { map, catchError } from 'rxjs/operators';\n" +
+      "import { of } from 'rxjs';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class UsernameValidator {\n" +
+      "  constructor(private http: HttpClient) {}\n\n" +
+      "  usernameExists(): AsyncValidatorFn {\n" +
+      "    return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "      if (!control.value) {\n" +
+      "        return of(null);\n" +
+      "      }\n\n" +
+      "      return this.http.get(`/api/check-username/${control.value}`).pipe(\n" +
+      "        map((exists: boolean) => exists ? { usernameTaken: true } : null),\n" +
+      "        catchError(() => of(null))\n" +
+      "      );\n" +
+      "    };\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "constructor(private usernameValidator: UsernameValidator) {}\n\n" +
+      "this.form = this.fb.group({\n" +
+      "  username: ['',\n" +
+      "    [Validators.required],\n" +
+      "    [this.usernameValidator.usernameExists()] // Async validator\n" +
+      "  ]\n" +
+      "});\n\n" +
+      "// Check status\n" +
+      "if (control.pending) console.log('Validating...');\n" +
+      "if (control.hasError('usernameTaken')) console.log('Username taken');\n" +
+      "```",
+    category: "Forms",
+    difficulty: "hard",
+    tags: ["validators", "custom-validators", "async-validators", "forms"],
+  },
+  {
+    id: 49,
+    question:
+      "What are Angular Animations? Implement complex animation sequences with state transitions.",
+    answer:
+      "Angular animations use the Web Animations API for declarative animations.\n\n" +
+      "**Basic Animation:**\n\n" +
+      "```typescript\n" +
+      "import { trigger, state, style, transition, animate } from '@angular/animations';\n\n" +
+      "@Component({\n" +
+      "  animations: [\n" +
+      "    trigger('openClose', [\n" +
+      "      state('open', style({\n" +
+      "        height: '200px',\n" +
+      "        opacity: 1,\n" +
+      "        backgroundColor: 'yellow'\n" +
+      "      })),\n" +
+      "      state('closed', style({\n" +
+      "        height: '50px',\n" +
+      "        opacity: 0.5,\n" +
+      "        backgroundColor: 'green'\n" +
+      "      })),\n" +
+      "      transition('open => closed', [\n" +
+      "        animate('0.3s')\n" +
+      "      ]),\n" +
+      "      transition('closed => open', [\n" +
+      "        animate('0.5s')\n" +
+      "      ])\n" +
+      "    ])\n" +
+      "  ],\n" +
+      "  template: `\n" +
+      "    <div [@openClose]=\"isOpen ? 'open' : 'closed'\">Content</div>\n" +
+      '    <button (click)="toggle()">Toggle</button>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  isOpen = true;\n" +
+      "  toggle() { this.isOpen = !this.isOpen; }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Enter/Leave Animations:**\n\n" +
+      "```typescript\n" +
+      "trigger('fadeIn', [\n" +
+      "  transition(':enter', [\n" +
+      "    style({ opacity: 0 }),\n" +
+      "    animate('300ms', style({ opacity: 1 }))\n" +
+      "  ]),\n" +
+      "  transition(':leave', [\n" +
+      "    animate('300ms', style({ opacity: 0 }))\n" +
+      "  ])\n" +
+      "])\n\n" +
+      "// Template\n" +
+      '<div *ngIf="show" @fadeIn>Fading in/out</div>\n' +
+      "```\n\n" +
+      "**List Animations:**\n\n" +
+      "```typescript\n" +
+      "import { query, stagger } from '@angular/animations';\n\n" +
+      "trigger('listAnimation', [\n" +
+      "  transition('* => *', [\n" +
+      "    query(':enter', [\n" +
+      "      style({ opacity: 0, transform: 'translateY(-20px)' }),\n" +
+      "      stagger(100, [\n" +
+      "        animate('300ms', style({ opacity: 1, transform: 'translateY(0)' }))\n" +
+      "      ])\n" +
+      "    ], { optional: true })\n" +
+      "  ])\n" +
+      "])\n\n" +
+      "// Template\n" +
+      '<div [@listAnimation]="items.length">\n' +
+      '  <div *ngFor="let item of items">{{ item }}</div>\n' +
+      "</div>\n" +
+      "```\n\n" +
+      "**Route Animations:**\n\n" +
+      "```typescript\n" +
+      "// app.component.ts\n" +
+      "prepareRoute(outlet: RouterOutlet) {\n" +
+      "  return outlet?.activatedRouteData?.['animation'];\n" +
+      "}\n\n" +
+      "// Template\n" +
+      '<div [@routeAnimations]="prepareRoute(outlet)">\n' +
+      '  <router-outlet #outlet="outlet"></router-outlet>\n' +
+      "</div>\n" +
+      "```",
+    category: "Animations",
+    difficulty: "hard",
+    tags: ["animations", "transitions", "web-animations-api", "ui"],
+  },
+  {
+    id: 50,
+    question: "What is Lazy Loading Strategy in Angular? Implement custom preloading strategies.",
+    answer:
+      "Lazy loading loads modules on-demand. Preloading strategies control when to load them.\n\n" +
+      "**Built-in Strategies:**\n\n" +
+      "```typescript\n" +
+      "import { PreloadAllModules, NoPreloading } from '@angular/router';\n\n" +
+      "// Option 1: No preloading (default)\n" +
+      "RouterModule.forRoot(routes, {\n" +
+      "  preloadingStrategy: NoPreloading\n" +
+      "});\n\n" +
+      "// Option 2: Preload all lazy modules\n" +
+      "RouterModule.forRoot(routes, {\n" +
+      "  preloadingStrategy: PreloadAllModules\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Custom Preloading Strategy:**\n\n" +
+      "```typescript\n" +
+      "import { PreloadingStrategy, Route } from '@angular/router';\n" +
+      "import { Observable, of, timer } from 'rxjs';\n" +
+      "import { mergeMap } from 'rxjs/operators';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class SelectivePreloadingStrategy implements PreloadingStrategy {\n" +
+      "  preload(route: Route, load: () => Observable<any>): Observable<any> {\n" +
+      "    // Preload if route data has preload: true\n" +
+      "    if (route.data && route.data['preload']) {\n" +
+      "      console.log('Preloading:', route.path);\n" +
+      "      return load();\n" +
+      "    }\n" +
+      "    return of(null);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Routes configuration\n" +
+      "const routes: Routes = [\n" +
+      "  {\n" +
+      "    path: 'admin',\n" +
+      "    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),\n" +
+      "    data: { preload: false } // Don't preload\n" +
+      "  },\n" +
+      "  {\n" +
+      "    path: 'dashboard',\n" +
+      "    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),\n" +
+      "    data: { preload: true } // Preload this\n" +
+      "  }\n" +
+      "];\n\n" +
+      "// App module\n" +
+      "RouterModule.forRoot(routes, {\n" +
+      "  preloadingStrategy: SelectivePreloadingStrategy\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Network-Aware Preloading:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class NetworkAwarePreloadingStrategy implements PreloadingStrategy {\n" +
+      "  preload(route: Route, load: () => Observable<any>): Observable<any> {\n" +
+      "    const connection = (navigator as any).connection;\n" +
+      "    \n" +
+      "    // Only preload on fast connections\n" +
+      "    if (connection && connection.effectiveType === '4g') {\n" +
+      "      return load();\n" +
+      "    }\n" +
+      "    \n" +
+      "    return of(null);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Delayed Preloading:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class DelayedPreloadingStrategy implements PreloadingStrategy {\n" +
+      "  preload(route: Route, load: () => Observable<any>): Observable<any> {\n" +
+      "    const delay = route.data?.['preloadDelay'] || 5000;\n" +
+      "    \n" +
+      "    return timer(delay).pipe(\n" +
+      "      mergeMap(() => load())\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Routing",
+    difficulty: "hard",
+    tags: ["lazy-loading", "preloading", "routing", "performance"],
+  },
+  {
+    id: 51,
+    question:
+      "How do you implement state management without NgRx? Explain service-based state pattern.",
+    answer:
+      "Service-based state management uses RxJS BehaviorSubject for simple state needs.\n\n" +
+      "**State Service Pattern:**\n\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { BehaviorSubject, Observable } from 'rxjs';\n" +
+      "import { map } from 'rxjs/operators';\n\n" +
+      "export interface AppState {\n" +
+      "  user: User | null;\n" +
+      "  cart: CartItem[];\n" +
+      "  loading: boolean;\n" +
+      "}\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class StateService {\n" +
+      "  private state = new BehaviorSubject<AppState>({\n" +
+      "    user: null,\n" +
+      "    cart: [],\n" +
+      "    loading: false\n" +
+      "  });\n\n" +
+      "  // Public observable (read-only)\n" +
+      "  state$ = this.state.asObservable();\n\n" +
+      "  // Selectors\n" +
+      "  user$ = this.state$.pipe(map(state => state.user));\n" +
+      "  cart$ = this.state$.pipe(map(state => state.cart));\n" +
+      "  cartItemCount$ = this.cart$.pipe(\n" +
+      "    map(cart => cart.reduce((sum, item) => sum + item.quantity, 0))\n" +
+      "  );\n\n" +
+      "  // Actions (update state)\n" +
+      "  setUser(user: User) {\n" +
+      "    this.state.next({\n" +
+      "      ...this.state.value,\n" +
+      "      user\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  addToCart(item: CartItem) {\n" +
+      "    const currentCart = this.state.value.cart;\n" +
+      "    const existingItem = currentCart.find(i => i.id === item.id);\n\n" +
+      "    if (existingItem) {\n" +
+      "      existingItem.quantity += item.quantity;\n" +
+      "      this.state.next({\n" +
+      "        ...this.state.value,\n" +
+      "        cart: [...currentCart]\n" +
+      "      });\n" +
+      "    } else {\n" +
+      "      this.state.next({\n" +
+      "        ...this.state.value,\n" +
+      "        cart: [...currentCart, item]\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  clearCart() {\n" +
+      "    this.state.next({\n" +
+      "      ...this.state.value,\n" +
+      "      cart: []\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  // Get current snapshot\n" +
+      "  getState(): AppState {\n" +
+      "    return this.state.value;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Usage in Component:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  user$ = this.stateService.user$;\n" +
+      "  cartCount$ = this.stateService.cartItemCount$;\n\n" +
+      "  constructor(private stateService: StateService) {}\n\n" +
+      "  addItem(item: CartItem) {\n" +
+      "    this.stateService.addToCart(item);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Template\n" +
+      '<div *ngIf="user$ | async as user">\n' +
+      "  Welcome, {{ user.name }}\n" +
+      "</div>\n" +
+      "<span>Cart: {{ cartCount$ | async }}</span>\n" +
+      "```",
+    category: "State Management",
+    difficulty: "intermediate",
+    tags: ["state-management", "rxjs", "behaviorsubject", "patterns"],
+  },
+  {
+    id: 52,
+    question:
+      "What is Content Projection in Angular? Explain ng-content, ng-template, and ng-container.",
+    answer:
+      "Content projection (transclusion) allows passing content into components.\n\n" +
+      "**Basic ng-content:**\n\n" +
+      "```typescript\n" +
+      "// card.component.ts\n" +
+      "@Component({\n" +
+      "  selector: 'app-card',\n" +
+      "  template: `\n" +
+      '    <div class="card">\n' +
+      '      <div class="card-header">\n' +
+      '        <ng-content select="[header]"></ng-content>\n' +
+      "      </div>\n" +
+      '      <div class="card-body">\n' +
+      "        <ng-content></ng-content> <!-- Default slot -->\n" +
+      "      </div>\n" +
+      '      <div class="card-footer">\n' +
+      '        <ng-content select="[footer]"></ng-content>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n\n" +
+      "// Usage\n" +
+      "<app-card>\n" +
+      "  <h2 header>Card Title</h2>\n" +
+      "  <p>Card body content goes here.</p>\n" +
+      "  <button footer>Action</button>\n" +
+      "</app-card>\n" +
+      "```\n\n" +
+      "**ng-template (Template Reference):**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-tabs',\n" +
+      "  template: `\n" +
+      '    <div class="tabs">\n' +
+      '      <button *ngFor="let tab of tabs" (click)="selectTab(tab)">\n' +
+      "        {{ tab.title }}\n" +
+      "      </button>\n" +
+      "    </div>\n" +
+      '    <div class="tab-content">\n' +
+      '      <ng-container *ngTemplateOutlet="selectedTab?.content"></ng-container>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class TabsComponent {\n" +
+      "  @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;\n" +
+      "  selectedTab: TabComponent;\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "<app-tabs>\n" +
+      '  <app-tab title="Tab 1">\n' +
+      "    <ng-template>\n" +
+      "      Content for tab 1\n" +
+      "    </ng-template>\n" +
+      "  </app-tab>\n" +
+      '  <app-tab title="Tab 2">\n' +
+      "    <ng-template>\n" +
+      "      Content for tab 2\n" +
+      "    </ng-template>\n" +
+      "  </app-tab>\n" +
+      "</app-tabs>\n" +
+      "```\n\n" +
+      "**ng-container (No DOM Element):**\n\n" +
+      "```typescript\n" +
+      "// Grouping without adding DOM element\n" +
+      '<ng-container *ngIf="user">\n' +
+      "  <h1>{{ user.name }}</h1>\n" +
+      "  <p>{{ user.email }}</p>\n" +
+      "</ng-container>\n" +
+      "// No wrapper div created!\n\n" +
+      "// Multiple structural directives\n" +
+      '<ng-container *ngIf="show">\n' +
+      '  <div *ngFor="let item of items">{{ item }}</div>\n' +
+      "</ng-container>\n" +
+      "```",
+    category: "Templates",
+    difficulty: "intermediate",
+    tags: ["ng-content", "projection", "templates", "ng-template"],
+  },
+  {
+    id: 53,
+    question:
+      "What is Zone.js and how does Angular use it? Explain NgZone and running outside Angular zone.",
+    answer:
+      "Zone.js monkey-patches async operations to trigger change detection.\n\n" +
+      "**How Zone.js Works:**\n\n" +
+      "```typescript\n" +
+      "// Zone.js patches:\n" +
+      "// - setTimeout/setInterval\n" +
+      "// - Promise.then\n" +
+      "// - addEventListener\n" +
+      "// - XMLHttpRequest\n\n" +
+      "// When any runs, Angular knows to run change detection\n" +
+      "setTimeout(() => {\n" +
+      "  this.data = 'updated'; // Change detection runs automatically\n" +
+      "}, 1000);\n" +
+      "```\n\n" +
+      "**NgZone API:**\n\n" +
+      "```typescript\n" +
+      "import { NgZone } from '@angular/core';\n\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  constructor(private ngZone: NgZone) {}\n\n" +
+      "  // Run outside Angular zone (skip change detection)\n" +
+      "  setupHeavyAnimation() {\n" +
+      "    this.ngZone.runOutsideAngular(() => {\n" +
+      "      // This code won't trigger change detection\n" +
+      "      setInterval(() => {\n" +
+      "        // Update canvas, heavy calculations, etc.\n" +
+      "        this.updateCanvas();\n" +
+      "      }, 16); // 60fps\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  // Re-enter Angular zone when needed\n" +
+      "  updateData() {\n" +
+      "    this.ngZone.run(() => {\n" +
+      "      this.data = 'updated'; // Change detection runs\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  // Check if inside Angular zone\n" +
+      "  checkZone() {\n" +
+      "    console.log(NgZone.isInAngularZone()); // true or false\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Use Cases for runOutsideAngular:**\n\n" +
+      "```typescript\n" +
+      "// 1. High-frequency events (scroll, mousemove)\n" +
+      "ngOnInit() {\n" +
+      "  this.ngZone.runOutsideAngular(() => {\n" +
+      "    fromEvent(window, 'scroll').pipe(\n" +
+      "      throttleTime(100)\n" +
+      "    ).subscribe(() => {\n" +
+      "      // Update non-Angular stuff\n" +
+      "      this.updateScrollPosition();\n" +
+      "    });\n" +
+      "  });\n" +
+      "}\n\n" +
+      "// 2. Third-party libraries\n" +
+      "initChart() {\n" +
+      "  this.ngZone.runOutsideAngular(() => {\n" +
+      "    this.chart = new Chart(this.canvas, config);\n" +
+      "  });\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Zoneless Angular (Future):**\n\n" +
+      "```typescript\n" +
+      "// Angular 16+ experimental\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideExperimentalZonelessChangeDetection()\n" +
+      "  ]\n" +
+      "});\n" +
+      "// Uses Signals instead of Zone.js\n" +
+      "```",
+    category: "Change Detection",
+    difficulty: "hard",
+    tags: ["zone.js", "ngzone", "change-detection", "performance"],
+  },
+  {
+    id: 54,
+    question: "What are Angular Elements? How do you create and use Web Components from Angular?",
+    answer:
+      "Angular Elements packages Angular components as custom Web Components.\n\n" +
+      "**Setup:**\n\n" +
+      "```bash\n" +
+      "ng add @angular/elements\n" +
+      "```\n\n" +
+      "**Create Angular Element:**\n\n" +
+      "```typescript\n" +
+      "import { createCustomElement } from '@angular/elements';\n" +
+      "import { Injector } from '@angular/core';\n\n" +
+      "// Widget component\n" +
+      "@Component({\n" +
+      "  selector: 'app-widget',\n" +
+      "  template: `\n" +
+      '    <div class="widget">\n' +
+      "      <h3>{{ title }}</h3>\n" +
+      "      <p>{{ content }}</p>\n" +
+      '      <button (click)="handleClick()">{{ buttonText }}</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class WidgetComponent {\n" +
+      "  @Input() title = '';\n" +
+      "  @Input() content = '';\n" +
+      "  @Input() buttonText = 'Click';\n" +
+      "  @Output() clicked = new EventEmitter();\n\n" +
+      "  handleClick() {\n" +
+      "    this.clicked.emit({ timestamp: Date.now() });\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Register as custom element\n" +
+      "@NgModule({\n" +
+      "  declarations: [WidgetComponent],\n" +
+      "  imports: [BrowserModule],\n" +
+      "  entryComponents: [WidgetComponent] // Important!\n" +
+      "})\n" +
+      "export class AppModule {\n" +
+      "  constructor(private injector: Injector) {\n" +
+      "    const widgetElement = createCustomElement(WidgetComponent, { injector });\n" +
+      "    customElements.define('my-widget', widgetElement);\n" +
+      "  }\n\n" +
+      "  ngDoBootstrap() {} // Skip normal bootstrap\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Use in Any HTML:**\n\n" +
+      "```html\n" +
+      "<!-- Can use in vanilla HTML, React, Vue, etc. -->\n" +
+      "<!DOCTYPE html>\n" +
+      "<html>\n" +
+      "<head>\n" +
+      '  <script src="widget.js"></script>\n' +
+      "</head>\n" +
+      "<body>\n" +
+      "  <my-widget\n" +
+      '    title="Hello"\n' +
+      '    content="This is an Angular Element!"\n' +
+      '    button-text="Click Me"\n' +
+      "  ></my-widget>\n\n" +
+      "  <script>\n" +
+      "    const widget = document.querySelector('my-widget');\n" +
+      "    widget.addEventListener('clicked', (e) => {\n" +
+      "      console.log('Clicked at:', e.detail.timestamp);\n" +
+      "    });\n" +
+      "  </script>\n" +
+      "</body>\n" +
+      "</html>\n" +
+      "```\n\n" +
+      "**Build for Production:**\n\n" +
+      "```bash\n" +
+      "ng build --configuration production --output-hashing=none\n" +
+      "\n" +
+      "# Concatenate files\n" +
+      "cat dist/widget/{runtime,polyfills,main}.js > widget.js\n" +
+      "```\n\n" +
+      "**Use Cases:**\n" +
+      "- Micro-frontends\n" +
+      "- Widget libraries\n" +
+      "- CMS integrations\n" +
+      "- Framework-agnostic components",
+    category: "Web Components",
+    difficulty: "hard",
+    tags: ["angular-elements", "web-components", "custom-elements", "micro-frontends"],
+  },
+  {
+    id: 55,
+    question:
+      "What are RxJS error handling operators? Explain catchError, retry, retryWhen with practical examples.",
+    answer:
+      "Error handling operators gracefully manage errors in observable streams.\n\n" +
+      "**catchError - Handle and Recover:**\n\n" +
+      "```typescript\n" +
+      "import { catchError } from 'rxjs/operators';\n" +
+      "import { of, throwError } from 'rxjs';\n\n" +
+      "// Return fallback value\n" +
+      "this.http.get('/api/data').pipe(\n" +
+      "  catchError(error => {\n" +
+      "    console.error('Error:', error);\n" +
+      "    return of({ data: 'fallback' }); // Continue with fallback\n" +
+      "  })\n" +
+      ").subscribe(data => console.log(data));\n\n" +
+      "// Re-throw error\n" +
+      "this.http.get('/api/data').pipe(\n" +
+      "  catchError(error => {\n" +
+      "    this.logError(error);\n" +
+      "    return throwError(() => new Error('Custom error'));\n" +
+      "  })\n" +
+      ").subscribe({\n" +
+      "  next: data => console.log(data),\n" +
+      "  error: err => console.error('Handled:', err)\n" +
+      "});\n" +
+      "```\n\n" +
+      "**retry - Retry on Error:**\n\n" +
+      "```typescript\n" +
+      "import { retry, delay } from 'rxjs/operators';\n\n" +
+      "// Simple retry (3 times)\n" +
+      "this.http.get('/api/data').pipe(\n" +
+      "  retry(3), // Retry up to 3 times\n" +
+      "  catchError(error => {\n" +
+      "    console.error('Failed after 3 retries');\n" +
+      "    return of(null);\n" +
+      "  })\n" +
+      ").subscribe(data => console.log(data));\n\n" +
+      "// With delay\n" +
+      "this.http.get('/api/data').pipe(\n" +
+      "  retry({ count: 3, delay: 1000 }), // Wait 1s between retries\n" +
+      "  catchError(error => of(null))\n" +
+      ").subscribe();\n" +
+      "```\n\n" +
+      "**retryWhen - Conditional Retry:**\n\n" +
+      "```typescript\n" +
+      "import { retryWhen, scan, delay, tap } from 'rxjs/operators';\n\n" +
+      "// Exponential backoff\n" +
+      "this.http.get('/api/data').pipe(\n" +
+      "  retryWhen(errors => errors.pipe(\n" +
+      "    scan((acc, error) => {\n" +
+      "      if (acc >= 5) {\n" +
+      "        throw error; // Stop after 5 attempts\n" +
+      "      }\n" +
+      "      return acc + 1;\n" +
+      "    }, 0),\n" +
+      "    tap(retryCount => console.log(`Retry attempt ${retryCount}`)),\n" +
+      "    delay(retryCount => retryCount * 1000) // 1s, 2s, 3s, 4s, 5s\n" +
+      "  ))\n" +
+      ").subscribe();\n\n" +
+      "// Retry only specific errors\n" +
+      "this.http.get('/api/data').pipe(\n" +
+      "  retryWhen(errors => errors.pipe(\n" +
+      "    tap(error => {\n" +
+      "      if (error.status === 500) {\n" +
+      "        console.log('Server error, retrying...');\n" +
+      "      } else {\n" +
+      "        throw error; // Don't retry client errors\n" +
+      "      }\n" +
+      "    }),\n" +
+      "    delay(1000)\n" +
+      "  ))\n" +
+      ").subscribe();\n" +
+      "```",
+    category: "RxJS",
+    difficulty: "hard",
+    tags: ["rxjs", "error-handling", "catcherror", "retry", "retrywhen"],
+  },
+  {
+    id: 56,
+    question:
+      "How do you implement Memory Leak Prevention in Angular? Explain subscription management strategies.",
+    answer:
+      "Memory leaks occur when subscriptions aren't properly cleaned up.\n\n" +
+      "**Problem:**\n\n" +
+      "```typescript\n" +
+      "// ❌ BAD - Memory leak!\n" +
+      "@Component({...})\n" +
+      "export class BadComponent implements OnInit {\n" +
+      "  ngOnInit() {\n" +
+      "    this.dataService.getData().subscribe(data => {\n" +
+      "      this.data = data;\n" +
+      "    });\n" +
+      "    // Subscription never cleaned up!\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Solution 1: Manual Unsubscribe:**\n\n" +
+      "```typescript\n" +
+      "import { Subscription } from 'rxjs';\n\n" +
+      "@Component({...})\n" +
+      "export class Component implements OnInit, OnDestroy {\n" +
+      "  private subscription = new Subscription();\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.subscription.add(\n" +
+      "      this.dataService.getData().subscribe(data => this.data = data)\n" +
+      "    );\n\n" +
+      "    this.subscription.add(\n" +
+      "      this.userService.getUser().subscribe(user => this.user = user)\n" +
+      "    );\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.subscription.unsubscribe(); // Cleans up all\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Solution 2: takeUntil Pattern:**\n\n" +
+      "```typescript\n" +
+      "import { Subject } from 'rxjs';\n" +
+      "import { takeUntil } from 'rxjs/operators';\n\n" +
+      "@Component({...})\n" +
+      "export class Component implements OnInit, OnDestroy {\n" +
+      "  private destroy$ = new Subject<void>();\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.dataService.getData().pipe(\n" +
+      "      takeUntil(this.destroy$)\n" +
+      "    ).subscribe(data => this.data = data);\n\n" +
+      "    this.userService.getUser().pipe(\n" +
+      "      takeUntil(this.destroy$)\n" +
+      "    ).subscribe(user => this.user = user);\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.destroy$.next();\n" +
+      "    this.destroy$.complete();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Solution 3: Async Pipe (Best):**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      '    <div *ngIf="data$ | async as data">{{ data.name }}</div>\n' +
+      '    <div *ngIf="user$ | async as user">{{ user.name }}</div>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  data$ = this.dataService.getData();\n" +
+      "  user$ = this.userService.getUser();\n" +
+      "  // async pipe auto-unsubscribes!\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Solution 4: take(1) for Single Emission:**\n\n" +
+      "```typescript\n" +
+      "import { take } from 'rxjs/operators';\n\n" +
+      "ngOnInit() {\n" +
+      "  this.http.get('/api/data').pipe(\n" +
+      "    take(1) // Auto-completes after 1 emission\n" +
+      "  ).subscribe(data => this.data = data);\n" +
+      "}\n" +
+      "```",
+    category: "Performance",
+    difficulty: "hard",
+    tags: ["memory-leaks", "subscriptions", "rxjs", "cleanup", "best-practices"],
+  },
+  {
+    id: 57,
+    question:
+      "What is AOT (Ahead-of-Time) vs JIT (Just-in-Time) compilation? What are the trade-offs?",
+    answer:
+      "**JIT (Just-in-Time) Compilation:**\n\n" +
+      "```typescript\n" +
+      "// Development mode (ng serve)\n" +
+      "// - Compiles in browser at runtime\n" +
+      "// - Slower startup\n" +
+      "// - Larger bundle (includes compiler)\n" +
+      "// - Better error messages\n" +
+      "// - Faster build time\n" +
+      "```\n\n" +
+      "**AOT (Ahead-of-Time) Compilation:**\n\n" +
+      "```typescript\n" +
+      "// Production mode (ng build --prod)\n" +
+      "// - Pre-compiled during build\n" +
+      "// - Faster startup (no compilation in browser)\n" +
+      "// - Smaller bundle (no compiler needed)\n" +
+      "// - Template errors caught at build time\n" +
+      "// - Better security (no eval)\n" +
+      "```\n\n" +
+      "**Build Commands:**\n\n" +
+      "```bash\n" +
+      "# JIT (development)\n" +
+      "ng serve\n" +
+      "ng build\n\n" +
+      "# AOT (production)\n" +
+      "ng build --configuration production  # AOT by default\n" +
+      "```\n\n" +
+      "**Benefits of AOT:**\n\n" +
+      "```typescript\n" +
+      "1. **Faster rendering**: Pre-compiled, no browser compilation\n" +
+      "2. **Smaller bundles**: ~40% smaller (no compiler)\n" +
+      "3. **Early error detection**: Template errors at build time\n" +
+      "4. **Better security**: No eval() or new Function()\n" +
+      "5. **Better tree-shaking**: Unused code removed\n" +
+      "```\n\n" +
+      "**Trade-offs:**\n\n" +
+      "```typescript\n" +
+      "// JIT\n" +
+      "+ Faster development builds\n" +
+      "+ Better error messages\n" +
+      "- Slower app startup\n" +
+      "- Larger bundles\n" +
+      "- Runtime errors in templates\n\n" +
+      "// AOT\n" +
+      "+ Production-ready\n" +
+      "+ Faster runtime\n" +
+      "+ Smaller bundles\n" +
+      "- Slower builds\n" +
+      "- Less detailed errors\n" +
+      "```",
+    category: "Build & Compilation",
+    difficulty: "intermediate",
+    tags: ["aot", "jit", "compilation", "build", "performance"],
+  },
+  {
+    id: 58,
+    question:
+      "How do you implement Progressive Web App (PWA) features in Angular? Explain Service Workers.",
+    answer:
+      "**Setup Angular PWA:**\n\n" +
+      "```bash\n" +
+      "ng add @angular/pwa\n" +
+      "```\n\n" +
+      "**Generates:**\n" +
+      "- `ngsw-config.json` - Service worker configuration\n" +
+      "- `manifest.webmanifest` - App manifest\n" +
+      "- Icons in various sizes\n\n" +
+      "**Service Worker Configuration:**\n\n" +
+      "```json\n" +
+      "// ngsw-config.json\n" +
+      "{\n" +
+      '  "index": "/index.html",\n' +
+      '  "assetGroups": [\n' +
+      "    {\n" +
+      '      "name": "app",\n' +
+      '      "installMode": "prefetch",\n' +
+      '      "resources": {\n' +
+      '        "files": ["/favicon.ico", "/index.html", "/*.css", "/*.js"]\n' +
+      "      }\n" +
+      "    },\n" +
+      "    {\n" +
+      '      "name": "assets",\n' +
+      '      "installMode": "lazy",\n' +
+      '      "updateMode": "prefetch",\n' +
+      '      "resources": {\n' +
+      '        "files": ["/assets/**"]\n' +
+      "      }\n" +
+      "    }\n" +
+      "  ],\n" +
+      '  "dataGroups": [\n' +
+      "    {\n" +
+      '      "name": "api",\n' +
+      '      "urls": ["/api/**"],\n' +
+      '      "cacheConfig": {\n' +
+      '        "maxSize": 100,\n' +
+      '        "maxAge": "1h",\n' +
+      '        "strategy": "freshness" // or "performance"\n' +
+      "      }\n" +
+      "    }\n" +
+      "  ]\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Service Worker API:**\n\n" +
+      "```typescript\n" +
+      "import { SwUpdate, SwPush } from '@angular/service-worker';\n\n" +
+      "@Component({...})\n" +
+      "export class AppComponent implements OnInit {\n" +
+      "  constructor(\n" +
+      "    private swUpdate: SwUpdate,\n" +
+      "    private swPush: SwPush\n" +
+      "  ) {}\n\n" +
+      "  ngOnInit() {\n" +
+      "    // Check for updates\n" +
+      "    if (this.swUpdate.isEnabled) {\n" +
+      "      this.swUpdate.versionUpdates.subscribe(event => {\n" +
+      "        if (event.type === 'VERSION_READY') {\n" +
+      "          if (confirm('New version available. Load?')) {\n" +
+      "            window.location.reload();\n" +
+      "          }\n" +
+      "        }\n" +
+      "      });\n\n" +
+      "      // Check every 6 hours\n" +
+      "      interval(6 * 60 * 60 * 1000).subscribe(() => {\n" +
+      "        this.swUpdate.checkForUpdate();\n" +
+      "      });\n" +
+      "    }\n\n" +
+      "    // Push notifications\n" +
+      "    if (this.swPush.isEnabled) {\n" +
+      "      this.swPush.requestSubscription({\n" +
+      "        serverPublicKey: 'YOUR_VAPID_PUBLIC_KEY'\n" +
+      "      }).then(sub => {\n" +
+      "        console.log('Subscribed:', sub);\n" +
+      "      });\n\n" +
+      "      this.swPush.messages.subscribe(message => {\n" +
+      "        console.log('Push notification:', message);\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Manifest Configuration:**\n\n" +
+      "```json\n" +
+      "// manifest.webmanifest\n" +
+      "{\n" +
+      '  "name": "My Angular PWA",\n' +
+      '  "short_name": "AngularPWA",\n' +
+      '  "theme_color": "#1976d2",\n' +
+      '  "background_color": "#fafafa",\n' +
+      '  "display": "standalone",\n' +
+      '  "scope": "./",\n' +
+      '  "start_url": "./",\n' +
+      '  "icons": [\n' +
+      "    {\n" +
+      '      "src": "assets/icons/icon-72x72.png",\n' +
+      '      "sizes": "72x72",\n' +
+      '      "type": "image/png"\n' +
+      "    }\n" +
+      "  ]\n" +
+      "}\n" +
+      "```",
+    category: "PWA",
+    difficulty: "hard",
+    tags: ["pwa", "service-workers", "offline", "push-notifications"],
+  },
+  {
+    id: 59,
+    question: "What is the Angular Compiler? Explain Ivy vs View Engine.",
+    answer:
+      "**Ivy (Angular 9+):**\n\n" +
+      "Modern compiler and runtime, enabled by default.\n\n" +
+      "```typescript\n" +
+      "**Ivy Benefits:**\n\n" +
+      "1. **Smaller bundles**: ~40% smaller\n" +
+      "2. **Faster compilation**: Incremental compilation\n" +
+      "3. **Better debugging**: More readable generated code\n" +
+      "4. **Tree-shakeable**: Removes unused Angular code\n" +
+      "5. **Backward compatible**: Works with View Engine libs\n" +
+      "6. **Locality**: Compiles components independently\n" +
+      "```\n\n" +
+      "**Ivy Compilation:**\n\n" +
+      "```typescript\n" +
+      "// Before (View Engine)\n" +
+      "@Component({\n" +
+      "  template: '<h1>{{ title }}</h1>'\n" +
+      "})\n" +
+      "// Generated: Large, complex factory functions\n\n" +
+      "// After (Ivy)\n" +
+      "@Component({\n" +
+      "  template: '<h1>{{ title }}</h1>'\n" +
+      "})\n" +
+      "// Generated: Instruction set (more efficient)\n" +
+      "// ɵɵelementStart(0, 'h1');\n" +
+      "// ɵɵtext(1, title);\n" +
+      "// ɵɵelementEnd();\n" +
+      "```\n\n" +
+      "**Key Differences:**\n\n" +
+      "```typescript\n" +
+      "// View Engine (Legacy)\n" +
+      "- Global compilation\n" +
+      "- Larger bundles\n" +
+      "- Complex metadata\n" +
+      "- Slower builds\n\n" +
+      "// Ivy (Modern)\n" +
+      "- Component-level compilation\n" +
+      "- Smaller bundles\n" +
+      "- Simpler metadata\n" +
+      "- Faster builds\n" +
+      "- Better tree-shaking\n" +
+      "```\n\n" +
+      "**Migration:**\n\n" +
+      "```bash\n" +
+      "# Angular 9+ uses Ivy by default\n" +
+      "# Check angular.json\n" +
+      "{\n" +
+      '  "projects": {\n' +
+      '    "app": {\n' +
+      '      "architect": {\n' +
+      '        "build": {\n' +
+      '          "options": {\n' +
+      '            "aot": true // Ivy enabled\n' +
+      "          }\n" +
+      "        }\n" +
+      "      }\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Compiler",
+    difficulty: "hard",
+    tags: ["ivy", "compiler", "view-engine", "angular-internals"],
+  },
+  {
+    id: 60,
+    question: "How do you implement Standalone Components? What are the benefits over NgModules?",
+    answer:
+      "Standalone components (Angular 14+) don't require NgModules.\n\n" +
+      "**Basic Standalone Component:**\n\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "import { FormsModule } from '@angular/forms';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-user',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, FormsModule], // Import directly!\n" +
+      "  template: `\n" +
+      '    <div *ngIf="user">\n' +
+      '      <input [(ngModel)]="user.name" />\n' +
+      "      <p>{{ user.name }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserComponent {\n" +
+      "  user = { name: 'John' };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Bootstrap Standalone App:**\n\n" +
+      "```typescript\n" +
+      "// main.ts\n" +
+      "import { bootstrapApplication } from '@angular/platform-browser';\n" +
+      "import { provideRouter } from '@angular/router';\n" +
+      "import { provideHttpClient } from '@angular/common/http';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideRouter(routes),\n" +
+      "    provideHttpClient(),\n" +
+      "    provideAnimations()\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Routing with Standalone:**\n\n" +
+      "```typescript\n" +
+      "// routes.ts\n" +
+      "import { Routes } from '@angular/router';\n\n" +
+      "export const routes: Routes = [\n" +
+      "  {\n" +
+      "    path: 'home',\n" +
+      "    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)\n" +
+      "  },\n" +
+      "  {\n" +
+      "    path: 'users',\n" +
+      "    loadChildren: () => import('./users/routes').then(m => m.USER_ROUTES)\n" +
+      "  }\n" +
+      "];\n" +
+      "```\n\n" +
+      "**Benefits:**\n\n" +
+      "```typescript\n" +
+      "1. **Simpler**: No NgModule boilerplate\n" +
+      "2. **Better tree-shaking**: Only import what you use\n" +
+      "3. **Easier lazy loading**: Direct component imports\n" +
+      "4. **Less coupling**: Self-contained components\n" +
+      "5. **Easier testing**: No module configuration\n" +
+      "```\n\n" +
+      "**Migration:**\n\n" +
+      "```bash\n" +
+      "# Angular CLI can migrate automatically\n" +
+      "ng generate @angular/core:standalone\n" +
+      "```",
+    category: "Architecture",
+    difficulty: "intermediate",
+    tags: ["standalone-components", "angular-14", "modules", "simplification"],
+  },
+  {
+    id: 61,
+    question:
+      "What is the difference between ViewChild and ContentChild? Explain @ViewChildren vs @ContentChildren.",
+    answer:
+      "ViewChild/ContentChild query different parts of the component tree.\n\n" +
+      "**@ViewChild - Query Own Template:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent',\n" +
+      "  template: `\n" +
+      "    <h1 #title>Title</h1>\n" +
+      "    <input #nameInput />\n" +
+      "    <app-child #childComp></app-child>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentComponent implements AfterViewInit {\n" +
+      "  @ViewChild('title') titleRef: ElementRef;\n" +
+      "  @ViewChild('nameInput') inputRef: ElementRef;\n" +
+      "  @ViewChild(ChildComponent) child: ChildComponent;\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log(this.titleRef.nativeElement.textContent); // 'Title'\n" +
+      "    this.inputRef.nativeElement.focus();\n" +
+      "    this.child.someMethod();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**@ContentChild - Query Projected Content:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-card',\n" +
+      "  template: `\n" +
+      '    <div class="card">\n' +
+      "      <ng-content></ng-content>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class CardComponent implements AfterContentInit {\n" +
+      "  @ContentChild('cardTitle') title: ElementRef;\n\n" +
+      "  ngAfterContentInit() {\n" +
+      "    console.log(this.title.nativeElement.textContent);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "<app-card>\n" +
+      "  <h2 #cardTitle>My Title</h2>\n" +
+      "  <p>Content here</p>\n" +
+      "</app-card>\n" +
+      "```\n\n" +
+      "**@ViewChildren vs @ContentChildren:**\n\n" +
+      "```typescript\n" +
+      "import { QueryList } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      '    <app-item *ngFor="let item of items">{{ item }}</app-item>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class ParentComponent implements AfterViewInit {\n" +
+      "  // Query ALL in template\n" +
+      "  @ViewChildren(ItemComponent) viewItems: QueryList<ItemComponent>;\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log(this.viewItems.length); // Number of items\n" +
+      "    this.viewItems.forEach(item => item.highlight());\n\n" +
+      "    // Listen to changes\n" +
+      "    this.viewItems.changes.subscribe(items => {\n" +
+      "      console.log('Items changed:', items.length);\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// @ContentChildren - query ALL projected content\n" +
+      "@Component({\n" +
+      "  selector: 'app-tabs',\n" +
+      "  template: '<ng-content></ng-content>'\n" +
+      "})\n" +
+      "export class TabsComponent implements AfterContentInit {\n" +
+      "  @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;\n\n" +
+      "  ngAfterContentInit() {\n" +
+      "    this.tabs.first.activate(); // Activate first tab\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "<app-tabs>\n" +
+      "  <app-tab>Tab 1</app-tab>\n" +
+      "  <app-tab>Tab 2</app-tab>\n" +
+      "  <app-tab>Tab 3</app-tab>\n" +
+      "</app-tabs>\n" +
+      "```\n\n" +
+      "**Key Differences:**\n" +
+      "- ViewChild: Component's own template\n" +
+      "- ContentChild: Projected content (ng-content)\n" +
+      "- Timing: AfterViewInit vs AfterContentInit",
+    category: "Component Queries",
+    difficulty: "intermediate",
+    tags: ["viewchild", "contentchild", "queries", "lifecycle"],
+  },
+  {
+    id: 62,
+    question: "How do you implement Custom Directives? Create a structural directive example.",
+    answer:
+      "**Attribute Directive (Modify Element):**\n\n" +
+      "```typescript\n" +
+      "import { Directive, ElementRef, HostListener, Input } from '@angular/core';\n\n" +
+      "@Directive({\n" +
+      "  selector: '[appHighlight]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class HighlightDirective {\n" +
+      "  @Input() appHighlight = 'yellow';\n" +
+      "  @Input() defaultColor = 'transparent';\n\n" +
+      "  constructor(private el: ElementRef) {\n" +
+      "    this.el.nativeElement.style.backgroundColor = this.defaultColor;\n" +
+      "  }\n\n" +
+      "  @HostListener('mouseenter') onMouseEnter() {\n" +
+      "    this.highlight(this.appHighlight);\n" +
+      "  }\n\n" +
+      "  @HostListener('mouseleave') onMouseLeave() {\n" +
+      "    this.highlight(this.defaultColor);\n" +
+      "  }\n\n" +
+      "  private highlight(color: string) {\n" +
+      "    this.el.nativeElement.style.backgroundColor = color;\n" +
+      "  }\n" +
+      "}\n\n" +
+      '// Usage: <p appHighlight="lightblue">Hover me</p>\n' +
+      "```\n\n" +
+      "**Structural Directive (Modify DOM Structure):**\n\n" +
+      "```typescript\n" +
+      "import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';\n\n" +
+      "// Custom *ngIf\n" +
+      "@Directive({\n" +
+      "  selector: '[appIf]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class IfDirective {\n" +
+      "  private hasView = false;\n\n" +
+      "  constructor(\n" +
+      "    private templateRef: TemplateRef<any>,\n" +
+      "    private viewContainer: ViewContainerRef\n" +
+      "  ) {}\n\n" +
+      "  @Input() set appIf(condition: boolean) {\n" +
+      "    if (condition && !this.hasView) {\n" +
+      "      this.viewContainer.createEmbeddedView(this.templateRef);\n" +
+      "      this.hasView = true;\n" +
+      "    } else if (!condition && this.hasView) {\n" +
+      "      this.viewContainer.clear();\n" +
+      "      this.hasView = false;\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n\n" +
+      '// Usage: <div *appIf="show">Content</div>\n' +
+      "```\n\n" +
+      "**Advanced: Custom *ngFor:**\n\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[appRepeat]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class RepeatDirective {\n" +
+      "  constructor(\n" +
+      "    private templateRef: TemplateRef<any>,\n" +
+      "    private viewContainer: ViewContainerRef\n" +
+      "  ) {}\n\n" +
+      "  @Input() set appRepeat(times: number) {\n" +
+      "    this.viewContainer.clear();\n" +
+      "    for (let i = 0; i < times; i++) {\n" +
+      "      this.viewContainer.createEmbeddedView(this.templateRef, {\n" +
+      "        $implicit: i,\n" +
+      "        index: i\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage:\n" +
+      '<div *appRepeat="5; let i = index">\n' +
+      "  Item {{ i }}\n" +
+      "</div>\n" +
+      "// Renders: Item 0, Item 1, Item 2, Item 3, Item 4\n" +
+      "```\n\n" +
+      "**Permission Directive:**\n\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[appHasPermission]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class HasPermissionDirective {\n" +
+      "  constructor(\n" +
+      "    private templateRef: TemplateRef<any>,\n" +
+      "    private viewContainer: ViewContainerRef,\n" +
+      "    private authService: AuthService\n" +
+      "  ) {}\n\n" +
+      "  @Input() set appHasPermission(permission: string) {\n" +
+      "    if (this.authService.hasPermission(permission)) {\n" +
+      "      this.viewContainer.createEmbeddedView(this.templateRef);\n" +
+      "    } else {\n" +
+      "      this.viewContainer.clear();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage:\n" +
+      "<button *appHasPermission=\"'ADMIN'\">Delete User</button>\n" +
+      "```",
+    category: "Directives",
+    difficulty: "hard",
+    tags: ["directives", "structural-directives", "attribute-directives", "advanced"],
+  },
+  {
+    id: 63,
+    question:
+      "What is the Angular HttpInterceptor chain? How do you implement multiple interceptors?",
+    answer:
+      "Interceptors form a chain to process HTTP requests/responses.\n\n" +
+      "**Basic Interceptor:**\n\n" +
+      "```typescript\n" +
+      "import { HttpInterceptorFn } from '@angular/common/http';\n\n" +
+      "// Functional interceptor (Angular 15+)\n" +
+      "export const loggingInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  console.log('Request:', req.url);\n" +
+      "  return next(req).pipe(\n" +
+      "    tap(event => {\n" +
+      "      if (event.type === HttpEventType.Response) {\n" +
+      "        console.log('Response:', event.status);\n" +
+      "      }\n" +
+      "    })\n" +
+      "  );\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Class-Based Interceptor:**\n\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';\n\n" +
+      "@Injectable()\n" +
+      "export class AuthInterceptor implements HttpInterceptor {\n" +
+      "  constructor(private authService: AuthService) {}\n\n" +
+      "  intercept(req: HttpRequest<any>, next: HttpHandler) {\n" +
+      "    // Clone and add auth header\n" +
+      "    const token = this.authService.getToken();\n" +
+      "    if (token) {\n" +
+      "      req = req.clone({\n" +
+      "        setHeaders: {\n" +
+      "          Authorization: `Bearer ${token}`\n" +
+      "        }\n" +
+      "      });\n" +
+      "    }\n" +
+      "    return next.handle(req);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Error Handling Interceptor:**\n\n" +
+      "```typescript\n" +
+      "export const errorInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  return next(req).pipe(\n" +
+      "    catchError((error: HttpErrorResponse) => {\n" +
+      "      if (error.status === 401) {\n" +
+      "        // Redirect to login\n" +
+      "        this.router.navigate(['/login']);\n" +
+      "      } else if (error.status === 500) {\n" +
+      "        // Show error message\n" +
+      "        this.toastService.error('Server error');\n" +
+      "      }\n" +
+      "      return throwError(() => error);\n" +
+      "    })\n" +
+      "  );\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Loading Interceptor:**\n\n" +
+      "```typescript\n" +
+      "export const loadingInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  const loadingService = inject(LoadingService);\n" +
+      "  loadingService.show();\n\n" +
+      "  return next(req).pipe(\n" +
+      "    finalize(() => loadingService.hide())\n" +
+      "  );\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Register Interceptors (Order Matters!):**\n\n" +
+      "```typescript\n" +
+      "// main.ts or app.config.ts\n" +
+      "import { provideHttpClient, withInterceptors } from '@angular/common/http';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideHttpClient(\n" +
+      "      withInterceptors([\n" +
+      "        loggingInterceptor,  // 1st\n" +
+      "        authInterceptor,     // 2nd\n" +
+      "        loadingInterceptor,  // 3rd\n" +
+      "        errorInterceptor     // 4th (last)\n" +
+      "      ])\n" +
+      "    )\n" +
+      "  ]\n" +
+      "});\n\n" +
+      "// Execution order:\n" +
+      "// Request: 1 → 2 → 3 → 4 → Server\n" +
+      "// Response: Server → 4 → 3 → 2 → 1\n" +
+      "```\n\n" +
+      "**Conditional Interceptor:**\n\n" +
+      "```typescript\n" +
+      "export const cacheInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  // Only cache GET requests\n" +
+      "  if (req.method !== 'GET') {\n" +
+      "    return next(req);\n" +
+      "  }\n\n" +
+      "  const cached = cache.get(req.url);\n" +
+      "  if (cached) {\n" +
+      "    return of(cached); // Return cached response\n" +
+      "  }\n\n" +
+      "  return next(req).pipe(\n" +
+      "    tap(response => cache.set(req.url, response))\n" +
+      "  );\n" +
+      "};\n" +
+      "```",
+    category: "HTTP",
+    difficulty: "hard",
+    tags: ["interceptors", "http", "middleware", "request-response"],
+  },
+  {
+    id: 64,
+    question:
+      "How do you implement Performance Profiling in Angular? Explain Angular DevTools and profiling strategies.",
+    answer:
+      "**Angular DevTools (Chrome Extension):**\n\n" +
+      "```typescript\n" +
+      "// Install Angular DevTools extension\n" +
+      "// Features:\n" +
+      "// 1. Component Explorer - inspect component tree\n" +
+      "// 2. Profiler - record performance\n" +
+      "// 3. Change Detection - visualize CD cycles\n" +
+      "```\n\n" +
+      "**Profiling Change Detection:**\n\n" +
+      "```typescript\n" +
+      "import { enableDebugTools } from '@angular/platform-browser';\n" +
+      "import { ApplicationRef } from '@angular/core';\n\n" +
+      "// main.ts (development only)\n" +
+      "platformBrowserDynamic()\n" +
+      "  .bootstrapModule(AppModule)\n" +
+      "  .then(moduleRef => {\n" +
+      "    const appRef = moduleRef.injector.get(ApplicationRef);\n" +
+      "    const comp = appRef.components[0];\n" +
+      "    enableDebugTools(comp);\n" +
+      "  });\n\n" +
+      "// In browser console:\n" +
+      "// ng.profiler.timeChangeDetection()\n" +
+      "```\n\n" +
+      "**Performance Measurement:**\n\n" +
+      "```typescript\n" +
+      "// Using Performance API\n" +
+      "@Component({...})\n" +
+      "export class Component implements OnInit {\n" +
+      "  ngOnInit() {\n" +
+      "    performance.mark('init-start');\n" +
+      "    this.heavyOperation();\n" +
+      "    performance.mark('init-end');\n" +
+      "    performance.measure('init', 'init-start', 'init-end');\n\n" +
+      "    const measure = performance.getEntriesByName('init')[0];\n" +
+      "    console.log(`Init took ${measure.duration}ms`);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**OnPush Change Detection:**\n\n" +
+      "```typescript\n" +
+      "import { ChangeDetectionStrategy } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  changeDetection: ChangeDetectionStrategy.OnPush // Optimize!\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  // Only checks when:\n" +
+      "  // 1. @Input() changes (reference)\n" +
+      "  // 2. Event fires\n" +
+      "  // 3. Observable emits (async pipe)\n" +
+      "  // 4. Manual: changeDetectorRef.markForCheck()\n" +
+      "}\n" +
+      "```\n\n" +
+      "**TrackBy for *ngFor:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      '    <div *ngFor="let item of items; trackBy: trackById">\n' +
+      "      {{ item.name }}\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  items = [...];\n\n" +
+      "  // Prevents re-rendering unchanged items\n" +
+      "  trackById(index: number, item: any) {\n" +
+      "    return item.id; // Unique identifier\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Bundle Analysis:**\n\n" +
+      "```bash\n" +
+      "# Analyze bundle size\n" +
+      "ng build --stats-json\n" +
+      "npx webpack-bundle-analyzer dist/stats.json\n\n" +
+      "# Or use source-map-explorer\n" +
+      "npm install -g source-map-explorer\n" +
+      "ng build --source-map\n" +
+      "source-map-explorer dist/**/*.js\n" +
+      "```",
+    category: "Performance",
+    difficulty: "hard",
+    tags: ["performance", "profiling", "devtools", "optimization", "debugging"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;
