@@ -17,7 +17,7 @@ Follow these steps to create a GitHub repository and push your Angular Interview
 1. Go to [GitHub.com](https://github.com)
 2. Click the **"+"** icon in the top right → **"New repository"**
 3. Fill in the details:
-   - **Repository name**: `angular-interview-prep`
+   - **Repository name**: `frontend-interview-prep`
    - **Description**: `Professional Angular senior interview preparation with 100 curated questions`
    - **Visibility**: Choose Public or Private
    - **DO NOT** check "Add README" (we already have one)
@@ -59,7 +59,7 @@ git commit -m "Initial commit: Angular Senior Interview Prep
 
 # Add your GitHub repository as remote
 # Replace YOUR_USERNAME and REPO_NAME with your actual values
-git remote add origin https://github.com/YOUR_USERNAME/angular-interview-prep.git
+git remote add origin https://github.com/YOUR_USERNAME/frontend-interview-prep.git
 
 # Push to GitHub
 git branch -M main
@@ -132,7 +132,7 @@ Go to your repository on GitHub and add these topics:
 
 1. Go to repository Settings → Pages
 2. Source: GitHub Actions
-3. Your site will be available at: `https://YOUR_USERNAME.github.io/angular-interview-prep`
+3. Your site will be available at: `https://YOUR_USERNAME.github.io/frontend-interview-prep`
 
 ---
 
@@ -165,7 +165,7 @@ After deployment, update your README.md badges:
 
 ```markdown
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://your-deployment-url.vercel.app)
-[![GitHub Stars](https://img.shields.io/github/stars/YOUR_USERNAME/angular-interview-prep)](https://github.com/YOUR_USERNAME/angular-interview-prep)
+[![GitHub Stars](https://img.shields.io/github/stars/YOUR_USERNAME/frontend-interview-prep)](https://github.com/YOUR_USERNAME/frontend-interview-prep)
 [![Test Coverage](https://img.shields.io/badge/tests-49%20passing-brightgreen)]()
 ```
 
@@ -232,7 +232,7 @@ git commit -m "Remove node_modules"
 ## 🎉 Success!
 
 Once pushed, your repository will be live at:
-**https://github.com/YOUR_USERNAME/angular-interview-prep**
+**https://github.com/YOUR_USERNAME/frontend-interview-prep**
 
 Share it with your network and help others prepare for their Angular interviews!
 

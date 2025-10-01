@@ -17,25 +17,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Run ESLint
         run: pnpm lint
-      
+
       - name: Check formatting
         run: pnpm format:check
-      
+
       - name: TypeScript type check
         run: pnpm type-check
 
@@ -47,22 +47,22 @@ jobs:
         node-version: [18, 20]
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Run tests
         run: pnpm test:coverage
-      
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         if: matrix.node-version == 20
@@ -77,22 +77,22 @@ jobs:
     needs: [quality, test]
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Build application
         run: pnpm build
-      
+
       - name: Analyze bundle size
         run: |
           echo "📦 Bundle Size Analysis:"
@@ -100,7 +100,7 @@ jobs:
           echo ""
           echo "📊 Asset Breakdown:"
           ls -lh dist/assets/
-      
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -114,22 +114,22 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Build
         run: pnpm build
-      
+
       - name: Run Lighthouse
         uses: treosh/lighthouse-ci-action@v11
         with:
@@ -144,23 +144,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Run security audit
         run: pnpm audit --audit-level=moderate
         continue-on-error: true
-      
+
       - name: Check for outdated dependencies
         run: pnpm outdated || true
 
@@ -171,22 +171,22 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Build
         run: pnpm build
-      
+
       - name: Deploy to Vercel Preview
         uses: amondnet/vercel-action@v25
         if: env.VERCEL_TOKEN != ''
@@ -205,25 +205,25 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
       name: production
-      url: https://angular-interview-prep.vercel.app
+      url: https://frontend-interview-prep.vercel.app
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Build
         run: pnpm build
-      
+
       - name: Deploy to Vercel Production
         uses: amondnet/vercel-action@v25
         if: env.VERCEL_TOKEN != ''
@@ -231,8 +231,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
+          vercel-args: "--prod"
           scope: ${{ secrets.VERCEL_ORG_ID }}
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-

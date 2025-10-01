@@ -1,5 +1,5 @@
 {
-  "name": "angular-interview-prep",
+  "name": "frontend-interview-prep",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -8,12 +8,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/htirawi/angular-interview-prep.git"
+    "url": "https://github.com/htirawi/frontend-interview-prep.git"
   },
   "bugs": {
-    "url": "https://github.com/htirawi/angular-interview-prep/issues"
+    "url": "https://github.com/htirawi/frontend-interview-prep/issues"
   },
-  "homepage": "https://github.com/htirawi/angular-interview-prep#readme",
+  "homepage": "https://github.com/htirawi/frontend-interview-prep#readme",
   "keywords": [
     "angular",
     "interview",

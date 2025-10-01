@@ -110,10 +110,10 @@ The `.github/workflows/deploy.yml` file handles automatic deployment!
 
 ```bash
 # Build image
-docker build -t angular-interview-prep .
+docker build -t frontend-interview-prep .
 
 # Run container
-docker run -p 3000:80 angular-interview-prep
+docker run -p 3000:80 frontend-interview-prep
 
 # Access at http://localhost:3000
 ```
@@ -124,32 +124,32 @@ docker run -p 3000:80 angular-interview-prep
 
 ```bash
 # Tag image
-docker tag angular-interview-prep username/angular-interview-prep
+docker tag frontend-interview-prep username/frontend-interview-prep
 
 # Push to Docker Hub
-docker push username/angular-interview-prep
+docker push username/frontend-interview-prep
 
 # Pull and run anywhere
-docker pull username/angular-interview-prep
-docker run -d -p 80:80 username/angular-interview-prep
+docker pull username/frontend-interview-prep
+docker run -d -p 80:80 username/frontend-interview-prep
 ```
 
 #### AWS ECS
 
 ```bash
 # Tag for ECR
-docker tag angular-interview-prep:latest AWS_ACCOUNT.dkr.ecr.region.amazonaws.com/angular-interview-prep:latest
+docker tag frontend-interview-prep:latest AWS_ACCOUNT.dkr.ecr.region.amazonaws.com/frontend-interview-prep:latest
 
 # Push to ECR
-docker push AWS_ACCOUNT.dkr.ecr.region.amazonaws.com/angular-interview-prep:latest
+docker push AWS_ACCOUNT.dkr.ecr.region.amazonaws.com/frontend-interview-prep:latest
 ```
 
 #### Google Cloud Run
 
 ```bash
 # Build and deploy
-gcloud builds submit --tag gcr.io/PROJECT_ID/angular-interview-prep
-gcloud run deploy --image gcr.io/PROJECT_ID/angular-interview-prep --platform managed
+gcloud builds submit --tag gcr.io/PROJECT_ID/frontend-interview-prep
+gcloud run deploy --image gcr.io/PROJECT_ID/frontend-interview-prep --platform managed
 ```
 
 ---

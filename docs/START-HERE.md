@@ -35,7 +35,7 @@ pnpm dev
 ### Step 2: Create GitHub Repository (2 minutes)
 
 1. Go to https://github.com/new
-2. **Repository name**: `angular-interview-prep`
+2. **Repository name**: `frontend-interview-prep`
 3. **Description**: `Professional Angular senior interview preparation with 100 curated questions`
 4. **Visibility**: Public (recommended) or Private
 5. ⚠️ **DO NOT** check "Add README" or "Add .gitignore" (we already have them)
@@ -58,7 +58,7 @@ pnpm dev
 git init
 git add .
 git commit -m "Initial commit: Angular Senior Interview Prep with 100 questions"
-git remote add origin https://github.com/YOUR_USERNAME/angular-interview-prep.git
+git remote add origin https://github.com/YOUR_USERNAME/frontend-interview-prep.git
 git branch -M main
 git push -u origin main
 ```
@@ -113,7 +113,7 @@ netlify deploy --prod
 
 Already configured! Just enable in Settings → Pages → Source: GitHub Actions
 
-✨ Live at: `https://YOUR_USERNAME.github.io/angular-interview-prep`
+✨ Live at: `https://YOUR_USERNAME.github.io/frontend-interview-prep`
 
 ---
 

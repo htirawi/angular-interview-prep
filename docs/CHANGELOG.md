@@ -149,4 +149,4 @@ When making changes:
 
 ---
 
-**Questions about a specific version?** Check the [commit history](https://github.com/htirawi/angular-interview-prep/commits/main) or [release notes](https://github.com/htirawi/angular-interview-prep/releases).
+**Questions about a specific version?** Check the [commit history](https://github.com/htirawi/frontend-interview-prep/commits/main) or [release notes](https://github.com/htirawi/frontend-interview-prep/releases).

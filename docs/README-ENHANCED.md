@@ -2,8 +2,8 @@
 
 > A professional, production-ready interview preparation tool with 100 essential Angular questions for senior-level positions.
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/angular-interview-prep)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yourusername/angular-interview-prep)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/frontend-interview-prep)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yourusername/frontend-interview-prep)
 
 ## ✨ Features
 
@@ -122,10 +122,10 @@ Push to `main` branch - GitHub Actions will auto-deploy.
 
 ```bash
 # Build image
-docker build -t angular-interview-prep .
+docker build -t frontend-interview-prep .
 
 # Run container
-docker run -p 3000:80 angular-interview-prep
+docker run -p 3000:80 frontend-interview-prep
 ```
 
 ## 📱 PWA Support

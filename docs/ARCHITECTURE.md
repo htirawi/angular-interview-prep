@@ -3,7 +3,7 @@
 ## 📁 Professional Folder Structure
 
 ```
-angular-interview-prep/
+frontend-interview-prep/
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml              # Main CI/CD pipeline

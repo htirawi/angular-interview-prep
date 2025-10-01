@@ -145,8 +145,8 @@ netlify deploy --prod
 ### Docker
 
 ```bash
-docker build -t angular-interview-prep .
-docker run -p 3000:80 angular-interview-prep
+docker build -t frontend-interview-prep .
+docker run -p 3000:80 frontend-interview-prep
 ```
 
 ### GitHub Pages

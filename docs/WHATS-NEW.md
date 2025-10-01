@@ -549,7 +549,7 @@ Automatically tracks user interactions (privacy-focused).
 
 ## 🚀 View Your Enhanced Repository
 
-**GitHub**: https://github.com/htirawi/angular-interview-prep
+**GitHub**: https://github.com/htirawi/frontend-interview-prep
 
 **Latest commit**: `feat: senior-level professional enhancements`
 
@@ -595,7 +595,7 @@ Automatically tracks user interactions (privacy-focused).
 > 🎨 Expert UI/UX design
 > 📱 PWA installable
 >
-> Check it out: github.com/htirawi/angular-interview-prep
+> Check it out: github.com/htirawi/frontend-interview-prep
 
 ### On Your Portfolio
 
@@ -704,7 +704,7 @@ You now have:
 
 ## 🚀 What's Live on GitHub
 
-**Repository**: https://github.com/htirawi/angular-interview-prep
+**Repository**: https://github.com/htirawi/frontend-interview-prep
 
 **Latest commit**:
 

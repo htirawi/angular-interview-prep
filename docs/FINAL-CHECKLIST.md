@@ -193,7 +193,7 @@ If all boxes are checked, you're ready!
 git init
 git add .
 git commit -m "Initial commit: Angular Senior Interview Prep"
-git remote add origin https://github.com/YOUR_USERNAME/angular-interview-prep.git
+git remote add origin https://github.com/YOUR_USERNAME/frontend-interview-prep.git
 git branch -M main
 git push -u origin main
 ```

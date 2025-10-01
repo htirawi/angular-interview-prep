@@ -3,17 +3,17 @@
 > **400+ Senior-Level Questions** for Angular • React • Next.js • Redux<br/>
 > Professional study platform with routing, progress tracking, PWA support & enterprise architecture
 
-[![CI](https://github.com/htirawi/angular-interview-prep/workflows/CI/badge.svg)](https://github.com/htirawi/angular-interview-prep/actions)
-[![Tests](https://img.shields.io/badge/tests-58%20passing-brightgreen.svg)](https://github.com/htirawi/angular-interview-prep)
+[![CI](https://github.com/htirawi/frontend-interview-prep/workflows/CI/badge.svg)](https://github.com/htirawi/frontend-interview-prep/actions)
+[![Tests](https://img.shields.io/badge/tests-58%20passing-brightgreen.svg)](https://github.com/htirawi/frontend-interview-prep)
 [![TypeScript](https://img.shields.io/badge/TypeScript-89.7%25-blue.svg)](https://www.typescriptlang.org/)
-[![Coverage](https://img.shields.io/badge/coverage-70%25+-green.svg)](https://github.com/htirawi/angular-interview-prep)
+[![Coverage](https://img.shields.io/badge/coverage-70%25+-green.svg)](https://github.com/htirawi/frontend-interview-prep)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://reactjs.org/)
-[![Bundle](https://img.shields.io/badge/bundle-375KB-orange.svg)](https://github.com/htirawi/angular-interview-prep)
-[![PWA](https://img.shields.io/badge/PWA-enabled-purple.svg)](https://github.com/htirawi/angular-interview-prep)
+[![Bundle](https://img.shields.io/badge/bundle-375KB-orange.svg)](https://github.com/htirawi/frontend-interview-prep)
+[![PWA](https://img.shields.io/badge/PWA-enabled-purple.svg)](https://github.com/htirawi/frontend-interview-prep)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](.github/CONTRIBUTING.md)
 
-[**Live Demo →**](https://angular-interview-prep.vercel.app) | [**Docs →**](docs/) | [**Architecture →**](docs/ARCHITECTURE.md) | [**Contributing →**](.github/CONTRIBUTING.md)
+[**Live Demo →**](https://frontend-interview-prep.vercel.app) | [**Docs →**](docs/) | [**Architecture →**](docs/ARCHITECTURE.md) | [**Contributing →**](.github/CONTRIBUTING.md)
 
 ---
 
@@ -67,8 +67,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/angular-interview-prep.git
-cd angular-interview-prep
+git clone https://github.com/YOUR_USERNAME/frontend-interview-prep.git
+cd frontend-interview-prep
 
 # Install dependencies
 pnpm install
@@ -171,8 +171,8 @@ netlify deploy --prod
 ### Docker
 
 ```bash
-docker build -t angular-interview-prep .
-docker run -p 3000:80 angular-interview-prep
+docker build -t frontend-interview-prep .
+docker run -p 3000:80 frontend-interview-prep
 ```
 
 ### GitHub Pages

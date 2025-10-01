@@ -29,7 +29,7 @@ vercel
 
 # Follow prompts:
 # - Link to existing project? N
-# - Project name? angular-interview-prep
+# - Project name? frontend-interview-prep
 # - Directory? ./
 # - Override settings? N
 
@@ -37,7 +37,7 @@ vercel
 vercel --prod
 ```
 
-**Done!** Your site is live at: `https://angular-interview-prep.vercel.app`
+**Done!** Your site is live at: `https://frontend-interview-prep.vercel.app`
 
 ### Continuous Deployment
 
@@ -61,7 +61,7 @@ netlify init
 netlify deploy --prod
 ```
 
-**Live at**: `https://angular-interview-prep.netlify.app`
+**Live at**: `https://frontend-interview-prep.netlify.app`
 
 ---
 
@@ -71,11 +71,11 @@ Already configured with GitHub Actions!
 
 ### Enable It:
 
-1. Go to: https://github.com/htirawi/angular-interview-prep/settings/pages
+1. Go to: https://github.com/htirawi/frontend-interview-prep/settings/pages
 2. Source: **GitHub Actions**
 3. Save
 
-**Live at**: `https://htirawi.github.io/angular-interview-prep`
+**Live at**: `https://htirawi.github.io/frontend-interview-prep`
 
 Automatically deploys on every push to `main`!
 
@@ -85,10 +85,10 @@ Automatically deploys on every push to `main`!
 
 ```bash
 # Build image
-docker build -t angular-interview-prep .
+docker build -t frontend-interview-prep .
 
 # Run container
-docker run -d -p 80:80 angular-interview-prep
+docker run -d -p 80:80 frontend-interview-prep
 
 # Access at http://localhost
 ```
@@ -159,7 +159,7 @@ Shows:
 
 ### GitHub Actions
 
-https://github.com/htirawi/angular-interview-prep/actions
+https://github.com/htirawi/frontend-interview-prep/actions
 
 Shows:
 
