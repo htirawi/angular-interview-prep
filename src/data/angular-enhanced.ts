@@ -31,7 +31,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "import { Observable } from 'rxjs';\n\n" +
       "@Injectable()\n" +
       "export class AuthInterceptor implements HttpInterceptor {\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    // Clone and modify request\n" +
       "    const authReq = req.clone({\n" +
       "      setHeaders: {\n" +
@@ -88,7 +88,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "@Injectable()\n" +
       "export class AuthInterceptor implements HttpInterceptor {\n" +
       "  constructor(private authService: AuthService) {}\n\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    // Skip for login/register endpoints\n" +
       "    if (req.url.includes('/auth/')) {\n" +
       "      return next.handle(req);\n" +
@@ -116,7 +116,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "    private router: Router,\n" +
       "    private toastr: ToastrService\n" +
       "  ) {}\n\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    return next.handle(req).pipe(\n" +
       "      retry(2), // Retry failed requests twice\n" +
       "      catchError((error: HttpErrorResponse) => {\n" +
@@ -139,7 +139,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "import { tap, finalize } from 'rxjs/operators';\n\n" +
       "@Injectable()\n" +
       "export class LoggingInterceptor implements HttpInterceptor {\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    const started = Date.now();\n" +
       "    console.log(`[HTTP] ${req.method} ${req.url}`);\n\n" +
       "    return next.handle(req).pipe(\n" +
@@ -163,7 +163,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "@Injectable()\n" +
       "export class LoadingInterceptor implements HttpInterceptor {\n" +
       "  constructor(private loadingService: LoadingService) {}\n\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    this.loadingService.show();\n\n" +
       "    return next.handle(req).pipe(\n" +
       "      finalize(() => this.loadingService.hide())\n" +
@@ -175,8 +175,8 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "```typescript\n" +
       "@Injectable()\n" +
       "export class CacheInterceptor implements HttpInterceptor {\n" +
-      "  private cache = new Map<string, HttpResponse<any>>();\n\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  private cache = new Map<string, HttpResponse<unknown>>();\n\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    // Only cache GET requests\n" +
       "    if (req.method !== 'GET') {\n" +
       "      return next.handle(req);\n" +
@@ -201,7 +201,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "```typescript\n" +
       "@Injectable()\n" +
       "export class ApiInterceptor implements HttpInterceptor {\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    // Add API prefix\n" +
       "    const apiReq = req.clone({\n" +
       "      url: `https://api.myapp.com${req.url}`,\n" +
@@ -234,7 +234,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "    private authService: AuthService,\n" +
       "    private router: Router\n" +
       "  ) {}\n\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    const token = this.authService.getAccessToken();\n\n" +
       "    if (token) {\n" +
       "      req = this.addToken(req, token);\n" +
@@ -248,7 +248,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "      })\n" +
       "    );\n" +
       "  }\n\n" +
-      "  private handle401Error(req: HttpRequest<any>, next: HttpHandler) {\n" +
+      "  private handle401Error(req: HttpRequest<unknown>, next: HttpHandler) {\n" +
       "    if (!this.isRefreshing) {\n" +
       "      this.isRefreshing = true;\n" +
       "      this.refreshTokenSubject.next(null);\n\n" +
@@ -273,7 +273,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "      );\n" +
       "    }\n" +
       "  }\n\n" +
-      "  private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {\n" +
+      "  private addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {\n" +
       "    return req.clone({\n" +
       "      setHeaders: { Authorization: `Bearer ${token}` }\n" +
       "    });\n" +
@@ -5337,7 +5337,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "@Injectable()\n" +
       "export class AuthInterceptor implements HttpInterceptor {\n" +
       "  constructor(private authService: AuthService) {}\n\n" +
-      "  intercept(req: HttpRequest<any>, next: HttpHandler) {\n" +
+      "  intercept(req: HttpRequest<unknown>, next: HttpHandler) {\n" +
       "    // Clone and add auth header\n" +
       "    const token = this.authService.getToken();\n" +
       "    if (token) {\n" +
