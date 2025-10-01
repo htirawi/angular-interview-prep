@@ -7946,6 +7946,1577 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "hard",
     tags: ["ngrx", "best-practices", "patterns", "architecture"],
   },
+  {
+    id: 93,
+    question: "What is NgRx Data (Entity Data Service)? How does it simplify CRUD operations?",
+    answer:
+      "NgRx Data automates entity CRUD operations without writing actions/reducers/effects.\n\n" +
+      "**Setup:**\n\n" +
+      "```bash\n" +
+      "npm install @ngrx/data\n" +
+      "```\n\n" +
+      "**Define Entity Metadata:**\n\n" +
+      "```typescript\n" +
+      "import { EntityMetadataMap } from '@ngrx/data';\n\n" +
+      "const entityMetadata: EntityMetadataMap = {\n" +
+      "  User: {\n" +
+      "    sortComparer: (a, b) => a.name.localeCompare(b.name)\n" +
+      "  },\n" +
+      "  Product: {},\n" +
+      "  Order: {}\n" +
+      "};\n\n" +
+      "export const entityConfig = {\n" +
+      "  entityMetadata\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Register:**\n\n" +
+      "```typescript\n" +
+      "import { provideEntityData, withEffects } from '@ngrx/data';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideStore(),\n" +
+      "    provideEffects(),\n" +
+      "    provideEntityData(entityConfig, withEffects())\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Create Entity Service:**\n\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class UserService extends EntityCollectionServiceBase<User> {\n" +
+      "  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {\n" +
+      "    super('User', serviceElementsFactory);\n" +
+      "  }\n\n" +
+      "  // Automatic methods available:\n" +
+      "  // - getAll()\n" +
+      "  // - getByKey(id)\n" +
+      "  // - add(user)\n" +
+      "  // - update(user)\n" +
+      "  // - delete(id)\n" +
+      "  // - upsert(user)\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Use in Component:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class UsersComponent implements OnInit {\n" +
+      "  users$ = this.userService.entities$;\n" +
+      "  loading$ = this.userService.loading$;\n\n" +
+      "  constructor(private userService: UserService) {}\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.userService.getAll(); // Auto HTTP GET /api/users\n" +
+      "  }\n\n" +
+      "  addUser(user: User) {\n" +
+      "    this.userService.add(user); // Auto HTTP POST /api/users\n" +
+      "  }\n\n" +
+      "  updateUser(user: User) {\n" +
+      "    this.userService.update(user); // Auto HTTP PUT /api/users/:id\n" +
+      "  }\n\n" +
+      "  deleteUser(id: number) {\n" +
+      "    this.userService.delete(id); // Auto HTTP DELETE /api/users/:id\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Custom Data Service:**\n\n" +
+      "```typescript\n" +
+      "import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data';\n\n" +
+      "@Injectable()\n" +
+      "export class CustomUserDataService extends DefaultDataService<User> {\n" +
+      "  constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {\n" +
+      "    super('User', http, httpUrlGenerator);\n" +
+      "  }\n\n" +
+      "  // Override getAll to use different endpoint\n" +
+      "  override getAll(): Observable<User[]> {\n" +
+      "    return this.http.get<User[]>('/custom/api/users');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- No actions/reducers/effects boilerplate\n" +
+      "- Automatic CRUD operations\n" +
+      "- Optimistic updates\n" +
+      "- Cache management\n" +
+      "- Perfect for standard REST APIs",
+    category: "NgRx Data",
+    difficulty: "hard",
+    tags: ["ngrx", "ngrx-data", "entity-services", "crud", "automation"],
+  },
+  {
+    id: 94,
+    question: "What are Meta-Reducers in NgRx? Provide logging and undo/redo examples.",
+    answer:
+      "Meta-reducers intercept actions before they reach regular reducers.\n\n" +
+      "**Logging Meta-Reducer:**\n\n" +
+      "```typescript\n" +
+      "import { ActionReducer, MetaReducer } from '@ngrx/store';\n\n" +
+      "export function logger(reducer: ActionReducer<any>): ActionReducer<any> {\n" +
+      "  return (state, action) => {\n" +
+      "    console.log('State before:', state);\n" +
+      "    console.log('Action:', action);\n\n" +
+      "    const nextState = reducer(state, action);\n\n" +
+      "    console.log('State after:', nextState);\n" +
+      "    return nextState;\n" +
+      "  };\n" +
+      "}\n\n" +
+      "// Register\n" +
+      "export const metaReducers: MetaReducer<AppState>[] = [\n" +
+      "  logger\n" +
+      "];\n\n" +
+      "provideStore(\n" +
+      "  reducers,\n" +
+      "  { metaReducers }\n" +
+      ");\n" +
+      "```\n\n" +
+      "**LocalStorage Sync Meta-Reducer:**\n\n" +
+      "```typescript\n" +
+      "export function localStorageSync(reducer: ActionReducer<AppState>): ActionReducer<AppState> {\n" +
+      "  return (state, action) => {\n" +
+      "    // Run reducer\n" +
+      "    const nextState = reducer(state, action);\n\n" +
+      "    // Save to localStorage\n" +
+      "    if (action.type !== '@ngrx/store/init') {\n" +
+      "      localStorage.setItem('appState', JSON.stringify(nextState));\n" +
+      "    }\n\n" +
+      "    return nextState;\n" +
+      "  };\n" +
+      "}\n\n" +
+      "// Load from localStorage on init\n" +
+      "export function getInitialState(): AppState {\n" +
+      "  const saved = localStorage.getItem('appState');\n" +
+      "  return saved ? JSON.parse(saved) : undefined;\n" +
+      "}\n\n" +
+      "provideStore(\n" +
+      "  reducers,\n" +
+      "  {\n" +
+      "    metaReducers: [localStorageSync],\n" +
+      "    initialState: getInitialState()\n" +
+      "  }\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Undo/Redo Meta-Reducer:**\n\n" +
+      "```typescript\n" +
+      "interface UndoableState<T> {\n" +
+      "  past: T[];\n" +
+      "  present: T;\n" +
+      "  future: T[];\n" +
+      "}\n\n" +
+      "export function undoable<T>(reducer: ActionReducer<T>): ActionReducer<UndoableState<T>> {\n" +
+      "  const initialState: UndoableState<T> = {\n" +
+      "    past: [],\n" +
+      "    present: reducer(undefined, { type: '@ngrx/store/init' }),\n" +
+      "    future: []\n" +
+      "  };\n\n" +
+      "  return (state = initialState, action) => {\n" +
+      "    const { past, present, future } = state;\n\n" +
+      "    switch (action.type) {\n" +
+      "      case 'UNDO':\n" +
+      "        if (past.length === 0) return state;\n" +
+      "        return {\n" +
+      "          past: past.slice(0, past.length - 1),\n" +
+      "          present: past[past.length - 1],\n" +
+      "          future: [present, ...future]\n" +
+      "        };\n\n" +
+      "      case 'REDO':\n" +
+      "        if (future.length === 0) return state;\n" +
+      "        return {\n" +
+      "          past: [...past, present],\n" +
+      "          present: future[0],\n" +
+      "          future: future.slice(1)\n" +
+      "        };\n\n" +
+      "      default:\n" +
+      "        const nextPresent = reducer(present, action);\n" +
+      "        if (present === nextPresent) return state;\n\n" +
+      "        return {\n" +
+      "          past: [...past, present],\n" +
+      "          present: nextPresent,\n" +
+      "          future: []\n" +
+      "        };\n" +
+      "    }\n" +
+      "  };\n" +
+      "}\n" +
+      "```",
+    category: "NgRx Meta-Reducers",
+    difficulty: "hard",
+    tags: ["ngrx", "meta-reducers", "undo-redo", "middleware"],
+  },
+  {
+    id: 95,
+    question:
+      "How do you test NgRx? Provide examples for Actions, Reducers, Effects, and Selectors.",
+    answer:
+      "**Testing Reducers:**\n\n" +
+      "```typescript\n" +
+      "import { usersReducer, initialState } from './users.reducer';\n" +
+      "import { UsersActions } from './users.actions';\n\n" +
+      "describe('UsersReducer', () => {\n" +
+      "  it('should return initial state', () => {\n" +
+      "    const state = usersReducer(undefined, { type: 'Unknown' });\n" +
+      "    expect(state).toEqual(initialState);\n" +
+      "  });\n\n" +
+      "  it('should set loading on loadUsers', () => {\n" +
+      "    const action = UsersActions.loadUsers();\n" +
+      "    const state = usersReducer(initialState, action);\n\n" +
+      "    expect(state.loading).toBe(true);\n" +
+      "    expect(state.error).toBeNull();\n" +
+      "  });\n\n" +
+      "  it('should add users on loadUsersSuccess', () => {\n" +
+      "    const users = [{ id: 1, name: 'John' }];\n" +
+      "    const action = UsersActions.loadUsersSuccess({ users });\n" +
+      "    const state = usersReducer(initialState, action);\n\n" +
+      "    expect(state.users).toEqual(users);\n" +
+      "    expect(state.loading).toBe(false);\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Testing Selectors:**\n\n" +
+      "```typescript\n" +
+      "import { selectAllUsers, selectActiveUsers } from './users.selectors';\n\n" +
+      "describe('Users Selectors', () => {\n" +
+      "  const state = {\n" +
+      "    users: {\n" +
+      "      users: [\n" +
+      "        { id: 1, name: 'John', active: true },\n" +
+      "        { id: 2, name: 'Jane', active: false }\n" +
+      "      ]\n" +
+      "    }\n" +
+      "  };\n\n" +
+      "  it('should select all users', () => {\n" +
+      "    const result = selectAllUsers(state);\n" +
+      "    expect(result.length).toBe(2);\n" +
+      "  });\n\n" +
+      "  it('should select active users', () => {\n" +
+      "    const result = selectActiveUsers(state);\n" +
+      "    expect(result.length).toBe(1);\n" +
+      "    expect(result[0].name).toBe('John');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Testing Effects:**\n\n" +
+      "```typescript\n" +
+      "import { TestBed } from '@angular/core/testing';\n" +
+      "import { provideMockActions } from '@ngrx/effects/testing';\n" +
+      "import { Observable, of, throwError } from 'rxjs';\n" +
+      "import { UsersEffects } from './users.effects';\n\n" +
+      "describe('UsersEffects', () => {\n" +
+      "  let actions$: Observable<any>;\n" +
+      "  let effects: UsersEffects;\n" +
+      "  let httpMock: jasmine.SpyObj<HttpClient>;\n\n" +
+      "  beforeEach(() => {\n" +
+      "    httpMock = jasmine.createSpyObj('HttpClient', ['get', 'post']);\n\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      providers: [\n" +
+      "        UsersEffects,\n" +
+      "        provideMockActions(() => actions$),\n" +
+      "        { provide: HttpClient, useValue: httpMock }\n" +
+      "      ]\n" +
+      "    });\n\n" +
+      "    effects = TestBed.inject(UsersEffects);\n" +
+      "  });\n\n" +
+      "  it('should return loadUsersSuccess on success', (done) => {\n" +
+      "    const users = [{ id: 1, name: 'John' }];\n" +
+      "    httpMock.get.and.returnValue(of(users));\n\n" +
+      "    actions$ = of(UsersActions.loadUsers());\n\n" +
+      "    effects.loadUsers$.subscribe(action => {\n" +
+      "      expect(action).toEqual(UsersActions.loadUsersSuccess({ users }));\n" +
+      "      done();\n" +
+      "    });\n" +
+      "  });\n\n" +
+      "  it('should return loadUsersFailure on error', (done) => {\n" +
+      "    const error = new Error('Failed');\n" +
+      "    httpMock.get.and.returnValue(throwError(() => error));\n\n" +
+      "    actions$ = of(UsersActions.loadUsers());\n\n" +
+      "    effects.loadUsers$.subscribe(action => {\n" +
+      "      expect(action.type).toBe('[Users API] Load Users Failure');\n" +
+      "      done();\n" +
+      "    });\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Testing with MockStore:**\n\n" +
+      "```typescript\n" +
+      "import { provideMockStore, MockStore } from '@ngrx/store/testing';\n\n" +
+      "describe('UsersComponent', () => {\n" +
+      "  let store: MockStore;\n" +
+      "  const initialState = { users: [] };\n\n" +
+      "  beforeEach(() => {\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      providers: [provideMockStore({ initialState })]\n" +
+      "    });\n\n" +
+      "    store = TestBed.inject(MockStore);\n" +
+      "  });\n\n" +
+      "  it('should dispatch loadUsers on init', () => {\n" +
+      "    spyOn(store, 'dispatch');\n" +
+      "    const component = new UsersComponent(store);\n" +
+      "    component.ngOnInit();\n\n" +
+      "    expect(store.dispatch).toHaveBeenCalledWith(UsersActions.loadUsers());\n" +
+      "  });\n" +
+      "});\n" +
+      "```",
+    category: "NgRx Testing",
+    difficulty: "hard",
+    tags: ["ngrx", "testing", "unit-tests", "jasmine"],
+  },
+  {
+    id: 96,
+    question:
+      "What are Angular Signals? Explain signal(), computed(), and effect() with signal-based change detection.",
+    answer:
+      "Signals are Angular's new reactive primitives for fine-grained reactivity.\n\n" +
+      "**Basic Signals:**\n\n" +
+      "```typescript\n" +
+      "import { Component, signal, computed, effect } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    <p>Count: {{ count() }}</p>\n" +
+      "    <p>Double: {{ doubleCount() }}</p>\n" +
+      '    <button (click)="increment()">+1</button>\n' +
+      '    <button (click)="reset()">Reset</button>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class CounterComponent {\n" +
+      "  // Writable signal\n" +
+      "  count = signal(0);\n\n" +
+      "  // Computed signal (derived, read-only)\n" +
+      "  doubleCount = computed(() => this.count() * 2);\n" +
+      "  isEven = computed(() => this.count() % 2 === 0);\n\n" +
+      "  // Effect (side effects)\n" +
+      "  constructor() {\n" +
+      "    effect(() => {\n" +
+      "      console.log('Count changed to:', this.count());\n" +
+      "      // Runs automatically when count changes\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  // Update signal\n" +
+      "  increment() {\n" +
+      "    this.count.update(value => value + 1);\n" +
+      "  }\n\n" +
+      "  // Set signal\n" +
+      "  reset() {\n" +
+      "    this.count.set(0);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Signal-Based Change Detection:**\n\n" +
+      "```typescript\n" +
+      "// Traditional (Zone.js)\n" +
+      "- Checks entire component tree on every event\n" +
+      "- Uses monkey-patched async operations\n" +
+      "- Can be inefficient\n\n" +
+      "// Signal-Based (Angular 16+)\n" +
+      "- Only updates dependent components\n" +
+      "- Fine-grained reactivity\n" +
+      "- No Zone.js needed\n" +
+      "- Better performance\n" +
+      "```\n\n" +
+      "**Complex Computed Signals:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  firstName = signal('John');\n" +
+      "  lastName = signal('Doe');\n" +
+      "  age = signal(25);\n\n" +
+      "  // Computed from multiple signals\n" +
+      "  fullName = computed(() => `${this.firstName()} ${this.lastName()}`);\n\n" +
+      "  // Conditional computed\n" +
+      "  canVote = computed(() => this.age() >= 18);\n" +
+      "  status = computed(() => \n" +
+      "    this.age() < 18 ? 'Minor' : \n" +
+      "    this.age() < 65 ? 'Adult' : 'Senior'\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Effects with Cleanup:**\n\n" +
+      "```typescript\n" +
+      "import { effect } from '@angular/core';\n\n" +
+      "constructor() {\n" +
+      "  effect((onCleanup) => {\n" +
+      "    const count = this.count();\n" +
+      "    \n" +
+      "    // Set up side effect\n" +
+      "    const timer = setInterval(() => {\n" +
+      "      console.log('Current count:', count);\n" +
+      "    }, 1000);\n\n" +
+      "    // Cleanup\n" +
+      "    onCleanup(() => clearInterval(timer));\n" +
+      "  });\n" +
+      "}\n" +
+      "```",
+    category: "Signals Basics",
+    difficulty: "hard",
+    tags: ["signals", "computed", "effect", "angular-16", "reactivity"],
+  },
+  {
+    id: 97,
+    question:
+      "What are Signal Inputs and Outputs? Explain input(), input.required(), and output().",
+    answer:
+      "Signal inputs/outputs provide type-safe, signal-based component communication.\n\n" +
+      "**Signal Inputs (Angular 17.1+):**\n\n" +
+      "```typescript\n" +
+      "import { Component, input, computed } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-card',\n" +
+      "  template: `\n" +
+      '    <div class="card">\n' +
+      "      <h2>{{ fullName() }}</h2>\n" +
+      "      <p>{{ email() }}</p>\n" +
+      '      <span [class.active]="isActive()">Status</span>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserCardComponent {\n" +
+      "  // Required input\n" +
+      "  userId = input.required<number>();\n" +
+      "  firstName = input.required<string>();\n" +
+      "  lastName = input.required<string>();\n\n" +
+      "  // Optional input with default\n" +
+      "  email = input('no-email@example.com');\n" +
+      "  isActive = input(false);\n\n" +
+      "  // Computed from inputs\n" +
+      "  fullName = computed(() => `${this.firstName()} ${this.lastName()}`);\n" +
+      "  displayName = computed(() => \n" +
+      "    `${this.fullName()} (ID: ${this.userId()})`\n" +
+      "  );\n" +
+      "}\n\n" +
+      "// Parent usage\n" +
+      "<app-user-card\n" +
+      '  [userId]="123"\n' +
+      "  [firstName]=\"'John'\"\n" +
+      "  [lastName]=\"'Doe'\"\n" +
+      "  [email]=\"'john@example.com'\"\n" +
+      '  [isActive]="true" />\n' +
+      "```\n\n" +
+      "**Signal Outputs:**\n\n" +
+      "```typescript\n" +
+      "import { Component, input, output } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-delete-button',\n" +
+      "  template: `\n" +
+      '    <button (click)="handleClick()">\n' +
+      "      Delete {{ itemName() }}\n" +
+      "    </button>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DeleteButtonComponent {\n" +
+      "  // Input\n" +
+      "  itemId = input.required<number>();\n" +
+      "  itemName = input('item');\n\n" +
+      "  // Output (type-safe event emitter)\n" +
+      "  deleted = output<number>();\n" +
+      "  cancelled = output<void>();\n\n" +
+      "  handleClick() {\n" +
+      "    if (confirm(`Delete ${this.itemName()}?`)) {\n" +
+      "      this.deleted.emit(this.itemId());\n" +
+      "    } else {\n" +
+      "      this.cancelled.emit();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "<app-delete-button\n" +
+      '  [itemId]="user.id"\n' +
+      '  [itemName]="user.name"\n' +
+      '  (deleted)="deleteUser($event)"\n' +
+      '  (cancelled)="onCancel()" />\n' +
+      "```\n\n" +
+      "**Input Transforms:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  // Transform input automatically\n" +
+      "  count = input(0, {\n" +
+      "    transform: (value: string | number) => +value\n" +
+      "  });\n" +
+      '  // <comp count="5" /> → count() = 5 (number)\n\n' +
+      "  // Alias\n" +
+      "  userName = input('', { alias: 'name' });\n" +
+      "  // <comp name=\"John\" /> → userName() = 'John'\n" +
+      "}\n" +
+      "```",
+    category: "Signal Inputs/Outputs",
+    difficulty: "hard",
+    tags: ["signals", "inputs", "outputs", "angular-17", "component-api"],
+  },
+  {
+    id: 98,
+    question: "What is the model() API? Explain bi-directional binding with signals.",
+    answer:
+      "model() creates two-way bindable signals for forms and components.\n\n" +
+      "**Basic model() Usage:**\n\n" +
+      "```typescript\n" +
+      "import { Component, model } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-counter',\n" +
+      "  template: `\n" +
+      '    <button (click)="decrement()">-</button>\n' +
+      "    <span>{{ value() }}</span>\n" +
+      '    <button (click)="increment()">+</button>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class CounterComponent {\n" +
+      "  // Two-way bindable signal\n" +
+      "  value = model(0);\n\n" +
+      "  increment() {\n" +
+      "    this.value.update(v => v + 1);\n" +
+      "    // Automatically emits valueChange event\n" +
+      "  }\n\n" +
+      "  decrement() {\n" +
+      "    this.value.update(v => v - 1);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Parent component\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    <p>Parent count: {{ count() }}</p>\n" +
+      '    <app-counter [(value)]="count" />\n' +
+      "    <!-- Equivalent to: -->\n" +
+      '    <app-counter [value]="count()" (valueChange)="count.set($event)" />\n' +
+      "  `\n" +
+      "})\n" +
+      "export class ParentComponent {\n" +
+      "  count = signal(5);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Form Control with model():**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-search',\n" +
+      "  template: `\n" +
+      '    <input [value]="query()" (input)="query.set($any($event.target).value)" />\n' +
+      "    <p>Searching for: {{ query() }}</p>\n" +
+      "    <p>Results: {{ results().length }}</p>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class SearchComponent {\n" +
+      "  // Two-way bound query\n" +
+      "  query = model('');\n\n" +
+      "  // Computed results (auto-updates when query changes)\n" +
+      "  results = computed(() => {\n" +
+      "    const q = this.query().toLowerCase();\n" +
+      "    return this.items.filter(item => item.name.toLowerCase().includes(q));\n" +
+      "  });\n\n" +
+      "  items = [{ name: 'Angular' }, { name: 'React' }, { name: 'Vue' }];\n" +
+      "}\n\n" +
+      "// Parent can bind\n" +
+      '<app-search [(query)]="searchQuery" />\n' +
+      "```\n\n" +
+      "**Complex Two-Way Binding:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-form',\n" +
+      "  template: `\n" +
+      "    <input \n" +
+      '      [value]="user().name" \n' +
+      '      (input)="updateName($any($event.target).value)" />\n' +
+      "    <input \n" +
+      '      [value]="user().email" \n' +
+      '      (input)="updateEmail($any($event.target).value)" />\n' +
+      "  `\n" +
+      "})\n" +
+      "export class UserFormComponent {\n" +
+      "  user = model<User>({ name: '', email: '' });\n\n" +
+      "  updateName(name: string) {\n" +
+      "    this.user.update(u => ({ ...u, name }));\n" +
+      "  }\n\n" +
+      "  updateEmail(email: string) {\n" +
+      "    this.user.update(u => ({ ...u, email }));\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Parent\n" +
+      '<app-user-form [(user)]="currentUser" />\n' +
+      "```",
+    category: "Signal Model API",
+    difficulty: "hard",
+    tags: ["signals", "model", "two-way-binding", "forms", "angular-17"],
+  },
+  {
+    id: 99,
+    question:
+      "What are Signal-based View Queries? Explain viewChild(), viewChildren(), contentChild(), contentChildren().",
+    answer:
+      "Signal-based queries return signals instead of requiring lifecycle hooks.\n\n" +
+      "**viewChild() - Single Element:**\n\n" +
+      "```typescript\n" +
+      "import { Component, viewChild, ElementRef, AfterViewInit } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      '    <input #nameInput placeholder="Name" />\n' +
+      "    <app-child-component />\n" +
+      '    <button (click)="focusInput()">Focus</button>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class Component implements AfterViewInit {\n" +
+      "  // Query returns Signal<ElementRef | undefined>\n" +
+      "  nameInput = viewChild<ElementRef>('nameInput');\n\n" +
+      "  // Query component\n" +
+      "  childComponent = viewChild(ChildComponent);\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    // Signal is available, no undefined checks needed!\n" +
+      "    this.nameInput()?.nativeElement.focus();\n" +
+      "  }\n\n" +
+      "  focusInput() {\n" +
+      "    this.nameInput()?.nativeElement.focus();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**viewChildren() - Multiple Elements:**\n\n" +
+      "```typescript\n" +
+      "import { viewChildren, QueryList } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    @for (item of items; track item.id) {\n" +
+      '      <app-item [data]="item" />\n' +
+      "    }\n" +
+      '    <button (click)="highlightAll()">Highlight All</button>\n' +
+      "  `\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  items = [{ id: 1 }, { id: 2 }, { id: 3 }];\n\n" +
+      "  // Returns Signal<ReadonlyArray<ItemComponent>>\n" +
+      "  itemComponents = viewChildren(ItemComponent);\n\n" +
+      "  highlightAll() {\n" +
+      "    this.itemComponents().forEach(item => item.highlight());\n" +
+      "  }\n\n" +
+      "  // Computed from query\n" +
+      "  itemCount = computed(() => this.itemComponents().length);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**contentChild() / contentChildren() - Projected Content:**\n\n" +
+      "```typescript\n" +
+      "import { contentChild, contentChildren } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-tabs',\n" +
+      "  template: `\n" +
+      '    <div class="tabs">\n' +
+      "      @for (tab of tabs(); track tab; let i = $index) {\n" +
+      '        <button (click)="selectTab(i)">{{ tab.title }}</button>\n' +
+      "      }\n" +
+      "    </div>\n" +
+      '    <div class="content">\n' +
+      "      <ng-content></ng-content>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class TabsComponent {\n" +
+      "  // Query projected content\n" +
+      "  tabs = contentChildren(TabComponent);\n" +
+      "  firstTab = contentChild(TabComponent);\n\n" +
+      "  selectedIndex = signal(0);\n\n" +
+      "  selectTab(index: number) {\n" +
+      "    this.selectedIndex.set(index);\n" +
+      "    this.tabs()[index].activate();\n" +
+      "  }\n\n" +
+      "  // Computed\n" +
+      "  tabCount = computed(() => this.tabs().length);\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "<app-tabs>\n" +
+      '  <app-tab title="Tab 1">Content 1</app-tab>\n' +
+      '  <app-tab title="Tab 2">Content 2</app-tab>\n' +
+      "</app-tabs>\n" +
+      "```\n\n" +
+      "**Benefits vs Old API:**\n" +
+      "- Always defined (returns Signal)\n" +
+      "- No @ViewChild decorator\n" +
+      "- Can use in computed signals\n" +
+      "- Type-safe\n" +
+      "- No lifecycle timing issues",
+    category: "Signal View Queries",
+    difficulty: "hard",
+    tags: ["signals", "viewchild", "contentchild", "queries", "angular-17"],
+  },
+  {
+    id: 100,
+    question:
+      "How do you implement complete CRUD with Signals? Show service and component integration.",
+    answer:
+      "**Signal-based CRUD Service:**\n\n" +
+      "```typescript\n" +
+      "import { Injectable, signal, computed } from '@angular/core';\n" +
+      "import { HttpClient } from '@angular/common/http';\n" +
+      "import { catchError, finalize } from 'rxjs/operators';\n" +
+      "import { of } from 'rxjs';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class UserSignalService {\n" +
+      "  private http = inject(HttpClient);\n\n" +
+      "  // State signals\n" +
+      "  private usersState = signal<User[]>([]);\n" +
+      "  private loadingState = signal(false);\n" +
+      "  private errorState = signal<string | null>(null);\n" +
+      "  private selectedIdState = signal<number | null>(null);\n\n" +
+      "  // Public read-only\n" +
+      "  users = this.usersState.asReadonly();\n" +
+      "  loading = this.loadingState.asReadonly();\n" +
+      "  error = this.errorState.asReadonly();\n\n" +
+      "  // Computed\n" +
+      "  userCount = computed(() => this.users().length);\n" +
+      "  hasUsers = computed(() => this.users().length > 0);\n" +
+      "  selectedUser = computed(() => {\n" +
+      "    const id = this.selectedIdState();\n" +
+      "    return this.users().find(u => u.id === id);\n" +
+      "  });\n\n" +
+      "  // CREATE\n" +
+      "  createUser(user: Partial<User>) {\n" +
+      "    this.loadingState.set(true);\n" +
+      "    this.errorState.set(null);\n\n" +
+      "    this.http.post<User>('/api/users', user)\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          this.errorState.set(error.message);\n" +
+      "          return of(null);\n" +
+      "        }),\n" +
+      "        finalize(() => this.loadingState.set(false))\n" +
+      "      )\n" +
+      "      .subscribe(newUser => {\n" +
+      "        if (newUser) {\n" +
+      "          this.usersState.update(users => [...users, newUser]);\n" +
+      "        }\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  // READ\n" +
+      "  loadUsers() {\n" +
+      "    this.loadingState.set(true);\n" +
+      "    this.errorState.set(null);\n\n" +
+      "    this.http.get<User[]>('/api/users')\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          this.errorState.set(error.message);\n" +
+      "          return of([]);\n" +
+      "        }),\n" +
+      "        finalize(() => this.loadingState.set(false))\n" +
+      "      )\n" +
+      "      .subscribe(users => this.usersState.set(users));\n" +
+      "  }\n\n" +
+      "  // UPDATE\n" +
+      "  updateUser(id: number, changes: Partial<User>) {\n" +
+      "    this.http.put<User>(`/api/users/${id}`, changes)\n" +
+      "      .pipe(catchError(error => {\n" +
+      "        this.errorState.set(error.message);\n" +
+      "        return of(null);\n" +
+      "      }))\n" +
+      "      .subscribe(updated => {\n" +
+      "        if (updated) {\n" +
+      "          this.usersState.update(users =>\n" +
+      "            users.map(u => u.id === id ? updated : u)\n" +
+      "          );\n" +
+      "        }\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  // DELETE\n" +
+      "  deleteUser(id: number) {\n" +
+      "    this.http.delete(`/api/users/${id}`)\n" +
+      "      .pipe(catchError(error => {\n" +
+      "        this.errorState.set(error.message);\n" +
+      "        return of(null);\n" +
+      "      }))\n" +
+      "      .subscribe(() => {\n" +
+      "        this.usersState.update(users => users.filter(u => u.id !== id));\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  selectUser(id: number) {\n" +
+      "    this.selectedIdState.set(id);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Component Usage:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    @if (service.loading()) {\n" +
+      '      <div class="spinner">Loading...</div>\n' +
+      "    }\n\n" +
+      "    @if (service.error(); as error) {\n" +
+      '      <div class="error">{{ error }}</div>\n' +
+      "    }\n\n" +
+      "    <p>Total: {{ service.userCount() }}</p>\n\n" +
+      "    @for (user of service.users(); track user.id) {\n" +
+      '      <div class="user-card">\n' +
+      "        <h3>{{ user.name }}</h3>\n" +
+      "        <button (click)=\"service.updateUser(user.id, { name: 'Updated' })\">Edit</button>\n" +
+      '        <button (click)="service.deleteUser(user.id)">Delete</button>\n' +
+      "      </div>\n" +
+      "    } @empty {\n" +
+      "      <p>No users found</p>\n" +
+      "    }\n\n" +
+      "    <button (click)=\"service.createUser({ name: 'New User' })\">Add User</button>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UsersComponent {\n" +
+      "  service = inject(UserSignalService);\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.service.loadUsers();\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signals CRUD",
+    difficulty: "hard",
+    tags: ["signals", "crud", "http", "state-management"],
+  },
+  {
+    id: 101,
+    question: "How do you handle HTTP with Signals? Show both RxJS and pure Signal approaches.",
+    answer:
+      "**Approach 1: RxJS with toSignal():**\n\n" +
+      "```typescript\n" +
+      "import { toSignal } from '@angular/core/rxjs-interop';\n" +
+      "import { inject, Component } from '@angular/core';\n\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  private http = inject(HttpClient);\n\n" +
+      "  // Convert Observable to Signal\n" +
+      "  users = toSignal(\n" +
+      "    this.http.get<User[]>('/api/users'),\n" +
+      "    { initialValue: [] }\n" +
+      "  );\n\n" +
+      "  // With retry\n" +
+      "  products = toSignal(\n" +
+      "    this.http.get<Product[]>('/api/products').pipe(\n" +
+      "      retry(3),\n" +
+      "      catchError(() => of([]))\n" +
+      "    ),\n" +
+      "    { initialValue: [] }\n" +
+      "  );\n\n" +
+      "  // Template\n" +
+      "  // @for (user of users(); track user.id) { ... }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Approach 2: Pure Signals (Manual):**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  private http = inject(HttpClient);\n\n" +
+      "  // State signals\n" +
+      "  users = signal<User[]>([]);\n" +
+      "  loading = signal(false);\n" +
+      "  error = signal<string | null>(null);\n\n" +
+      "  // Computed\n" +
+      "  hasData = computed(() => this.users().length > 0);\n\n" +
+      "  loadUsers() {\n" +
+      "    this.loading.set(true);\n" +
+      "    this.error.set(null);\n\n" +
+      "    this.http.get<User[]>('/api/users')\n" +
+      "      .pipe(\n" +
+      "        catchError(err => {\n" +
+      "          this.error.set(err.message);\n" +
+      "          return of([]);\n" +
+      "        }),\n" +
+      "        finalize(() => this.loading.set(false))\n" +
+      "      )\n" +
+      "      .subscribe(users => this.users.set(users));\n" +
+      "  }\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.loadUsers();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Approach 3: Resource API (Angular 19+):**\n\n" +
+      "```typescript\n" +
+      "import { resource } from '@angular/core';\n\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  userId = signal(1);\n\n" +
+      "  // Automatic refetch when userId changes\n" +
+      "  userResource = resource({\n" +
+      "    request: () => ({ id: this.userId() }),\n" +
+      "    loader: ({ request }) => \n" +
+      "      this.http.get<User>(`/api/users/${request.id}`)\n" +
+      "  });\n\n" +
+      "  // Access data, loading, error\n" +
+      "  user = this.userResource.value;\n" +
+      "  loading = this.userResource.isLoading;\n" +
+      "  error = this.userResource.error;\n\n" +
+      "  // Change userId triggers auto-reload\n" +
+      "  loadUser(id: number) {\n" +
+      "    this.userId.set(id);\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signals HTTP",
+    difficulty: "hard",
+    tags: ["signals", "http", "rxjs", "tosignal", "resource"],
+  },
+  {
+    id: 102,
+    question: "How do you handle errors and loading states with Signals?",
+    answer:
+      "**Comprehensive Error & Loading Management:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class DataService {\n" +
+      "  private http = inject(HttpClient);\n\n" +
+      "  // Loading states\n" +
+      "  private loadingState = signal(false);\n" +
+      "  private savingState = signal(false);\n" +
+      "  private deletingState = signal<number | null>(null);\n\n" +
+      "  loading = this.loadingState.asReadonly();\n" +
+      "  saving = this.savingState.asReadonly();\n" +
+      "  deleting = this.deletingState.asReadonly();\n\n" +
+      "  // Error states\n" +
+      "  private errorState = signal<string | null>(null);\n" +
+      "  private fieldErrors = signal<Record<string, string>>({});\n\n" +
+      "  error = this.errorState.asReadonly();\n" +
+      "  fieldError = this.fieldErrors.asReadonly();\n\n" +
+      "  // Data\n" +
+      "  private dataState = signal<User[]>([]);\n" +
+      "  data = this.dataState.asReadonly();\n\n" +
+      "  // Computed\n" +
+      "  isLoading = computed(() => this.loading() || this.saving());\n" +
+      "  hasError = computed(() => !!this.error());\n\n" +
+      "  loadData() {\n" +
+      "    this.loadingState.set(true);\n" +
+      "    this.errorState.set(null);\n\n" +
+      "    this.http.get<User[]>('/api/users')\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          this.handleError(error);\n" +
+      "          return of([]);\n" +
+      "        }),\n" +
+      "        finalize(() => this.loadingState.set(false))\n" +
+      "      )\n" +
+      "      .subscribe(users => this.dataState.set(users));\n" +
+      "  }\n\n" +
+      "  saveData(user: User) {\n" +
+      "    this.savingState.set(true);\n" +
+      "    this.errorState.set(null);\n" +
+      "    this.fieldErrors.set({});\n\n" +
+      "    this.http.post<User>('/api/users', user)\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          if (error.status === 400 && error.error.errors) {\n" +
+      "            // Field-specific errors\n" +
+      "            this.fieldErrors.set(error.error.errors);\n" +
+      "          } else {\n" +
+      "            this.errorState.set(error.message);\n" +
+      "          }\n" +
+      "          return of(null);\n" +
+      "        }),\n" +
+      "        finalize(() => this.savingState.set(false))\n" +
+      "      )\n" +
+      "      .subscribe(saved => {\n" +
+      "        if (saved) {\n" +
+      "          this.dataState.update(users => [...users, saved]);\n" +
+      "        }\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  deleteData(id: number) {\n" +
+      "    this.deletingState.set(id);\n\n" +
+      "    this.http.delete(`/api/users/${id}`)\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          this.errorState.set(`Failed to delete user ${id}`);\n" +
+      "          return of(null);\n" +
+      "        }),\n" +
+      "        finalize(() => this.deletingState.set(null))\n" +
+      "      )\n" +
+      "      .subscribe(success => {\n" +
+      "        if (success !== null) {\n" +
+      "          this.dataState.update(users => users.filter(u => u.id !== id));\n" +
+      "        }\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  clearError() {\n" +
+      "    this.errorState.set(null);\n" +
+      "    this.fieldErrors.set({});\n" +
+      "  }\n\n" +
+      "  private handleError(error: any) {\n" +
+      "    const message = error.error?.message || error.message || 'Unknown error';\n" +
+      "    this.errorState.set(message);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Component with Loading/Error UI:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    <!-- Global error toast -->\n" +
+      "    @if (service.error(); as error) {\n" +
+      '      <div class="toast error">\n' +
+      "        {{ error }}\n" +
+      '        <button (click)="service.clearError()">✕</button>\n' +
+      "      </div>\n" +
+      "    }\n\n" +
+      "    <!-- Loading overlay -->\n" +
+      "    @if (service.isLoading()) {\n" +
+      '      <div class="loading-overlay">\n' +
+      '        <div class="spinner"></div>\n' +
+      "      </div>\n" +
+      "    }\n\n" +
+      "    <!-- Data list -->\n" +
+      "    @for (user of service.data(); track user.id) {\n" +
+      '      <div class="user-card" [class.deleting]="service.deleting() === user.id">\n' +
+      "        <h3>{{ user.name }}</h3>\n" +
+      "        <button \n" +
+      '          (click)="service.deleteUser(user.id)"\n' +
+      '          [disabled]="service.deleting() === user.id">\n' +
+      "          @if (service.deleting() === user.id) {\n" +
+      "            Deleting...\n" +
+      "          } @else {\n" +
+      "            Delete\n" +
+      "          }\n" +
+      "        </button>\n" +
+      "      </div>\n" +
+      "    }\n\n" +
+      "    <!-- Field errors -->\n" +
+      "    @if (service.fieldError().name) {\n" +
+      '      <span class="field-error">{{ service.fieldError().name }}</span>\n' +
+      "    }\n" +
+      "  `\n" +
+      "})\n" +
+      "export class Component {\n" +
+      "  service = inject(DataService);\n" +
+      "}\n" +
+      "```",
+    category: "Signals Error Handling",
+    difficulty: "hard",
+    tags: ["signals", "error-handling", "loading", "state-management"],
+  },
+  {
+    id: 103,
+    question:
+      "How do you create Stateful Signal-based Services? Show complete example with loading/error/data pattern.",
+    answer:
+      "**Generic Signal Service Pattern:**\n\n" +
+      "```typescript\n" +
+      "// Base class for reusable pattern\n" +
+      "export abstract class SignalService<T> {\n" +
+      "  protected http = inject(HttpClient);\n\n" +
+      "  // State signals\n" +
+      "  protected dataState = signal<T[]>([]);\n" +
+      "  protected loadingState = signal(false);\n" +
+      "  protected errorState = signal<string | null>(null);\n" +
+      "  protected selectedState = signal<T | null>(null);\n\n" +
+      "  // Public API\n" +
+      "  readonly data = this.dataState.asReadonly();\n" +
+      "  readonly loading = this.loadingState.asReadonly();\n" +
+      "  readonly error = this.errorState.asReadonly();\n" +
+      "  readonly selected = this.selectedState.asReadonly();\n\n" +
+      "  // Computed\n" +
+      "  readonly count = computed(() => this.data().length);\n" +
+      "  readonly hasData = computed(() => this.data().length > 0);\n" +
+      "  readonly hasError = computed(() => !!this.error());\n\n" +
+      "  abstract getEndpoint(): string;\n\n" +
+      "  load() {\n" +
+      "    this.loadingState.set(true);\n" +
+      "    this.errorState.set(null);\n\n" +
+      "    this.http.get<T[]>(this.getEndpoint())\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          this.errorState.set(error.message);\n" +
+      "          return of([]);\n" +
+      "        }),\n" +
+      "        finalize(() => this.loadingState.set(false))\n" +
+      "      )\n" +
+      "      .subscribe(data => this.dataState.set(data));\n" +
+      "  }\n\n" +
+      "  select(item: T) {\n" +
+      "    this.selectedState.set(item);\n" +
+      "  }\n\n" +
+      "  clearError() {\n" +
+      "    this.errorState.set(null);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Concrete implementation\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class UsersService extends SignalService<User> {\n" +
+      "  getEndpoint() {\n" +
+      "    return '/api/users';\n" +
+      "  }\n\n" +
+      "  // Add custom methods\n" +
+      "  activeUsers = computed(() => \n" +
+      "    this.data().filter(u => u.active)\n" +
+      "  );\n\n" +
+      "  searchUsers = signal('');\n" +
+      "  filteredUsers = computed(() => {\n" +
+      "    const query = this.searchUsers().toLowerCase();\n" +
+      "    return this.data().filter(u => \n" +
+      "      u.name.toLowerCase().includes(query)\n" +
+      "    );\n" +
+      "  });\n" +
+      "}\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class ProductsService extends SignalService<Product> {\n" +
+      "  getEndpoint() {\n" +
+      "    return '/api/products';\n" +
+      "  }\n\n" +
+      "  // Product-specific\n" +
+      "  totalValue = computed(() => \n" +
+      "    this.data().reduce((sum, p) => sum + p.price, 0)\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Usage:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class UsersComponent {\n" +
+      "  service = inject(UsersService);\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.service.load();\n" +
+      "  }\n" +
+      "}\n\n" +
+      "@Component({...})\n" +
+      "export class ProductsComponent {\n" +
+      "  service = inject(ProductsService);\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.service.load();\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signal Services",
+    difficulty: "hard",
+    tags: ["signals", "services", "state-management", "patterns"],
+  },
+  {
+    id: 104,
+    question: "How do you implement Authentication with Signals? Show complete auth flow.",
+    answer:
+      "**Complete Signal-based Authentication:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class SignalAuthService {\n" +
+      "  private http = inject(HttpClient);\n" +
+      "  private router = inject(Router);\n\n" +
+      "  // State\n" +
+      "  private userState = signal<User | null>(null);\n" +
+      "  private tokenState = signal<string | null>(null);\n" +
+      "  private loadingState = signal(false);\n" +
+      "  private errorState = signal<string | null>(null);\n\n" +
+      "  // Public signals\n" +
+      "  user = this.userState.asReadonly();\n" +
+      "  token = this.tokenState.asReadonly();\n" +
+      "  loading = this.loadingState.asReadonly();\n" +
+      "  error = this.errorState.asReadonly();\n\n" +
+      "  // Computed\n" +
+      "  isAuthenticated = computed(() => !!this.user());\n" +
+      "  isAdmin = computed(() => this.user()?.role === 'admin');\n" +
+      "  userName = computed(() => this.user()?.name ?? 'Guest');\n" +
+      "  userEmail = computed(() => this.user()?.email ?? '');\n\n" +
+      "  constructor() {\n" +
+      "    this.loadStoredAuth();\n" +
+      "    this.setupTokenExpiration();\n" +
+      "  }\n\n" +
+      "  login(email: string, password: string) {\n" +
+      "    this.loadingState.set(true);\n" +
+      "    this.errorState.set(null);\n\n" +
+      "    this.http.post<{ user: User; token: string; expiresIn: number }>(\n" +
+      "      '/api/login',\n" +
+      "      { email, password }\n" +
+      "    )\n" +
+      "      .pipe(\n" +
+      "        tap(response => {\n" +
+      "          this.setAuthData(response);\n" +
+      "          this.router.navigate(['/dashboard']);\n" +
+      "        }),\n" +
+      "        catchError(error => {\n" +
+      "          this.errorState.set(error.error?.message || 'Login failed');\n" +
+      "          return of(null);\n" +
+      "        }),\n" +
+      "        finalize(() => this.loadingState.set(false))\n" +
+      "      )\n" +
+      "      .subscribe();\n" +
+      "  }\n\n" +
+      "  logout() {\n" +
+      "    this.userState.set(null);\n" +
+      "    this.tokenState.set(null);\n" +
+      "    localStorage.removeItem('token');\n" +
+      "    localStorage.removeItem('user');\n" +
+      "    this.router.navigate(['/login']);\n" +
+      "  }\n\n" +
+      "  refreshToken() {\n" +
+      "    return this.http.post<{ token: string }>('/api/refresh', {}).pipe(\n" +
+      "      tap(({ token }) => {\n" +
+      "        this.tokenState.set(token);\n" +
+      "        localStorage.setItem('token', token);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n\n" +
+      "  private setAuthData(response: { user: User; token: string; expiresIn: number }) {\n" +
+      "    this.userState.set(response.user);\n" +
+      "    this.tokenState.set(response.token);\n" +
+      "    localStorage.setItem('token', response.token);\n" +
+      "    localStorage.setItem('user', JSON.stringify(response.user));\n" +
+      "    localStorage.setItem('tokenExpires', String(Date.now() + response.expiresIn * 1000));\n" +
+      "  }\n\n" +
+      "  private loadStoredAuth() {\n" +
+      "    const token = localStorage.getItem('token');\n" +
+      "    const user = localStorage.getItem('user');\n" +
+      "    const expires = localStorage.getItem('tokenExpires');\n\n" +
+      "    if (token && user && expires && Date.now() < +expires) {\n" +
+      "      this.tokenState.set(token);\n" +
+      "      this.userState.set(JSON.parse(user));\n" +
+      "    } else {\n" +
+      "      this.logout();\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  private setupTokenExpiration() {\n" +
+      "    effect(() => {\n" +
+      "      const expires = localStorage.getItem('tokenExpires');\n" +
+      "      if (expires && this.isAuthenticated()) {\n" +
+      "        const timeLeft = +expires - Date.now();\n" +
+      "        if (timeLeft > 0) {\n" +
+      "          setTimeout(() => this.refreshToken().subscribe(), timeLeft - 60000);\n" +
+      "        }\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Guard\n" +
+      "export const authGuard: CanActivateFn = () => {\n" +
+      "  const auth = inject(SignalAuthService);\n" +
+      "  const router = inject(Router);\n\n" +
+      "  if (auth.isAuthenticated()) {\n" +
+      "    return true;\n" +
+      "  }\n\n" +
+      "  return router.createUrlTree(['/login']);\n" +
+      "};\n\n" +
+      "// Interceptor\n" +
+      "export const authInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  const auth = inject(SignalAuthService);\n" +
+      "  const token = auth.token();\n\n" +
+      "  if (token) {\n" +
+      "    req = req.clone({\n" +
+      "      setHeaders: { Authorization: `Bearer ${token}` }\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  return next(req).pipe(\n" +
+      "    catchError(error => {\n" +
+      "      if (error.status === 401) {\n" +
+      "        auth.logout();\n" +
+      "      }\n" +
+      "      return throwError(() => error);\n" +
+      "    })\n" +
+      "  );\n" +
+      "};\n" +
+      "```",
+    category: "Signals Authentication",
+    difficulty: "hard",
+    tags: ["signals", "authentication", "jwt", "security"],
+  },
+  {
+    id: 105,
+    question:
+      "How do you handle user-facing error messages with Signals? Show toast/notification system.",
+    answer:
+      "**Toast Service with Signals:**\n\n" +
+      "```typescript\n" +
+      "export interface Toast {\n" +
+      "  id: number;\n" +
+      "  message: string;\n" +
+      "  type: 'success' | 'error' | 'warning' | 'info';\n" +
+      "  duration?: number;\n" +
+      "}\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class ToastService {\n" +
+      "  private toastsState = signal<Toast[]>([]);\n" +
+      "  private nextId = 0;\n\n" +
+      "  toasts = this.toastsState.asReadonly();\n" +
+      "  hasToasts = computed(() => this.toasts().length > 0);\n\n" +
+      "  show(message: string, type: Toast['type'] = 'info', duration = 3000) {\n" +
+      "    const toast: Toast = {\n" +
+      "      id: this.nextId++,\n" +
+      "      message,\n" +
+      "      type,\n" +
+      "      duration\n" +
+      "    };\n\n" +
+      "    this.toastsState.update(toasts => [...toasts, toast]);\n\n" +
+      "    if (duration > 0) {\n" +
+      "      setTimeout(() => this.remove(toast.id), duration);\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  success(message: string) {\n" +
+      "    this.show(message, 'success');\n" +
+      "  }\n\n" +
+      "  error(message: string) {\n" +
+      "    this.show(message, 'error', 5000);\n" +
+      "  }\n\n" +
+      "  warning(message: string) {\n" +
+      "    this.show(message, 'warning');\n" +
+      "  }\n\n" +
+      "  remove(id: number) {\n" +
+      "    this.toastsState.update(toasts => toasts.filter(t => t.id !== id));\n" +
+      "  }\n\n" +
+      "  clear() {\n" +
+      "    this.toastsState.set([]);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Toast Container Component\n" +
+      "@Component({\n" +
+      "  selector: 'app-toast-container',\n" +
+      "  standalone: true,\n" +
+      "  template: `\n" +
+      '    <div class="toast-container">\n' +
+      "      @for (toast of toastService.toasts(); track toast.id) {\n" +
+      '        <div class="toast" [class]="toast.type">\n' +
+      "          <span>{{ toast.message }}</span>\n" +
+      '          <button (click)="toastService.remove(toast.id)">✕</button>\n' +
+      "        </div>\n" +
+      "      }\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .toast-container {\n" +
+      "      position: fixed;\n" +
+      "      top: 20px;\n" +
+      "      right: 20px;\n" +
+      "      z-index: 9999;\n" +
+      "    }\n" +
+      "    .toast {\n" +
+      "      padding: 12px 16px;\n" +
+      "      margin-bottom: 8px;\n" +
+      "      border-radius: 4px;\n" +
+      "      box-shadow: 0 2px 8px rgba(0,0,0,0.15);\n" +
+      "    }\n" +
+      "    .success { background: #4caf50; color: white; }\n" +
+      "    .error { background: #f44336; color: white; }\n" +
+      "    .warning { background: #ff9800; color: white; }\n" +
+      "    .info { background: #2196f3; color: white; }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class ToastContainerComponent {\n" +
+      "  toastService = inject(ToastService);\n" +
+      "}\n\n" +
+      "// Usage in other components\n" +
+      "@Component({...})\n" +
+      "export class DataComponent {\n" +
+      "  toast = inject(ToastService);\n" +
+      "  http = inject(HttpClient);\n\n" +
+      "  saveData(data: any) {\n" +
+      "    this.http.post('/api/data', data)\n" +
+      "      .pipe(\n" +
+      "        tap(() => this.toast.success('Data saved successfully!')),\n" +
+      "        catchError(error => {\n" +
+      "          this.toast.error(error.message);\n" +
+      "          return of(null);\n" +
+      "        })\n" +
+      "      )\n" +
+      "      .subscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Form Validation Errors:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    <form>\n" +
+      '      <input [(ngModel)]="name" name="name" />\n' +
+      "      @if (errors().name) {\n" +
+      '        <span class="error">{{ errors().name }}</span>\n' +
+      "      }\n\n" +
+      '      <input [(ngModel)]="email" name="email" />\n' +
+      "      @if (errors().email) {\n" +
+      '        <span class="error">{{ errors().email }}</span>\n' +
+      "      }\n\n" +
+      '      <button (click)="submit()">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class FormComponent {\n" +
+      "  name = '';\n" +
+      "  email = '';\n" +
+      "  errors = signal<Record<string, string>>({});\n\n" +
+      "  submit() {\n" +
+      "    this.http.post('/api/users', { name: this.name, email: this.email })\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          if (error.status === 400) {\n" +
+      "            this.errors.set(error.error.errors);\n" +
+      "          }\n" +
+      "          return of(null);\n" +
+      "        })\n" +
+      "      )\n" +
+      "      .subscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signals User Messages",
+    difficulty: "hard",
+    tags: ["signals", "toast", "notifications", "ux"],
+  },
+  {
+    id: 105,
+    question: "How do you implement Reactive Search with Signals?",
+    answer:
+      "**Signal-based Search with Debounce:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-search',\n" +
+      "  standalone: true,\n" +
+      "  imports: [FormsModule],\n" +
+      "  template: `\n" +
+      "    <input \n" +
+      '      [value]="searchQuery()" \n' +
+      '      (input)="searchQuery.set($any($event.target).value)" \n' +
+      '      placeholder="Search users..." />\n\n' +
+      "    @if (loading()) {\n" +
+      "      <p>Searching...</p>\n" +
+      "    }\n\n" +
+      "    @if (error(); as err) {\n" +
+      '      <p class="error">{{ err }}</p>\n' +
+      "    }\n\n" +
+      "    <p>Found: {{ results().length }} users</p>\n\n" +
+      "    @for (user of results(); track user.id) {\n" +
+      '      <div class="user-card">{{ user.name }}</div>\n' +
+      "    } @empty {\n" +
+      "      <p>No results</p>\n" +
+      "    }\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserSearchComponent {\n" +
+      "  private http = inject(HttpClient);\n\n" +
+      "  searchQuery = signal('');\n" +
+      "  results = signal<User[]>([]);\n" +
+      "  loading = signal(false);\n" +
+      "  error = signal<string | null>(null);\n\n" +
+      "  constructor() {\n" +
+      "    // Auto-search when query changes (with debounce using RxJS)\n" +
+      "    toObservable(this.searchQuery)\n" +
+      "      .pipe(\n" +
+      "        debounceTime(300),\n" +
+      "        distinctUntilChanged(),\n" +
+      "        tap(() => {\n" +
+      "          this.loading.set(true);\n" +
+      "          this.error.set(null);\n" +
+      "        }),\n" +
+      "        switchMap(query => {\n" +
+      "          if (!query) {\n" +
+      "            this.results.set([]);\n" +
+      "            this.loading.set(false);\n" +
+      "            return of([]);\n" +
+      "          }\n\n" +
+      "          return this.http.get<User[]>(`/api/users/search?q=${query}`).pipe(\n" +
+      "            catchError(error => {\n" +
+      "              this.error.set(error.message);\n" +
+      "              return of([]);\n" +
+      "            }),\n" +
+      "            finalize(() => this.loading.set(false))\n" +
+      "          );\n" +
+      "        })\n" +
+      "      )\n" +
+      "      .subscribe(users => this.results.set(users));\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Alternative: Pure Signal Approach (No RxJS):**\n\n" +
+      "```typescript\n" +
+      "// Client-side filtering\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  allUsers = signal<User[]>([]);\n" +
+      "  searchQuery = signal('');\n\n" +
+      "  // Computed filtered results\n" +
+      "  filteredUsers = computed(() => {\n" +
+      "    const query = this.searchQuery().toLowerCase();\n" +
+      "    if (!query) return this.allUsers();\n\n" +
+      "    return this.allUsers().filter(user =>\n" +
+      "      user.name.toLowerCase().includes(query) ||\n" +
+      "      user.email.toLowerCase().includes(query)\n" +
+      "    );\n" +
+      "  });\n\n" +
+      "  resultCount = computed(() => this.filteredUsers().length);\n" +
+      "}\n" +
+      "```",
+    category: "Signals Reactive Search",
+    difficulty: "hard",
+    tags: ["signals", "search", "debounce", "reactive"],
+  },
+  {
+    id: 106,
+    question: "How do you implement Pagination with Signals?",
+    answer:
+      "**Complete Pagination System:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class PaginatedDataService {\n" +
+      "  private http = inject(HttpClient);\n\n" +
+      "  // State\n" +
+      "  private dataState = signal<User[]>([]);\n" +
+      "  private totalState = signal(0);\n" +
+      "  private pageState = signal(1);\n" +
+      "  private pageSizeState = signal(10);\n" +
+      "  private loadingState = signal(false);\n\n" +
+      "  // Public\n" +
+      "  data = this.dataState.asReadonly();\n" +
+      "  total = this.totalState.asReadonly();\n" +
+      "  page = this.pageState.asReadonly();\n" +
+      "  pageSize = this.pageSizeState.asReadonly();\n" +
+      "  loading = this.loadingState.asReadonly();\n\n" +
+      "  // Computed\n" +
+      "  totalPages = computed(() => Math.ceil(this.total() / this.pageSize()));\n" +
+      "  hasNext = computed(() => this.page() < this.totalPages());\n" +
+      "  hasPrev = computed(() => this.page() > 1);\n" +
+      "  startIndex = computed(() => (this.page() - 1) * this.pageSize() + 1);\n" +
+      "  endIndex = computed(() => Math.min(this.page() * this.pageSize(), this.total()));\n\n" +
+      "  constructor() {\n" +
+      "    // Auto-load when page/pageSize changes\n" +
+      "    effect(() => {\n" +
+      "      const page = this.page();\n" +
+      "      const pageSize = this.pageSize();\n" +
+      "      this.load(page, pageSize);\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  private load(page: number, pageSize: number) {\n" +
+      "    this.loadingState.set(true);\n\n" +
+      "    this.http.get<{ data: User[]; total: number }>(\n" +
+      "      `/api/users?page=${page}&pageSize=${pageSize}`\n" +
+      "    )\n" +
+      "      .pipe(finalize(() => this.loadingState.set(false)))\n" +
+      "      .subscribe(response => {\n" +
+      "        this.dataState.set(response.data);\n" +
+      "        this.totalState.set(response.total);\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  nextPage() {\n" +
+      "    if (this.hasNext()) {\n" +
+      "      this.pageState.update(p => p + 1);\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  prevPage() {\n" +
+      "    if (this.hasPrev()) {\n" +
+      "      this.pageState.update(p => p - 1);\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  goToPage(page: number) {\n" +
+      "    if (page >= 1 && page <= this.totalPages()) {\n" +
+      "      this.pageState.set(page);\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  setPageSize(size: number) {\n" +
+      "    this.pageSizeState.set(size);\n" +
+      "    this.pageState.set(1); // Reset to first page\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Component\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    @for (user of service.data(); track user.id) {\n" +
+      "      <div>{{ user.name }}</div>\n" +
+      "    }\n\n" +
+      '    <div class="pagination">\n' +
+      '      <button (click)="service.prevPage()" [disabled]="!service.hasPrev()">\n' +
+      "        Previous\n" +
+      "      </button>\n\n" +
+      "      <span>Page {{ service.page() }} of {{ service.totalPages() }}</span>\n" +
+      "      <span>({{ service.startIndex() }}-{{ service.endIndex() }} of {{ service.total() }})</span>\n\n" +
+      '      <button (click)="service.nextPage()" [disabled]="!service.hasNext()">\n' +
+      "        Next\n" +
+      "      </button>\n\n" +
+      '      <select [value]="service.pageSize()" (change)="service.setPageSize(+$any($event.target).value)">\n' +
+      '        <option value="10">10</option>\n' +
+      '        <option value="25">25</option>\n' +
+      '        <option value="50">50</option>\n' +
+      "      </select>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UsersComponent {\n" +
+      "  service = inject(PaginatedDataService);\n" +
+      "}\n" +
+      "```",
+    category: "Signals Pagination",
+    difficulty: "hard",
+    tags: ["signals", "pagination", "data-tables", "ux"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;
