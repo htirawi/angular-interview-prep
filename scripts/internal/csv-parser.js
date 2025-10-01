@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 class CSVQuestionParser {
   constructor() {
-    this.questionsFile = path.join(__dirname, "../src/data/angular-enhanced.ts");
+    this.questionsFile = path.join(__dirname, "../../src/data/angular-enhanced.ts");
     this.backupDir = path.join(__dirname, "../backups");
 
     // Ensure backup directory exists
@@ -147,8 +147,8 @@ class CSVQuestionParser {
   /**
    * Format question for TypeScript
    */
-  formatQuestion(question, startId) {
-    const id = startId + question.id;
+  formatQuestion(question, startId, index) {
+    const id = startId + index + 1;
 
     // Escape the answer properly
     const escapedAnswer = question.answer
@@ -208,7 +208,7 @@ class CSVQuestionParser {
       // Process questions
       console.log(`🔄 Processing questions...`);
       const newQuestions = questions.map((question, index) => {
-        const formatted = this.formatQuestion(question, lastId);
+        const formatted = this.formatQuestion(question, lastId, index);
         console.log(
           `   ✅ ${index + 1}/${questions.length}: ${question.question.substring(0, 50)}...`
         );
