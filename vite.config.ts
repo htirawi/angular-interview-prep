@@ -1,12 +1,79 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  plugins: [react()],
-  server: { port: 5173 },
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: "autoUpdate",
+      includeAssets: ["favicon.ico", "robots.txt", "icon-192.png", "icon-512.png"],
+      manifest: {
+        name: "Angular Senior Interview Prep",
+        short_name: "Angular Prep",
+        description: "Master 100 essential Angular interview questions",
+        theme_color: "#2563eb",
+        background_color: "#ffffff",
+        display: "standalone",
+        icons: [
+          {
+            src: "icon-192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "icon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "google-fonts-cache",
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+              },
+            },
+          },
+        ],
+      },
+    }),
+  ],
+  server: {
+    port: 5173,
+    host: true,
+  },
+  build: {
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          utils: ["./src/shared/utils/exportProgress"],
+        },
+      },
+    },
+  },
   test: {
     globals: true,
     environment: "jsdom",
     setupFiles: "./vitest.setup.ts",
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html", "lcov"],
+      exclude: [
+        "node_modules/",
+        "src/**/*.test.{ts,tsx}",
+        "src/**/__tests__/**",
+        "*.config.{js,ts}",
+        "dist/",
+      ],
+    },
   },
 });

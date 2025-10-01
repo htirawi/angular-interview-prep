@@ -2,12 +2,15 @@
 
 > A professional, production-ready interview preparation platform with 100 essential Angular questions for senior-level positions.
 
+[![CI/CD](https://github.com/htirawi/angular-interview-prep/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/htirawi/angular-interview-prep/actions)
+[![Tests](https://img.shields.io/badge/tests-49%20passing-brightgreen.svg)](https://github.com/htirawi/angular-interview-prep)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646cff.svg)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-[**Live Demo →**](https://angular-interview-prep.vercel.app)
+[**Live Demo →**](https://angular-interview-prep.vercel.app) | [**Architecture →**](ARCHITECTURE.md) | [**Contributing →**](CONTRIBUTING.md)
 
 ---
 

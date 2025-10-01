@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './animations.css';
+
 :root {
   color-scheme: light dark;
 }
@@ -9,4 +11,22 @@
 .prose pre,
 .prose code {
   font-family: theme("fontFamily.mono");
+}
+
+/* Custom scrollbar for modern browsers */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-600;
 }

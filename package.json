@@ -1,16 +1,45 @@
 {
-  "name": "angular-senior-mock-interview",
+  "name": "angular-interview-prep",
   "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Professional Angular senior interview preparation with 100 curated questions",
+  "author": "Hussein Tirawi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/htirawi/angular-interview-prep.git"
+  },
+  "bugs": {
+    "url": "https://github.com/htirawi/angular-interview-prep/issues"
+  },
+  "homepage": "https://github.com/htirawi/angular-interview-prep#readme",
+  "keywords": [
+    "angular",
+    "interview",
+    "preparation",
+    "questions",
+    "senior-developer",
+    "react",
+    "typescript",
+    "pwa",
+    "interview-prep"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "vitest run",
-    "test:ui": "vitest"
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit",
+    "prepare": "husky install",
+    "validate": "pnpm lint && pnpm type-check && pnpm test"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -18,25 +47,47 @@
     "react-remove-scroll": "^2.6.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.7.7",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
     "@vitejs/plugin-react": "^5.0.4",
+    "@vitest/coverage-v8": "^2.1.9",
+    "@vitest/ui": "^2.1.9",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",
+    "husky": "^8.0.3",
     "jsdom": "^26.0.0",
+    "lint-staged": "^15.5.2",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
+    "vite-plugin-pwa": "^0.17.5",
     "vitest": "^2.1.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
   }
 }
