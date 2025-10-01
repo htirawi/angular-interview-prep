@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type DependencyList } from "react";
 
 type KeyHandler = (event: KeyboardEvent) => void;
 
@@ -16,7 +16,7 @@ type KeyMap = {
  *   'Meta+k': () => openSearch(), // Cmd+K or Ctrl+K
  * });
  */
-export function useKeyboard(keyMap: KeyMap, deps: React.DependencyList = []) {
+export function useKeyboard(keyMap: KeyMap, deps: DependencyList = []) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // Build key combination string
@@ -24,7 +24,7 @@ export function useKeyboard(keyMap: KeyMap, deps: React.DependencyList = []) {
       if (event.metaKey || event.ctrlKey) modifiers.push("Meta");
       if (event.shiftKey) modifiers.push("Shift");
       if (event.altKey) modifiers.push("Alt");
-      
+
       const key = event.key;
       const combination = modifiers.length > 0 ? `${modifiers.join("+")}+${key}` : key;
 
@@ -37,8 +37,9 @@ export function useKeyboard(keyMap: KeyMap, deps: React.DependencyList = []) {
 
       // Check for case-insensitive match for letters
       const lowerKey = key.toLowerCase();
-      const lowerCombination = modifiers.length > 0 ? `${modifiers.join("+")}+${lowerKey}` : lowerKey;
-      
+      const lowerCombination =
+        modifiers.length > 0 ? `${modifiers.join("+")}+${lowerKey}` : lowerKey;
+
       if (keyMap[lowerCombination]) {
         // Only prevent default if not typing in an input
         const target = event.target as HTMLElement;
@@ -53,4 +54,3 @@ export function useKeyboard(keyMap: KeyMap, deps: React.DependencyList = []) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [keyMap, ...deps]);
 }
-

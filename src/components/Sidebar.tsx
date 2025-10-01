@@ -16,7 +16,7 @@ type Props = {
   mode: Mode;
   onModeChange: (mode: Mode) => void;
   // Search & Filters
-  searchQuery: string;
+  searchQuery?: string;
   onSearchChange: (query: string) => void;
   questions: QA[];
   selectedCategory: string;
@@ -39,7 +39,7 @@ export default function Sidebar({
   bookmarked,
   mode,
   onModeChange,
-  searchQuery,
+  searchQuery: _searchQuery, // Passed from parent but managed internally by SearchBar
   onSearchChange,
   questions,
   selectedCategory,
@@ -57,7 +57,7 @@ export default function Sidebar({
       {/* Mobile Toggle Button */}
       <button
         onClick={onToggle}
-        className="fixed left-4 top-4 z-50 rounded-lg bg-white p-2 shadow-lg lg:hidden dark:bg-gray-800"
+        className="fixed left-4 top-4 z-50 rounded-lg bg-white p-2 shadow-lg dark:bg-gray-800 lg:hidden"
         aria-label="Toggle sidebar"
       >
         <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,9 +91,7 @@ export default function Sidebar({
             <h1 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
               Angular Interview Prep
             </h1>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              100 Senior-Level Questions
-            </p>
+            <p className="text-xs text-gray-600 dark:text-gray-400">100 Senior-Level Questions</p>
           </div>
 
           {/* Stats */}
@@ -149,10 +147,7 @@ export default function Sidebar({
             <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
               Search
             </h2>
-            <SearchBar
-              onSearch={onSearchChange}
-              onClear={() => onSearchChange("")}
-            />
+            <SearchBar onSearch={onSearchChange} onClear={() => onSearchChange("")} />
           </div>
 
           {/* Filters */}
@@ -229,4 +224,3 @@ export default function Sidebar({
     </>
   );
 }
-

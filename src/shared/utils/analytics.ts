@@ -18,6 +18,8 @@ class Analytics {
    */
   track(event: AnalyticsEvent) {
     if (this.isDevelopment) {
+      // Development mode - log to console for debugging
+      // eslint-disable-next-line no-console
       console.log("📊 Analytics:", event);
       return;
     }
@@ -29,7 +31,7 @@ class Analytics {
         event_category: event.category,
         event_label: event.label,
         value: event.value,
-      });
+      } as Record<string, unknown>);
     }
   }
 
@@ -87,7 +89,6 @@ export const analytics = new Analytics();
 // TypeScript global declaration for gtag
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
-

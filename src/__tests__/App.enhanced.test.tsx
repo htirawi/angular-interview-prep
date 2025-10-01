@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import App from "../App";
 
 describe("Enhanced App Features", () => {
@@ -44,9 +44,7 @@ describe("Enhanced App Features", () => {
   describe("Search Functionality", () => {
     it("renders search input", () => {
       render(<App />);
-      expect(
-        screen.getByPlaceholderText(/search questions, topics, tags/i)
-      ).toBeInTheDocument();
+      expect(screen.getByPlaceholderText(/search questions, topics, tags/i)).toBeInTheDocument();
     });
 
     it("search input is accessible", () => {
@@ -118,14 +116,14 @@ describe("Enhanced App Features", () => {
     it("can navigate using next button", () => {
       render(<App />);
       const nextButton = screen.getByRole("button", { name: /next question/i });
-      
+
       // Check navigation exists
       expect(nextButton).toBeInTheDocument();
       expect(screen.getByRole("button", { name: /previous question/i })).toBeInTheDocument();
-      
+
       // Click next
       fireEvent.click(nextButton);
-      
+
       // Should still have navigation buttons
       expect(screen.getByRole("button", { name: /next question/i })).toBeInTheDocument();
     });
@@ -139,9 +137,7 @@ describe("Enhanced App Features", () => {
 
     it("renders subtitle in sidebar", () => {
       render(<App />);
-      expect(
-        screen.getByText(/100 senior-level questions/i)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/100 senior-level questions/i)).toBeInTheDocument();
     });
   });
 
@@ -154,4 +150,3 @@ describe("Enhanced App Features", () => {
     });
   });
 });
-

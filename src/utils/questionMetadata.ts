@@ -1,8 +1,17 @@
 // Auto-generate metadata for questions that don't have it
-export function enrichQuestions<T extends { id: number; question: string; answer: string; category?: string; difficulty?: string; tags?: string[] }>(
+export function enrichQuestions<
+  T extends {
+    id: number;
+    question: string;
+    answer: string;
+    category?: string;
+    difficulty?: string;
+    tags?: string[];
+  },
+>(
   questions: T[]
 ): Array<
-  Omit<T, 'category' | 'difficulty' | 'tags'> & {
+  Omit<T, "category" | "difficulty" | "tags"> & {
     category: string;
     difficulty: "intermediate" | "advanced" | "expert";
     tags: string[];
@@ -11,11 +20,15 @@ export function enrichQuestions<T extends { id: number; question: string; answer
   return questions.map((q) => {
     // If already has all metadata, return as-is
     if (q.category && q.difficulty && q.tags) {
-      return q as any;
+      return q as Omit<T, "category" | "difficulty" | "tags"> & {
+        category: string;
+        difficulty: "intermediate" | "advanced" | "expert";
+        tags: string[];
+      };
     }
 
     // Auto-categorize based on question content
-    const questionLower = (q.question + " " + q.answer).toLowerCase();
+    const questionLower = `${q.question} ${q.answer}`.toLowerCase();
 
     let category = "General";
     let difficulty: "intermediate" | "advanced" | "expert" = "intermediate";
@@ -145,4 +158,3 @@ export function enrichQuestions<T extends { id: number; question: string; answer
     };
   });
 }
-
