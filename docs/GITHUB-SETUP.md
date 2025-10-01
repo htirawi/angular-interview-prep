@@ -29,6 +29,7 @@ Follow these steps to create a GitHub repository and push your Angular Interview
 We've prepared a script that will initialize git, commit all files, and push to GitHub.
 
 **Option A: Run the automated script**
+
 ```bash
 ./push-to-github.sh YOUR_GITHUB_USERNAME
 ```
@@ -70,6 +71,7 @@ git push -u origin main
 ## ✅ What Gets Pushed
 
 The `.gitignore` file is configured to **include**:
+
 - ✅ All source code (`src/`)
 - ✅ Configuration files
 - ✅ Tests
@@ -78,10 +80,11 @@ The `.gitignore` file is configured to **include**:
 - ✅ Public assets
 
 And **exclude**:
+
 - ❌ `node_modules/`
 - ❌ `dist/` (build output)
 - ❌ Other .md documentation files (except README)
-- ❌ Backup files (*-original.tsx)
+- ❌ Backup files (\*-original.tsx)
 - ❌ IDE-specific files
 
 ---
@@ -89,6 +92,7 @@ And **exclude**:
 ## 📊 Repository Statistics
 
 After pushing, your repo will contain:
+
 - **6 test files** with 49 passing tests
 - **100 interview questions** with metadata
 - **10+ React components**
@@ -100,6 +104,7 @@ After pushing, your repo will contain:
 ## 🎨 Make Your Repository Stand Out
 
 ### Add a License
+
 ```bash
 # Add MIT license
 curl -o LICENSE https://raw.githubusercontent.com/licenses/license-templates/master/templates/mit.txt
@@ -110,7 +115,9 @@ git push
 ```
 
 ### Add Topics/Tags
+
 Go to your repository on GitHub and add these topics:
+
 - `angular`
 - `interview-questions`
 - `react`
@@ -122,6 +129,7 @@ Go to your repository on GitHub and add these topics:
 - `senior-developer`
 
 ### Enable GitHub Pages
+
 1. Go to repository Settings → Pages
 2. Source: GitHub Actions
 3. Your site will be available at: `https://YOUR_USERNAME.github.io/angular-interview-prep`
@@ -133,6 +141,7 @@ Go to your repository on GitHub and add these topics:
 After pushing to GitHub, deploy to these platforms:
 
 ### Vercel (Recommended)
+
 ```bash
 npm i -g vercel
 vercel
@@ -140,6 +149,7 @@ vercel
 ```
 
 ### Netlify
+
 ```bash
 npm i -g netlify-cli
 netlify init
@@ -194,18 +204,23 @@ git push
 ## 🆘 Troubleshooting
 
 ### "Permission denied (publickey)"
+
 You need to set up SSH keys or use HTTPS with a personal access token.
 [GitHub SSH Setup Guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 
 ### "Updates were rejected"
+
 Someone else pushed changes. Pull first:
+
 ```bash
 git pull origin main --rebase
 git push
 ```
 
 ### "Large files warning"
+
 Check that `node_modules/` is in `.gitignore`:
+
 ```bash
 echo "node_modules/" >> .gitignore
 git rm -r --cached node_modules/
@@ -226,4 +241,3 @@ Share it with your network and help others prepare for their Angular interviews!
 **Questions?** Open an issue on GitHub or check the documentation.
 
 Good luck! 🚀
-

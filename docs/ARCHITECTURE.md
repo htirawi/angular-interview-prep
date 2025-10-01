@@ -99,18 +99,21 @@ angular-interview-prep/
 ## 🎯 Design Principles
 
 ### 1. **Feature-Based Organization**
+
 - Each feature module is self-contained
 - Easy to locate related code
 - Scalable for team collaboration
 - Clear boundaries and dependencies
 
 ### 2. **Separation of Concerns**
+
 - **Core**: Infrastructure (error boundaries, providers)
 - **Features**: Domain-specific functionality
 - **Shared**: Reusable utilities and components
 - **Styles**: Global styling and themes
 
 ### 3. **Dependency Flow**
+
 ```
 Features → Shared → Core
      ↓
@@ -118,6 +121,7 @@ Features → Shared → Core
 ```
 
 ### 4. **Co-location**
+
 - Tests live next to components (`__tests__/`)
 - Related utilities stay with features
 - Easy to find and maintain
@@ -141,6 +145,7 @@ graph LR
 ### Jobs Breakdown
 
 #### 1. **Quality** (Parallel)
+
 - ESLint validation
 - Prettier formatting check
 - TypeScript type checking
@@ -148,6 +153,7 @@ graph LR
 - **Duration**: ~30s
 
 #### 2. **Test** (Matrix)
+
 - Unit & integration tests
 - Multiple Node versions (18, 20)
 - Coverage reporting
@@ -155,6 +161,7 @@ graph LR
 - **Duration**: ~1min
 
 #### 3. **Build** (Sequential)
+
 - Production build
 - Bundle size analysis
 - Artifact upload
@@ -162,6 +169,7 @@ graph LR
 - **Duration**: ~45s
 
 #### 4. **Lighthouse** (Performance)
+
 - Performance audit
 - Best practices check
 - SEO validation
@@ -169,6 +177,7 @@ graph LR
 - **Duration**: ~2min
 
 #### 5. **Security** (Parallel)
+
 - Dependency audit
 - CodeQL analysis (weekly)
 - Vulnerability scanning
@@ -176,12 +185,14 @@ graph LR
 - **Duration**: ~3min
 
 #### 6. **Deploy Preview** (PR only)
+
 - Deploy to staging
 - Comment with preview URL
 - **Runs on**: Pull requests
 - **Duration**: ~1min
 
 #### 7. **Deploy Production** (Main only)
+
 - Deploy to production
 - Invalidate CDN cache
 - **Runs on**: Main branch push
@@ -192,6 +203,7 @@ graph LR
 ## 🎨 Component Architecture
 
 ### Component Hierarchy
+
 ```
 App (Container)
 ├── ErrorBoundary (HOC)
@@ -236,6 +248,7 @@ App (Container)
 ## 🔐 State Management
 
 ### Storage Strategy
+
 ```typescript
 LocalStorage Keys:
 ├── mockInterview.index      // Current question index
@@ -247,6 +260,7 @@ LocalStorage Keys:
 ```
 
 ### Data Flow
+
 ```
 User Action → Component Handler → State Update → LocalStorage → Re-render
                                        ↓
@@ -260,22 +274,26 @@ User Action → Component Handler → State Update → LocalStorage → Re-rende
 ## ⚡ Performance Optimizations
 
 ### Code Splitting
+
 - Vendor chunk (React, ReactDOM)
 - Utility chunk (helpers)
 - Route-based splitting (future)
 
 ### Bundle Size
+
 - Target: < 250 KB total
 - Gzip compression enabled
 - Tree-shaking via Vite
 
 ### Runtime Optimizations
+
 - Memoized computations (`useMemo`)
 - Callback stability (`useCallback`)
 - Lazy loading for heavy features
 - Virtual scrolling for lists (if needed)
 
 ### Caching Strategy
+
 - Service Worker (PWA)
 - LocalStorage for state
 - CDN caching for assets
@@ -285,6 +303,7 @@ User Action → Component Handler → State Update → LocalStorage → Re-rende
 ## 🧪 Testing Strategy
 
 ### Test Pyramid
+
 ```
         E2E (Future)
            /\
@@ -296,6 +315,7 @@ User Action → Component Handler → State Update → LocalStorage → Re-rende
 ```
 
 ### Coverage Targets
+
 - **Unit Tests**: 80%+ coverage
 - **Integration Tests**: Critical user flows
 - **Component Tests**: All UI components
@@ -303,6 +323,7 @@ User Action → Component Handler → State Update → LocalStorage → Re-rende
 - **Utility Tests**: Pure functions
 
 ### Test Organization
+
 ```
 Component Tests:    src/components/__tests__/
 Integration Tests:  src/__tests__/
@@ -315,17 +336,20 @@ Utility Tests:      src/utils/__tests__/
 ## 🔒 Security Measures
 
 ### Code Level
+
 - TypeScript strict mode
 - No `any` types
 - Input sanitization
 - XSS prevention
 
 ### Build Level
+
 - Dependency audits
 - CodeQL scanning
 - OWASP checks
 
 ### Runtime Level
+
 - CSP headers
 - HTTPS only
 - Secure cookies
@@ -336,6 +360,7 @@ Utility Tests:      src/utils/__tests__/
 ## 📊 Monitoring & Analytics
 
 ### Metrics Tracked
+
 1. **Performance**
    - Page load time
    - Time to Interactive (TTI)
@@ -353,6 +378,7 @@ Utility Tests:      src/utils/__tests__/
    - Console errors
 
 ### Tools (Optional)
+
 - Vercel Analytics
 - Google Analytics 4
 - Sentry (error tracking)
@@ -363,6 +389,7 @@ Utility Tests:      src/utils/__tests__/
 ## 🚀 Deployment Architecture
 
 ### Build Process
+
 ```
 Source → TypeScript → Vite → Minify → Bundle → Deploy
                               ↓
@@ -374,12 +401,14 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ```
 
 ### Environments
+
 - **Development**: `pnpm dev` (HMR, source maps)
 - **Preview**: `pnpm preview` (production build locally)
 - **Staging**: PR deployments (Vercel preview)
 - **Production**: Main branch (Vercel/Netlify)
 
 ### CDN Strategy
+
 - Static assets on edge
 - Immutable caching
 - Cache invalidation on deploy
@@ -389,12 +418,14 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ## 📦 Dependency Management
 
 ### Package Strategy
+
 - **Locked versions** (`pnpm-lock.yaml`)
 - **Peer dependencies** checked
 - **Regular updates** via Renovate/Dependabot
 - **Security audits** in CI
 
 ### Update Policy
+
 - Security patches: Immediate
 - Minor updates: Weekly review
 - Major updates: Quarterly planning
@@ -404,24 +435,28 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ## 🎓 Code Standards
 
 ### TypeScript
+
 - Strict mode enabled
 - No implicit `any`
 - Consistent naming conventions
 - Interface over type (when appropriate)
 
 ### React
+
 - Functional components only
 - Hooks for state/effects
 - Prop types explicitly defined
 - Component composition over inheritance
 
 ### CSS
+
 - Tailwind utility-first
 - Custom classes in animations.css
 - BEM methodology for custom CSS
 - Mobile-first responsive design
 
 ### Git
+
 - Conventional commits
 - Feature branch workflow
 - Squash merges to main
@@ -432,6 +467,7 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ## 🔄 Development Workflow
 
 ### Local Development
+
 ```bash
 1. git checkout -b feature/new-feature
 2. pnpm dev                    # Start development
@@ -444,12 +480,14 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ```
 
 ### Automated Checks (Pre-commit)
+
 1. Lint-staged runs ESLint
 2. Prettier formats code
 3. TypeScript check
 4. Commit message validation
 
 ### CI Checks (On PR)
+
 1. Code quality (ESLint, Prettier)
 2. TypeScript compilation
 3. All tests pass
@@ -462,12 +500,14 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ## 🎯 Scalability Considerations
 
 ### Current Scale
+
 - 100 questions
 - ~40 components
 - ~50 tests
 - Single page application
 
 ### Future Scale (Ready For)
+
 - 1,000+ questions
 - Multiple question sets
 - User authentication
@@ -476,6 +516,7 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 - Multi-language support
 
 ### Architecture Supports
+
 - ✅ Feature modules (easy to add)
 - ✅ Lazy loading (Vite)
 - ✅ Code splitting
@@ -487,6 +528,7 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ## 📈 Performance Benchmarks
 
 ### Target Metrics
+
 - **Lighthouse Performance**: 95+
 - **First Contentful Paint**: < 1.5s
 - **Time to Interactive**: < 3.0s
@@ -494,6 +536,7 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 - **Test Suite**: < 10s
 
 ### Actual Results
+
 - ✅ All tests: ~1.7s
 - ✅ Build time: < 1s
 - ✅ Bundle size: ~232 KB
@@ -504,12 +547,14 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ## 🛠️ Maintenance
 
 ### Regular Tasks
+
 - **Weekly**: Dependency updates
 - **Monthly**: Security audits
 - **Quarterly**: Major dependency upgrades
 - **Annually**: Architecture review
 
 ### Monitoring
+
 - GitHub Actions status
 - Deployment health checks
 - Error tracking (if configured)
@@ -520,6 +565,7 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 ## 🤝 Contribution Guidelines
 
 ### Code Review Checklist
+
 - [ ] Tests added/updated
 - [ ] Types defined
 - [ ] Accessible (a11y)
@@ -529,22 +575,27 @@ Source → TypeScript → Vite → Minify → Bundle → Deploy
 - [ ] Documentation updated
 
 ### Pull Request Template
+
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation
 
 ## Testing
+
 - [ ] Unit tests added
 - [ ] Integration tests updated
 - [ ] Manual testing completed
 
 ## Screenshots
+
 (if UI changes)
 ```
 
@@ -553,6 +604,7 @@ Brief description of changes
 ## 🎓 Learning Resources
 
 Built with these advanced patterns:
+
 - **Feature-Slice Design**
 - **Atomic Design** (for components)
 - **SOLID Principles**
@@ -564,4 +616,3 @@ Built with these advanced patterns:
 This architecture is designed to scale from a solo project to a team-maintained production application. Every decision prioritizes maintainability, testability, and developer experience.
 
 **Questions?** Open an issue or check the inline code documentation!
-

@@ -7,9 +7,10 @@ Welcome! Your **Angular Senior Interview Prep** tool is ready to deploy! 🚀
 ## 🎉 What You Have Now
 
 ✅ **Professional Interview Prep Platform** with:
+
 - 100 curated Angular interview questions
 - Search & filter functionality
-- Progress tracking with statistics  
+- Progress tracking with statistics
 - Bookmark system
 - Multiple practice modes
 - Modern UI with dark mode
@@ -43,6 +44,7 @@ pnpm dev
 ### Step 3: Push to GitHub (1 minute)
 
 **Option A: Automated (Recommended)**
+
 ```bash
 # Replace YOUR_USERNAME with your GitHub username
 ./push-to-github.sh YOUR_USERNAME
@@ -51,6 +53,7 @@ pnpm dev
 ```
 
 **Option B: Manual**
+
 ```bash
 git init
 git add .
@@ -65,6 +68,7 @@ git push -u origin main
 ## ✨ What Gets Pushed to GitHub
 
 ### ✅ Included:
+
 - All source code (`src/`)
 - Tests (49 tests, 6 test files)
 - Configuration files
@@ -74,10 +78,11 @@ git push -u origin main
 - PWA manifest
 
 ### ❌ Excluded (via .gitignore):
+
 - `node_modules/` (300+ MB)
 - `dist/` (build output)
 - Other documentation files (except README.md)
-- Backup files (*-original.tsx)
+- Backup files (\*-original.tsx)
 - IDE settings
 
 **Total repo size**: ~600 KB (very lightweight!)
@@ -87,20 +92,25 @@ git push -u origin main
 ## 🚀 Deploy to Production (Choose One)
 
 ### Vercel (Easiest - Recommended)
+
 ```bash
 npm i -g vercel
 vercel
 ```
+
 ✨ Live in 2 minutes at: `https://your-project.vercel.app`
 
 ### Netlify
+
 ```bash
 npm i -g netlify-cli
 netlify deploy --prod
 ```
+
 ✨ Live at: `https://your-project.netlify.app`
 
 ### GitHub Pages (Free)
+
 Already configured! Just enable in Settings → Pages → Source: GitHub Actions
 
 ✨ Live at: `https://YOUR_USERNAME.github.io/angular-interview-prep`
@@ -153,26 +163,31 @@ Already configured! Just enable in Settings → Pages → Source: GitHub Actions
 ## 🎨 Key Features Walkthrough
 
 ### 1. Search & Filter
+
 - Type keywords to search across questions, answers, and tags
 - Filter by category (Architecture, RxJS, Forms, etc.)
 - Filter by difficulty (Intermediate, Advanced, Expert)
 
 ### 2. Progress Tracking
+
 - See completion stats at the top
 - Track which questions you've completed
 - Monitor your overall progress percentage
 
 ### 3. Bookmark System
+
 - Click ★ to bookmark questions
 - Press 'B' for quick bookmarking
 - Switch to "Bookmarked" mode to review favorites
 
 ### 4. Practice Modes
+
 - **Sequential**: Go through questions 1-100 in order
 - **Random**: Shuffle for varied practice
 - **Bookmarked**: Focus on saved questions
 
 ### 5. Keyboard Shortcuts
+
 - `←` / `→`: Navigate between questions
 - `A`: Toggle answer visibility
 - `B`: Bookmark current question
@@ -184,11 +199,13 @@ Already configured! Just enable in Settings → Pages → Source: GitHub Actions
 Your app can be installed on phones and desktops!
 
 **On Mobile:**
+
 1. Open the deployed site
 2. Tap "Add to Home Screen"
 3. App opens in fullscreen mode
 
 **On Desktop:**
+
 1. Look for install icon in address bar
 2. Click to install
 3. Works offline after first visit!
@@ -200,6 +217,7 @@ Your app can be installed on phones and desktops!
 After deploying, enhance your repository:
 
 ### On GitHub.com
+
 - [ ] Add description in "About" section
 - [ ] Add topics: `angular`, `interview-questions`, `react`, `typescript`, `vite`, `tailwindcss`, `pwa`, `senior-developer`
 - [ ] Add website URL to repository details
@@ -207,6 +225,7 @@ After deploying, enhance your repository:
 - [ ] Enable GitHub Discussions (optional)
 
 ### Social Sharing
+
 - [ ] Share on LinkedIn
 - [ ] Tweet about it
 - [ ] Post in r/Angular on Reddit
@@ -214,6 +233,7 @@ After deploying, enhance your repository:
 - [ ] Add to your portfolio website
 
 ### Optional Enhancements
+
 - [ ] Add LICENSE file (MIT recommended)
 - [ ] Create social preview image (1200x630)
 - [ ] Set up analytics (Vercel/Google Analytics)
@@ -223,15 +243,15 @@ After deploying, enhance your repository:
 
 ## 📚 Documentation Files
 
-| File | Purpose | Included in Git |
-|------|---------|-----------------|
-| `README.md` | Main documentation | ✅ Yes |
-| `GITHUB-SETUP.md` | GitHub setup guide | ❌ No |
-| `DEPLOYMENT.md` | Deployment guide | ❌ No |
-| `FEATURES.md` | Complete feature list | ❌ No |
-| `SUMMARY.md` | Project summary | ❌ No |
-| `FINAL-CHECKLIST.md` | Pre-push checklist | ❌ No |
-| `START-HERE.md` | This file | ❌ No |
+| File                 | Purpose               | Included in Git |
+| -------------------- | --------------------- | --------------- |
+| `README.md`          | Main documentation    | ✅ Yes          |
+| `GITHUB-SETUP.md`    | GitHub setup guide    | ❌ No           |
+| `DEPLOYMENT.md`      | Deployment guide      | ❌ No           |
+| `FEATURES.md`        | Complete feature list | ❌ No           |
+| `SUMMARY.md`         | Project summary       | ❌ No           |
+| `FINAL-CHECKLIST.md` | Pre-push checklist    | ❌ No           |
+| `START-HERE.md`      | This file             | ❌ No           |
 
 ---
 
@@ -240,18 +260,22 @@ After deploying, enhance your repository:
 ### Common Issues
 
 **"Push failed - permission denied"**
+
 - Set up SSH keys: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
 - Or use HTTPS with personal access token
 
 **"Repository doesn't exist"**
+
 - Make sure you created it on GitHub first
 - Check the repository name matches
 
 **"Tests failing"**
+
 - Run `pnpm test` to see what's failing
 - All 49 tests should pass before pushing
 
 **"Build errors"**
+
 - Run `pnpm build` to see TypeScript errors
 - Make sure all dependencies are installed: `pnpm install`
 
@@ -260,11 +284,15 @@ After deploying, enhance your repository:
 ## 💡 Tips for Maximum Impact
 
 ### For Your Portfolio
+
 Add to your resume/portfolio:
+
 > Built a professional Angular interview preparation platform with 100 curated questions, featuring search, bookmarks, progress tracking, and PWA support. Deployed with CI/CD, achieving 95+ Lighthouse score.
 
 ### For Open Source Contributions
+
 This is a great project to showcase:
+
 - Modern React patterns
 - TypeScript best practices
 - Testing discipline (49 tests!)
@@ -272,6 +300,7 @@ This is a great project to showcase:
 - Documentation skills
 
 ### For Helping Others
+
 Share it! Help other Angular developers prepare for senior interviews.
 
 ---
@@ -295,7 +324,7 @@ Run these commands to verify everything:
 pnpm test
 # Should show: ✓ 49 tests passed
 
-# 2. No linting errors  
+# 2. No linting errors
 pnpm lint
 
 # 3. Production build works
@@ -315,13 +344,14 @@ git status
 
 Everything is set up and ready to go. Just follow the 3 steps above and you'll have a professional Angular interview prep tool live on the internet!
 
-**Next**: Run `./push-to-github.sh YOUR_USERNAME` 
+**Next**: Run `./push-to-github.sh YOUR_USERNAME`
 
 ---
 
 ## 📞 Questions?
 
 Check the other documentation files:
+
 - `GITHUB-SETUP.md` - Detailed GitHub instructions
 - `DEPLOYMENT.md` - Platform-specific deployment guides
 - `README.md` - Main project documentation
@@ -330,5 +360,4 @@ Check the other documentation files:
 
 **Good luck with your Angular interviews! 🚀**
 
-*You've got a professional tool to help you prepare - now go ace that interview!*
-
+_You've got a professional tool to help you prepare - now go ace that interview!_

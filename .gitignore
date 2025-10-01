@@ -49,12 +49,9 @@ lerna-debug.log*
 Thumbs.db
 .DS_Store
 
-# Documentation (keep README.md only)
-SUMMARY.md
-FEATURES.md
-UPGRADE-GUIDE.md
-DEPLOYMENT.md
-README-ENHANCED.md
+# Documentation in root (keep only README.md and PROJECT-STRUCTURE.md)
+# All other docs are in docs/ folder
+PROJECT-STRUCTURE.md
 
 # Backups and enhanced versions (keep -enhanced files, exclude -original)
 *-original.tsx

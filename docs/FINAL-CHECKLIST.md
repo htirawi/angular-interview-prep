@@ -5,17 +5,20 @@ Before pushing to GitHub, verify everything is ready:
 ## 🧪 Tests & Quality
 
 - [x] **All 49 tests passing** ✅
+
   ```bash
   pnpm test
   # ✓ 49 tests passed
   ```
 
 - [x] **No linting errors**
+
   ```bash
   pnpm lint
   ```
 
 - [x] **Code formatted**
+
   ```bash
   pnpm format
   ```
@@ -89,12 +92,14 @@ Coverage:
 ## 📏 Repository Size
 
 Approximate size after first commit:
+
 - **Source code**: ~500 KB
 - **Tests**: ~50 KB
 - **Configs**: ~10 KB
 - **Total**: ~560 KB (very lightweight!)
 
 **Excluded** (via .gitignore):
+
 - node_modules/ (~300 MB)
 - dist/ (~500 KB)
 - Documentation files (except README)
@@ -131,6 +136,7 @@ git status
 After successfully pushing:
 
 ### On GitHub.com
+
 1. ✅ Add repository description
 2. ✅ Add topics/tags: `angular`, `interview-questions`, `react`, `typescript`, `vite`, `tailwindcss`, `pwa`
 3. ✅ Add About section with website URL
@@ -139,11 +145,13 @@ After successfully pushing:
 6. ✅ Add repository social image (optional)
 
 ### Deploy
+
 1. ✅ Deploy to Vercel: `vercel`
 2. ✅ Or deploy to Netlify: `netlify deploy --prod`
 3. ✅ Or enable GitHub Pages
 
 ### Share
+
 1. ✅ Share on LinkedIn
 2. ✅ Share on Twitter
 3. ✅ Post in r/Angular
@@ -153,6 +161,7 @@ After successfully pushing:
 ## 🎓 Repository Stats (Expected)
 
 After push, your repository will show:
+
 - **Language**: TypeScript (85%), CSS (10%), JavaScript (5%)
 - **Files**: ~60 files
 - **Lines of code**: ~4,000
@@ -163,6 +172,7 @@ After push, your repository will show:
 ## 🏆 Success Criteria
 
 Your repository is ready if:
+
 - ✅ All tests pass (49/49)
 - ✅ Build completes successfully
 - ✅ No linting errors
@@ -193,4 +203,3 @@ git push -u origin main
 **🎉 Your Angular Interview Prep tool is ready to help developers worldwide!**
 
 Good luck with your GitHub repository! 🚀
-

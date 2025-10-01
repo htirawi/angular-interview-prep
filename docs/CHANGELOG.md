@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🎉 Initial Release
 
 #### ✨ Features
+
 - 100 curated Angular senior interview questions
 - Smart search across questions, answers, categories, and tags
 - Filter by 15+ categories (Architecture, RxJS, Forms, NgRx, etc.)
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fully responsive design (mobile, tablet, desktop)
 
 #### 🏗️ Architecture
+
 - Feature-based folder structure
 - Professional component organization
 - Separation of concerns (core, features, shared)
@@ -34,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Toast notification system
 
 #### 🧪 Testing
+
 - 49 comprehensive tests across 6 test files
 - Unit tests for all components
 - Integration tests for user flows
@@ -42,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vitest + React Testing Library
 
 #### 🔄 CI/CD
+
 - Multi-stage GitHub Actions pipeline
 - Code quality checks (ESLint, Prettier, TypeScript)
 - Automated testing on multiple Node versions (18, 20)
@@ -51,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Production deployments on merge
 
 #### 🛠️ Developer Experience
+
 - Husky git hooks (pre-commit, commit-msg)
 - Lint-staged for auto-formatting
 - Commitlint for conventional commits
@@ -59,6 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fast refresh in development
 
 #### 🚀 Deployment
+
 - Vercel configuration
 - Netlify configuration
 - Docker + nginx setup
@@ -68,6 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CDN-ready
 
 #### 📚 Documentation
+
 - Comprehensive README
 - Architecture documentation
 - Contributing guidelines
@@ -76,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of conduct ready
 
 #### 🔐 Security
+
 - CSP headers
 - XSS prevention
 - Dependency auditing
@@ -84,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Privacy-focused analytics
 
 #### ⚡ Performance
+
 - Code splitting (vendor, utils chunks)
 - Tree-shaking
 - Lazy loading ready
@@ -92,6 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - < 250 KB total bundle size
 
 #### ♿ Accessibility
+
 - WCAG 2.1 AA compliant
 - Semantic HTML
 - ARIA labels and roles
@@ -105,6 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### 🎯 Planned Features
+
 - [ ] Multiple question sets (React, Vue, Node.js)
 - [ ] Spaced repetition algorithm
 - [ ] Mock interview mode with timer
@@ -139,4 +150,3 @@ When making changes:
 ---
 
 **Questions about a specific version?** Check the [commit history](https://github.com/htirawi/angular-interview-prep/commits/main) or [release notes](https://github.com/htirawi/angular-interview-prep/releases).
-

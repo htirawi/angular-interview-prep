@@ -5,6 +5,7 @@ Thank you to everyone who has contributed to making Angular Interview Prep bette
 ## 🏆 Project Creator & Maintainer
 
 **Hussein Tirawi** ([@htirawi](https://github.com/htirawi))
+
 - Created the project
 - Architecture design
 - All initial features
@@ -48,5 +49,4 @@ We recognize contributions of all types:
 
 ---
 
-*This project exists to help Angular developers succeed. Thank you for being part of it!* ❤️
-
+_This project exists to help Angular developers succeed. Thank you for being part of it!_ ❤️

@@ -7,6 +7,7 @@ Your Angular Interview Prep is **ready to go live**! Choose your deployment plat
 ## ⚡ Vercel (Recommended - 2 minutes)
 
 ### Why Vercel?
+
 - ✅ Fastest deployment
 - ✅ Free for personal projects
 - ✅ Automatic HTTPS
@@ -39,6 +40,7 @@ vercel --prod
 **Done!** Your site is live at: `https://angular-interview-prep.vercel.app`
 
 ### Continuous Deployment
+
 Once connected, every push to `main` auto-deploys! 🎉
 
 ---
@@ -68,6 +70,7 @@ netlify deploy --prod
 Already configured with GitHub Actions!
 
 ### Enable It:
+
 1. Go to: https://github.com/htirawi/angular-interview-prep/settings/pages
 2. Source: **GitHub Actions**
 3. Save
@@ -97,12 +100,14 @@ docker run -d -p 80:80 angular-interview-prep
 After deploying:
 
 ### On GitHub
+
 - [ ] Add deployment URL to repository description
 - [ ] Add topics/tags
 - [ ] Update README badges with live demo link
 - [ ] Enable Discussions (optional)
 
 ### Test Your Site
+
 - [ ] Mobile responsive
 - [ ] Dark mode works
 - [ ] Search works
@@ -113,11 +118,13 @@ After deploying:
 - [ ] Keyboard shortcuts work
 
 ### Performance
+
 - [ ] Run Lighthouse audit (should be 95+)
 - [ ] Check bundle size
 - [ ] Test on slow 3G
 
 ### Share
+
 - [ ] LinkedIn post
 - [ ] Twitter announcement
 - [ ] Reddit r/Angular
@@ -140,18 +147,22 @@ Replace `YOUR-DEPLOYED-URL` with your actual URL.
 ## 📊 Monitor Your Site
 
 ### Vercel Dashboard
+
 https://vercel.com/dashboard
 
 Shows:
+
 - Deployment history
 - Analytics (page views, users)
 - Performance metrics
 - Error logs
 
 ### GitHub Actions
+
 https://github.com/htirawi/angular-interview-prep/actions
 
 Shows:
+
 - CI/CD pipeline status
 - Test results
 - Build logs
@@ -162,25 +173,30 @@ Shows:
 ## 🔥 Pro Tips
 
 ### Custom Domain (Optional)
+
 1. Buy domain (Namecheap, Google Domains)
 2. Add to Vercel/Netlify
 3. Update DNS records
 4. HTTPS auto-configured!
 
 ### Environment Variables
+
 If you add analytics:
 
 **Vercel**: Settings → Environment Variables
 **Netlify**: Site settings → Environment
 
 Add:
+
 ```
 VITE_GA_ID=G-XXXXXXXXXX
 VITE_ANALYTICS_ENABLED=true
 ```
 
 ### Automated Updates
+
 Enable Dependabot in GitHub:
+
 - Settings → Security → Dependabot
 - Auto-creates PRs for updates
 - Keeps dependencies fresh
@@ -190,6 +206,7 @@ Enable Dependabot in GitHub:
 ## 🎉 You're Live!
 
 Once deployed, you'll have:
+
 - ✅ Professional URL
 - ✅ HTTPS certificate
 - ✅ Global CDN

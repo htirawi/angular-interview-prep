@@ -10,37 +10,42 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-[**Live Demo →**](https://angular-interview-prep.vercel.app) | [**Architecture →**](ARCHITECTURE.md) | [**Contributing →**](CONTRIBUTING.md)
+[**Live Demo →**](https://angular-interview-prep.vercel.app) | [**Docs →**](docs/) | [**Architecture →**](docs/ARCHITECTURE.md) | [**Contributing →**](.github/CONTRIBUTING.md)
 
 ---
 
 ## ✨ Features
 
 ### 🎨 Professional UI/UX
+
 - Modern gradient design with smooth animations
 - Dark mode with system preference detection
 - Fully responsive (mobile, tablet, desktop)
 - Accessible (WCAG 2.1 AA compliant)
 
 ### 🔍 Smart Search & Filtering
+
 - Real-time search across questions, answers, and tags
 - Filter by 15+ categories (Architecture, RxJS, Forms, NgRx, etc.)
 - Filter by difficulty (Intermediate, Advanced, Expert)
 - Smart auto-categorization
 
 ### 📊 Progress Tracking
+
 - Visual statistics dashboard
 - Track completed questions
 - Progress percentage
 - Persistent across sessions
 
 ### ⭐ Study Features
+
 - **Sequential Mode** - Linear progression
 - **Random Mode** - Shuffled questions for practice
 - **Bookmarked Mode** - Save and review favorites
 - Keyboard shortcuts (← → A B)
 
 ### 🚀 Production Ready
+
 - PWA installable (works offline)
 - SEO optimized
 - Deployment configs (Vercel, Netlify, Docker)
@@ -82,12 +87,12 @@ pnpm format     # Format code with Prettier
 
 ## ⌨️ Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
-| `←` / `→` | Navigate questions |
-| `A` | Toggle answer visibility |
-| `B` | Bookmark question |
-| `Esc` | Clear search |
+| Shortcut  | Action                   |
+| --------- | ------------------------ |
+| `←` / `→` | Navigate questions       |
+| `A`       | Toggle answer visibility |
+| `B`       | Bookmark question        |
+| `Esc`     | Clear search             |
 
 ---
 
@@ -116,18 +121,21 @@ pnpm format     # Format code with Prettier
 ## 🎯 How to Use
 
 ### For First-Time Study
+
 1. Start with **Sequential Mode**
 2. Read each question carefully
 3. Try to answer before revealing
 4. Bookmark challenging questions
 
 ### For Interview Prep
+
 1. Use **Random Mode** to simulate interviews
 2. Filter by difficulty level
 3. Focus on bookmarked questions
 4. Practice explaining answers out loud
 
 ### For Quick Review
+
 1. Switch to **Bookmarked Mode**
 2. Use search to find specific topics
 3. Filter by category
@@ -138,24 +146,28 @@ pnpm format     # Format code with Prettier
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
+
 ```bash
 npm i -g vercel
 vercel
 ```
 
 ### Netlify
+
 ```bash
 npm i -g netlify-cli
 netlify deploy --prod
 ```
 
 ### Docker
+
 ```bash
 docker build -t angular-interview-prep .
 docker run -p 3000:80 angular-interview-prep
 ```
 
 ### GitHub Pages
+
 Push to `main` branch - auto-deploys via GitHub Actions!
 
 ---
@@ -183,7 +195,9 @@ Contributions welcome! Here's how:
 5. Open a Pull Request
 
 ### Adding Questions
+
 Edit `src/data/questions.ts`:
+
 ```typescript
 {
   id: 101,
@@ -227,5 +241,4 @@ Questions or feedback? Open an issue!
 
 **Good luck with your interview!** 🚀
 
-*Built with ❤️ for Angular developers*
-
+_Built with ❤️ for Angular developers_
