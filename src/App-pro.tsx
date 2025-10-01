@@ -7,21 +7,15 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { ErrorBoundary } from "./core/components/ErrorBoundary";
 import { useToast } from "./shared/hooks/useToast";
 import Toast from "./shared/components/Toast";
-import { STORAGE_KEYS, PRACTICE_MODES } from "./shared/constants/app";
+import { STORAGE_KEYS } from "./shared/constants/app";
 
 type Mode = "sequential" | "random" | "bookmarked";
 
 export default function App() {
   const enrichedQuestions = useMemo(() => enrichQuestions(QUESTIONS), []);
   const [index, setIndex] = useLocalStorage<number>(STORAGE_KEYS.INDEX, 0);
-  const [completed, setCompleted] = useLocalStorage<Set<number>>(
-    STORAGE_KEYS.COMPLETED,
-    new Set()
-  );
-  const [bookmarks, setBookmarks] = useLocalStorage<Set<number>>(
-    STORAGE_KEYS.BOOKMARKS,
-    new Set()
-  );
+  const [completed, setCompleted] = useLocalStorage<Set<number>>(STORAGE_KEYS.COMPLETED, new Set());
+  const [bookmarks, setBookmarks] = useLocalStorage<Set<number>>(STORAGE_KEYS.BOOKMARKS, new Set());
   const [mode, setMode] = useLocalStorage<Mode>(STORAGE_KEYS.MODE, "sequential");
   const [notes, setNotes] = useLocalStorage<Record<number, string>>(STORAGE_KEYS.NOTES, {});
 
@@ -197,11 +191,7 @@ export default function App() {
         />
 
         {/* Main Content - Focused on Questions */}
-        <main
-          className={`flex-1 transition-all duration-300 ${
-            sidebarOpen ? "lg:ml-80" : "ml-0"
-          }`}
-        >
+        <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"}`}>
           <div className="container mx-auto max-w-4xl px-4 py-8 md:px-8 md:py-12">
             <QuestionCardPro
               item={item}
@@ -235,4 +225,3 @@ export default function App() {
     </ErrorBoundary>
   );
 }
-
