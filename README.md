@@ -250,4 +250,4 @@ Questions or feedback? Open an issue!
 
 **Good luck with your interview!** 🚀
 
-_Built with ❤️ for Angular developers_
+_Built with ❤️ for developers preparing for Angular, React, Next.js & Redux interviews_
