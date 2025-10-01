@@ -1,0 +1,17 @@
+## Continue adding these questions to react-enhanced.ts:
+
+Question 11: Error Boundaries
+Question 12: useMemo and useCallback
+Question 13: React.memo
+Question 14: StrictMode
+Question 15: Concurrent Mode & useTransition
+Question 16: Suspense for Data Fetching
+Question 17: useState vs useReducer
+Question 18: useRef and Refs
+Question 19: Custom Hooks Design
+Question 20: Performance Optimization Strategies
+Question 21: Code Splitting & React.lazy
+Question 22: React 18 Features (Automatic Batching)
+Question 23: Server Components (RSC)
+Question 24: Testing React Components
+Question 25: React Security Best Practices
