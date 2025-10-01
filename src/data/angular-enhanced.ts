@@ -175,7 +175,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "```typescript\n" +
       "@Injectable()\n" +
       "export class CacheInterceptor implements HttpInterceptor {\n" +
-      "  private cache = new Map<string, HttpResponse<any>>();\n\n" +
+      "  private cache = new Map<string, HttpResponse<unknown>>();\n\n" +
       "  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {\n" +
       "    // Only cache GET requests\n" +
       "    if (req.method !== 'GET') {\n" +
@@ -248,7 +248,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "      })\n" +
       "    );\n" +
       "  }\n\n" +
-      "  private handle401Error(req: HttpRequest<any>, next: HttpHandler) {\n" +
+      "  private handle401Error(req: HttpRequest<unknown>, next: HttpHandler) {\n" +
       "    if (!this.isRefreshing) {\n" +
       "      this.isRefreshing = true;\n" +
       "      this.refreshTokenSubject.next(null);\n\n" +
@@ -273,7 +273,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "      );\n" +
       "    }\n" +
       "  }\n\n" +
-      "  private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {\n" +
+      "  private addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {\n" +
       "    return req.clone({\n" +
       "      setHeaders: { Authorization: `Bearer ${token}` }\n" +
       "    });\n" +
