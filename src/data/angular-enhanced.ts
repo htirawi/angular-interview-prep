@@ -5506,6 +5506,1227 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "hard",
     tags: ["performance", "profiling", "devtools", "optimization", "debugging"],
   },
+  {
+    id: 65,
+    question: "What is Differential Loading in Angular? How does it work?",
+    answer:
+      "Differential loading serves modern ES2015+ code to modern browsers and ES5 to legacy browsers.\n\n" +
+      "**How It Works:**\n\n" +
+      "```typescript\n" +
+      "// Angular CLI automatically generates two bundles:\n\n" +
+      "// 1. Modern bundle (ES2015+):\n" +
+      "// - main-es2015.js (smaller, faster)\n" +
+      "// - For Chrome, Firefox, Safari, Edge\n\n" +
+      "// 2. Legacy bundle (ES5):\n" +
+      "// - main-es5.js (larger, includes polyfills)\n" +
+      "// - For IE11, older browsers\n" +
+      "```\n\n" +
+      "**index.html Output:**\n\n" +
+      "```html\n" +
+      "<!-- Modern browsers load ES2015 -->\n" +
+      '<script src="main-es2015.js" type="module"></script>\n\n' +
+      "<!-- Legacy browsers load ES5 -->\n" +
+      '<script src="main-es5.js" nomodule defer></script>\n\n' +
+      '<!-- type="module" = modern browsers only -->\n' +
+      "<!-- nomodule = legacy browsers only -->\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Smaller bundles for 95% of users\n" +
+      "- Better performance on modern browsers\n" +
+      "- Still supports legacy browsers\n\n" +
+      "**Configuration (tsconfig.json):**\n\n" +
+      "```json\n" +
+      "{\n" +
+      '  "compilerOptions": {\n' +
+      '    "target": "ES2015",\n' +
+      '    "module": "ES2015"\n' +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Build & Optimization",
+    difficulty: "intermediate",
+    tags: ["differential-loading", "build", "es5", "es2015", "performance"],
+  },
+  {
+    id: 66,
+    question:
+      "How do you implement Testing strategies in Angular? Explain unit vs integration vs e2e testing.",
+    answer:
+      "**Unit Testing (Jasmine + Karma):**\n\n" +
+      "```typescript\n" +
+      "import { ComponentFixture, TestBed } from '@angular/core/testing';\n\n" +
+      "describe('UserComponent', () => {\n" +
+      "  let component: UserComponent;\n" +
+      "  let fixture: ComponentFixture<UserComponent>;\n\n" +
+      "  beforeEach(async () => {\n" +
+      "    await TestBed.configureTestingModule({\n" +
+      "      declarations: [UserComponent],\n" +
+      "      providers: [UserService]\n" +
+      "    }).compileComponents();\n\n" +
+      "    fixture = TestBed.createComponent(UserComponent);\n" +
+      "    component = fixture.componentInstance;\n" +
+      "  });\n\n" +
+      "  it('should create', () => {\n" +
+      "    expect(component).toBeTruthy();\n" +
+      "  });\n\n" +
+      "  it('should display user name', () => {\n" +
+      "    component.user = { name: 'John' };\n" +
+      "    fixture.detectChanges();\n" +
+      "    \n" +
+      "    const compiled = fixture.nativeElement;\n" +
+      "    expect(compiled.querySelector('h1').textContent).toContain('John');\n" +
+      "  });\n\n" +
+      "  it('should call service on save', () => {\n" +
+      "    const service = TestBed.inject(UserService);\n" +
+      "    spyOn(service, 'save');\n" +
+      "    \n" +
+      "    component.save();\n" +
+      "    expect(service.save).toHaveBeenCalled();\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Integration Testing:**\n\n" +
+      "```typescript\n" +
+      "import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';\n\n" +
+      "describe('UserService', () => {\n" +
+      "  let service: UserService;\n" +
+      "  let httpMock: HttpTestingController;\n\n" +
+      "  beforeEach(() => {\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      imports: [HttpClientTestingModule],\n" +
+      "      providers: [UserService]\n" +
+      "    });\n\n" +
+      "    service = TestBed.inject(UserService);\n" +
+      "    httpMock = TestBed.inject(HttpTestingController);\n" +
+      "  });\n\n" +
+      "  it('should fetch users', () => {\n" +
+      "    const mockUsers = [{ id: 1, name: 'John' }];\n\n" +
+      "    service.getUsers().subscribe(users => {\n" +
+      "      expect(users).toEqual(mockUsers);\n" +
+      "    });\n\n" +
+      "    const req = httpMock.expectOne('/api/users');\n" +
+      "    expect(req.request.method).toBe('GET');\n" +
+      "    req.flush(mockUsers);\n" +
+      "  });\n\n" +
+      "  afterEach(() => {\n" +
+      "    httpMock.verify(); // Ensure no outstanding requests\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**E2E Testing (Cypress):**\n\n" +
+      "```typescript\n" +
+      "describe('User Flow', () => {\n" +
+      "  beforeEach(() => {\n" +
+      "    cy.visit('/users');\n" +
+      "  });\n\n" +
+      "  it('should add new user', () => {\n" +
+      "    cy.get('[data-cy=add-user]').click();\n" +
+      "    cy.get('[data-cy=name-input]').type('John Doe');\n" +
+      "    cy.get('[data-cy=email-input]').type('john@example.com');\n" +
+      "    cy.get('[data-cy=submit]').click();\n\n" +
+      "    cy.get('[data-cy=user-list]').should('contain', 'John Doe');\n" +
+      "  });\n\n" +
+      "  it('should validate form', () => {\n" +
+      "    cy.get('[data-cy=add-user]').click();\n" +
+      "    cy.get('[data-cy=submit]').click();\n" +
+      "    cy.get('[data-cy=error]').should('be.visible');\n" +
+      "  });\n" +
+      "});\n" +
+      "```",
+    category: "Testing",
+    difficulty: "hard",
+    tags: ["testing", "jasmine", "karma", "cypress", "unit-tests", "e2e"],
+  },
+  {
+    id: 67,
+    question:
+      "What are the differences between Constructor, ngOnInit, and ngAfterViewInit? When to use each?",
+    answer:
+      "**Constructor - Dependency Injection:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  // ✅ Use constructor for:\n" +
+      "  // - Dependency injection\n" +
+      "  // - Simple initialization\n" +
+      "  // - No DOM access\n" +
+      "  // - No @Input() data yet\n\n" +
+      "  private userId: number;\n\n" +
+      "  constructor(\n" +
+      "    private userService: UserService,\n" +
+      "    private route: ActivatedRoute\n" +
+      "  ) {\n" +
+      "    // ❌ BAD - @Input not available yet\n" +
+      "    // console.log(this.userId);\n\n" +
+      "    // ✅ GOOD - Simple setup\n" +
+      "    this.userId = 0;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**ngOnInit - Component Initialization:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component implements OnInit {\n" +
+      "  @Input() userId: number;\n" +
+      "  user: User;\n\n" +
+      "  // ✅ Use ngOnInit for:\n" +
+      "  // - @Input() values available\n" +
+      "  // - HTTP requests\n" +
+      "  // - Complex initialization\n" +
+      "  // - Setup subscriptions\n\n" +
+      "  ngOnInit() {\n" +
+      "    // ✅ GOOD - @Input available\n" +
+      "    if (this.userId) {\n" +
+      "      this.loadUser(this.userId);\n" +
+      "    }\n\n" +
+      "    // ✅ GOOD - HTTP calls\n" +
+      "    this.userService.getUsers().subscribe(users => {\n" +
+      "      this.users = users;\n" +
+      "    });\n\n" +
+      "    // ❌ BAD - ViewChild not available\n" +
+      "    // this.inputElement.nativeElement.focus();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**ngAfterViewInit - View Initialization:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component implements AfterViewInit {\n" +
+      "  @ViewChild('nameInput') inputRef: ElementRef;\n" +
+      "  @ViewChild(ChildComponent) child: ChildComponent;\n\n" +
+      "  // ✅ Use ngAfterViewInit for:\n" +
+      "  // - DOM manipulation\n" +
+      "  // - @ViewChild queries\n" +
+      "  // - Third-party lib initialization (charts, maps)\n" +
+      "  // - Canvas operations\n\n" +
+      "  ngAfterViewInit() {\n" +
+      "    // ✅ GOOD - ViewChild available\n" +
+      "    this.inputRef.nativeElement.focus();\n\n" +
+      "    // ✅ GOOD - Access child component\n" +
+      "    this.child.initialize();\n\n" +
+      "    // ✅ GOOD - Init charts\n" +
+      "    this.initChart();\n\n" +
+      "    // ⚠️ Avoid change detection in same cycle\n" +
+      "    // Use setTimeout or Promise for state changes\n" +
+      "  }\n\n" +
+      "  private initChart() {\n" +
+      "    // Initialize chart library\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Lifecycle Sequence:**\n\n" +
+      "```typescript\n" +
+      "1. constructor()           // DI, no DOM\n" +
+      "2. ngOnChanges()          // @Input changes\n" +
+      "3. ngOnInit()             // Initialization\n" +
+      "4. ngDoCheck()            // Change detection\n" +
+      "5. ngAfterContentInit()   // Projected content\n" +
+      "6. ngAfterContentChecked()// After content checked\n" +
+      "7. ngAfterViewInit()      // View initialized ✅ DOM ready\n" +
+      "8. ngAfterViewChecked()   // After view checked\n" +
+      "9. ngOnDestroy()          // Cleanup\n" +
+      "```",
+    category: "Lifecycle Hooks",
+    difficulty: "intermediate",
+    tags: ["lifecycle", "constructor", "ngoninit", "ngafterviewinit", "hooks"],
+  },
+  {
+    id: 68,
+    question: "What is the Decorator Pattern in Angular? Explain all built-in decorators.",
+    answer:
+      "Decorators add metadata to classes, properties, methods, and parameters.\n\n" +
+      "**Class Decorators:**\n\n" +
+      "```typescript\n" +
+      "// @Component\n" +
+      "@Component({\n" +
+      "  selector: 'app-user',\n" +
+      "  template: '<h1>User</h1>',\n" +
+      "  styles: ['h1 { color: blue; }']\n" +
+      "})\n\n" +
+      "// @Directive\n" +
+      "@Directive({\n" +
+      "  selector: '[appHighlight]'\n" +
+      "})\n\n" +
+      "// @Injectable\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n\n" +
+      "// @Pipe\n" +
+      "@Pipe({\n" +
+      "  name: 'capitalize'\n" +
+      "})\n\n" +
+      "// @NgModule (deprecated with standalone)\n" +
+      "@NgModule({\n" +
+      "  declarations: [AppComponent],\n" +
+      "  imports: [BrowserModule],\n" +
+      "  bootstrap: [AppComponent]\n" +
+      "})\n" +
+      "```\n\n" +
+      "**Property Decorators:**\n\n" +
+      "```typescript\n" +
+      "export class Component {\n" +
+      "  // Input/Output\n" +
+      "  @Input() userId: number;\n" +
+      "  @Output() userChanged = new EventEmitter<User>();\n\n" +
+      "  // View Queries\n" +
+      "  @ViewChild('nameInput') input: ElementRef;\n" +
+      "  @ViewChildren(ChildComponent) children: QueryList<ChildComponent>;\n\n" +
+      "  // Content Queries\n" +
+      "  @ContentChild('header') header: ElementRef;\n" +
+      "  @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;\n\n" +
+      "  // Host Binding\n" +
+      "  @HostBinding('class.active') isActive = true;\n" +
+      "  @HostBinding('attr.role') role = 'button';\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Method Decorators:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  // Host Listener\n" +
+      "  @HostListener('click', ['$event'])\n" +
+      "  onClick(event: MouseEvent) {\n" +
+      "    console.log('Clicked:', event);\n" +
+      "  }\n\n" +
+      "  @HostListener('window:resize', ['$event'])\n" +
+      "  onResize(event: Event) {\n" +
+      "    console.log('Window resized');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Parameter Decorators:**\n\n" +
+      "```typescript\n" +
+      "import { Optional, Self, SkipSelf, Host, Inject } from '@angular/core';\n\n" +
+      "export class Component {\n" +
+      "  constructor(\n" +
+      "    // @Optional - Service might not exist\n" +
+      "    @Optional() private logger: LoggerService,\n\n" +
+      "    // @Self - Only from this component's injector\n" +
+      "    @Self() private localService: LocalService,\n\n" +
+      "    // @SkipSelf - Skip this component, look in parent\n" +
+      "    @SkipSelf() private parentService: ParentService,\n\n" +
+      "    // @Host - Only look in host component\n" +
+      "    @Host() private hostService: HostService,\n\n" +
+      "    // @Inject - Inject token\n" +
+      "    @Inject(CONFIG_TOKEN) private config: AppConfig\n" +
+      "  ) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Custom Decorator Example:**\n\n" +
+      "```typescript\n" +
+      "// Simple method decorator\n" +
+      "export function Log() {\n" +
+      "  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {\n" +
+      "    const original = descriptor.value;\n" +
+      "    \n" +
+      "    descriptor.value = function(...args: any[]) {\n" +
+      "      console.log(`Calling ${propertyKey} with`, args);\n" +
+      "      const result = original.apply(this, args);\n" +
+      "      console.log(`Result:`, result);\n" +
+      "      return result;\n" +
+      "    };\n" +
+      "    \n" +
+      "    return descriptor;\n" +
+      "  };\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "export class Component {\n" +
+      "  @Log()\n" +
+      "  saveUser(user: User) {\n" +
+      "    return this.http.post('/api/users', user);\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Decorators",
+    difficulty: "hard",
+    tags: ["decorators", "metadata", "typescript", "advanced"],
+  },
+  {
+    id: 69,
+    question: "How do you implement Multi-Provider Pattern in Angular? Explain use cases.",
+    answer:
+      "Multi-providers allow multiple values for a single token.\n\n" +
+      "**HTTP Interceptors (Built-in Multi-Provider):**\n\n" +
+      "```typescript\n" +
+      "// Each interceptor adds to the array\n" +
+      "providers: [\n" +
+      "  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },\n" +
+      "  { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },\n" +
+      "  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }\n" +
+      "]\n" +
+      "// Angular calls all interceptors in order\n" +
+      "```\n\n" +
+      "**Custom Multi-Provider - Plugin System:**\n\n" +
+      "```typescript\n" +
+      "// Define interface\n" +
+      "export interface Plugin {\n" +
+      "  name: string;\n" +
+      "  execute(): void;\n" +
+      "}\n\n" +
+      "// Create token\n" +
+      "export const PLUGINS = new InjectionToken<Plugin[]>('plugins');\n\n" +
+      "// Implement plugins\n" +
+      "@Injectable()\n" +
+      "export class LoggingPlugin implements Plugin {\n" +
+      "  name = 'Logging';\n" +
+      "  execute() {\n" +
+      "    console.log('Logging plugin executed');\n" +
+      "  }\n" +
+      "}\n\n" +
+      "@Injectable()\n" +
+      "export class AnalyticsPlugin implements Plugin {\n" +
+      "  name = 'Analytics';\n" +
+      "  execute() {\n" +
+      "    console.log('Analytics plugin executed');\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Register plugins\n" +
+      "providers: [\n" +
+      "  { provide: PLUGINS, useClass: LoggingPlugin, multi: true },\n" +
+      "  { provide: PLUGINS, useClass: AnalyticsPlugin, multi: true }\n" +
+      "]\n\n" +
+      "// Use plugins\n" +
+      "@Component({...})\n" +
+      "export class AppComponent implements OnInit {\n" +
+      "  constructor(@Inject(PLUGINS) private plugins: Plugin[]) {}\n\n" +
+      "  ngOnInit() {\n" +
+      "    // Execute all plugins\n" +
+      "    this.plugins.forEach(plugin => {\n" +
+      "      console.log(`Running ${plugin.name}`);\n" +
+      "      plugin.execute();\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Validation Rules Example:**\n\n" +
+      "```typescript\n" +
+      "export interface ValidationRule {\n" +
+      "  validate(value: any): boolean;\n" +
+      "  message: string;\n" +
+      "}\n\n" +
+      "export const VALIDATION_RULES = new InjectionToken<ValidationRule[]>('validation-rules');\n\n" +
+      "@Injectable()\n" +
+      "export class RequiredRule implements ValidationRule {\n" +
+      "  message = 'This field is required';\n" +
+      "  validate(value: any) {\n" +
+      "    return !!value;\n" +
+      "  }\n" +
+      "}\n\n" +
+      "@Injectable()\n" +
+      "export class EmailRule implements ValidationRule {\n" +
+      "  message = 'Invalid email format';\n" +
+      "  validate(value: string) {\n" +
+      "    return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Register\n" +
+      "providers: [\n" +
+      "  { provide: VALIDATION_RULES, useClass: RequiredRule, multi: true },\n" +
+      "  { provide: VALIDATION_RULES, useClass: EmailRule, multi: true }\n" +
+      "]\n\n" +
+      "// Validator Service\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class ValidatorService {\n" +
+      "  constructor(@Inject(VALIDATION_RULES) private rules: ValidationRule[]) {}\n\n" +
+      "  validate(value: any): string[] {\n" +
+      "    const errors: string[] = [];\n" +
+      "    this.rules.forEach(rule => {\n" +
+      "      if (!rule.validate(value)) {\n" +
+      "        errors.push(rule.message);\n" +
+      "      }\n" +
+      "    });\n" +
+      "    return errors;\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Dependency Injection",
+    difficulty: "hard",
+    tags: ["multi-provider", "di", "injection-token", "patterns", "advanced"],
+  },
+  {
+    id: 70,
+    question: "What is the RxJS shareReplay operator? How does it differ from share?",
+    answer:
+      "shareReplay caches and replays emissions to late subscribers.\n\n" +
+      "**Problem (Without shareReplay):**\n\n" +
+      "```typescript\n" +
+      "// ❌ Each subscription triggers new HTTP request\n" +
+      "const user$ = this.http.get('/api/user');\n\n" +
+      "user$.subscribe(u => console.log('Sub 1:', u)); // Request 1\n" +
+      "user$.subscribe(u => console.log('Sub 2:', u)); // Request 2 (duplicate!)\n" +
+      "```\n\n" +
+      "**Solution: shareReplay:**\n\n" +
+      "```typescript\n" +
+      "import { shareReplay } from 'rxjs/operators';\n\n" +
+      "// ✅ Single request, cached result\n" +
+      "const user$ = this.http.get('/api/user').pipe(\n" +
+      "  shareReplay({ bufferSize: 1, refCount: true })\n" +
+      ");\n\n" +
+      "user$.subscribe(u => console.log('Sub 1:', u)); // Request\n" +
+      "user$.subscribe(u => console.log('Sub 2:', u)); // From cache!\n" +
+      "```\n\n" +
+      "**shareReplay Options:**\n\n" +
+      "```typescript\n" +
+      "shareReplay({\n" +
+      "  bufferSize: 1,     // How many values to cache\n" +
+      "  refCount: true,    // Unsubscribe when no subscribers (cleanup)\n" +
+      "  windowTime: 5000   // Cache expiration (ms)\n" +
+      "})\n\n" +
+      "// Common patterns:\n\n" +
+      "// Cache forever\n" +
+      "shareReplay(1)\n\n" +
+      "// Cache with cleanup\n" +
+      "shareReplay({ bufferSize: 1, refCount: true })\n\n" +
+      "// Cache with expiration\n" +
+      "shareReplay({ bufferSize: 1, windowTime: 5000 })\n" +
+      "```\n\n" +
+      "**vs share() operator:**\n\n" +
+      "```typescript\n" +
+      "// share() - No replay to late subscribers\n" +
+      "const data$ = this.http.get('/api/data').pipe(share());\n\n" +
+      "data$.subscribe(d => console.log('Sub 1:', d)); // Gets data\n" +
+      "// ... time passes, request completes ...\n" +
+      "data$.subscribe(d => console.log('Sub 2:', d)); // Gets nothing!\n\n" +
+      "// shareReplay() - Replays to late subscribers\n" +
+      "const data$ = this.http.get('/api/data').pipe(shareReplay(1));\n\n" +
+      "data$.subscribe(d => console.log('Sub 1:', d)); // Gets data\n" +
+      "// ... time passes, request completes ...\n" +
+      "data$.subscribe(d => console.log('Sub 2:', d)); // Gets cached data!\n" +
+      "```\n\n" +
+      "**Service Example:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class UserService {\n" +
+      "  private currentUser$ = this.http.get<User>('/api/user').pipe(\n" +
+      "    shareReplay({ bufferSize: 1, refCount: true })\n" +
+      "  );\n\n" +
+      "  constructor(private http: HttpClient) {}\n\n" +
+      "  getCurrentUser(): Observable<User> {\n" +
+      "    return this.currentUser$;\n" +
+      "  }\n\n" +
+      "  // Multiple components can subscribe without duplicate requests\n" +
+      "}\n" +
+      "```",
+    category: "RxJS",
+    difficulty: "hard",
+    tags: ["rxjs", "sharereplay", "share", "caching", "multicasting"],
+  },
+  {
+    id: 71,
+    question: "What is Micro-frontend Architecture? How do you implement it with Angular?",
+    answer:
+      "Micro-frontends break monolithic frontends into smaller, independent apps.\n\n" +
+      "**Architecture:**\n\n" +
+      "```typescript\n" +
+      "// Shell App (Container)\n" +
+      "// - Routing\n" +
+      "// - Navigation\n" +
+      "// - Authentication\n\n" +
+      "// Micro-frontend 1 (Products)\n" +
+      "// - Product list\n" +
+      "// - Product details\n\n" +
+      "// Micro-frontend 2 (Cart)\n" +
+      "// - Shopping cart\n" +
+      "// - Checkout\n\n" +
+      "// Micro-frontend 3 (User)\n" +
+      "// - Profile\n" +
+      "// - Settings\n" +
+      "```\n\n" +
+      "**Module Federation Setup:**\n\n" +
+      "```javascript\n" +
+      "// webpack.config.js (Micro-frontend)\n" +
+      "const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');\n\n" +
+      "module.exports = {\n" +
+      "  plugins: [\n" +
+      "    new ModuleFederationPlugin({\n" +
+      "      name: 'products',\n" +
+      "      filename: 'remoteEntry.js',\n" +
+      "      exposes: {\n" +
+      "        './ProductsModule': './src/app/products/products.module.ts'\n" +
+      "      },\n" +
+      "      shared: {\n" +
+      "        '@angular/core': { singleton: true, strictVersion: true },\n" +
+      "        '@angular/common': { singleton: true, strictVersion: true }\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ]\n" +
+      "};\n\n" +
+      "// webpack.config.js (Shell)\n" +
+      "module.exports = {\n" +
+      "  plugins: [\n" +
+      "    new ModuleFederationPlugin({\n" +
+      "      name: 'shell',\n" +
+      "      remotes: {\n" +
+      "        products: 'products@http://localhost:4201/remoteEntry.js',\n" +
+      "        cart: 'cart@http://localhost:4202/remoteEntry.js'\n" +
+      "      },\n" +
+      "      shared: {\n" +
+      "        '@angular/core': { singleton: true },\n" +
+      "        '@angular/common': { singleton: true }\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ]\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Shell Routing:**\n\n" +
+      "```typescript\n" +
+      "const routes: Routes = [\n" +
+      "  {\n" +
+      "    path: 'products',\n" +
+      "    loadChildren: () =>\n" +
+      "      import('products/ProductsModule').then(m => m.ProductsModule)\n" +
+      "  },\n" +
+      "  {\n" +
+      "    path: 'cart',\n" +
+      "    loadChildren: () =>\n" +
+      "      import('cart/CartModule').then(m => m.CartModule)\n" +
+      "  }\n" +
+      "];\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Independent deployment\n" +
+      "- Team autonomy\n" +
+      "- Technology diversity\n" +
+      "- Faster builds\n" +
+      "- Scalability\n\n" +
+      "**Challenges:**\n" +
+      "- Shared state\n" +
+      "- Cross-app communication\n" +
+      "- Version management\n" +
+      "- Testing complexity\n" +
+      "- Performance overhead",
+    category: "Architecture",
+    difficulty: "hard",
+    tags: ["micro-frontends", "module-federation", "architecture", "scalability"],
+  },
+  {
+    id: 72,
+    question:
+      "How do you implement Real-time Communication in Angular? Compare WebSockets, SSE, and Polling.",
+    answer:
+      "**1. WebSockets (Full-Duplex):**\n\n" +
+      "```typescript\n" +
+      "import { webSocket, WebSocketSubject } from 'rxjs/webSocket';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class WebSocketService {\n" +
+      "  private socket$: WebSocketSubject<any>;\n\n" +
+      "  connect(): Observable<any> {\n" +
+      "    if (!this.socket$ || this.socket$.closed) {\n" +
+      "      this.socket$ = webSocket({\n" +
+      "        url: 'ws://localhost:8080',\n" +
+      "        openObserver: {\n" +
+      "          next: () => console.log('Connected')\n" +
+      "        },\n" +
+      "        closeObserver: {\n" +
+      "          next: () => console.log('Disconnected')\n" +
+      "        }\n" +
+      "      });\n" +
+      "    }\n" +
+      "    return this.socket$;\n" +
+      "  }\n\n" +
+      "  send(message: any) {\n" +
+      "    this.socket$.next(message);\n" +
+      "  }\n\n" +
+      "  close() {\n" +
+      "    this.socket$.complete();\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "ngOnInit() {\n" +
+      "  this.wsService.connect().subscribe(message => {\n" +
+      "    console.log('Received:', message);\n" +
+      "  });\n\n" +
+      "  this.wsService.send({ type: 'subscribe', channel: 'chat' });\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Server-Sent Events (SSE) (Server → Client):**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class SSEService {\n" +
+      "  getServerEvents(url: string): Observable<any> {\n" +
+      "    return new Observable(observer => {\n" +
+      "      const eventSource = new EventSource(url);\n\n" +
+      "      eventSource.onmessage = (event) => {\n" +
+      "        observer.next(JSON.parse(event.data));\n" +
+      "      };\n\n" +
+      "      eventSource.onerror = (error) => {\n" +
+      "        observer.error(error);\n" +
+      "      };\n\n" +
+      "      // Cleanup\n" +
+      "      return () => eventSource.close();\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "ngOnInit() {\n" +
+      "  this.sseService.getServerEvents('/api/events').subscribe(event => {\n" +
+      "    console.log('Event:', event);\n" +
+      "  });\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Long Polling:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class PollingService {\n" +
+      "  poll(url: string, interval: number = 5000): Observable<any> {\n" +
+      "    return timer(0, interval).pipe(\n" +
+      "      switchMap(() => this.http.get(url)),\n" +
+      "      retry({ delay: 1000 })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "ngOnInit() {\n" +
+      "  this.pollingService.poll('/api/notifications', 5000)\n" +
+      "    .subscribe(data => console.log('Polled data:', data));\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. SignalR (Microsoft):**\n\n" +
+      "```typescript\n" +
+      "import * as signalR from '@microsoft/signalr';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class SignalRService {\n" +
+      "  private connection: signalR.HubConnection;\n\n" +
+      "  startConnection() {\n" +
+      "    this.connection = new signalR.HubConnectionBuilder()\n" +
+      "      .withUrl('/chathub')\n" +
+      "      .withAutomaticReconnect()\n" +
+      "      .build();\n\n" +
+      "    this.connection.start()\n" +
+      "      .then(() => console.log('Connected'))\n" +
+      "      .catch(err => console.error('Error:', err));\n" +
+      "  }\n\n" +
+      "  onMessage(callback: (user: string, message: string) => void) {\n" +
+      "    this.connection.on('ReceiveMessage', callback);\n" +
+      "  }\n\n" +
+      "  sendMessage(user: string, message: string) {\n" +
+      "    this.connection.invoke('SendMessage', user, message);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Comparison:**\n\n" +
+      "| Feature | WebSocket | SSE | Polling |\n" +
+      "|---------|-----------|-----|----------|\n" +
+      "| Direction | Bi-directional | Server→Client | Client→Server |\n" +
+      "| Overhead | Low | Medium | High |\n" +
+      "| Browser Support | Modern | Good | All |\n" +
+      "| Use Case | Chat, Gaming | Notifications | Simple updates |",
+    category: "Real-time",
+    difficulty: "hard",
+    tags: ["websockets", "sse", "polling", "signalr", "real-time"],
+  },
+  {
+    id: 73,
+    question: "What is Angular Schematics? How do you create custom schematics?",
+    answer:
+      "Schematics are code generators for Angular projects.\n\n" +
+      "**Built-in Schematics:**\n\n" +
+      "```bash\n" +
+      "# Generate component\n" +
+      "ng generate component user\n\n" +
+      "# Generate service\n" +
+      "ng generate service api\n\n" +
+      "# Add library\n" +
+      "ng add @angular/material\n" +
+      "```\n\n" +
+      "**Create Custom Schematic:**\n\n" +
+      "```bash\n" +
+      "# Install schematics CLI\n" +
+      "npm install -g @angular-devkit/schematics-cli\n\n" +
+      "# Create schematic\n" +
+      "schematics blank my-schematic\n" +
+      "cd my-schematic\n" +
+      "```\n\n" +
+      "**Schematic Definition:**\n\n" +
+      "```typescript\n" +
+      "// src/my-component/index.ts\n" +
+      "import {\n" +
+      "  Rule,\n" +
+      "  SchematicContext,\n" +
+      "  Tree,\n" +
+      "  apply,\n" +
+      "  url,\n" +
+      "  template,\n" +
+      "  move,\n" +
+      "  mergeWith\n" +
+      "} from '@angular-devkit/schematics';\n" +
+      "import { strings } from '@angular-devkit/core';\n\n" +
+      "interface Schema {\n" +
+      "  name: string;\n" +
+      "  path?: string;\n" +
+      "}\n\n" +
+      "export function myComponent(options: Schema): Rule {\n" +
+      "  return (tree: Tree, context: SchematicContext) => {\n" +
+      "    // Create template files\n" +
+      "    const templateSource = apply(url('./files'), [\n" +
+      "      template({\n" +
+      "        ...strings,\n" +
+      "        ...options,\n" +
+      "        name: strings.dasherize(options.name)\n" +
+      "      }),\n" +
+      "      move(options.path || '')\n" +
+      "    ]);\n\n" +
+      "    return mergeWith(templateSource)(tree, context);\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Files:**\n\n" +
+      "```typescript\n" +
+      "// src/my-component/files/__name@dasherize__.component.ts.template\n" +
+      "import { Component } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'app-<%= dasherize(name) %>',\n" +
+      "  templateUrl: './<%= dasherize(name) %>.component.html',\n" +
+      "  styleUrls: ['./<%= dasherize(name) %>.component.css']\n" +
+      "})\n" +
+      "export class <%= classify(name) %>Component {\n" +
+      "  constructor() { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Schema (collection.json):**\n\n" +
+      "```json\n" +
+      "{\n" +
+      '  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",\n' +
+      '  "schematics": {\n' +
+      '    "my-component": {\n' +
+      '      "description": "Generate a custom component",\n' +
+      '      "factory": "./my-component/index#myComponent",\n' +
+      '      "schema": "./my-component/schema.json"\n' +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Build & Use:**\n\n" +
+      "```bash\n" +
+      "# Build schematic\n" +
+      "npm run build\n\n" +
+      "# Test locally\n" +
+      "schematics .:my-component --name=user\n\n" +
+      "# Publish\n" +
+      "npm publish\n\n" +
+      "# Use in project\n" +
+      "ng generate my-schematic:my-component user\n" +
+      "```",
+    category: "Tooling",
+    difficulty: "hard",
+    tags: ["schematics", "code-generation", "cli", "tooling"],
+  },
+  {
+    id: 74,
+    question:
+      "What are Angular Workspace Configurations? Explain projects, libraries, and applications.",
+    answer:
+      "Angular workspace can contain multiple projects (apps & libraries).\n\n" +
+      "**Workspace Structure:**\n\n" +
+      "```typescript\n" +
+      "my-workspace/\n" +
+      "├── angular.json        # Workspace config\n" +
+      "├── package.json\n" +
+      "├── projects/\n" +
+      "│   ├── app1/           # Application 1\n" +
+      "│   ├── app2/           # Application 2\n" +
+      "│   ├── shared-lib/     # Shared library\n" +
+      "│   └── ui-components/  # Component library\n" +
+      "└── tsconfig.json\n" +
+      "```\n\n" +
+      "**Create Library:**\n\n" +
+      "```bash\n" +
+      "# Generate library\n" +
+      "ng generate library shared-lib\n\n" +
+      "# Generate component in library\n" +
+      "ng generate component button --project=shared-lib\n" +
+      "```\n\n" +
+      "**Library Structure:**\n\n" +
+      "```typescript\n" +
+      "projects/shared-lib/\n" +
+      "├── src/\n" +
+      "│   ├── lib/\n" +
+      "│   │   ├── shared-lib.module.ts\n" +
+      "│   │   ├── components/\n" +
+      "│   │   ├── services/\n" +
+      "│   │   └── utils/\n" +
+      "│   └── public-api.ts        # Public exports\n" +
+      "├── ng-package.json\n" +
+      "└── package.json\n" +
+      "```\n\n" +
+      "**Public API (Exports):**\n\n" +
+      "```typescript\n" +
+      "// projects/shared-lib/src/public-api.ts\n" +
+      "export * from './lib/shared-lib.module';\n" +
+      "export * from './lib/components/button/button.component';\n" +
+      "export * from './lib/services/logger.service';\n" +
+      "```\n\n" +
+      "**Use Library in App:**\n\n" +
+      "```typescript\n" +
+      "// Import from library\n" +
+      "import { SharedLibModule, LoggerService } from 'shared-lib';\n\n" +
+      "@Component({\n" +
+      "  imports: [SharedLibModule]\n" +
+      "})\n" +
+      "export class AppComponent {\n" +
+      "  constructor(private logger: LoggerService) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Build Library:**\n\n" +
+      "```bash\n" +
+      "# Build library\n" +
+      "ng build shared-lib\n\n" +
+      "# Output: dist/shared-lib/\n\n" +
+      "# Publish to npm\n" +
+      "cd dist/shared-lib\n" +
+      "npm publish\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Code reusability\n" +
+      "- Modular architecture\n" +
+      "- Separate versioning\n" +
+      "- Easier testing\n" +
+      "- Team collaboration",
+    category: "Workspace",
+    difficulty: "intermediate",
+    tags: ["workspace", "libraries", "monorepo", "architecture"],
+  },
+  {
+    id: 75,
+    question:
+      "How do you implement Error Tracking and Monitoring in Angular? Explain Sentry integration.",
+    answer:
+      "**Global Error Handler:**\n\n" +
+      "```typescript\n" +
+      "import { ErrorHandler, Injectable } from '@angular/core';\n\n" +
+      "@Injectable()\n" +
+      "export class GlobalErrorHandler implements ErrorHandler {\n" +
+      "  constructor(private loggingService: LoggingService) {}\n\n" +
+      "  handleError(error: Error) {\n" +
+      "    // Log to console\n" +
+      "    console.error('Global error:', error);\n\n" +
+      "    // Log to service\n" +
+      "    this.loggingService.logError({\n" +
+      "      message: error.message,\n" +
+      "      stack: error.stack,\n" +
+      "      timestamp: new Date(),\n" +
+      "      userAgent: navigator.userAgent\n" +
+      "    });\n\n" +
+      "    // Show user-friendly message\n" +
+      "    this.showErrorToast('Something went wrong. Please try again.');\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Register\n" +
+      "providers: [\n" +
+      "  { provide: ErrorHandler, useClass: GlobalErrorHandler }\n" +
+      "]\n" +
+      "```\n\n" +
+      "**Sentry Integration:**\n\n" +
+      "```bash\n" +
+      "npm install @sentry/angular @sentry/tracing\n" +
+      "```\n\n" +
+      "```typescript\n" +
+      "// main.ts\n" +
+      "import * as Sentry from '@sentry/angular';\n" +
+      "import { BrowserTracing } from '@sentry/tracing';\n\n" +
+      "Sentry.init({\n" +
+      "  dsn: 'YOUR_SENTRY_DSN',\n" +
+      "  integrations: [\n" +
+      "    new BrowserTracing({\n" +
+      "      tracingOrigins: ['localhost', 'https://yourserver.com'],\n" +
+      "      routingInstrumentation: Sentry.routingInstrumentation\n" +
+      "    })\n" +
+      "  ],\n" +
+      "  tracesSampleRate: 1.0,\n" +
+      "  environment: environment.production ? 'production' : 'development'\n" +
+      "});\n\n" +
+      "// App config\n" +
+      "import { APP_INITIALIZER, ErrorHandler } from '@angular/core';\n" +
+      "import { Router } from '@angular/router';\n\n" +
+      "providers: [\n" +
+      "  {\n" +
+      "    provide: ErrorHandler,\n" +
+      "    useValue: Sentry.createErrorHandler({\n" +
+      "      showDialog: false\n" +
+      "    })\n" +
+      "  },\n" +
+      "  {\n" +
+      "    provide: Sentry.TraceService,\n" +
+      "    deps: [Router]\n" +
+      "  },\n" +
+      "  {\n" +
+      "    provide: APP_INITIALIZER,\n" +
+      "    useFactory: () => () => {},\n" +
+      "    deps: [Sentry.TraceService],\n" +
+      "    multi: true\n" +
+      "  }\n" +
+      "]\n" +
+      "```\n\n" +
+      "**Custom Logging:**\n\n" +
+      "```typescript\n" +
+      "import * as Sentry from '@sentry/angular';\n\n" +
+      "// Capture exception\n" +
+      "try {\n" +
+      "  riskyOperation();\n" +
+      "} catch (error) {\n" +
+      "  Sentry.captureException(error);\n" +
+      "}\n\n" +
+      "// Log message\n" +
+      "Sentry.captureMessage('User completed checkout', 'info');\n\n" +
+      "// Add context\n" +
+      "Sentry.setUser({ id: '123', email: 'user@example.com' });\n" +
+      "Sentry.setContext('order', { orderId: '456', total: 99.99 });\n\n" +
+      "// Breadcrumbs\n" +
+      "Sentry.addBreadcrumb({\n" +
+      "  category: 'navigation',\n" +
+      "  message: 'User navigated to checkout',\n" +
+      "  level: 'info'\n" +
+      "});\n" +
+      "```",
+    category: "Monitoring",
+    difficulty: "hard",
+    tags: ["error-tracking", "sentry", "monitoring", "logging"],
+  },
+  {
+    id: 76,
+    question: "What is the Angular Compiler API? How do you use it programmatically?",
+    answer:
+      "The Compiler API allows programmatic compilation of Angular code.\n\n" +
+      "**Use Cases:**\n" +
+      "- Custom build tools\n" +
+      "- Code generation\n" +
+      "- Template compilation\n" +
+      "- Dynamic module loading\n\n" +
+      "**Basic Example:**\n\n" +
+      "```typescript\n" +
+      "import { Compiler, Component, NgModule } from '@angular/core';\n\n" +
+      "@Component({\n" +
+      "  selector: 'dynamic-comp',\n" +
+      "  template: '<h1>{{ title }}</h1>'\n" +
+      "})\n" +
+      "class DynamicComponent {\n" +
+      "  title = 'Dynamic!';\n" +
+      "}\n\n" +
+      "@NgModule({\n" +
+      "  declarations: [DynamicComponent]\n" +
+      "})\n" +
+      "class DynamicModule {}\n\n" +
+      "// Compile and load dynamically\n" +
+      "export class AppComponent {\n" +
+      "  constructor(\n" +
+      "    private compiler: Compiler,\n" +
+      "    private viewContainerRef: ViewContainerRef\n" +
+      "  ) {}\n\n" +
+      "  async loadDynamic() {\n" +
+      "    const module = await this.compiler.compileModuleAsync(DynamicModule);\n" +
+      "    const moduleRef = module.create(this.viewContainerRef.injector);\n" +
+      "    const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(DynamicComponent);\n" +
+      "    this.viewContainerRef.createComponent(factory);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Note:** With Ivy, dynamic compilation is less common. Use Angular Elements or Module Federation instead.",
+    category: "Compiler",
+    difficulty: "hard",
+    tags: ["compiler", "api", "dynamic", "advanced"],
+  },
+  {
+    id: 77,
+    question: "How do you implement Feature Flags in Angular?",
+    answer:
+      "Feature flags enable/disable features without redeployment.\n\n" +
+      "**Service Implementation:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class FeatureFlagService {\n" +
+      "  private flags: Record<string, boolean> = {};\n\n" +
+      "  constructor(private http: HttpClient) {}\n\n" +
+      "  loadFlags(): Observable<void> {\n" +
+      "    return this.http.get<Record<string, boolean>>('/api/feature-flags').pipe(\n" +
+      "      tap(flags => this.flags = flags),\n" +
+      "      map(() => undefined)\n" +
+      "    );\n" +
+      "  }\n\n" +
+      "  isEnabled(flag: string): boolean {\n" +
+      "    return this.flags[flag] === true;\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Initialize in app\n" +
+      "export const appInitializer = (featureService: FeatureFlagService) => {\n" +
+      "  return () => featureService.loadFlags().toPromise();\n" +
+      "};\n\n" +
+      "providers: [\n" +
+      "  {\n" +
+      "    provide: APP_INITIALIZER,\n" +
+      "    useFactory: appInitializer,\n" +
+      "    deps: [FeatureFlagService],\n" +
+      "    multi: true\n" +
+      "  }\n" +
+      "]\n" +
+      "```\n\n" +
+      "**Directive:**\n\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[featureFlag]',\n" +
+      "  standalone: true\n" +
+      "})\n" +
+      "export class FeatureFlagDirective implements OnInit {\n" +
+      "  @Input() featureFlag: string;\n\n" +
+      "  constructor(\n" +
+      "    private templateRef: TemplateRef<any>,\n" +
+      "    private viewContainer: ViewContainerRef,\n" +
+      "    private featureService: FeatureFlagService\n" +
+      "  ) {}\n\n" +
+      "  ngOnInit() {\n" +
+      "    if (this.featureService.isEnabled(this.featureFlag)) {\n" +
+      "      this.viewContainer.createEmbeddedView(this.templateRef);\n" +
+      "    } else {\n" +
+      "      this.viewContainer.clear();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage\n" +
+      "<div *featureFlag=\"'new-checkout'\">New checkout flow</div>\n" +
+      "```\n\n" +
+      "**Route Guard:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class FeatureFlagGuard implements CanActivate {\n" +
+      "  constructor(private featureService: FeatureFlagService) {}\n\n" +
+      "  canActivate(route: ActivatedRouteSnapshot): boolean {\n" +
+      "    const flag = route.data['featureFlag'];\n" +
+      "    return this.featureService.isEnabled(flag);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Route\n" +
+      "{\n" +
+      "  path: 'beta',\n" +
+      "  component: BetaComponent,\n" +
+      "  canActivate: [FeatureFlagGuard],\n" +
+      "  data: { featureFlag: 'beta-features' }\n" +
+      "}\n" +
+      "```",
+    category: "Patterns",
+    difficulty: "intermediate",
+    tags: ["feature-flags", "patterns", "deployment"],
+  },
+  {
+    id: 78,
+    question: "What is Angular's Hydration? How does it improve SSR performance?",
+    answer:
+      "Hydration reuses server-rendered DOM instead of re-rendering on client.\n\n" +
+      "**Problem (Without Hydration):**\n\n" +
+      "```typescript\n" +
+      "// 1. Server renders HTML\n" +
+      "// 2. Client receives HTML (displayed immediately)\n" +
+      "// 3. Angular loads and RE-RENDERS everything (flicker!)\n" +
+      "// 4. Event listeners attached\n" +
+      "```\n\n" +
+      "**Solution (With Hydration):**\n\n" +
+      "```typescript\n" +
+      "// 1. Server renders HTML + state\n" +
+      "// 2. Client receives HTML (displayed)\n" +
+      "// 3. Angular REUSES existing DOM (no re-render!)\n" +
+      "// 4. Event listeners attached\n" +
+      "```\n\n" +
+      "**Enable Hydration:**\n\n" +
+      "```typescript\n" +
+      "// main.ts\n" +
+      "import { provideClientHydration } from '@angular/platform-browser';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideClientHydration() // Enable hydration!\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- No flicker on load\n" +
+      "- Faster Time to Interactive (TTI)\n" +
+      "- Better user experience\n" +
+      "- Reduced bandwidth\n\n" +
+      "**Available since:** Angular 16+",
+    category: "SSR",
+    difficulty: "hard",
+    tags: ["hydration", "ssr", "performance", "angular-16"],
+  },
+  {
+    id: 79,
+    question: "What are Input/Output Transforms in Angular? How do you use them?",
+    answer:
+      "Input/Output transforms automatically convert values.\n\n" +
+      "**Input Transforms (Angular 16+):**\n\n" +
+      "```typescript\n" +
+      "import { Component, Input, booleanAttribute, numberAttribute } from '@angular/core';\n\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  // Transform string to boolean\n" +
+      "  @Input({ transform: booleanAttribute }) disabled: boolean = false;\n" +
+      "  // <comp disabled></comp> → disabled = true\n" +
+      "  // <comp></comp> → disabled = false\n\n" +
+      "  // Transform string to number\n" +
+      "  @Input({ transform: numberAttribute }) count: number = 0;\n" +
+      '  // <comp count="5"></comp> → count = 5 (number)\n\n' +
+      "  // Custom transform\n" +
+      "  @Input({ transform: trimString }) name: string = '';\n" +
+      "}\n\n" +
+      "// Custom transform function\n" +
+      "function trimString(value: string | undefined): string {\n" +
+      "  return value?.trim() ?? '';\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Type safety\n" +
+      "- Cleaner code\n" +
+      "- Automatic conversion\n" +
+      "- Less boilerplate",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["inputs", "transforms", "angular-16", "type-safety"],
+  },
+  {
+    id: 80,
+    question: "What is the Self-Documenting Code principle? How do you apply it in Angular?",
+    answer:
+      "Self-documenting code is clear without extensive comments.\n\n" +
+      "**Naming Conventions:**\n\n" +
+      "```typescript\n" +
+      "// ❌ BAD\n" +
+      "getUserData(id) {}\n" +
+      "const d = new Date();\n\n" +
+      "// ✅ GOOD\n" +
+      "async fetchUserProfileById(userId: number): Promise<UserProfile> {}\n" +
+      "const currentDate = new Date();\n" +
+      "```\n\n" +
+      "**Component Organization:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class UserProfileComponent {\n" +
+      "  // 1. Inputs/Outputs\n" +
+      "  @Input() userId: number;\n" +
+      "  @Output() profileUpdated = new EventEmitter<User>();\n\n" +
+      "  // 2. Public properties\n" +
+      "  user$: Observable<User>;\n" +
+      "  isLoading = false;\n\n" +
+      "  // 3. Private properties\n" +
+      "  private destroy$ = new Subject<void>();\n\n" +
+      "  // 4. Constructor\n" +
+      "  constructor(private userService: UserService) {}\n\n" +
+      "  // 5. Lifecycle hooks\n" +
+      "  ngOnInit() {}\n" +
+      "  ngOnDestroy() {}\n\n" +
+      "  // 6. Public methods\n" +
+      "  async saveProfile() {}\n\n" +
+      "  // 7. Private methods\n" +
+      "  private validateProfile() {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Use RxJS Declaratively:**\n\n" +
+      "```typescript\n" +
+      "// ✅ GOOD - Intent is clear\n" +
+      "activeUsers$ = this.users$.pipe(\n" +
+      "  map(users => users.filter(user => user.isActive)),\n" +
+      "  shareReplay(1)\n" +
+      ");\n" +
+      "```",
+    category: "Best Practices",
+    difficulty: "intermediate",
+    tags: ["clean-code", "best-practices", "naming", "organization"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;
