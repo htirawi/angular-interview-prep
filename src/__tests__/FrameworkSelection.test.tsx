@@ -28,7 +28,7 @@ describe("FrameworkSelection Landing Page", () => {
     renderWithRouter();
     const counts = screen.getAllByText("100");
     expect(counts.length).toBeGreaterThanOrEqual(3); // 3 frameworks with 100 questions
-    const angularCount = screen.getByText("64"); // Angular has 64 questions
+    const angularCount = screen.getByText("115"); // Angular has 115 questions
     expect(angularCount).toBeInTheDocument();
   });
 
@@ -42,7 +42,7 @@ describe("FrameworkSelection Landing Page", () => {
   it("framework cards are clickable", () => {
     renderWithRouter();
     const angularCard = screen.getByRole("button", {
-      name: /Angular.*64.*Senior-Level Questions/i,
+      name: /Angular.*115.*Senior-Level Questions/i,
     });
     expect(angularCard).toBeInTheDocument();
     expect(angularCard).not.toBeDisabled();

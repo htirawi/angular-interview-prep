@@ -29,7 +29,7 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "angular",
     name: "Angular",
-    count: 64, // Updated to reflect actual count
+    count: 115, // Restored original count
     icon: "angular",
   },
   {
