@@ -32,7 +32,7 @@ describe("FrameworkSelection Landing Page", () => {
     expect(angularCount).toBeInTheDocument();
     const reactCount = screen.getByText("27"); // React has 27 questions
     expect(reactCount).toBeInTheDocument();
-    const nextjsCount = screen.getByText("10"); // Next.js has 10 questions
+    const nextjsCount = screen.getByText("19"); // Next.js has 19 questions
     expect(nextjsCount).toBeInTheDocument();
   });
 

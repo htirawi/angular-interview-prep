@@ -1527,6 +1527,1634 @@ export const NEXTJS_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "intermediate",
     tags: ["deployment", "vercel", "netlify", "aws", "docker", "ci-cd"],
   },
+  {
+    id: 10,
+    question:
+      "How do you integrate TypeScript with Next.js? What are the key configuration options and type definitions?",
+    answer:
+      "Next.js has excellent TypeScript support out of the box, providing type safety and enhanced developer experience.\n\n" +
+      "**Setup & Configuration:**\n\n" +
+      "1. **Initial Setup:**\n" +
+      "```bash\n" +
+      "npx create-next-app@latest --typescript\n" +
+      "# or add to existing project\n" +
+      "npm install --save-dev typescript @types/react @types/node\n" +
+      "```\n\n" +
+      "2. **tsconfig.json Configuration:**\n" +
+      "```json\n" +
+      "{\n" +
+      '  "compilerOptions": {\n' +
+      '    "target": "es5",\n' +
+      '    "lib": ["dom", "dom.iterable", "es6"],\n' +
+      '    "allowJs": true,\n' +
+      '    "skipLibCheck": true,\n' +
+      '    "strict": true,\n' +
+      '    "forceConsistentCasingInFileNames": true,\n' +
+      '    "noEmit": true,\n' +
+      '    "esModuleInterop": true,\n' +
+      '    "module": "esnext",\n' +
+      '    "moduleResolution": "node",\n' +
+      '    "resolveJsonModule": true,\n' +
+      '    "isolatedModules": true,\n' +
+      '    "jsx": "preserve",\n' +
+      '    "incremental": true,\n' +
+      '    "plugins": [\n' +
+      "      {\n" +
+      '        "name": "next"\n' +
+      "      }\n" +
+      "    ]\n" +
+      "  },\n" +
+      '  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],\n' +
+      '  "exclude": ["node_modules"]\n' +
+      "}\n" +
+      "```\n\n" +
+      "**Key Type Definitions:**\n\n" +
+      "1. **Page Props Types:**\n" +
+      "```typescript\n" +
+      "// pages/index.tsx\n" +
+      "import { GetStaticProps, GetServerSideProps } from 'next';\n" +
+      "\n" +
+      "interface HomeProps {\n" +
+      "  posts: Post[];\n" +
+      "  count: number;\n" +
+      "}\n" +
+      "\n" +
+      "export const getStaticProps: GetStaticProps<HomeProps> = async () => {\n" +
+      "  const posts = await fetchPosts();\n" +
+      "  return {\n" +
+      "    props: {\n" +
+      "      posts,\n" +
+      "      count: posts.length\n" +
+      "    },\n" +
+      "    revalidate: 60\n" +
+      "  };\n" +
+      "};\n" +
+      "\n" +
+      "export default function Home({ posts, count }: HomeProps) {\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>Posts ({count})</h1>\n" +
+      "      {posts.map(post => (\n" +
+      "        <div key={post.id}>{post.title}</div>\n" +
+      "      ))}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **API Route Types:**\n" +
+      "```typescript\n" +
+      "// pages/api/users.ts\n" +
+      "import { NextApiRequest, NextApiResponse } from 'next';\n" +
+      "\n" +
+      "interface User {\n" +
+      "  id: string;\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "}\n" +
+      "\n" +
+      "export default function handler(\n" +
+      "  req: NextApiRequest,\n" +
+      "  res: NextApiResponse<User[] | { error: string }>\n" +
+      ") {\n" +
+      "  if (req.method === 'GET') {\n" +
+      "    const users: User[] = await getUsers();\n" +
+      "    res.status(200).json(users);\n" +
+      "  } else {\n" +
+      "    res.status(405).json({ error: 'Method not allowed' });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Compile-time error detection\n" +
+      "- Better IDE support with autocomplete\n" +
+      "- Refactoring safety\n" +
+      "- Self-documenting code\n" +
+      "- Enhanced debugging experience",
+    category: "TypeScript",
+    difficulty: "intermediate",
+    tags: ["typescript", "configuration", "types", "type-safety", "development"],
+  },
+  {
+    id: 11,
+    question:
+      "How do you optimize Next.js performance? Explain bundle analysis, code splitting, and lazy loading strategies.",
+    answer:
+      "Next.js performance optimization involves multiple strategies to reduce bundle size, improve loading times, and enhance user experience.\n\n" +
+      "**Bundle Analysis:**\n\n" +
+      "1. **Analyze Bundle Size:**\n" +
+      "```bash\n" +
+      "# Install bundle analyzer\n" +
+      "npm install --save-dev @next/bundle-analyzer\n" +
+      "\n" +
+      "# Add to next.config.js\n" +
+      "const withBundleAnalyzer = require('@next/bundle-analyzer')({\n" +
+      "  enabled: process.env.ANALYZE === 'true',\n" +
+      "});\n" +
+      "\n" +
+      "module.exports = withBundleAnalyzer({\n" +
+      "  // your config\n" +
+      "});\n" +
+      "\n" +
+      "# Run analysis\n" +
+      "ANALYZE=true npm run build\n" +
+      "```\n\n" +
+      "**Code Splitting Strategies:**\n\n" +
+      "1. **Dynamic Imports:**\n" +
+      "```typescript\n" +
+      "// Lazy load components\n" +
+      "import dynamic from 'next/dynamic';\n" +
+      "\n" +
+      "const HeavyComponent = dynamic(() => import('../components/HeavyComponent'), {\n" +
+      "  loading: () => <p>Loading...</p>,\n" +
+      "  ssr: false // Disable SSR for client-only components\n" +
+      "});\n" +
+      "\n" +
+      "// Conditional loading\n" +
+      "const Chart = dynamic(() => import('../components/Chart'), {\n" +
+      "  loading: () => <div>Loading chart...</div>\n" +
+      "});\n" +
+      "\n" +
+      "function Dashboard() {\n" +
+      "  const [showChart, setShowChart] = useState(false);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <button onClick={() => setShowChart(true)}>\n" +
+      "        Show Chart\n" +
+      "      </button>\n" +
+      "      {showChart && <Chart />}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Optimization Techniques:**\n\n" +
+      "1. **Image Optimization:**\n" +
+      "```typescript\n" +
+      "import Image from 'next/image';\n" +
+      "\n" +
+      "// Optimized images\n" +
+      "function OptimizedImage() {\n" +
+      "  return (\n" +
+      "    <Image\n" +
+      "      src='/hero.jpg'\n" +
+      "      alt='Hero image'\n" +
+      "      width={800}\n" +
+      "      height={600}\n" +
+      "      priority // Load immediately\n" +
+      "      placeholder='blur'\n" +
+      "      blurDataURL='data:image/jpeg;base64,...'\n" +
+      "    />\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **Font Optimization:**\n" +
+      "```typescript\n" +
+      "import { Inter } from 'next/font/google';\n" +
+      "\n" +
+      "const inter = Inter({ subsets: ['latin'] });\n" +
+      "\n" +
+      "export default function RootLayout({ children }) {\n" +
+      "  return (\n" +
+      "    <html lang='en' className={inter.className}>\n" +
+      "      <body>{children}</body>\n" +
+      "    </html>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use dynamic imports for heavy components\n" +
+      "- Implement proper loading states\n" +
+      "- Optimize images and fonts\n" +
+      "- Use static generation when possible\n" +
+      "- Monitor Core Web Vitals\n" +
+      "- Implement proper caching strategies\n" +
+      "- Minimize JavaScript bundle size\n" +
+      "- Use CDN for static assets",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["performance", "bundle-analysis", "code-splitting", "lazy-loading", "optimization"],
+  },
+  {
+    id: 12,
+    question:
+      "How do you implement testing in Next.js applications? Explain Jest, React Testing Library, and E2E testing strategies.",
+    answer:
+      "Testing Next.js applications requires a comprehensive approach covering unit tests, integration tests, and end-to-end testing.\n\n" +
+      "**Jest Configuration:**\n\n" +
+      "1. **Setup Jest:**\n" +
+      "```bash\n" +
+      "npm install --save-dev jest @testing-library/react @testing-library/jest-dom jest-environment-jsdom\n" +
+      "```\n\n" +
+      "2. **jest.config.js:**\n" +
+      "```javascript\n" +
+      "const nextJest = require('next/jest');\n" +
+      "\n" +
+      "const createJestConfig = nextJest({\n" +
+      "  dir: './',\n" +
+      "});\n" +
+      "\n" +
+      "const customJestConfig = {\n" +
+      "  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],\n" +
+      "  testEnvironment: 'jest-environment-jsdom',\n" +
+      "  moduleNameMapping: {\n" +
+      "    '^@/(.*)$': '<rootDir>/src/$1',\n" +
+      "  },\n" +
+      "};\n" +
+      "\n" +
+      "module.exports = createJestConfig(customJestConfig);\n" +
+      "```\n\n" +
+      "**React Testing Library:**\n\n" +
+      "1. **Component Testing:**\n" +
+      "```typescript\n" +
+      "// components/Button.test.tsx\n" +
+      "import { render, screen, fireEvent } from '@testing-library/react';\n" +
+      "import Button from './Button';\n" +
+      "\n" +
+      "describe('Button Component', () => {\n" +
+      "  it('renders with correct text', () => {\n" +
+      "    render(<Button>Click me</Button>);\n" +
+      "    expect(screen.getByText('Click me')).toBeInTheDocument();\n" +
+      "  });\n" +
+      "\n" +
+      "  it('calls onClick handler when clicked', () => {\n" +
+      "    const handleClick = jest.fn();\n" +
+      "    render(<Button onClick={handleClick}>Click me</Button>);\n" +
+      "    \n" +
+      "    fireEvent.click(screen.getByText('Click me'));\n" +
+      "    expect(handleClick).toHaveBeenCalledTimes(1);\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "2. **Page Testing:**\n" +
+      "```typescript\n" +
+      "// pages/index.test.tsx\n" +
+      "import { render, screen } from '@testing-library/react';\n" +
+      "import Home from '../pages/index';\n" +
+      "\n" +
+      "describe('Home Page', () => {\n" +
+      "  it('renders welcome message', () => {\n" +
+      "    render(<Home />);\n" +
+      "    expect(screen.getByText('Welcome to Next.js!')).toBeInTheDocument();\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**API Route Testing:**\n\n" +
+      "```typescript\n" +
+      "// pages/api/users.test.ts\n" +
+      "import { createMocks } from 'node-mocks-http';\n" +
+      "import handler from '../api/users';\n" +
+      "\n" +
+      "describe('/api/users', () => {\n" +
+      "  it('returns users list', async () => {\n" +
+      "    const { req, res } = createMocks({\n" +
+      "      method: 'GET',\n" +
+      "    });\n" +
+      "\n" +
+      "    await handler(req, res);\n" +
+      "\n" +
+      "    expect(res._getStatusCode()).toBe(200);\n" +
+      "    expect(JSON.parse(res._getData())).toEqual(\n" +
+      "      expect.arrayContaining([\n" +
+      "        expect.objectContaining({\n" +
+      "          id: expect.any(String),\n" +
+      "          name: expect.any(String),\n" +
+      "        })\n" +
+      "      ])\n" +
+      "    );\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**E2E Testing with Playwright:**\n\n" +
+      "1. **Setup Playwright:**\n" +
+      "```bash\n" +
+      "npm install --save-dev @playwright/test\n" +
+      "npx playwright install\n" +
+      "```\n\n" +
+      "2. **E2E Test:**\n" +
+      "```typescript\n" +
+      "// tests/e2e/homepage.spec.ts\n" +
+      "import { test, expect } from '@playwright/test';\n" +
+      "\n" +
+      "test('homepage loads correctly', async ({ page }) => {\n" +
+      "  await page.goto('/');\n" +
+      "  \n" +
+      "  // Check page title\n" +
+      "  await expect(page).toHaveTitle(/Next.js/);\n" +
+      "  \n" +
+      "  // Check main content\n" +
+      "  await expect(page.locator('h1')).toContainText('Welcome to Next.js!');\n" +
+      "  \n" +
+      "  // Test navigation\n" +
+      "  await page.click('text=About');\n" +
+      "  await expect(page).toHaveURL('/about');\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Testing Best Practices:**\n" +
+      "- Test user interactions, not implementation details\n" +
+      "- Use data-testid for reliable element selection\n" +
+      "- Mock external dependencies\n" +
+      "- Test error states and edge cases\n" +
+      "- Maintain good test coverage\n" +
+      "- Use descriptive test names\n" +
+      "- Keep tests simple and focused",
+    category: "Testing",
+    difficulty: "intermediate",
+    tags: ["testing", "jest", "react-testing-library", "playwright", "e2e"],
+  },
+  {
+    id: 13,
+    question:
+      "How do you implement internationalization (i18n) in Next.js? Explain multi-language support and routing strategies.",
+    answer:
+      "Next.js provides built-in internationalization support for creating multi-language applications with proper routing and content management.\n\n" +
+      "**Setup i18n:**\n\n" +
+      "1. **next.config.js Configuration:**\n" +
+      "```javascript\n" +
+      "module.exports = {\n" +
+      "  i18n: {\n" +
+      "    locales: ['en', 'es', 'fr', 'de'],\n" +
+      "    defaultLocale: 'en',\n" +
+      "    localeDetection: true,\n" +
+      "  },\n" +
+      "};\n" +
+      "```\n\n" +
+      "2. **Install Dependencies:**\n" +
+      "```bash\n" +
+      "npm install next-i18next\n" +
+      "```\n\n" +
+      "**Translation Files:**\n\n" +
+      "1. **Create Translation Files:**\n" +
+      "```javascript\n" +
+      "// public/locales/en/common.json\n" +
+      "{\n" +
+      '  "welcome": "Welcome to our website",\n' +
+      '  "about": "About Us",\n' +
+      '  "contact": "Contact"\n' +
+      "}\n" +
+      "\n" +
+      "// public/locales/es/common.json\n" +
+      "{\n" +
+      '  "welcome": "Bienvenido a nuestro sitio web",\n' +
+      '  "about": "Acerca de Nosotros",\n' +
+      '  "contact": "Contacto"\n' +
+      "}\n" +
+      "```\n\n" +
+      "**Using Translations:**\n\n" +
+      "1. **Pages Router:**\n" +
+      "```typescript\n" +
+      "// pages/index.tsx\n" +
+      "import { useTranslation } from 'next-i18next';\n" +
+      "import { serverSideTranslations } from 'next-i18next/serverSideTranslations';\n" +
+      "\n" +
+      "export default function Home() {\n" +
+      "  const { t } = useTranslation('common');\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>{t('welcome')}</h1>\n" +
+      "      <nav>\n" +
+      "        <Link href='/about'>{t('about')}</Link>\n" +
+      "        <Link href='/contact'>{t('contact')}</Link>\n" +
+      "      </nav>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "\n" +
+      "export async function getStaticProps({ locale }) {\n" +
+      "  return {\n" +
+      "    props: {\n" +
+      "      ...(await serverSideTranslations(locale, ['common'])),\n" +
+      "    },\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **App Router:**\n" +
+      "```typescript\n" +
+      "// app/[locale]/page.tsx\n" +
+      "import { useTranslations } from 'next-intl';\n" +
+      "\n" +
+      "export default function HomePage() {\n" +
+      "  const t = useTranslations('common');\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>{t('welcome')}</h1>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Language Switching:**\n\n" +
+      "```typescript\n" +
+      "// components/LanguageSwitcher.tsx\n" +
+      "import { useRouter } from 'next/router';\n" +
+      "import { useTranslation } from 'next-i18next';\n" +
+      "\n" +
+      "export default function LanguageSwitcher() {\n" +
+      "  const router = useRouter();\n" +
+      "  const { t } = useTranslation('common');\n" +
+      "  \n" +
+      "  const changeLanguage = (locale: string) => {\n" +
+      "    router.push(router.asPath, router.asPath, { locale });\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <select onChange={(e) => changeLanguage(e.target.value)}>\n" +
+      "      <option value='en'>English</option>\n" +
+      "      <option value='es'>Español</option>\n" +
+      "      <option value='fr'>Français</option>\n" +
+      "      <option value='de'>Deutsch</option>\n" +
+      "    </select>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Features:**\n\n" +
+      "1. **Namespace Organization:**\n" +
+      "```javascript\n" +
+      "// public/locales/en/\n" +
+      "//   common.json\n" +
+      "//   navigation.json\n" +
+      "//   forms.json\n" +
+      "//   errors.json\n" +
+      "```\n\n" +
+      "2. **Pluralization:**\n" +
+      "```json\n" +
+      "{\n" +
+      '  "items": "{{count}} item",\n' +
+      '  "items_plural": "{{count}} items"\n' +
+      "}\n" +
+      "```\n\n" +
+      "3. **Interpolation:**\n" +
+      "```json\n" +
+      "{\n" +
+      '  "welcome_user": "Welcome, {{name}}!"\n' +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use meaningful translation keys\n" +
+      "- Organize translations by feature\n" +
+      "- Test all language variants\n" +
+      "- Consider RTL languages\n" +
+      "- Use professional translation services\n" +
+      "- Implement fallback strategies\n" +
+      "- Monitor translation completeness",
+    category: "Internationalization",
+    difficulty: "intermediate",
+    tags: ["i18n", "internationalization", "localization", "multi-language", "routing"],
+  },
+  {
+    id: 14,
+    question:
+      "How do you implement authentication in Next.js? Explain NextAuth.js, JWT, and OAuth provider integration.",
+    answer:
+      "Authentication in Next.js can be implemented using various strategies, with NextAuth.js being the most popular solution for handling multiple authentication providers.\n\n" +
+      "**NextAuth.js Setup:**\n\n" +
+      "1. **Install Dependencies:**\n" +
+      "```bash\n" +
+      "npm install next-auth\n" +
+      "npm install @next-auth/prisma-adapter prisma @prisma/client\n" +
+      "```\n\n" +
+      "2. **Configuration:**\n" +
+      "```typescript\n" +
+      "// pages/api/auth/[...nextauth].ts\n" +
+      "import NextAuth from 'next-auth';\n" +
+      "import GoogleProvider from 'next-auth/providers/google';\n" +
+      "import GitHubProvider from 'next-auth/providers/github';\n" +
+      "import CredentialsProvider from 'next-auth/providers/credentials';\n" +
+      "\n" +
+      "export default NextAuth({\n" +
+      "  providers: [\n" +
+      "    GoogleProvider({\n" +
+      "      clientId: process.env.GOOGLE_CLIENT_ID!,\n" +
+      "      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,\n" +
+      "    }),\n" +
+      "    GitHubProvider({\n" +
+      "      clientId: process.env.GITHUB_ID!,\n" +
+      "      clientSecret: process.env.GITHUB_SECRET!,\n" +
+      "    }),\n" +
+      "    CredentialsProvider({\n" +
+      "      name: 'credentials',\n" +
+      "      credentials: {\n" +
+      "        email: { label: 'Email', type: 'email' },\n" +
+      "        password: { label: 'Password', type: 'password' }\n" +
+      "      },\n" +
+      "      async authorize(credentials) {\n" +
+      "        const user = await validateUser(credentials);\n" +
+      "        return user ? { id: user.id, email: user.email } : null;\n" +
+      "      }\n" +
+      "    })\n" +
+      "  ],\n" +
+      "  callbacks: {\n" +
+      "    async jwt({ token, user }) {\n" +
+      "      if (user) {\n" +
+      "        token.role = user.role;\n" +
+      "      }\n" +
+      "      return token;\n" +
+      "    },\n" +
+      "    async session({ session, token }) {\n" +
+      "      session.user.role = token.role;\n" +
+      "      return session;\n" +
+      "    }\n" +
+      "  },\n" +
+      "  pages: {\n" +
+      "    signIn: '/auth/signin',\n" +
+      "    error: '/auth/error'\n" +
+      "  }\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Using Authentication:**\n\n" +
+      "1. **Client-side Usage:**\n" +
+      "```typescript\n" +
+      "// components/AuthButton.tsx\n" +
+      "import { useSession, signIn, signOut } from 'next-auth/react';\n" +
+      "\n" +
+      "export default function AuthButton() {\n" +
+      "  const { data: session, status } = useSession();\n" +
+      "  \n" +
+      "  if (status === 'loading') return <p>Loading...</p>;\n" +
+      "  \n" +
+      "  if (session) {\n" +
+      "    return (\n" +
+      "      <div>\n" +
+      "        <p>Signed in as {session.user.email}</p>\n" +
+      "        <button onClick={() => signOut()}>Sign out</button>\n" +
+      "      </div>\n" +
+      "    );\n" +
+      "  }\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Not signed in</p>\n" +
+      "      <button onClick={() => signIn()}>Sign in</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **Server-side Usage:**\n" +
+      "```typescript\n" +
+      "// pages/protected.tsx\n" +
+      "import { getServerSession } from 'next-auth';\n" +
+      "import { authOptions } from './api/auth/[...nextauth]';\n" +
+      "\n" +
+      "export async function getServerSideProps(context) {\n" +
+      "  const session = await getServerSession(context.req, context.res, authOptions);\n" +
+      "  \n" +
+      "  if (!session) {\n" +
+      "    return {\n" +
+      "      redirect: {\n" +
+      "        destination: '/auth/signin',\n" +
+      "        permanent: false,\n" +
+      "      },\n" +
+      "    };\n" +
+      "  }\n" +
+      "  \n" +
+      "  return {\n" +
+      "    props: { session },\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "export default function ProtectedPage({ session }) {\n" +
+      "  return <div>Welcome, {session.user.email}!</div>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**JWT Implementation:**\n\n" +
+      "```typescript\n" +
+      "// utils/jwt.ts\n" +
+      "import jwt from 'jsonwebtoken';\n" +
+      "\n" +
+      "const JWT_SECRET = process.env.JWT_SECRET!;\n" +
+      "\n" +
+      "export function generateToken(payload: any) {\n" +
+      "  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });\n" +
+      "}\n" +
+      "\n" +
+      "export function verifyToken(token: string) {\n" +
+      "  try {\n" +
+      "    return jwt.verify(token, JWT_SECRET);\n" +
+      "  } catch (error) {\n" +
+      "    return null;\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// API route for login\n" +
+      "// pages/api/auth/login.ts\n" +
+      "export default async function handler(req, res) {\n" +
+      "  if (req.method !== 'POST') {\n" +
+      "    return res.status(405).json({ error: 'Method not allowed' });\n" +
+      "  }\n" +
+      "  \n" +
+      "  const { email, password } = req.body;\n" +
+      "  const user = await validateUser({ email, password });\n" +
+      "  \n" +
+      "  if (!user) {\n" +
+      "    return res.status(401).json({ error: 'Invalid credentials' });\n" +
+      "  }\n" +
+      "  \n" +
+      "  const token = generateToken({ userId: user.id, email: user.email });\n" +
+      "  \n" +
+      "  res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Secure; SameSite=Strict`);\n" +
+      "  res.status(200).json({ success: true });\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Middleware Protection:**\n\n" +
+      "```typescript\n" +
+      "// middleware.ts\n" +
+      "import { withAuth } from 'next-auth/middleware';\n" +
+      "\n" +
+      "export default withAuth(\n" +
+      "  function middleware(req) {\n" +
+      "    // Additional middleware logic\n" +
+      "  },\n" +
+      "  {\n" +
+      "    callbacks: {\n" +
+      "      authorized: ({ token }) => !!token\n" +
+      "    },\n" +
+      "  }\n" +
+      ");\n" +
+      "\n" +
+      "export const config = {\n" +
+      "  matcher: ['/dashboard/:path*', '/admin/:path*']\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use HTTPS in production\n" +
+      "- Implement proper session management\n" +
+      "- Use secure cookie settings\n" +
+      "- Implement role-based access control\n" +
+      "- Validate tokens on server-side\n" +
+      "- Use environment variables for secrets\n" +
+      "- Implement proper error handling\n" +
+      "- Consider rate limiting for auth endpoints",
+    category: "Authentication",
+    difficulty: "intermediate",
+    tags: ["authentication", "nextauth", "jwt", "oauth", "security"],
+  },
+  {
+    id: 15,
+    question:
+      "How do you integrate databases with Next.js? Explain Prisma, MongoDB, PostgreSQL, and ORM patterns.",
+    answer:
+      "Next.js applications often require database integration for data persistence, with various options available depending on your needs.\n\n" +
+      "**Prisma ORM Integration:**\n\n" +
+      "1. **Setup Prisma:**\n" +
+      "```bash\n" +
+      "npm install prisma @prisma/client\n" +
+      "npx prisma init\n" +
+      "```\n\n" +
+      "2. **Schema Definition:**\n" +
+      "```prisma\n" +
+      "// prisma/schema.prisma\n" +
+      "generator client {\n" +
+      '  provider = "prisma-client-js"\n' +
+      "}\n" +
+      "\n" +
+      "datasource db {\n" +
+      '  provider = "postgresql"\n' +
+      '  url      = env("DATABASE_URL")\n' +
+      "}\n" +
+      "\n" +
+      "model User {\n" +
+      "  id        String   @id @default(cuid())\n" +
+      "  email     String   @unique\n" +
+      "  name      String?\n" +
+      "  posts     Post[]\n" +
+      "  createdAt DateTime @default(now())\n" +
+      "  updatedAt DateTime @updatedAt\n" +
+      "}\n" +
+      "\n" +
+      "model Post {\n" +
+      "  id        String   @id @default(cuid())\n" +
+      "  title     String\n" +
+      "  content   String?\n" +
+      "  published Boolean  @default(false)\n" +
+      "  author    User     @relation(fields: [authorId], references: [id])\n" +
+      "  authorId  String\n" +
+      "  createdAt DateTime @default(now())\n" +
+      "  updatedAt DateTime @updatedAt\n" +
+      "}\n" +
+      "```\n\n" +
+      "3. **Using Prisma Client:**\n" +
+      "```typescript\n" +
+      "// lib/prisma.ts\n" +
+      "import { PrismaClient } from '@prisma/client';\n" +
+      "\n" +
+      "const globalForPrisma = globalThis as unknown as {\n" +
+      "  prisma: PrismaClient | undefined;\n" +
+      "};\n" +
+      "\n" +
+      "export const prisma = globalForPrisma.prisma ?? new PrismaClient();\n" +
+      "\n" +
+      "if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;\n" +
+      "\n" +
+      "// pages/api/posts.ts\n" +
+      "import { prisma } from '../../lib/prisma';\n" +
+      "\n" +
+      "export default async function handler(req, res) {\n" +
+      "  if (req.method === 'GET') {\n" +
+      "    const posts = await prisma.post.findMany({\n" +
+      "      include: {\n" +
+      "        author: {\n" +
+      "          select: {\n" +
+      "            name: true,\n" +
+      "            email: true\n" +
+      "          }\n" +
+      "        }\n" +
+      "      }\n" +
+      "    });\n" +
+      "    res.json(posts);\n" +
+      "  } else if (req.method === 'POST') {\n" +
+      "    const { title, content, authorId } = req.body;\n" +
+      "    const post = await prisma.post.create({\n" +
+      "      data: {\n" +
+      "        title,\n" +
+      "        content,\n" +
+      "        authorId\n" +
+      "      }\n" +
+      "    });\n" +
+      "    res.json(post);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**MongoDB Integration:**\n\n" +
+      "1. **Using Mongoose:**\n" +
+      "```bash\n" +
+      "npm install mongoose\n" +
+      "```\n\n" +
+      "2. **Mongoose Setup:**\n" +
+      "```typescript\n" +
+      "// lib/mongodb.ts\n" +
+      "import mongoose from 'mongoose';\n" +
+      "\n" +
+      "const MONGODB_URI = process.env.MONGODB_URI!;\n" +
+      "\n" +
+      "if (!MONGODB_URI) {\n" +
+      "  throw new Error('Please define the MONGODB_URI environment variable');\n" +
+      "}\n" +
+      "\n" +
+      "let cached = global.mongoose;\n" +
+      "\n" +
+      "if (!cached) {\n" +
+      "  cached = global.mongoose = { conn: null, promise: null };\n" +
+      "}\n" +
+      "\n" +
+      "async function connectDB() {\n" +
+      "  if (cached.conn) {\n" +
+      "    return cached.conn;\n" +
+      "  }\n" +
+      "\n" +
+      "  if (!cached.promise) {\n" +
+      "    const opts = {\n" +
+      "      bufferCommands: false,\n" +
+      "    };\n" +
+      "\n" +
+      "    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {\n" +
+      "      return mongoose;\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  cached.conn = await cached.promise;\n" +
+      "  return cached.conn;\n" +
+      "}\n" +
+      "\n" +
+      "export default connectDB;\n" +
+      "```\n\n" +
+      "3. **Mongoose Models:**\n" +
+      "```typescript\n" +
+      "// models/User.ts\n" +
+      "import mongoose, { Schema, Document } from 'mongoose';\n" +
+      "\n" +
+      "export interface IUser extends Document {\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "  password: string;\n" +
+      "  createdAt: Date;\n" +
+      "}\n" +
+      "\n" +
+      "const UserSchema: Schema = new Schema({\n" +
+      "  name: {\n" +
+      "    type: String,\n" +
+      "    required: true\n" +
+      "  },\n" +
+      "  email: {\n" +
+      "    type: String,\n" +
+      "    required: true,\n" +
+      "    unique: true\n" +
+      "  },\n" +
+      "  password: {\n" +
+      "    type: String,\n" +
+      "    required: true\n" +
+      "  }\n" +
+      "}, {\n" +
+      "  timestamps: true\n" +
+      "});\n" +
+      "\n" +
+      "export default mongoose.models.User || mongoose.model<IUser>('User', UserSchema);\n" +
+      "```\n\n" +
+      "**PostgreSQL with Raw Queries:**\n\n" +
+      "```typescript\n" +
+      "// lib/postgres.ts\n" +
+      "import { Pool } from 'pg';\n" +
+      "\n" +
+      "const pool = new Pool({\n" +
+      "  connectionString: process.env.POSTGRES_URL,\n" +
+      "  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false\n" +
+      "});\n" +
+      "\n" +
+      "export async function query(text: string, params?: any[]) {\n" +
+      "  const client = await pool.connect();\n" +
+      "  try {\n" +
+      "    const result = await client.query(text, params);\n" +
+      "    return result;\n" +
+      "  } finally {\n" +
+      "    client.release();\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// pages/api/users.ts\n" +
+      "import { query } from '../../lib/postgres';\n" +
+      "\n" +
+      "export default async function handler(req, res) {\n" +
+      "  if (req.method === 'GET') {\n" +
+      "    const result = await query('SELECT * FROM users ORDER BY created_at DESC');\n" +
+      "    res.json(result.rows);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use connection pooling for better performance\n" +
+      "- Implement proper error handling\n" +
+      "- Use environment variables for database URLs\n" +
+      "- Implement database migrations\n" +
+      "- Use transactions for complex operations\n" +
+      "- Implement proper indexing\n" +
+      "- Use prepared statements to prevent SQL injection\n" +
+      "- Monitor database performance",
+    category: "Database",
+    difficulty: "intermediate",
+    tags: ["database", "prisma", "mongodb", "postgresql", "orm"],
+  },
+  {
+    id: 16,
+    question:
+      "How do you implement state management in Next.js? Compare Zustand, Redux Toolkit, and Context API patterns.",
+    answer:
+      "State management in Next.js applications can be handled using various approaches, each with different trade-offs and use cases.\n\n" +
+      "**Zustand (Lightweight):**\n\n" +
+      "1. **Setup:**\n" +
+      "```bash\n" +
+      "npm install zustand\n" +
+      "```\n\n" +
+      "2. **Store Creation:**\n" +
+      "```typescript\n" +
+      "// stores/useStore.ts\n" +
+      "import { create } from 'zustand';\n" +
+      "import { devtools } from 'zustand/middleware';\n" +
+      "\n" +
+      "interface StoreState {\n" +
+      "  count: number;\n" +
+      "  user: User | null;\n" +
+      "  increment: () => void;\n" +
+      "  decrement: () => void;\n" +
+      "  setUser: (user: User) => void;\n" +
+      "}\n" +
+      "\n" +
+      "export const useStore = create<StoreState>()(\n" +
+      "  devtools(\n" +
+      "    (set) => ({\n" +
+      "      count: 0,\n" +
+      "      user: null,\n" +
+      "      increment: () => set((state) => ({ count: state.count + 1 })),\n" +
+      "      decrement: () => set((state) => ({ count: state.count - 1 })),\n" +
+      "      setUser: (user) => set({ user }),\n" +
+      "    }),\n" +
+      "    { name: 'app-store' }\n" +
+      "  )\n" +
+      ");\n" +
+      "```\n\n" +
+      "3. **Using Zustand:**\n" +
+      "```typescript\n" +
+      "// components/Counter.tsx\n" +
+      "import { useStore } from '../stores/useStore';\n" +
+      "\n" +
+      "export default function Counter() {\n" +
+      "  const { count, increment, decrement } = useStore();\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={increment}>+</button>\n" +
+      "      <button onClick={decrement}>-</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Redux Toolkit:**\n\n" +
+      "1. **Setup:**\n" +
+      "```bash\n" +
+      "npm install @reduxjs/toolkit react-redux\n" +
+      "```\n\n" +
+      "2. **Store Configuration:**\n" +
+      "```typescript\n" +
+      "// store/index.ts\n" +
+      "import { configureStore } from '@reduxjs/toolkit';\n" +
+      "import counterSlice from './slices/counterSlice';\n" +
+      "import userSlice from './slices/userSlice';\n" +
+      "\n" +
+      "export const store = configureStore({\n" +
+      "  reducer: {\n" +
+      "    counter: counterSlice,\n" +
+      "    user: userSlice,\n" +
+      "  },\n" +
+      "});\n" +
+      "\n" +
+      "export type RootState = ReturnType<typeof store.getState>;\n" +
+      "export type AppDispatch = typeof store.dispatch;\n" +
+      "```\n\n" +
+      "3. **Slice Creation:**\n" +
+      "```typescript\n" +
+      "// store/slices/counterSlice.ts\n" +
+      "import { createSlice, PayloadAction } from '@reduxjs/toolkit';\n" +
+      "\n" +
+      "interface CounterState {\n" +
+      "  value: number;\n" +
+      "}\n" +
+      "\n" +
+      "const initialState: CounterState = {\n" +
+      "  value: 0,\n" +
+      "};\n" +
+      "\n" +
+      "export const counterSlice = createSlice({\n" +
+      "  name: 'counter',\n" +
+      "  initialState,\n" +
+      "  reducers: {\n" +
+      "    increment: (state) => {\n" +
+      "      state.value += 1;\n" +
+      "    },\n" +
+      "    decrement: (state) => {\n" +
+      "      state.value -= 1;\n" +
+      "    },\n" +
+      "    incrementByAmount: (state, action: PayloadAction<number>) => {\n" +
+      "      state.value += action.payload;\n" +
+      "    },\n" +
+      "  },\n" +
+      "});\n" +
+      "\n" +
+      "export const { increment, decrement, incrementByAmount } = counterSlice.actions;\n" +
+      "export default counterSlice.reducer;\n" +
+      "```\n\n" +
+      "**Context API:**\n\n" +
+      "1. **Context Creation:**\n" +
+      "```typescript\n" +
+      "// contexts/AppContext.tsx\n" +
+      "import { createContext, useContext, useReducer, ReactNode } from 'react';\n" +
+      "\n" +
+      "interface AppState {\n" +
+      "  count: number;\n" +
+      "  user: User | null;\n" +
+      "}\n" +
+      "\n" +
+      "type AppAction = \n" +
+      "  | { type: 'INCREMENT' }\n" +
+      "  | { type: 'DECREMENT' }\n" +
+      "  | { type: 'SET_USER'; payload: User };\n" +
+      "\n" +
+      "const initialState: AppState = {\n" +
+      "  count: 0,\n" +
+      "  user: null,\n" +
+      "};\n" +
+      "\n" +
+      "function appReducer(state: AppState, action: AppAction): AppState {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'INCREMENT':\n" +
+      "      return { ...state, count: state.count + 1 };\n" +
+      "    case 'DECREMENT':\n" +
+      "      return { ...state, count: state.count - 1 };\n" +
+      "    case 'SET_USER':\n" +
+      "      return { ...state, user: action.payload };\n" +
+      "    default:\n" +
+      "      return state;\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "const AppContext = createContext<{\n" +
+      "  state: AppState;\n" +
+      "  dispatch: React.Dispatch<AppAction>;\n" +
+      "} | null>(null);\n" +
+      "\n" +
+      "export function AppProvider({ children }: { children: ReactNode }) {\n" +
+      "  const [state, dispatch] = useReducer(appReducer, initialState);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <AppContext.Provider value={{ state, dispatch }}>\n" +
+      "      {children}\n" +
+      "    </AppContext.Provider>\n" +
+      "  );\n" +
+      "}\n" +
+      "\n" +
+      "export function useAppContext() {\n" +
+      "  const context = useContext(AppContext);\n" +
+      "  if (!context) {\n" +
+      "    throw new Error('useAppContext must be used within AppProvider');\n" +
+      "  }\n" +
+      "  return context;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Comparison:**\n\n" +
+      "| Feature | Zustand | Redux Toolkit | Context API |\n" +
+      "|---------|---------|---------------|-------------|\n" +
+      "| Bundle Size | Small | Medium | Built-in |\n" +
+      "| Boilerplate | Minimal | High | Medium |\n" +
+      "| DevTools | Good | Excellent | Limited |\n" +
+      "| Performance | Good | Good | Can be poor |\n" +
+      "| Learning Curve | Easy | Steep | Easy |\n" +
+      "| TypeScript | Excellent | Excellent | Good |\n\n" +
+      "**Best Practices:**\n" +
+      "- Use Zustand for simple to medium complexity\n" +
+      "- Use Redux Toolkit for complex applications\n" +
+      "- Use Context API for component-specific state\n" +
+      "- Avoid prop drilling with proper state management\n" +
+      "- Implement proper TypeScript types\n" +
+      "- Use selectors for performance optimization\n" +
+      "- Consider server state vs client state separation",
+    category: "State Management",
+    difficulty: "intermediate",
+    tags: ["state-management", "zustand", "redux", "context-api", "react"],
+  },
+  {
+    id: 17,
+    question:
+      "How do you implement SEO optimization in Next.js? Explain meta tags, structured data, and sitemap generation.",
+    answer:
+      "SEO optimization in Next.js involves proper meta tag management, structured data implementation, and sitemap generation for better search engine visibility.\n\n" +
+      "**Meta Tags Management:**\n\n" +
+      "1. **Pages Router:**\n" +
+      "```typescript\n" +
+      "// pages/_document.tsx\n" +
+      "import { Html, Head, Main, NextScript } from 'next/document';\n" +
+      "\n" +
+      "export default function Document() {\n" +
+      "  return (\n" +
+      "    <Html lang='en'>\n" +
+      "      <Head>\n" +
+      "        <meta name='description' content='Your app description' />\n" +
+      "        <meta name='keywords' content='nextjs, react, seo' />\n" +
+      "        <meta name='author' content='Your Name' />\n" +
+      "        <meta property='og:type' content='website' />\n" +
+      "        <meta property='og:title' content='Your App Title' />\n" +
+      "        <meta property='og:description' content='Your app description' />\n" +
+      "        <meta property='og:image' content='/og-image.jpg' />\n" +
+      "        <meta name='twitter:card' content='summary_large_image' />\n" +
+      "        <meta name='twitter:title' content='Your App Title' />\n" +
+      "        <meta name='twitter:description' content='Your app description' />\n" +
+      "        <meta name='twitter:image' content='/og-image.jpg' />\n" +
+      "      </Head>\n" +
+      "      <body>\n" +
+      "        <Main />\n" +
+      "        <NextScript />\n" +
+      "      </body>\n" +
+      "    </Html>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **Dynamic Meta Tags:**\n" +
+      "```typescript\n" +
+      "// pages/blog/[slug].tsx\n" +
+      "import Head from 'next/head';\n" +
+      "\n" +
+      "export default function BlogPost({ post }) {\n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <Head>\n" +
+      "        <title>{post.title} | Your Blog</title>\n" +
+      "        <meta name='description' content={post.excerpt} />\n" +
+      "        <meta property='og:title' content={post.title} />\n" +
+      "        <meta property='og:description' content={post.excerpt} />\n" +
+      "        <meta property='og:image' content={post.featuredImage} />\n" +
+      "        <meta property='article:published_time' content={post.publishedAt} />\n" +
+      "        <meta property='article:author' content={post.author} />\n" +
+      "      </Head>\n" +
+      "      <article>\n" +
+      "        <h1>{post.title}</h1>\n" +
+      "        <div dangerouslySetInnerHTML={{ __html: post.content }} />\n" +
+      "      </article>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "\n" +
+      "export async function getStaticProps({ params }) {\n" +
+      "  const post = await getPost(params.slug);\n" +
+      "  return {\n" +
+      "    props: { post },\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Structured Data:**\n\n" +
+      "1. **JSON-LD Implementation:**\n" +
+      "```typescript\n" +
+      "// components/StructuredData.tsx\n" +
+      "interface StructuredDataProps {\n" +
+      "  data: any;\n" +
+      "}\n" +
+      "\n" +
+      "export default function StructuredData({ data }: StructuredDataProps) {\n" +
+      "  return (\n" +
+      "    <script\n" +
+      "      type='application/ld+json'\n" +
+      "      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}\n" +
+      "    />\n" +
+      "  );\n" +
+      "}\n" +
+      "\n" +
+      "// pages/blog/[slug].tsx\n" +
+      "const structuredData = {\n" +
+      "  '@context': 'https://schema.org',\n" +
+      "  '@type': 'Article',\n" +
+      "  headline: post.title,\n" +
+      "  description: post.excerpt,\n" +
+      "  image: post.featuredImage,\n" +
+      "  datePublished: post.publishedAt,\n" +
+      "  dateModified: post.updatedAt,\n" +
+      "  author: {\n" +
+      "    '@type': 'Person',\n" +
+      "    name: post.author,\n" +
+      "  },\n" +
+      "  publisher: {\n" +
+      "    '@type': 'Organization',\n" +
+      "    name: 'Your Company',\n" +
+      "    logo: {\n" +
+      "      '@type': 'ImageObject',\n" +
+      "      url: '/logo.png',\n" +
+      "    },\n" +
+      "  },\n" +
+      "};\n" +
+      "\n" +
+      "return (\n" +
+      "  <>\n" +
+      "    <StructuredData data={structuredData} />\n" +
+      "    {/* rest of component */}\n" +
+      "  </>\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Sitemap Generation:**\n\n" +
+      "1. **Dynamic Sitemap:**\n" +
+      "```typescript\n" +
+      "// pages/sitemap.xml.ts\n" +
+      "import { GetServerSideProps } from 'next';\n" +
+      "\n" +
+      "function generateSiteMap(posts: Post[]) {\n" +
+      '  return `<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+      "      <url>\n" +
+      "        <loc>https://yoursite.com</loc>\n" +
+      "        <lastmod>${new Date().toISOString()}</lastmod>\n" +
+      "        <changefreq>daily</changefreq>\n" +
+      "        <priority>1.0</priority>\n" +
+      "      </url>\n" +
+      "      ${posts\n" +
+      "        .map((post) => {\n" +
+      "          return `\n" +
+      "            <url>\n" +
+      "              <loc>https://yoursite.com/blog/${post.slug}</loc>\n" +
+      "              <lastmod>${post.updatedAt}</lastmod>\n" +
+      "              <changefreq>weekly</changefreq>\n" +
+      "              <priority>0.8</priority>\n" +
+      "            </url>\n" +
+      "          `;\n" +
+      "        })\n" +
+      "        .join('')}\n" +
+      "    </urlset>\n" +
+      "  `;\n" +
+      "}\n" +
+      "\n" +
+      "export const getServerSideProps: GetServerSideProps = async ({ res }) => {\n" +
+      "  const posts = await getAllPosts();\n" +
+      "  const sitemap = generateSiteMap(posts);\n" +
+      "\n" +
+      "  res.setHeader('Content-Type', 'text/xml');\n" +
+      "  res.write(sitemap);\n" +
+      "  res.end();\n" +
+      "\n" +
+      "  return {\n" +
+      "    props: {},\n" +
+      "  };\n" +
+      "};\n" +
+      "\n" +
+      "export default function SiteMap() {\n" +
+      "  return null;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**SEO Best Practices:**\n" +
+      "- Use descriptive, keyword-rich titles\n" +
+      "- Implement proper heading hierarchy (H1, H2, H3)\n" +
+      "- Add alt text to all images\n" +
+      "- Use semantic HTML elements\n" +
+      "- Implement proper internal linking\n" +
+      "- Optimize page loading speed\n" +
+      "- Use canonical URLs to prevent duplicate content\n" +
+      "- Implement proper error pages (404, 500)\n" +
+      "- Use robots.txt for crawler guidance\n" +
+      "- Monitor Core Web Vitals",
+    category: "SEO",
+    difficulty: "intermediate",
+    tags: ["seo", "meta-tags", "structured-data", "sitemap", "optimization"],
+  },
+  {
+    id: 18,
+    question:
+      "How do you implement error handling in Next.js? Explain error boundaries, custom error pages, and error monitoring.",
+    answer:
+      "Error handling in Next.js involves implementing error boundaries, custom error pages, and proper error monitoring to ensure robust applications.\n\n" +
+      "**Error Boundaries:**\n\n" +
+      "1. **Class Component Error Boundary:**\n" +
+      "```typescript\n" +
+      "// components/ErrorBoundary.tsx\n" +
+      "import React, { Component, ErrorInfo, ReactNode } from 'react';\n" +
+      "\n" +
+      "interface Props {\n" +
+      "  children: ReactNode;\n" +
+      "  fallback?: ReactNode;\n" +
+      "}\n" +
+      "\n" +
+      "interface State {\n" +
+      "  hasError: boolean;\n" +
+      "  error?: Error;\n" +
+      "}\n" +
+      "\n" +
+      "export class ErrorBoundary extends Component<Props, State> {\n" +
+      "  constructor(props: Props) {\n" +
+      "    super(props);\n" +
+      "    this.state = { hasError: false };\n" +
+      "  }\n" +
+      "\n" +
+      "  static getDerivedStateFromError(error: Error): State {\n" +
+      "    return { hasError: true, error };\n" +
+      "  }\n" +
+      "\n" +
+      "  componentDidCatch(error: Error, errorInfo: ErrorInfo) {\n" +
+      "    console.error('Error caught by boundary:', error, errorInfo);\n" +
+      "    \n" +
+      "    // Send error to monitoring service\n" +
+      "    if (typeof window !== 'undefined') {\n" +
+      "      // Example: Sentry.captureException(error);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  render() {\n" +
+      "    if (this.state.hasError) {\n" +
+      "      return this.props.fallback || (\n" +
+      "        <div className='error-boundary'>\n" +
+      "          <h2>Something went wrong</h2>\n" +
+      "          <p>We're sorry, but something unexpected happened.</p>\n" +
+      "          <button onClick={() => this.setState({ hasError: false })}>\n" +
+      "            Try again\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "      );\n" +
+      "    }\n" +
+      "\n" +
+      "    return this.props.children;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **Using Error Boundary:**\n" +
+      "```typescript\n" +
+      "// pages/_app.tsx\n" +
+      "import { ErrorBoundary } from '../components/ErrorBoundary';\n" +
+      "\n" +
+      "export default function App({ Component, pageProps }) {\n" +
+      "  return (\n" +
+      "    <ErrorBoundary>\n" +
+      "      <Component {...pageProps} />\n" +
+      "    </ErrorBoundary>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Custom Error Pages:**\n\n" +
+      "1. **404 Error Page:**\n" +
+      "```typescript\n" +
+      "// pages/404.tsx\n" +
+      "import Link from 'next/link';\n" +
+      "import Head from 'next/head';\n" +
+      "\n" +
+      "export default function Custom404() {\n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <Head>\n" +
+      "        <title>404 - Page Not Found</title>\n" +
+      "        <meta name='robots' content='noindex' />\n" +
+      "      </Head>\n" +
+      "      <div className='error-page'>\n" +
+      "        <h1>404 - Page Not Found</h1>\n" +
+      "        <p>The page you're looking for doesn't exist.</p>\n" +
+      "        <Link href='/'>\n" +
+      "          <a>Go back home</a>\n" +
+      "        </Link>\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **500 Error Page:**\n" +
+      "```typescript\n" +
+      "// pages/500.tsx\n" +
+      "import Head from 'next/head';\n" +
+      "\n" +
+      "export default function Custom500() {\n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <Head>\n" +
+      "        <title>500 - Server Error</title>\n" +
+      "        <meta name='robots' content='noindex' />\n" +
+      "      </Head>\n" +
+      "      <div className='error-page'>\n" +
+      "        <h1>500 - Server Error</h1>\n" +
+      "        <p>Something went wrong on our end. Please try again later.</p>\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**API Error Handling:**\n\n" +
+      "```typescript\n" +
+      "// pages/api/users.ts\n" +
+      "import { NextApiRequest, NextApiResponse } from 'next';\n" +
+      "\n" +
+      "export default async function handler(req: NextApiRequest, res: NextApiResponse) {\n" +
+      "  try {\n" +
+      "    if (req.method !== 'GET') {\n" +
+      "      return res.status(405).json({ error: 'Method not allowed' });\n" +
+      "    }\n" +
+      "\n" +
+      "    const users = await getUsers();\n" +
+      "    res.status(200).json(users);\n" +
+      "  } catch (error) {\n" +
+      "    console.error('API Error:', error);\n" +
+      "    \n" +
+      "    // Log error to monitoring service\n" +
+      "    // Example: Sentry.captureException(error);\n" +
+      "    \n" +
+      "    res.status(500).json({ \n" +
+      "      error: 'Internal server error',\n" +
+      "      message: process.env.NODE_ENV === 'development' ? error.message : undefined\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Error Monitoring:**\n\n" +
+      "1. **Sentry Integration:**\n" +
+      "```bash\n" +
+      "npm install @sentry/nextjs\n" +
+      "```\n\n" +
+      "2. **Sentry Configuration:**\n" +
+      "```typescript\n" +
+      "// sentry.client.config.ts\n" +
+      "import * as Sentry from '@sentry/nextjs';\n" +
+      "\n" +
+      "Sentry.init({\n" +
+      "  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,\n" +
+      "  environment: process.env.NODE_ENV,\n" +
+      "  tracesSampleRate: 1.0,\n" +
+      "});\n" +
+      "\n" +
+      "// sentry.server.config.ts\n" +
+      "import * as Sentry from '@sentry/nextjs';\n" +
+      "\n" +
+      "Sentry.init({\n" +
+      "  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,\n" +
+      "  environment: process.env.NODE_ENV,\n" +
+      "  tracesSampleRate: 1.0,\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Implement error boundaries at appropriate levels\n" +
+      "- Use custom error pages for better UX\n" +
+      "- Log errors to monitoring services\n" +
+      "- Provide meaningful error messages\n" +
+      "- Implement retry mechanisms for transient errors\n" +
+      "- Use proper HTTP status codes\n" +
+      "- Handle both client and server-side errors\n" +
+      "- Implement graceful degradation\n" +
+      "- Test error scenarios thoroughly",
+    category: "Error Handling",
+    difficulty: "intermediate",
+    tags: ["error-handling", "error-boundaries", "custom-pages", "monitoring", "sentry"],
+  },
+  {
+    id: 19,
+    question:
+      "How do you implement Progressive Web App (PWA) features in Next.js? Explain service workers, offline support, and app manifest.",
+    answer:
+      "Progressive Web App (PWA) features in Next.js enable offline functionality, app-like experiences, and enhanced user engagement through service workers and web app manifests.\n\n" +
+      "**Service Worker Setup:**\n\n" +
+      "1. **Install PWA Plugin:**\n" +
+      "```bash\n" +
+      "npm install next-pwa\n" +
+      "```\n\n" +
+      "2. **next.config.js Configuration:**\n" +
+      "```javascript\n" +
+      "const withPWA = require('next-pwa')({\n" +
+      "  dest: 'public',\n" +
+      "  register: true,\n" +
+      "  skipWaiting: true,\n" +
+      "  disable: process.env.NODE_ENV === 'development',\n" +
+      "});\n" +
+      "\n" +
+      "module.exports = withPWA({\n" +
+      "  // your existing config\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Web App Manifest:**\n\n" +
+      "1. **public/manifest.json:**\n" +
+      "```json\n" +
+      "{\n" +
+      '  "name": "Your App Name",\n' +
+      '  "short_name": "App",\n' +
+      '  "description": "Your app description",\n' +
+      '  "start_url": "/",\n' +
+      '  "display": "standalone",\n' +
+      '  "background_color": "#ffffff",\n' +
+      '  "theme_color": "#000000",\n' +
+      '  "orientation": "portrait",\n' +
+      '  "icons": [\n' +
+      "    {\n" +
+      '      "src": "/icons/icon-72x72.png",\n' +
+      '      "sizes": "72x72",\n' +
+      '      "type": "image/png"\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "src": "/icons/icon-96x96.png",\n' +
+      '      "sizes": "96x96",\n' +
+      '      "type": "image/png"\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "src": "/icons/icon-128x128.png",\n' +
+      '      "sizes": "128x128",\n' +
+      '      "type": "image/png"\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "src": "/icons/icon-144x144.png",\n' +
+      '      "sizes": "144x144",\n' +
+      '      "type": "image/png"\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "src": "/icons/icon-152x152.png",\n' +
+      '      "sizes": "152x152",\n' +
+      '      "type": "image/png"\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "src": "/icons/icon-192x192.png",\n' +
+      '      "sizes": "192x192",\n' +
+      '      "type": "image/png"\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "src": "/icons/icon-384x384.png",\n' +
+      '      "sizes": "384x384",\n' +
+      '      "type": "image/png"\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "src": "/icons/icon-512x512.png",\n' +
+      '      "sizes": "512x512",\n' +
+      '      "type": "image/png"\n' +
+      "    }\n" +
+      "  ]\n" +
+      "}\n" +
+      "```\n\n" +
+      "2. **Link Manifest in Document:**\n" +
+      "```typescript\n" +
+      "// pages/_document.tsx\n" +
+      "import { Html, Head, Main, NextScript } from 'next/document';\n" +
+      "\n" +
+      "export default function Document() {\n" +
+      "  return (\n" +
+      "    <Html lang='en'>\n" +
+      "      <Head>\n" +
+      "        <link rel='manifest' href='/manifest.json' />\n" +
+      "        <meta name='theme-color' content='#000000' />\n" +
+      "        <meta name='apple-mobile-web-app-capable' content='yes' />\n" +
+      "        <meta name='apple-mobile-web-app-status-bar-style' content='default' />\n" +
+      "        <meta name='apple-mobile-web-app-title' content='Your App' />\n" +
+      "        <link rel='apple-touch-icon' href='/icons/icon-192x192.png' />\n" +
+      "      </Head>\n" +
+      "      <body>\n" +
+      "        <Main />\n" +
+      "        <NextScript />\n" +
+      "      </body>\n" +
+      "    </Html>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Offline Support:**\n\n" +
+      "1. **Custom Service Worker:**\n" +
+      "```typescript\n" +
+      "// public/sw.js\n" +
+      "const CACHE_NAME = 'app-cache-v1';\n" +
+      "const urlsToCache = [\n" +
+      "  '/',\n" +
+      "  '/static/js/bundle.js',\n" +
+      "  '/static/css/main.css',\n" +
+      "  '/manifest.json'\n" +
+      "];\n" +
+      "\n" +
+      "self.addEventListener('install', (event) => {\n" +
+      "  event.waitUntil(\n" +
+      "    caches.open(CACHE_NAME)\n" +
+      "      .then((cache) => cache.addAll(urlsToCache))\n" +
+      "  );\n" +
+      "});\n" +
+      "\n" +
+      "self.addEventListener('fetch', (event) => {\n" +
+      "  event.respondWith(\n" +
+      "    caches.match(event.request)\n" +
+      "      .then((response) => {\n" +
+      "        if (response) {\n" +
+      "          return response;\n" +
+      "        }\n" +
+      "        return fetch(event.request);\n" +
+      "      })\n" +
+      "  );\n" +
+      "});\n" +
+      "```\n\n" +
+      "2. **Offline Page:**\n" +
+      "```typescript\n" +
+      "// pages/offline.tsx\n" +
+      "import Head from 'next/head';\n" +
+      "\n" +
+      "export default function Offline() {\n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <Head>\n" +
+      "        <title>Offline - Your App</title>\n" +
+      "      </Head>\n" +
+      "      <div className='offline-page'>\n" +
+      "        <h1>You're offline</h1>\n" +
+      "        <p>Please check your internet connection and try again.</p>\n" +
+      "        <button onClick={() => window.location.reload()}>\n" +
+      "          Retry\n" +
+      "        </button>\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**PWA Features:**\n\n" +
+      "1. **Install Prompt:**\n" +
+      "```typescript\n" +
+      "// components/InstallPrompt.tsx\n" +
+      "import { useState, useEffect } from 'react';\n" +
+      "\n" +
+      "export default function InstallPrompt() {\n" +
+      "  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);\n" +
+      "  const [showInstallPrompt, setShowInstallPrompt] = useState(false);\n" +
+      "\n" +
+      "  useEffect(() => {\n" +
+      "    const handler = (e: Event) => {\n" +
+      "      e.preventDefault();\n" +
+      "      setDeferredPrompt(e);\n" +
+      "      setShowInstallPrompt(true);\n" +
+      "    };\n" +
+      "\n" +
+      "    window.addEventListener('beforeinstallprompt', handler);\n" +
+      "\n" +
+      "    return () => {\n" +
+      "      window.removeEventListener('beforeinstallprompt', handler);\n" +
+      "    };\n" +
+      "  }, []);\n" +
+      "\n" +
+      "  const handleInstall = async () => {\n" +
+      "    if (deferredPrompt) {\n" +
+      "      deferredPrompt.prompt();\n" +
+      "      const { outcome } = await deferredPrompt.userChoice;\n" +
+      "      console.log(`User response to the install prompt: ${outcome}`);\n" +
+      "      setDeferredPrompt(null);\n" +
+      "      setShowInstallPrompt(false);\n" +
+      "    }\n" +
+      "  };\n" +
+      "\n" +
+      "  if (!showInstallPrompt) return null;\n" +
+      "\n" +
+      "  return (\n" +
+      "    <div className='install-prompt'>\n" +
+      "      <p>Install our app for a better experience!</p>\n" +
+      "      <button onClick={handleInstall}>Install</button>\n" +
+      "      <button onClick={() => setShowInstallPrompt(false)}>Not now</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**PWA Best Practices:**\n" +
+      "- Provide meaningful offline content\n" +
+      "- Use appropriate cache strategies\n" +
+      "- Implement proper error handling\n" +
+      "- Test on various devices and browsers\n" +
+      "- Monitor PWA metrics and user engagement\n" +
+      "- Keep service worker updated\n" +
+      "- Use HTTPS in production\n" +
+      "- Implement proper app icons\n" +
+      "- Consider app store distribution\n" +
+      "- Monitor Core Web Vitals for PWA compliance",
+    category: "PWA",
+    difficulty: "intermediate",
+    tags: ["pwa", "service-worker", "offline", "manifest", "progressive-web-app"],
+  },
 ];
 
 export default NEXTJS_ENHANCED_QUESTIONS;

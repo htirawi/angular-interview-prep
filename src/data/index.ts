@@ -35,7 +35,7 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "nextjs",
     name: "Next.js",
-    count: 10, // Updated count
+    count: 19, // Updated count after adding 9 comprehensive questions
     icon: "nextjs",
   },
   {
