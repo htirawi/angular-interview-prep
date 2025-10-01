@@ -24,7 +24,7 @@ export class QuestionService {
 
     // Filter by practice mode
     if (filters.mode === "bookmarked" && filters.bookmarks) {
-      filtered = filtered.filter((q) => filters.bookmarks!.has(q.id));
+      filtered = filtered.filter((q) => (filters.bookmarks || new Set()).has(q.id));
     }
 
     // Filter by search query

@@ -189,7 +189,7 @@ export class AuthManager {
   }
 
   // Mock API methods - replace with actual API calls
-  private async mockAuthAPI(email: string, password: string): Promise<any> {
+  private async mockAuthAPI(email: string, password: string): Promise<unknown> {
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -223,7 +223,7 @@ export class AuthManager {
     };
   }
 
-  private async mockRefreshAPI(refreshToken: string): Promise<any> {
+  private async mockRefreshAPI(_refreshToken: string): Promise<unknown> {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     return {

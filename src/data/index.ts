@@ -31,7 +31,7 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "angular",
     name: "Angular",
-    count: 217, // Updated count after adding 5 new Angular questions (CSS host property, routing, standalone components, signals)
+    count: 227, // Updated count after adding 10 new Angular 16-19 questions
     icon: "angular",
   },
   {

@@ -3,7 +3,7 @@
  * Provides abstraction layer for question data operations
  */
 
-import type { Question, QA } from "../types";
+import type { QA } from "../types";
 import type { FrameworkId } from "../types/framework";
 
 export interface QuestionRepository {
@@ -20,7 +20,7 @@ export class LocalQuestionRepository implements QuestionRepository {
 
   async getAll(framework: FrameworkId): Promise<QA[]> {
     if (this.cache.has(framework)) {
-      return this.cache.get(framework)!;
+      return this.cache.get(framework) || [];
     }
 
     try {

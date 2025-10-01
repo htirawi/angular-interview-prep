@@ -31,6 +31,16 @@ export interface UserAction {
   metadata?: Record<string, unknown>;
 }
 
+interface MemoryInfo {
+  usedJSHeapSize: number;
+  totalJSHeapSize: number;
+  jsHeapSizeLimit: number;
+}
+
+interface PerformanceWithMemory extends Performance {
+  memory?: MemoryInfo;
+}
+
 export class MonitoringService {
   private errors: ErrorInfo[] = [];
   private metrics: PerformanceMetric[] = [];
@@ -82,7 +92,7 @@ export class MonitoringService {
 
     // Log to console in development
     if (process.env.NODE_ENV === "development") {
-      console.log("Performance Metric:", metric);
+      console.warn("Performance Metric:", metric);
     }
 
     // Send to external service in production
@@ -107,7 +117,7 @@ export class MonitoringService {
 
     // Log to console in development
     if (process.env.NODE_ENV === "development") {
-      console.log("User Action:", userAction);
+      console.warn("User Action:", userAction);
     }
 
     // Send to external service in production
@@ -134,10 +144,15 @@ export class MonitoringService {
       // Track First Input Delay (FID)
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        entries.forEach((entry: any) => {
-          this.trackMetric("fid", entry.processingStart - entry.startTime, "ms", {
-            eventType: entry.name,
-          });
+        entries.forEach((entry: PerformanceEntry) => {
+          this.trackMetric(
+            "fid",
+            (entry as PerformanceEventTiming).processingStart - entry.startTime,
+            "ms",
+            {
+              eventType: entry.name,
+            }
+          );
         });
       });
       fidObserver.observe({ entryTypes: ["first-input"] });
@@ -146,9 +161,10 @@ export class MonitoringService {
       let clsValue = 0;
       const clsObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        entries.forEach((entry: any) => {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value;
+        entries.forEach((entry: PerformanceEntry) => {
+          const layoutShiftEntry = entry as LayoutShift;
+          if (!layoutShiftEntry.hadRecentInput) {
+            clsValue += layoutShiftEntry.value;
           }
         });
         this.trackMetric("cls", clsValue, "score");
@@ -181,7 +197,7 @@ export class MonitoringService {
    */
   trackMemoryUsage(): void {
     if ("memory" in performance) {
-      const memory = (performance as any).memory;
+      const memory = (performance as PerformanceWithMemory).memory;
       this.trackMetric("memory_used", memory.usedJSHeapSize, "bytes");
       this.trackMetric("memory_total", memory.totalJSHeapSize, "bytes");
       this.trackMetric("memory_limit", memory.jsHeapSizeLimit, "bytes");
@@ -346,11 +362,11 @@ export class MonitoringService {
     }
   }
 
-  private async sendToExternalService(type: string, data: any): Promise<void> {
+  private async sendToExternalService(type: string, data: unknown): Promise<void> {
     try {
       // In a real application, you would send this to your monitoring service
       // For example: Sentry, LogRocket, DataDog, etc.
-      console.log(`Sending ${type} to external service:`, data);
+      console.warn(`Sending ${type} to external service:`, data);
 
       // Example implementation:
       // await fetch('/api/monitoring', {

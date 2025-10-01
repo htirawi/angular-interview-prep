@@ -112,7 +112,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
     const elements: JSX.Element[] = [];
     let codeBlockIndex = 0;
     let inCodeBlock = false;
-    let currentCodeBlock: string[] = [];
+    const currentCodeBlock: string[] = [];
     let codeLanguage = "";
     let inTable = false;
     let tableRows: string[] = [];

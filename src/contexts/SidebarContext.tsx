@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext } from "react";
 import type { SidebarContextValue, SidebarProviderProps } from "../types";
 
 const SidebarContext = createContext<SidebarContextValue | null>(null);

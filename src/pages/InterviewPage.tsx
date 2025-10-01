@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import QuestionCard from "../components/QuestionCard";
 import Sidebar from "../components/Sidebar";
 import { QUESTION_SETS } from "../data";
