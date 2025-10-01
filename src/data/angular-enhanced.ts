@@ -9685,89 +9685,40 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     tags: ["signals", "optimistic-updates", "ux", "offline"],
   },
   {
-    id: 109,
-    question: "How do you implement Form State Management with Signals?",
+    id: 110,
+    question: "How do you implement Caching and State Persistence with Signals?",
     answer:
-      (`**Signal-based Form Management:**\n\n` +
-        `\`\`\`typescript\n` +
-        `@Component({\n` +
-        `  selector: 'app-user-form',\n` +
-        `  standalone: true,\n` +
-        `  template: \`\n` +
-        `    <form (ngSubmit)="submit()">\n` +
-        `      <input \n` +
-        `        [value]="formData().name" \n` +
-        `        (input)="updateField('name', $any($event.target).value)" />\n` +
-        `      @if (errors().name) {\n` +
-        `        <span class="error">{{ errors().name }}</span>\n` +
-        `      }\n\n` +
-        `      <input \n` +
-        `        type="email"\n` +
-        `        [value]="formData().email" \n` +
-        `        (input)="updateField('email', $any($event.target).value)" />\n` +
-        `      @if (errors().email) {\n` +
-        `        <span class="error">{{ errors().email }}</span>\n` +
-        `      }\n\n${9536}`) |
-      `      <button [disabled]="!isValid() || saving()">Submit</button>\n${9537}` |
-      `    </form>\n${9538}` |
-      `  \`\n${9539}` |
-      `})\n${9540}` |
-      `export class UserFormComponent {\n${9541}` |
-      `  formData = signal({ name: '', email: '', age: 0 });\n${9542}` |
-      `  errors = signal<Record<string, string>>({});\n${9543}` |
-      `  saving = signal(false);\n${9544}` |
-      `  touched = signal<Set<string>>(new Set());\n\n${9545}` |
-      `  // Computed validation\n${9546}` |
-      `  isValid = computed(() => {\n${9547}` |
-      `    const data = this.formData();\n${9548}` |
-      `    return data.name.length >= 3 && this.isEmailValid(data.email);\n${9549}` |
-      `  });\n\n${9550}` |
-      `  isDirty = computed(() => {\n${9551}` |
-      `    const data = this.formData();\n${9552}` |
-      `    return data.name !== '' || data.email !== '';\n${9553}` |
-      `  });\n\n${9554}` |
-      `  updateField(field: string, value: any) {\n${9555}` |
-      `    this.formData.update(data => ({ ...data, [field]: value }));\n${9556}` |
-      `    this.touched.update(fields => new Set(fields).add(field));\n${9557}` |
-      `    this.validateField(field, value);\n${9558}` |
-      `  }\n\n${9559}` |
-      `  validateField(field: string, value: any) {\n${9560}` |
-      `    const errors = { ...this.errors() };\n\n${9561}` |
-      `    if (field === 'name' && value.length < 3) {\n${9562}` |
-      `      errors.name = 'Name must be at least 3 characters';\n${9563}` |
-      `    } else if (field === 'name') {\n${9564}` |
-      `      delete errors.name;\n${9565}` |
-      `    }\n\n${9566}` |
-      `    if (field === 'email' && !this.isEmailValid(value)) {\n${9567}` |
-      `      errors.email = 'Invalid email';\n${9568}` |
-      `    } else if (field === 'email') {\n${9569}` |
-      `      delete errors.email;\n${9570}` |
-      `    }\n\n${9571}` |
-      `    this.errors.set(errors);\n${9572}` |
-      `  }\n\n${9573}` |
-      `  isEmailValid(email: string) {\n${9574}` |
-      `    return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);\n${9575}` |
-      `  }\n\n${9576}` |
-      `  submit() {\n${9577}` |
-      `    if (!this.isValid()) return;\n\n${9578}` |
-      `    this.saving.set(true);\n\n${9579}` |
-      `    this.http.post('/api/users', this.formData())\n${9580}` |
-      `      .pipe(finalize(() => this.saving.set(false)))\n${9581}` |
-      `      .subscribe({\n${9582}` |
-      `        next: () => this.resetForm(),\n${9583}` |
-      `        error: (err) => this.errors.set(err.error.errors || {})\n${9584}` |
-      `      });\n${9585}` |
-      `  }\n\n${9586}` |
-      `  resetForm() {\n${9587}` |
-      `    this.formData.set({ name: '', email: '', age: 0 });\n${9588}` |
-      `    this.errors.set({});\n${9589}` |
-      `    this.touched.set(new Set());\n${9590}` |
-      `  }\n${9591}` |
-      `}\n${9592}` |
+      "**LocalStorage Sync with Signals:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class CachedDataService {\n" +
+      "  private dataState = signal<User[]>([]);\n" +
+      "  private cacheKey = 'users-cache';\n\n" +
+      "  data = this.dataState.asReadonly();\n\n" +
+      "  constructor() {\n" +
+      "    // Load from cache\n" +
+      "    this.loadFromCache();\n\n" +
+      "    // Auto-save on changes\n" +
+      "    effect(() => {\n" +
+      "      const users = this.data();\n" +
+      "      localStorage.setItem(this.cacheKey, JSON.stringify(users));\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  private loadFromCache() {\n" +
+      "    const cached = localStorage.getItem(this.cacheKey);\n" +
+      "    if (cached) {\n" +
+      "      this.dataState.set(JSON.parse(cached));\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  updateData(users: User[]) {\n" +
+      "    this.dataState.set(users);\n" +
+      "    // Auto-saves via effect\n" +
+      "  }\n" +
+      "}\n" +
       "```",
-    category: "Signals Forms",
-    difficulty: "hard",
-    tags: ["signals", "forms", "validation", "state-management"],
+    category: "Signals Caching",
+    difficulty: "intermediate",
+    tags: ["signals", "caching", "localstorage", "persistence"],
   },
   {
     id: 111,
