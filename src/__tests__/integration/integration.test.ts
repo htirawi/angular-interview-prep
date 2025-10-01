@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { renderWithProviders, createMockQuestion, setupTestEnvironment } from "./utils/testUtils";
+import { createMockQuestion, setupTestEnvironment } from "./utils/testUtils";
 import { questionRepository } from "../repositories/QuestionRepository";
 import { authManager } from "../security/AuthManager";
 import { commandHistory } from "../commands/CommandPattern";
@@ -109,12 +109,12 @@ describe("Integration Tests", () => {
         isActive: true,
       };
 
-      const mockToken = {
-        accessToken: "test_token",
-        refreshToken: "refresh_token",
-        expiresAt: new Date(Date.now() + 3600000),
-        tokenType: "Bearer" as const,
-      };
+       const _mockToken = {
+         accessToken: "test_token",
+         refreshToken: "refresh_token",
+         expiresAt: new Date(Date.now() + 3600000),
+         tokenType: "Bearer" as const,
+       };
 
       // Mock successful login
       vi.spyOn(authManager, "login").mockResolvedValue(undefined);
@@ -149,12 +149,12 @@ describe("Integration Tests", () => {
     });
 
     it("should handle token expiration and refresh", async () => {
-      const expiredToken = {
-        accessToken: "expired_token",
-        refreshToken: "refresh_token",
-        expiresAt: new Date(Date.now() - 3600000), // Expired 1 hour ago
-        tokenType: "Bearer" as const,
-      };
+       const _expiredToken = {
+         accessToken: "expired_token",
+         refreshToken: "refresh_token",
+         expiresAt: new Date(Date.now() - 3600000), // Expired 1 hour ago
+         tokenType: "Bearer" as const,
+       };
 
       vi.spyOn(authManager, "isTokenExpired").mockReturnValue(true);
       vi.spyOn(authManager, "refreshToken").mockResolvedValue(true);
@@ -166,11 +166,11 @@ describe("Integration Tests", () => {
 
   describe("Command Pattern Integration", () => {
     it("should handle bookmark command execution and undo", async () => {
-      const mockBookmarkService = {
-        toggleBookmark: vi.fn(),
-        addBookmark: vi.fn(),
-        removeBookmark: vi.fn(),
-      };
+       const _mockBookmarkService = {
+         toggleBookmark: vi.fn(),
+         addBookmark: vi.fn(),
+         removeBookmark: vi.fn(),
+       };
 
       const bookmarkCommand = {
         execute: vi.fn().mockResolvedValue(undefined),

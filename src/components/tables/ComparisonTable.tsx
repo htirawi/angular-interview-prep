@@ -10,7 +10,7 @@ import type { ComparisonTableProps } from "../../types";
  * - Professional typography and spacing
  * - Dark mode support
  */
-export function ComparisonTable({ headers, rows }: ComparisonTableProps) {
+export function ComparisonTable({ rows }: ComparisonTableProps) {
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
 
   return (

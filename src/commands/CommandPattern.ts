@@ -90,7 +90,7 @@ export class BookmarkQuestionCommand implements Command {
   constructor(
     private questionId: number,
     private framework: string,
-    private bookmarkService: BookmarkService,
+    private bookmarkService: { toggleBookmark: (id: number, framework: string) => Promise<void> },
     private wasBookmarked: boolean
   ) {}
 
@@ -100,9 +100,9 @@ export class BookmarkQuestionCommand implements Command {
 
   async undo(): Promise<void> {
     if (this.wasBookmarked) {
-      await this.bookmarkService.addBookmark(this.questionId, this.framework);
+      await this.bookmarkService.toggleBookmark(this.questionId, this.framework);
     } else {
-      await this.bookmarkService.removeBookmark(this.questionId, this.framework);
+      await this.bookmarkService.toggleBookmark(this.questionId, this.framework);
     }
   }
 
@@ -119,7 +119,7 @@ export class CompleteQuestionCommand implements Command {
   constructor(
     private questionId: number,
     private framework: string,
-    private progressService: ProgressService,
+    private progressService: { markCompleted: (id: number, framework: string) => Promise<void> },
     private wasCompleted: boolean
   ) {}
 
@@ -131,7 +131,7 @@ export class CompleteQuestionCommand implements Command {
     if (this.wasCompleted) {
       await this.progressService.markCompleted(this.questionId, this.framework);
     } else {
-      await this.progressService.markIncomplete(this.questionId, this.framework);
+      await this.progressService.markCompleted(this.questionId, this.framework);
     }
   }
 

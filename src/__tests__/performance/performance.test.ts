@@ -5,11 +5,9 @@
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
-  renderWithProviders,
   createMockQuestion,
   setupTestEnvironment,
   measurePerformance,
-  mockFetch,
 } from "../utils/testUtils";
 import { InputSanitizer, rateLimiter } from "../../security/SecurityConfig";
 import { questionRepository } from "../../repositories/QuestionRepository";
@@ -214,49 +212,49 @@ describe("Security Tests", () => {
   });
 
   describe("Content Security Policy", () => {
-    it("should have proper CSP headers configured", () => {
-      const { securityHeaders } = require("../../security/SecurityConfig");
+     it("should have proper CSP headers configured", async () => {
+       const { securityHeaders } = await import("../../security/SecurityConfig");
 
-      expect(securityHeaders["Content-Security-Policy"]).toBeDefined();
-      expect(securityHeaders["X-Frame-Options"]).toBe("DENY");
-      expect(securityHeaders["X-Content-Type-Options"]).toBe("nosniff");
-      expect(securityHeaders["X-XSS-Protection"]).toBe("1; mode=block");
-      expect(securityHeaders["Referrer-Policy"]).toBe("strict-origin-when-cross-origin");
-    });
+       expect(securityHeaders["Content-Security-Policy"]).toBeDefined();
+       expect(securityHeaders["X-Frame-Options"]).toBe("DENY");
+       expect(securityHeaders["X-Content-Type-Options"]).toBe("nosniff");
+       expect(securityHeaders["X-XSS-Protection"]).toBe("1; mode=block");
+       expect(securityHeaders["Referrer-Policy"]).toBe("strict-origin-when-cross-origin");
+     });
 
-    it("should prevent inline script execution", () => {
-      const { cspConfig } = require("../../security/SecurityConfig");
+     it("should prevent inline script execution", async () => {
+       const { cspConfig } = await import("../../security/SecurityConfig");
 
-      // In production, unsafe-inline should be removed
-      const isProduction = process.env.NODE_ENV === "production";
-      if (isProduction) {
-        expect(cspConfig["script-src"]).not.toContain("'unsafe-inline'");
-        expect(cspConfig["script-src"]).not.toContain("'unsafe-eval'");
-      }
-    });
+       // In production, unsafe-inline should be removed
+       const isProduction = process.env.NODE_ENV === "production";
+       if (isProduction) {
+         expect(cspConfig["script-src"]).not.toContain("'unsafe-inline'");
+         expect(cspConfig["script-src"]).not.toContain("'unsafe-eval'");
+       }
+     });
   });
 
   describe("Authentication Security", () => {
-    it("should handle token expiration securely", async () => {
-      const { authManager } = require("../../security/AuthManager");
+     it("should handle token expiration securely", async () => {
+       const { authManager } = await import("../../security/AuthManager");
 
-      const expiredToken = {
-        accessToken: "expired_token",
-        refreshToken: "refresh_token",
-        expiresAt: new Date(Date.now() - 3600000), // Expired
-        tokenType: "Bearer",
-      };
+       const _expiredToken = {
+         accessToken: "expired_token",
+         refreshToken: "refresh_token",
+         expiresAt: new Date(Date.now() - 3600000), // Expired
+         tokenType: "Bearer",
+       };
 
-      vi.spyOn(authManager, "isTokenExpired").mockReturnValue(true);
-      vi.spyOn(authManager, "logout").mockResolvedValue(undefined);
+       vi.spyOn(authManager, "isTokenExpired").mockReturnValue(true);
+       vi.spyOn(authManager, "logout").mockResolvedValue(undefined);
 
-      await authManager.checkAuthStatus();
+       await authManager.checkAuthStatus();
 
-      expect(authManager.logout).toHaveBeenCalled();
-    });
+       expect(authManager.logout).toHaveBeenCalled();
+     });
 
-    it("should validate user permissions correctly", async () => {
-      const { authManager } = require("../../security/AuthManager");
+     it("should validate user permissions correctly", async () => {
+       const { authManager } = await import("../../security/AuthManager");
 
       const regularUser = {
         id: "1",
@@ -280,9 +278,9 @@ describe("Security Tests", () => {
   });
 
   describe("Data Validation", () => {
-    it("should validate question data structure", () => {
-      const validQuestion = createMockQuestion();
-      const invalidQuestion = { id: "invalid", question: null };
+     it("should validate question data structure", () => {
+       const validQuestion = createMockQuestion();
+       const _invalidQuestion = { id: "invalid", question: null };
 
       // Valid question should have all required fields
       expect(validQuestion.id).toBeDefined();
