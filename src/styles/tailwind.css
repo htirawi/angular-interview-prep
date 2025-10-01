@@ -1,4 +1,4 @@
-@import './animations.css';
+@import "./animations.css";
 
 @tailwind base;
 @tailwind components;
@@ -24,7 +24,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+  @apply rounded-full bg-gray-300 dark:bg-gray-700;
 }
 
 ::-webkit-scrollbar-thumb:hover {

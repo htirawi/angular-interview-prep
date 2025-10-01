@@ -19,8 +19,7 @@ class Analytics {
   track(event: AnalyticsEvent) {
     if (this.isDevelopment) {
       // Development mode - log to console for debugging
-      // eslint-disable-next-line no-console
-      console.log("📊 Analytics:", event);
+      console.warn("📊 Analytics:", event);
       return;
     }
 

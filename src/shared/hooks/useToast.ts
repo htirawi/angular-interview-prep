@@ -35,4 +35,3 @@ export function useToast() {
     warning,
   };
 }
-

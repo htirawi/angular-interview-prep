@@ -37,7 +37,7 @@ export function importProgress(file: File): Promise<ProgressData> {
     reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target?.result as string) as ProgressData;
-        
+
         // Validate structure
         if (!Array.isArray(data.completed) || !Array.isArray(data.bookmarks)) {
           throw new Error("Invalid progress file format");
@@ -53,4 +53,3 @@ export function importProgress(file: File): Promise<ProgressData> {
     reader.readAsText(file);
   });
 }
-

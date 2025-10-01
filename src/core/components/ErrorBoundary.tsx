@@ -4,7 +4,7 @@ import type { ErrorBoundaryProps, ErrorBoundaryState } from "../../types";
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: undefined };
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
@@ -34,7 +34,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             </p>
             <button
               onClick={() => {
-                this.setState({ hasError: false, error: null });
+                this.setState({ hasError: false, error: undefined });
                 window.location.reload();
               }}
               className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
