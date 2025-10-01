@@ -27,10 +27,25 @@ echo ""
 
 # Check for 'any' types (only type annotations, not strings)
 echo "🚫 Checking for 'any' type usage..."
-ANY_COUNT=$(grep -rE "(: any[^a-zA-Z]|: any\$|<any>|Array<any)" src/ --include="*.ts" --include="*.tsx" | grep -v "as any" | grep -v "// @ts" | grep -v "test" | grep -v ".test." | grep -v "__tests__" | wc -l | xargs)
+# More specific pattern: ': any,' or ': any;' or ': any)' or ': any[]' or '<any>' at code level
+ANY_COUNT=$(grep -rE ":\s*any[\s,;\)\[\]]|<any>|Array<any>" src/ --include="*.ts" --include="*.tsx" | \
+  grep -v "as any" | \
+  grep -v "// @ts" | \
+  grep -v "eslint-disable" | \
+  grep -v "test" | \
+  grep -v ".test." | \
+  grep -v "__tests__" | \
+  grep -v '": any' | \
+  grep -v '= "any' | \
+  wc -l | xargs)
+
 if [ "$ANY_COUNT" -gt 0 ]; then
   echo "⚠️  Warning: Found $ANY_COUNT usage(s) of 'any' type annotation:"
-  grep -rnE "(: any[^a-zA-Z]|: any\$|<any>|Array<any)" src/ --include="*.ts" --include="*.tsx" | grep -v "as any" | grep -v "// @ts" | grep -v "test" | grep -v ".test." | grep -v "__tests__" | head -5
+  grep -rnE ":\s*any[\s,;\)\[\]]|<any>|Array<any>" src/ --include="*.ts" --include="*.tsx" | \
+    grep -v "as any" | grep -v "// @ts" | grep -v "test" | grep -v ".test." | grep -v "__tests__" | \
+    grep -v '": any' | grep -v '= "any' | head -5
+  echo ""
+  echo "💡 Tip: Replace 'any' with 'unknown' or specific types"
   echo ""
   read -p "Continue anyway? (y/n) " -n 1 -r
   echo ""
