@@ -1,16 +1,25 @@
-# 🎯 Angular Senior Interview Prep
+# 🎯 Interview Prep Platform
 
-> A professional, production-ready interview preparation platform with 100 essential Angular questions for senior-level positions.
+> **400+ Senior-Level Questions** for Angular • React • Next.js • Redux<br/>
+> Professional study platform with routing, progress tracking, PWA support & enterprise architecture
 
-[![CI/CD](https://github.com/htirawi/angular-interview-prep/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/htirawi/angular-interview-prep/actions)
-[![Tests](https://img.shields.io/badge/tests-49%20passing-brightgreen.svg)](https://github.com/htirawi/angular-interview-prep)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org/)
+[![CI](https://github.com/htirawi/angular-interview-prep/workflows/CI/badge.svg)](https://github.com/htirawi/angular-interview-prep/actions)
+[![Tests](https://img.shields.io/badge/tests-58%20passing-brightgreen.svg)](https://github.com/htirawi/angular-interview-prep)
+[![TypeScript](https://img.shields.io/badge/TypeScript-89.7%25-blue.svg)](https://www.typescriptlang.org/)
+[![Coverage](https://img.shields.io/badge/coverage-70%25+-green.svg)](https://github.com/htirawi/angular-interview-prep)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.4-646cff.svg)](https://vitejs.dev/)
+[![Bundle](https://img.shields.io/badge/bundle-375KB-orange.svg)](https://github.com/htirawi/angular-interview-prep)
+[![PWA](https://img.shields.io/badge/PWA-enabled-purple.svg)](https://github.com/htirawi/angular-interview-prep)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](.github/CONTRIBUTING.md)
 
 [**Live Demo →**](https://angular-interview-prep.vercel.app) | [**Docs →**](docs/) | [**Architecture →**](docs/ARCHITECTURE.md) | [**Contributing →**](.github/CONTRIBUTING.md)
+
+---
+
+## 🌟 What Makes This Special
+
+**400+ Questions** across 4 frameworks • **Landing Page** with beautiful UI • **Per-Framework Progress** tracking • **Clean URLs** (`/angular`, `/react`, `/nextjs`, `/redux`) • **Enterprise Architecture** (types/, pages/, routing) • **58 Tests** (100% passing) • **CI/CD Pipeline** (automated) • **PWA Ready** (offline support)
 
 ---
 
