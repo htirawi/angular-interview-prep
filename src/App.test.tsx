@@ -21,7 +21,7 @@ describe("App routing", () => {
     render(<App />);
     // Check that framework selection cards exist
     const angularCard = screen.getByRole("button", {
-      name: /Angular.*100.*Senior-Level Questions/i,
+      name: /Angular.*64.*Senior-Level Questions/i,
     });
     expect(angularCard).toBeInTheDocument();
   });
