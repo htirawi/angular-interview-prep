@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output/
+
+# Production
+dist/
+build/
+*.tsbuildinfo
+
+# Misc
+.DS_Store
+*.pem
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Documentation (keep README.md only)
+SUMMARY.md
+FEATURES.md
+UPGRADE-GUIDE.md
+DEPLOYMENT.md
+README-ENHANCED.md
+
+# Backups and enhanced versions (keep -enhanced files, exclude -original)
+*-original.tsx
+*-original.ts
+
+# Optional: Local environment
+.vercel
+.netlify
+
