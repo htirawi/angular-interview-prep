@@ -2829,7 +2829,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "    }\n\n" +
       "    // Attach to DOM\n" +
       "    this.appRef.attachView(componentRef.hostView);\n" +
-      "    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0];\n" +
+      "    const domElem = (componentRef.hostView as EmbeddedViewRef<unknown>).rootNodes[0];\n" +
       "    document.body.appendChild(domElem);\n\n" +
       "    return componentRef;\n" +
       "  }\n\n" +
@@ -4239,7 +4239,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "import { mergeMap } from 'rxjs/operators';\n\n" +
       "@Injectable({ providedIn: 'root' })\n" +
       "export class SelectivePreloadingStrategy implements PreloadingStrategy {\n" +
-      "  preload(route: Route, load: () => Observable<any>): Observable<any> {\n" +
+      "  preload(route: Route, load: () => Observable<unknown>): Observable<unknown> {\n" +
       "    // Preload if route data has preload: true\n" +
       "    if (route.data && route.data['preload']) {\n" +
       "      console.log('Preloading:', route.path);\n" +
@@ -4270,7 +4270,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "```typescript\n" +
       "@Injectable({ providedIn: 'root' })\n" +
       "export class NetworkAwarePreloadingStrategy implements PreloadingStrategy {\n" +
-      "  preload(route: Route, load: () => Observable<any>): Observable<any> {\n" +
+      "  preload(route: Route, load: () => Observable<unknown>): Observable<unknown> {\n" +
       "    const connection = (navigator as any).connection;\n" +
       "    \n" +
       "    // Only preload on fast connections\n" +
@@ -4286,7 +4286,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "```typescript\n" +
       "@Injectable({ providedIn: 'root' })\n" +
       "export class DelayedPreloadingStrategy implements PreloadingStrategy {\n" +
-      "  preload(route: Route, load: () => Observable<any>): Observable<any> {\n" +
+      "  preload(route: Route, load: () => Observable<unknown>): Observable<unknown> {\n" +
       "    const delay = route.data?.['preloadDelay'] || 5000;\n" +
       "    \n" +
       "    return timer(delay).pipe(\n" +
@@ -5819,7 +5819,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {\n" +
       "    const original = descriptor.value;\n" +
       "    \n" +
-      "    descriptor.value = function(...args: any[]) {\n" +
+      "    descriptor.value = function(...args: unknown[]) {\n" +
       "      console.log(`Calling ${propertyKey} with`, args);\n" +
       "      const result = original.apply(this, args);\n" +
       "      console.log(`Result:`, result);\n" +
@@ -6110,7 +6110,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "@Injectable({ providedIn: 'root' })\n" +
       "export class WebSocketService {\n" +
       "  private socket$: WebSocketSubject<unknown>;\n\n" +
-      "  connect(): Observable<any> {\n" +
+      "  connect(): Observable<unknown> {\n" +
       "    if (!this.socket$ || this.socket$.closed) {\n" +
       "      this.socket$ = webSocket({\n" +
       "        url: 'ws://localhost:8080',\n" +
@@ -6143,7 +6143,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "```typescript\n" +
       "@Injectable({ providedIn: 'root' })\n" +
       "export class SSEService {\n" +
-      "  getServerEvents(url: string): Observable<any> {\n" +
+      "  getServerEvents(url: string): Observable<unknown> {\n" +
       "    return new Observable(observer => {\n" +
       "      const eventSource = new EventSource(url);\n\n" +
       "      eventSource.onmessage = (event) => {\n" +
@@ -6168,7 +6168,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "```typescript\n" +
       "@Injectable({ providedIn: 'root' })\n" +
       "export class PollingService {\n" +
-      "  poll(url: string, interval: number = 5000): Observable<any> {\n" +
+      "  poll(url: string, interval: number = 5000): Observable<unknown> {\n" +
       "    return timer(0, interval).pipe(\n" +
       "      switchMap(() => this.http.get(url)),\n" +
       "      retry({ delay: 1000 })\n" +
@@ -8200,7 +8200,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "import { Observable, of, throwError } from 'rxjs';\n" +
       "import { UsersEffects } from './users.effects';\n\n" +
       "describe('UsersEffects', () => {\n" +
-      "  let actions$: Observable<any>;\n" +
+      "  let actions$: Observable<unknown>;\n" +
       "  let effects: UsersEffects;\n" +
       "  let httpMock: jasmine.SpyObj<HttpClient>;\n\n" +
       "  beforeEach(() => {\n" +
