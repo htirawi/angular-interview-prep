@@ -222,7 +222,7 @@ export default function Sidebar({
       {isOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/50 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
+          onClick={onToggle}
           aria-hidden="true"
         />
       )}

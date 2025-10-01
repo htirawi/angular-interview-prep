@@ -217,7 +217,7 @@ export default function QuestionCard({
               <QuestionNotes
                 questionId={item.id}
                 initialNote={note}
-                onSave={onSaveNote}
+                onSave={(_, note) => onSaveNote(note)}
               />
             </div>
           )}
