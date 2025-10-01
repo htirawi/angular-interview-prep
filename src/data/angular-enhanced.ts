@@ -9517,6 +9517,780 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "hard",
     tags: ["signals", "pagination", "data-tables", "ux"],
   },
+  {
+    id: 107,
+    question: "How do you convert between Signals and RxJS? Explain toSignal() and toObservable().",
+    answer:
+      "**toSignal() - Observable to Signal:**\n\n" +
+      "```typescript\n" +
+      "import { toSignal } from '@angular/core/rxjs-interop';\n" +
+      "import { interval, fromEvent } from 'rxjs';\n\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  // Convert HTTP observable\n" +
+      "  users = toSignal(\n" +
+      "    this.http.get<User[]>('/api/users'),\n" +
+      "    { initialValue: [] }\n" +
+      "  );\n\n" +
+      "  // Convert interval\n" +
+      "  timer = toSignal(interval(1000), { initialValue: 0 });\n\n" +
+      "  // Without initial value (can be undefined)\n" +
+      "  data = toSignal(this.dataService.data$);\n" +
+      "  // Type: Signal<Data | undefined>\n\n" +
+      "  // Require initial value\n" +
+      "  safeData = toSignal(\n" +
+      "    this.dataService.data$,\n" +
+      "    { requireSync: true } // Throws if no value emitted synchronously\n" +
+      "  );\n\n" +
+      "  // Manual unsubscribe\n" +
+      "  constructor() {\n" +
+      "    const signal = toSignal(this.observable$);\n" +
+      "    // Auto-unsubscribes when component destroys\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**toObservable() - Signal to Observable:**\n\n" +
+      "```typescript\n" +
+      "import { toObservable } from '@angular/core/rxjs-interop';\n\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  searchQuery = signal('');\n\n" +
+      "  constructor() {\n" +
+      "    // Convert signal to observable for RxJS operators\n" +
+      "    toObservable(this.searchQuery)\n" +
+      "      .pipe(\n" +
+      "        debounceTime(300),\n" +
+      "        distinctUntilChanged(),\n" +
+      "        switchMap(query => this.http.get(`/api/search?q=${query}`))\n" +
+      "      )\n" +
+      "      .subscribe(results => this.results.set(results));\n" +
+      "  }\n\n" +
+      "  results = signal<any[]>([]);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Combining Both:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  userId = signal(1);\n\n" +
+      "  // Signal → Observable → Transform → Signal\n" +
+      "  user = toSignal(\n" +
+      "    toObservable(this.userId).pipe(\n" +
+      "      debounceTime(300),\n" +
+      "      switchMap(id => this.http.get<User>(`/api/users/${id}`))\n" +
+      "    )\n" +
+      "  );\n\n" +
+      "  // When userId changes, automatically fetches new user\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use toSignal() for observables you want in templates\n" +
+      "- Use toObservable() when you need RxJS operators\n" +
+      "- Always provide initialValue when possible\n" +
+      "- toSignal() auto-unsubscribes on destroy",
+    category: "Signal-RxJS Interop",
+    difficulty: "hard",
+    tags: ["signals", "rxjs", "tosignal", "toobservable", "interop"],
+  },
+  {
+    id: 108,
+    question: "How do you implement Optimistic Updates with Signals?",
+    answer:
+      "**Optimistic Update Pattern:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class OptimisticUserService {\n" +
+      "  private http = inject(HttpClient);\n\n" +
+      "  private usersState = signal<User[]>([]);\n" +
+      "  private errorState = signal<string | null>(null);\n\n" +
+      "  users = this.usersState.asReadonly();\n" +
+      "  error = this.errorState.asReadonly();\n\n" +
+      "  // Optimistic create\n" +
+      "  createUser(user: Partial<User>) {\n" +
+      "    const tempId = Date.now(); // Temporary ID\n" +
+      "    const tempUser: User = { ...user, id: tempId, pending: true } as User;\n\n" +
+      "    // 1. Immediately add to UI (optimistic)\n" +
+      "    this.usersState.update(users => [...users, tempUser]);\n\n" +
+      "    // 2. Save to server\n" +
+      "    this.http.post<User>('/api/users', user)\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          // Rollback on error\n" +
+      "          this.usersState.update(users => users.filter(u => u.id !== tempId));\n" +
+      "          this.errorState.set(error.message);\n" +
+      "          return of(null);\n" +
+      "        })\n" +
+      "      )\n" +
+      "      .subscribe(savedUser => {\n" +
+      "        if (savedUser) {\n" +
+      "          // Replace temp with real user\n" +
+      "          this.usersState.update(users =>\n" +
+      "            users.map(u => u.id === tempId ? savedUser : u)\n" +
+      "          );\n" +
+      "        }\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  // Optimistic update\n" +
+      "  updateUser(id: number, changes: Partial<User>) {\n" +
+      "    // Store original for rollback\n" +
+      "    const original = this.users().find(u => u.id === id);\n" +
+      "    if (!original) return;\n\n" +
+      "    // 1. Immediately update UI\n" +
+      "    this.usersState.update(users =>\n" +
+      "      users.map(u => u.id === id ? { ...u, ...changes } : u)\n" +
+      "    );\n\n" +
+      "    // 2. Save to server\n" +
+      "    this.http.put<User>(`/api/users/${id}`, changes)\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          // Rollback to original\n" +
+      "          this.usersState.update(users =>\n" +
+      "            users.map(u => u.id === id ? original : u)\n" +
+      "          );\n" +
+      "          this.errorState.set('Update failed');\n" +
+      "          return of(null);\n" +
+      "        })\n" +
+      "      )\n" +
+      "      .subscribe(updated => {\n" +
+      "        if (updated) {\n" +
+      "          // Confirm with server data\n" +
+      "          this.usersState.update(users =>\n" +
+      "            users.map(u => u.id === id ? updated : u)\n" +
+      "          );\n" +
+      "        }\n" +
+      "      });\n" +
+      "  }\n\n" +
+      "  // Optimistic delete\n" +
+      "  deleteUser(id: number) {\n" +
+      "    const original = this.users().find(u => u.id === id);\n" +
+      "    if (!original) return;\n\n" +
+      "    // 1. Immediately remove from UI\n" +
+      "    this.usersState.update(users => users.filter(u => u.id !== id));\n\n" +
+      "    // 2. Delete on server\n" +
+      "    this.http.delete(`/api/users/${id}`)\n" +
+      "      .pipe(\n" +
+      "        catchError(error => {\n" +
+      "          // Rollback - add back\n" +
+      "          this.usersState.update(users => [...users, original]);\n" +
+      "          this.errorState.set('Delete failed');\n" +
+      "          return of(null);\n" +
+      "        })\n" +
+      "      )\n" +
+      "      .subscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signals Optimistic Updates",
+    difficulty: "hard",
+    tags: ["signals", "optimistic-updates", "ux", "offline"],
+  },
+  {
+    id: 109,
+    question: "How do you implement Form State Management with Signals?",
+    answer:
+      (`**Signal-based Form Management:**\n\n` +
+        `\`\`\`typescript\n` +
+        `@Component({\n` +
+        `  selector: 'app-user-form',\n` +
+        `  standalone: true,\n` +
+        `  template: \`\n` +
+        `    <form (ngSubmit)="submit()">\n` +
+        `      <input \n` +
+        `        [value]="formData().name" \n` +
+        `        (input)="updateField('name', $any($event.target).value)" />\n` +
+        `      @if (errors().name) {\n` +
+        `        <span class="error">{{ errors().name }}</span>\n` +
+        `      }\n\n` +
+        `      <input \n` +
+        `        type="email"\n` +
+        `        [value]="formData().email" \n` +
+        `        (input)="updateField('email', $any($event.target).value)" />\n` +
+        `      @if (errors().email) {\n` +
+        `        <span class="error">{{ errors().email }}</span>\n` +
+        `      }\n\n${9536}`) |
+      `      <button [disabled]="!isValid() || saving()">Submit</button>\n${9537}` |
+      `    </form>\n${9538}` |
+      `  \`\n${9539}` |
+      `})\n${9540}` |
+      `export class UserFormComponent {\n${9541}` |
+      `  formData = signal({ name: '', email: '', age: 0 });\n${9542}` |
+      `  errors = signal<Record<string, string>>({});\n${9543}` |
+      `  saving = signal(false);\n${9544}` |
+      `  touched = signal<Set<string>>(new Set());\n\n${9545}` |
+      `  // Computed validation\n${9546}` |
+      `  isValid = computed(() => {\n${9547}` |
+      `    const data = this.formData();\n${9548}` |
+      `    return data.name.length >= 3 && this.isEmailValid(data.email);\n${9549}` |
+      `  });\n\n${9550}` |
+      `  isDirty = computed(() => {\n${9551}` |
+      `    const data = this.formData();\n${9552}` |
+      `    return data.name !== '' || data.email !== '';\n${9553}` |
+      `  });\n\n${9554}` |
+      `  updateField(field: string, value: any) {\n${9555}` |
+      `    this.formData.update(data => ({ ...data, [field]: value }));\n${9556}` |
+      `    this.touched.update(fields => new Set(fields).add(field));\n${9557}` |
+      `    this.validateField(field, value);\n${9558}` |
+      `  }\n\n${9559}` |
+      `  validateField(field: string, value: any) {\n${9560}` |
+      `    const errors = { ...this.errors() };\n\n${9561}` |
+      `    if (field === 'name' && value.length < 3) {\n${9562}` |
+      `      errors.name = 'Name must be at least 3 characters';\n${9563}` |
+      `    } else if (field === 'name') {\n${9564}` |
+      `      delete errors.name;\n${9565}` |
+      `    }\n\n${9566}` |
+      `    if (field === 'email' && !this.isEmailValid(value)) {\n${9567}` |
+      `      errors.email = 'Invalid email';\n${9568}` |
+      `    } else if (field === 'email') {\n${9569}` |
+      `      delete errors.email;\n${9570}` |
+      `    }\n\n${9571}` |
+      `    this.errors.set(errors);\n${9572}` |
+      `  }\n\n${9573}` |
+      `  isEmailValid(email: string) {\n${9574}` |
+      `    return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);\n${9575}` |
+      `  }\n\n${9576}` |
+      `  submit() {\n${9577}` |
+      `    if (!this.isValid()) return;\n\n${9578}` |
+      `    this.saving.set(true);\n\n${9579}` |
+      `    this.http.post('/api/users', this.formData())\n${9580}` |
+      `      .pipe(finalize(() => this.saving.set(false)))\n${9581}` |
+      `      .subscribe({\n${9582}` |
+      `        next: () => this.resetForm(),\n${9583}` |
+      `        error: (err) => this.errors.set(err.error.errors || {})\n${9584}` |
+      `      });\n${9585}` |
+      `  }\n\n${9586}` |
+      `  resetForm() {\n${9587}` |
+      `    this.formData.set({ name: '', email: '', age: 0 });\n${9588}` |
+      `    this.errors.set({});\n${9589}` |
+      `    this.touched.set(new Set());\n${9590}` |
+      `  }\n${9591}` |
+      `}\n${9592}` |
+      "```",
+    category: "Signals Forms",
+    difficulty: "hard",
+    tags: ["signals", "forms", "validation", "state-management"],
+  },
+  {
+    id: 111,
+    question: "How do you implement Real-time Updates with Signals and WebSockets?",
+    answer:
+      "**WebSocket with Signals:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class SignalWebSocketService {\n" +
+      "  private socket$ = webSocket('ws://localhost:8080');\n\n" +
+      "  // State\n" +
+      "  private messagesState = signal<Message[]>([]);\n" +
+      "  private connectedState = signal(false);\n" +
+      "  private onlineUsersState = signal<User[]>([]);\n\n" +
+      "  messages = this.messagesState.asReadonly();\n" +
+      "  connected = this.connectedState.asReadonly();\n" +
+      "  onlineUsers = this.onlineUsersState.asReadonly();\n\n" +
+      "  // Computed\n" +
+      "  messageCount = computed(() => this.messages().length);\n" +
+      "  onlineCount = computed(() => this.onlineUsers().length);\n\n" +
+      "  connect() {\n" +
+      "    this.socket$.pipe(\n" +
+      "      tap(() => this.connectedState.set(true)),\n" +
+      "      catchError(() => {\n" +
+      "        this.connectedState.set(false);\n" +
+      "        return of(null);\n" +
+      "      })\n" +
+      "    ).subscribe(message => {\n" +
+      "      if (!message) return;\n\n" +
+      "      switch (message.type) {\n" +
+      "        case 'NEW_MESSAGE':\n" +
+      "          this.messagesState.update(msgs => [...msgs, message.data]);\n" +
+      "          break;\n" +
+      "        case 'USER_JOINED':\n" +
+      "          this.onlineUsersState.update(users => [...users, message.data]);\n" +
+      "          break;\n" +
+      "        case 'USER_LEFT':\n" +
+      "          this.onlineUsersState.update(users => \n" +
+      "            users.filter(u => u.id !== message.data.id)\n" +
+      "          );\n" +
+      "          break;\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  sendMessage(text: string) {\n" +
+      "    this.socket$.next({ type: 'SEND_MESSAGE', text });\n" +
+      "  }\n\n" +
+      "  disconnect() {\n" +
+      "    this.socket$.complete();\n" +
+      "    this.connectedState.set(false);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Component\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      "    @if (ws.connected()) {\n" +
+      '      <span class="status online">Connected</span>\n' +
+      "    } @else {\n" +
+      '      <span class="status offline">Disconnected</span>\n' +
+      "    }\n\n" +
+      '    <div class="online-users">\n' +
+      "      <p>Online: {{ ws.onlineCount() }}</p>\n" +
+      "      @for (user of ws.onlineUsers(); track user.id) {\n" +
+      "        <span>{{ user.name }}</span>\n" +
+      "      }\n" +
+      "    </div>\n\n" +
+      '    <div class="messages">\n' +
+      "      @for (msg of ws.messages(); track msg.id) {\n" +
+      '        <div class="message">{{ msg.text }}</div>\n' +
+      "      }\n" +
+      "    </div>\n\n" +
+      "    <input #input (keyup.enter)=\"sendMessage(input.value); input.value = ''\" />\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ChatComponent {\n" +
+      "  ws = inject(SignalWebSocketService);\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.ws.connect();\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.ws.disconnect();\n" +
+      "  }\n\n" +
+      "  sendMessage(text: string) {\n" +
+      "    if (text.trim()) {\n" +
+      "      this.ws.sendMessage(text);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signals WebSocket",
+    difficulty: "hard",
+    tags: ["signals", "websocket", "real-time", "chat"],
+  },
+  {
+    id: 112,
+    question: "How do you implement Undo/Redo with Signals?",
+    answer:
+      "**Undo/Redo Pattern with Signals:**\n\n" +
+      "```typescript\n" +
+      "interface HistoryState<T> {\n" +
+      "  past: T[];\n" +
+      "  present: T;\n" +
+      "  future: T[];\n" +
+      "}\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class UndoableService<T> {\n" +
+      "  private historyState = signal<HistoryState<T>>({\n" +
+      "    past: [],\n" +
+      "    present: null as T,\n" +
+      "    future: []\n" +
+      "  });\n\n" +
+      "  // Current state\n" +
+      "  current = computed(() => this.historyState().present);\n\n" +
+      "  // Can undo/redo?\n" +
+      "  canUndo = computed(() => this.historyState().past.length > 0);\n" +
+      "  canRedo = computed(() => this.historyState().future.length > 0);\n\n" +
+      "  // Initialize\n" +
+      "  init(initialValue: T) {\n" +
+      "    this.historyState.set({\n" +
+      "      past: [],\n" +
+      "      present: initialValue,\n" +
+      "      future: []\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  // Update (adds to history)\n" +
+      "  update(newValue: T) {\n" +
+      "    this.historyState.update(state => ({\n" +
+      "      past: [...state.past, state.present],\n" +
+      "      present: newValue,\n" +
+      "      future: [] // Clear redo history\n" +
+      "    }));\n" +
+      "  }\n\n" +
+      "  // Undo\n" +
+      "  undo() {\n" +
+      "    if (!this.canUndo()) return;\n\n" +
+      "    this.historyState.update(state => ({\n" +
+      "      past: state.past.slice(0, -1),\n" +
+      "      present: state.past[state.past.length - 1],\n" +
+      "      future: [state.present, ...state.future]\n" +
+      "    }));\n" +
+      "  }\n\n" +
+      "  // Redo\n" +
+      "  redo() {\n" +
+      "    if (!this.canRedo()) return;\n\n" +
+      "    this.historyState.update(state => ({\n" +
+      "      past: [...state.past, state.present],\n" +
+      "      present: state.future[0],\n" +
+      "      future: state.future.slice(1)\n" +
+      "    }));\n" +
+      "  }\n\n" +
+      "  // Clear history\n" +
+      "  clearHistory() {\n" +
+      "    this.historyState.update(state => ({\n" +
+      "      past: [],\n" +
+      "      present: state.present,\n" +
+      "      future: []\n" +
+      "    }));\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage: Text Editor\n" +
+      "@Component({\n" +
+      "  template: `\n" +
+      '    <div class="toolbar">\n' +
+      '      <button (click)="history.undo()" [disabled]="!history.canUndo()">\n' +
+      "        Undo\n" +
+      "      </button>\n" +
+      '      <button (click)="history.redo()" [disabled]="!history.canRedo()">\n' +
+      "        Redo\n" +
+      "      </button>\n" +
+      "    </div>\n\n" +
+      "    <textarea \n" +
+      '      [value]="history.current()" \n' +
+      '      (input)="onTextChange($any($event.target).value)">\n' +
+      "    </textarea>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class EditorComponent {\n" +
+      "  history = new UndoableService<string>();\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.history.init('');\n" +
+      "  }\n\n" +
+      "  onTextChange(text: string) {\n" +
+      "    this.history.update(text);\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signals Undo/Redo",
+    difficulty: "hard",
+    tags: ["signals", "undo-redo", "history", "state-management"],
+  },
+  {
+    id: 113,
+    question: "How do you implement Filtering, Sorting, and Multi-selection with Signals?",
+    answer:
+      "**Advanced Data Manipulation with Signals:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  selector: 'app-users-table',\n" +
+      "  template: `\n" +
+      "    <!-- Filters -->\n" +
+      "    <input \n" +
+      '      [value]="searchQuery()" \n' +
+      '      (input)="searchQuery.set($any($event.target).value)" \n' +
+      '      placeholder="Search..." />\n\n' +
+      '    <select [value]="statusFilter()" (change)="statusFilter.set($any($event.target).value)">\n' +
+      '      <option value="">All</option>\n' +
+      '      <option value="active">Active</option>\n' +
+      '      <option value="inactive">Inactive</option>\n' +
+      "    </select>\n\n" +
+      "    <!-- Sorting -->\n" +
+      "    <button (click)=\"toggleSort('name')\">Sort by Name</button>\n" +
+      "    <button (click)=\"toggleSort('email')\">Sort by Email</button>\n\n" +
+      "    <!-- Select All -->\n" +
+      "    <input \n" +
+      '      type="checkbox" \n' +
+      '      [checked]="allSelected()" \n' +
+      '      (change)="toggleSelectAll()" />\n\n' +
+      "    <p>{{ selectedCount() }} selected</p>\n\n" +
+      "    <!-- Data Table -->\n" +
+      "    @for (user of displayedUsers(); track user.id) {\n" +
+      '      <div class="row" [class.selected]="isSelected(user.id)">\n' +
+      "        <input \n" +
+      '          type="checkbox"\n' +
+      '          [checked]="isSelected(user.id)"\n' +
+      '          (change)="toggleSelect(user.id)" />\n' +
+      "        <span>{{ user.name }}</span>\n" +
+      "        <span>{{ user.email }}</span>\n" +
+      "      </div>\n" +
+      "    } @empty {\n" +
+      "      <p>No users found</p>\n" +
+      "    }\n\n" +
+      "    @if (selectedCount() > 0) {\n" +
+      '      <button (click)="deleteSelected()">Delete Selected</button>\n' +
+      "    }\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UsersTableComponent {\n" +
+      "  // Raw data\n" +
+      "  allUsers = signal<User[]>([]);\n\n" +
+      "  // Filters\n" +
+      "  searchQuery = signal('');\n" +
+      "  statusFilter = signal('');\n\n" +
+      "  // Sorting\n" +
+      "  sortField = signal<keyof User | null>(null);\n" +
+      "  sortDirection = signal<'asc' | 'desc'>('asc');\n\n" +
+      "  // Selection\n" +
+      "  selectedIds = signal<Set<number>>(new Set());\n\n" +
+      "  // Computed: Filtered\n" +
+      "  filteredUsers = computed(() => {\n" +
+      "    let users = this.allUsers();\n" +
+      "    const query = this.searchQuery().toLowerCase();\n" +
+      "    const status = this.statusFilter();\n\n" +
+      "    if (query) {\n" +
+      "      users = users.filter(u => \n" +
+      "        u.name.toLowerCase().includes(query) ||\n" +
+      "        u.email.toLowerCase().includes(query)\n" +
+      "      );\n" +
+      "    }\n\n" +
+      "    if (status) {\n" +
+      "      users = users.filter(u => u.status === status);\n" +
+      "    }\n\n" +
+      "    return users;\n" +
+      "  });\n\n" +
+      "  // Computed: Sorted\n" +
+      "  displayedUsers = computed(() => {\n" +
+      "    const users = [...this.filteredUsers()];\n" +
+      "    const field = this.sortField();\n" +
+      "    const dir = this.sortDirection();\n\n" +
+      "    if (!field) return users;\n\n" +
+      "    return users.sort((a, b) => {\n" +
+      "      const aVal = a[field];\n" +
+      "      const bVal = b[field];\n" +
+      "      const result = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;\n" +
+      "      return dir === 'asc' ? result : -result;\n" +
+      "    });\n" +
+      "  });\n\n" +
+      "  // Computed: Selection\n" +
+      "  selectedCount = computed(() => this.selectedIds().size);\n" +
+      "  allSelected = computed(() => {\n" +
+      "    const users = this.displayedUsers();\n" +
+      "    return users.length > 0 && users.every(u => this.selectedIds().has(u.id));\n" +
+      "  });\n\n" +
+      "  toggleSort(field: keyof User) {\n" +
+      "    if (this.sortField() === field) {\n" +
+      "      this.sortDirection.update(dir => dir === 'asc' ? 'desc' : 'asc');\n" +
+      "    } else {\n" +
+      "      this.sortField.set(field);\n" +
+      "      this.sortDirection.set('asc');\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  toggleSelect(id: number) {\n" +
+      "    this.selectedIds.update(ids => {\n" +
+      "      const newIds = new Set(ids);\n" +
+      "      if (newIds.has(id)) {\n" +
+      "        newIds.delete(id);\n" +
+      "      } else {\n" +
+      "        newIds.add(id);\n" +
+      "      }\n" +
+      "      return newIds;\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  toggleSelectAll() {\n" +
+      "    if (this.allSelected()) {\n" +
+      "      this.selectedIds.set(new Set());\n" +
+      "    } else {\n" +
+      "      const allIds = this.displayedUsers().map(u => u.id);\n" +
+      "      this.selectedIds.set(new Set(allIds));\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  isSelected(id: number) {\n" +
+      "    return this.selectedIds().has(id);\n" +
+      "  }\n\n" +
+      "  deleteSelected() {\n" +
+      "    const ids = Array.from(this.selectedIds());\n" +
+      "    this.allUsers.update(users => users.filter(u => !ids.includes(u.id)));\n" +
+      "    this.selectedIds.set(new Set());\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Signals Data Tables",
+    difficulty: "hard",
+    tags: ["signals", "filtering", "sorting", "selection", "tables"],
+  },
+  {
+    id: 114,
+    question: "How do you implement Dark Mode and Theme Switching with Signals?",
+    answer:
+      "**Theme Service with Signals:**\n\n" +
+      "```typescript\n" +
+      "type Theme = 'light' | 'dark' | 'auto';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class ThemeService {\n" +
+      "  private themeState = signal<Theme>('auto');\n" +
+      "  private systemPrefersDark = signal(false);\n\n" +
+      "  theme = this.themeState.asReadonly();\n\n" +
+      "  // Computed: Actual applied theme\n" +
+      "  appliedTheme = computed(() => {\n" +
+      "    const theme = this.theme();\n" +
+      "    if (theme === 'auto') {\n" +
+      "      return this.systemPrefersDark() ? 'dark' : 'light';\n" +
+      "    }\n" +
+      "    return theme;\n" +
+      "  });\n\n" +
+      "  isDark = computed(() => this.appliedTheme() === 'dark');\n\n" +
+      "  constructor() {\n" +
+      "    // Load from localStorage\n" +
+      "    const saved = localStorage.getItem('theme') as Theme;\n" +
+      "    if (saved) {\n" +
+      "      this.themeState.set(saved);\n" +
+      "    }\n\n" +
+      "    // Watch system preference\n" +
+      "    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');\n" +
+      "    this.systemPrefersDark.set(darkModeQuery.matches);\n\n" +
+      "    darkModeQuery.addEventListener('change', e => {\n" +
+      "      this.systemPrefersDark.set(e.matches);\n" +
+      "    });\n\n" +
+      "    // Apply theme to DOM\n" +
+      "    effect(() => {\n" +
+      "      const isDark = this.isDark();\n" +
+      "      document.documentElement.classList.toggle('dark', isDark);\n" +
+      "      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  setTheme(theme: Theme) {\n" +
+      "    this.themeState.set(theme);\n" +
+      "    localStorage.setItem('theme', theme);\n" +
+      "  }\n\n" +
+      "  toggle() {\n" +
+      "    const current = this.appliedTheme();\n" +
+      "    this.setTheme(current === 'dark' ? 'light' : 'dark');\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Theme Switcher Component\n" +
+      "@Component({\n" +
+      "  selector: 'app-theme-switcher',\n" +
+      "  standalone: true,\n" +
+      "  template: `\n" +
+      '    <div class="theme-switcher">\n' +
+      "      <button (click)=\"theme.setTheme('light')\" [class.active]=\"theme.theme() === 'light'\">\n" +
+      "        ☀️ Light\n" +
+      "      </button>\n" +
+      "      <button (click)=\"theme.setTheme('dark')\" [class.active]=\"theme.theme() === 'dark'\">\n" +
+      "        🌙 Dark\n" +
+      "      </button>\n" +
+      "      <button (click)=\"theme.setTheme('auto')\" [class.active]=\"theme.theme() === 'auto'\">\n" +
+      "        🔄 Auto\n" +
+      "      </button>\n" +
+      "    </div>\n" +
+      "    <p>Current: {{ theme.appliedTheme() }}</p>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ThemeSwitcherComponent {\n" +
+      "  theme = inject(ThemeService);\n" +
+      "}\n\n" +
+      "// CSS (Tailwind dark mode)\n" +
+      "// tailwind.config.js\n" +
+      "module.exports = {\n" +
+      "  darkMode: 'class', // Use class-based dark mode\n" +
+      "  // ...\n" +
+      "}\n\n" +
+      "// CSS Variables approach\n" +
+      ":root {\n" +
+      "  --bg-color: white;\n" +
+      "  --text-color: black;\n" +
+      "}\n\n" +
+      ".dark {\n" +
+      "  --bg-color: #1a1a1a;\n" +
+      "  --text-color: white;\n" +
+      "}\n" +
+      "```",
+    category: "Signals Theming",
+    difficulty: "intermediate",
+    tags: ["signals", "dark-mode", "theme", "ux"],
+  },
+  {
+    id: 115,
+    question:
+      "What are Angular Signals Best Practices? Summarize patterns, pitfalls, and migration strategy.",
+    answer:
+      "**Best Practices:**\n\n" +
+      "```typescript\n" +
+      "1. **Use signals() for state, computed() for derived values**\n" +
+      "   count = signal(0);\n" +
+      "   doubleCount = computed(() => this.count() * 2);\n\n" +
+      "2. **Make writable signals private, expose readonly**\n" +
+      "   private countState = signal(0);\n" +
+      "   count = this.countState.asReadonly();\n\n" +
+      "3. **Use effect() only for side effects, not state changes**\n" +
+      "   // ✅ Good\n" +
+      "   effect(() => console.log(this.count()));\n" +
+      "   \n" +
+      "   // ❌ Bad\n" +
+      "   effect(() => this.otherSignal.set(this.count()));\n\n" +
+      "4. **Use input() instead of @Input() for new components**\n" +
+      "   userId = input.required<number>();\n\n" +
+      "5. **Use model() for two-way binding**\n" +
+      "   value = model(0);\n\n" +
+      "6. **Use viewChild() instead of @ViewChild()**\n" +
+      "   inputElement = viewChild<ElementRef>('input');\n\n" +
+      "7. **Keep computed() pure (no side effects)**\n" +
+      "   // ✅ Good\n" +
+      "   fullName = computed(() => `${this.first()} ${this.last()}`);\n" +
+      "   \n" +
+      "   // ❌ Bad\n" +
+      "   badComputed = computed(() => {\n" +
+      "     this.http.get('/api').subscribe(); // NO!\n" +
+      "     return this.value();\n" +
+      "   });\n\n" +
+      "8. **Signals are synchronous**\n" +
+      "   this.count.set(5);\n" +
+      "   console.log(this.count()); // 5 immediately\n\n" +
+      "9. **Use toSignal() for observables in templates**\n" +
+      "   users = toSignal(this.http.get<User[]>('/api/users'), { initialValue: [] });\n\n" +
+      "10. **Combine with RxJS when needed**\n" +
+      "    toObservable(this.searchQuery)\n" +
+      "      .pipe(debounceTime(300))\n" +
+      "      .subscribe(...);\n" +
+      "```\n\n" +
+      "**Common Pitfalls:**\n\n" +
+      "```typescript\n" +
+      "// ❌ 1. Forgetting to call signal\n" +
+      "if (this.count > 5) { } // Wrong!\n" +
+      "if (this.count() > 5) { } // Correct\n\n" +
+      "// ❌ 2. Mutating signal value\n" +
+      "this.users().push(newUser); // Wrong!\n" +
+      "this.users.update(u => [...u, newUser]); // Correct\n\n" +
+      "// ❌ 3. Using effect() for derived state\n" +
+      "effect(() => this.total.set(this.items().length)); // Wrong!\n" +
+      "total = computed(() => this.items().length); // Correct\n\n" +
+      "// ❌ 4. Async operations in computed()\n" +
+      "computed(() => {\n" +
+      "  this.http.get('/api').subscribe(); // Wrong!\n" +
+      "  return this.value();\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Migration Strategy:**\n\n" +
+      "```typescript\n" +
+      "// Before (Observables)\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  @Input() userId: number;\n" +
+      "  @Output() userChanged = new EventEmitter<User>();\n" +
+      "  @ViewChild('input') input: ElementRef;\n\n" +
+      "  user$ = new BehaviorSubject<User | null>(null);\n" +
+      "  loading$ = new BehaviorSubject(false);\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.loadUser();\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// After (Signals)\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  userId = input.required<number>();\n" +
+      "  userChanged = output<User>();\n" +
+      "  inputElement = viewChild<ElementRef>('input');\n\n" +
+      "  user = signal<User | null>(null);\n" +
+      "  loading = signal(false);\n\n" +
+      "  constructor() {\n" +
+      "    // Auto-load when userId changes\n" +
+      "    effect(() => this.loadUser(this.userId()));\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Signals:**\n" +
+      "✅ New components\n" +
+      "✅ Local state management\n" +
+      "✅ Derived/computed values\n" +
+      "✅ View queries\n" +
+      "✅ Component inputs/outputs\n\n" +
+      "**When to Keep RxJS:**\n" +
+      "✅ Complex async flows\n" +
+      "✅ Existing large codebases\n" +
+      "✅ Time-based operators (debounce, throttle)\n" +
+      "✅ HTTP interceptors\n\n" +
+      "**The Future:**\n" +
+      "- Signals are the future of Angular reactivity\n" +
+      "- Gradually migrate existing code\n" +
+      "- Use signals for new features\n" +
+      "- RxJS and Signals work together!",
+    category: "Signals Best Practices",
+    difficulty: "hard",
+    tags: ["signals", "best-practices", "migration", "patterns"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;
