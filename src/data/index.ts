@@ -11,6 +11,7 @@ export { REDUX_QUESTIONS } from "./redux";
 export { ANGULAR_ENHANCED_QUESTIONS } from "./angular-enhanced";
 export { REACT_ENHANCED_QUESTIONS } from "./react-enhanced";
 export { NEXTJS_ENHANCED_QUESTIONS } from "./nextjs-enhanced";
+export { RANDOM_ENHANCED_QUESTIONS } from "./random-enhanced";
 
 // Re-export types
 export type { Question, QA } from "../types/question";
@@ -22,6 +23,7 @@ export const ALL_QUESTIONS = {
   nextjs: () => import("./nextjs-enhanced").then((m) => m.NEXTJS_ENHANCED_QUESTIONS),
   react: () => import("./react-enhanced").then((m) => m.REACT_ENHANCED_QUESTIONS),
   redux: () => import("./redux").then((m) => m.REDUX_QUESTIONS),
+  random: () => import("./random-enhanced").then((m) => m.RANDOM_ENHANCED_QUESTIONS),
 } as const;
 
 // Metadata with icon identifiers
@@ -29,19 +31,19 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "angular",
     name: "Angular",
-    count: 165, // Updated count after adding 50 Angular Elements questions
+    count: 217, // Updated count after adding 5 new Angular questions (CSS host property, routing, standalone components, signals)
     icon: "angular",
   },
   {
     id: "nextjs",
     name: "Next.js",
-    count: 19, // Updated count after adding 9 comprehensive questions
+    count: 50, // Updated count after adding 21 more comprehensive questions
     icon: "nextjs",
   },
   {
     id: "react",
     name: "React",
-    count: 27, // Updated count
+    count: 80, // Updated count after adding 30 comprehensive questions
     icon: "react",
   },
   {
@@ -49,5 +51,11 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
     name: "Redux",
     count: 100,
     icon: "redux",
+  },
+  {
+    id: "random",
+    name: "Random",
+    count: 52, // Mixed topics: Git, CSS, Angular Material, Performance, SASS, Webpack, Docker, TypeScript, GraphQL, Web APIs, JavaScript Advanced, Build Tools
+    icon: "random",
   },
 ];

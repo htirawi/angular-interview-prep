@@ -2,13 +2,7 @@ import { useState, useEffect } from "react";
 import { QUESTION_SETS } from "../data";
 import type { FrameworkId } from "../types";
 import { FrameworkIcon } from "./icons/FrameworkIcon";
-
-interface FrameworkSelectorProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSelect: (framework: FrameworkId) => void;
-  currentFramework?: FrameworkId;
-}
+import type { FrameworkSelectorProps } from "../types";
 
 export default function FrameworkSelector({
   isOpen,

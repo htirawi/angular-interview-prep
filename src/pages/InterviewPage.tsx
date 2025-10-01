@@ -1,343 +1,223 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import Sidebar from "../components/Sidebar";
-import { REDUX_QUESTIONS, QUESTION_SETS } from "../data";
-import { ANGULAR_ENHANCED_QUESTIONS } from "../data/angular-enhanced";
-import { REACT_ENHANCED_QUESTIONS } from "../data/react-enhanced";
-import { NEXTJS_ENHANCED_QUESTIONS } from "../data/nextjs-enhanced";
+import { QUESTION_SETS } from "../data";
 import { FrameworkIcon } from "../components/icons/FrameworkIcon";
-import type { Question, FrameworkId, PracticeMode } from "../types";
-import { enrichQuestions } from "../utils/questionMetadata";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { ErrorBoundary } from "../core/components/ErrorBoundary";
 import { useToast } from "../shared/hooks/useToast";
 import Toast from "../shared/components/Toast";
-import { STORAGE_KEYS } from "../shared/constants/app";
+import { useFrameworkManager } from "../hooks/useFrameworkManager";
+import { useQuestionNavigation } from "../hooks/useQuestionNavigation";
+import { useProgressManager } from "../hooks/useProgressManager";
+import { QuestionService } from "../services/QuestionService";
+import { SidebarProvider } from "../contexts/SidebarContext";
+import type { Question } from "../types";
 
-// Framework-specific storage keys
-const getFrameworkKey = (framework: FrameworkId, key: string) => `${framework}_${key}`;
-
+/**
+ * Refactored InterviewPage component with clean separation of concerns
+ * Uses custom hooks and services for better maintainability
+ */
 export default function InterviewPage() {
-  const { framework } = useParams<{ framework: FrameworkId }>();
-  const navigate = useNavigate();
-
-  // Validate framework from URL
-  const selectedFramework = framework || "angular";
-  const isValidFramework = QUESTION_SETS.some((set) => set.id === selectedFramework);
-
-  // Redirect to home if invalid framework
-  useEffect(() => {
-    if (!isValidFramework) {
-      navigate("/");
-    }
-  }, [isValidFramework, navigate]);
-
-  // Update browser tab title based on framework
-  useEffect(() => {
-    const getFrameworkTitle = (framework: FrameworkId): string => {
-      switch (framework) {
-        case "angular":
-          return "Angular Senior Interview Prep";
-        case "react":
-          return "React Senior Interview Prep";
-        case "nextjs":
-          return "Next.js Senior Interview Prep";
-        case "redux":
-          return "Redux Senior Interview Prep";
-        default:
-          return "Senior Interview Prep";
-      }
-    };
-
-    document.title = getFrameworkTitle(selectedFramework);
-  }, [selectedFramework]);
-
-  // Get questions for selected framework
-  const allFrameworkQuestions = useMemo(() => {
-    switch (selectedFramework) {
-      case "angular":
-        return ANGULAR_ENHANCED_QUESTIONS; // Use enhanced!
-      case "nextjs":
-        return NEXTJS_ENHANCED_QUESTIONS; // Use enhanced!
-      case "react":
-        return REACT_ENHANCED_QUESTIONS; // Use enhanced!
-      case "redux":
-        return REDUX_QUESTIONS;
-      default:
-        return ANGULAR_ENHANCED_QUESTIONS; // Default to enhanced Angular
-    }
-  }, [selectedFramework]);
-
-  const enrichedQuestions = useMemo(
-    () => enrichQuestions(allFrameworkQuestions),
-    [allFrameworkQuestions]
-  );
-
-  // Framework-specific state
-  const [index, setIndex] = useLocalStorage<number>(
-    getFrameworkKey(selectedFramework, STORAGE_KEYS.INDEX),
-    0
-  );
-  const [completed, setCompleted] = useLocalStorage<Set<number>>(
-    getFrameworkKey(selectedFramework, STORAGE_KEYS.COMPLETED),
-    new Set()
-  );
-  const [bookmarks, setBookmarks] = useLocalStorage<Set<number>>(
-    getFrameworkKey(selectedFramework, STORAGE_KEYS.BOOKMARKS),
-    new Set()
-  );
-  const [mode, setMode] = useLocalStorage<PracticeMode>(
-    getFrameworkKey(selectedFramework, STORAGE_KEYS.MODE),
-    "sequential"
-  );
-  const [notes, setNotes] = useLocalStorage<Record<number, string>>(
-    getFrameworkKey(selectedFramework, STORAGE_KEYS.NOTES),
-    {}
-  );
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
-  const [randomOrder, setRandomOrder] = useState<number[]>([]);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
   const { toasts, removeToast, success, warning } = useToast();
 
-  // Initialize random order
-  useEffect(() => {
-    if (randomOrder.length === 0) {
-      const indices = Array.from({ length: enrichedQuestions.length }, (_, i) => i);
-      setRandomOrder(indices.sort(() => Math.random() - 0.5));
-    }
-  }, [enrichedQuestions.length, randomOrder.length]);
+  // Framework management
+  const { selectedFramework, isValidFramework, enrichedQuestions, navigate } =
+    useFrameworkManager();
 
-  // Handle framework change via navigation
-  const handleFrameworkChange = useCallback(
-    (newFramework: FrameworkId) => {
-      navigate(`/${newFramework}`);
-      success(`Switched to ${newFramework}! 🎉`);
-    },
-    [navigate, success]
-  );
+  // Progress management
+  const {
+    index,
+    completed,
+    bookmarks,
+    mode,
+    notes,
+    setIndex,
+    setMode,
+    goPrev,
+    goNext,
+    handleJump,
+    toggleBookmark,
+    saveNote,
+    handleReset,
+  } = useProgressManager(selectedFramework, success, warning);
 
-  // Filter questions
-  const filteredQuestions = useMemo(() => {
-    let filtered = enrichedQuestions;
+  // Question navigation and filtering
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    selectedDifficulty,
+    setSelectedDifficulty,
+    currentQuestionList,
+  } = useQuestionNavigation(enrichedQuestions, bookmarks, mode);
 
-    if (mode === "bookmarked") {
-      filtered = filtered.filter((q) => bookmarks.has(q.id));
-    }
+  // UI state
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (q) =>
-          q.question.toLowerCase().includes(query) ||
-          q.answer.toLowerCase().includes(query) ||
-          q.category?.toLowerCase().includes(query) ||
-          q.tags?.some((tag) => tag.toLowerCase().includes(query))
-      );
-    }
-
-    if (selectedCategory) {
-      filtered = filtered.filter((q) => q.category === selectedCategory);
-    }
-
-    if (selectedDifficulty) {
-      filtered = filtered.filter((q) => q.difficulty === selectedDifficulty);
-    }
-
-    return filtered;
-  }, [enrichedQuestions, mode, bookmarks, searchQuery, selectedCategory, selectedDifficulty]);
-
-  const currentQuestionList = useMemo(() => {
-    if (mode === "random" && randomOrder.length > 0) {
-      return randomOrder.map((i) => filteredQuestions[i]).filter(Boolean);
-    }
-    return filteredQuestions;
-  }, [mode, randomOrder, filteredQuestions]);
-
+  // Calculate current question and safe index
   const total = currentQuestionList.length;
-  const safeIndex = Math.min(Math.max(0, index), total - 1);
+  const safeIndex = QuestionService.getSafeIndex(index, total);
   const item: Question | undefined = currentQuestionList[safeIndex];
 
+  // Update index when safe index changes
   useEffect(() => {
     if (safeIndex !== index) {
       setIndex(safeIndex);
     }
   }, [safeIndex, index, setIndex]);
 
-  const goPrev = useCallback(() => {
-    setIndex((i) => Math.max(0, i - 1));
-  }, [setIndex]);
+  // Navigation handlers
+  const handlePrev = useCallback(() => {
+    goPrev();
+  }, [goPrev]);
 
-  const goNext = useCallback(() => {
-    if (item && !completed.has(item.id)) {
-      setCompleted((prev) => new Set(prev).add(item.id));
-      success("Question marked as completed!");
+  const handleNext = useCallback(() => {
+    goNext(item, total);
+  }, [goNext, item, total]);
+
+  const handleToggleBookmark = useCallback(() => {
+    if (item) {
+      toggleBookmark(item.id);
     }
-    setIndex((i) => Math.min(total - 1, i + 1));
-  }, [setIndex, total, item, setCompleted, completed, success]);
+  }, [item, toggleBookmark]);
 
-  const toggleBookmark = useCallback(
-    (id: number) => {
-      setBookmarks((prev) => {
-        const next = new Set(prev);
-        if (next.has(id)) {
-          next.delete(id);
-          warning("Bookmark removed");
-        } else {
-          next.add(id);
-          success("Bookmarked! ⭐");
-        }
-        return next;
-      });
-    },
-    [setBookmarks, success, warning]
-  );
-
-  const saveNote = useCallback(
+  const handleSaveNote = useCallback(
     (note: string) => {
-      if (item) {
-        setNotes((prev) => ({ ...prev, [item.id]: note }));
-        success("Note saved!");
-      }
+      saveNote(note, item);
     },
-    [item, setNotes, success]
+    [saveNote, item]
   );
 
-  const handleReset = useCallback(() => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm(`Reset all progress for ${selectedFramework}? This cannot be undone.`)) {
-      setCompleted(new Set());
-      setBookmarks(new Set());
-      setNotes({});
-      setIndex(0);
-      success("Progress reset!");
-    }
-  }, [selectedFramework, setCompleted, setBookmarks, setNotes, setIndex, success]);
-
-  const handleJump = useCallback(
-    (targetIndex: number) => {
-      setIndex(targetIndex);
+  const handleFrameworkChange = useCallback(
+    (newFramework: string) => {
+      navigate(`/${newFramework}`);
+      success(`Switched to ${newFramework}! 🎉`);
     },
-    [setIndex]
+    [navigate, success]
   );
 
   const handleBackToHome = useCallback(() => {
     navigate("/");
   }, [navigate]);
 
+  // Early return for invalid framework
   if (!isValidFramework) {
     return null; // Will redirect
   }
 
+  // Sidebar context value
+  const sidebarContextValue = {
+    currentFramework: selectedFramework,
+    totalQuestions: enrichedQuestions.length,
+    completed: completed.size,
+    bookmarked: bookmarks.size,
+    mode,
+    onModeChange: setMode,
+    searchQuery,
+    onSearchChange: setSearchQuery,
+    questions: enrichedQuestions,
+    selectedCategory,
+    selectedDifficulty,
+    onCategoryChange: setSelectedCategory,
+    onDifficultyChange: setSelectedDifficulty,
+    onResetProgress: handleReset,
+    currentIndex: safeIndex,
+    totalFiltered: total,
+    onJumpToQuestion: handleJump,
+    questionList: currentQuestionList,
+  };
+
   return (
     <ErrorBoundary>
-      <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Sidebar
-          isOpen={sidebarOpen}
-          onToggle={() => setSidebarOpen(!sidebarOpen)}
-          currentFramework={selectedFramework}
-          totalQuestions={enrichedQuestions.length}
-          completed={completed.size}
-          bookmarked={bookmarks.size}
-          mode={mode}
-          onModeChange={setMode}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          questions={enrichedQuestions}
-          selectedCategory={selectedCategory}
-          selectedDifficulty={selectedDifficulty}
-          onCategoryChange={setSelectedCategory}
-          onDifficultyChange={setSelectedDifficulty}
-          onResetProgress={handleReset}
-          currentIndex={safeIndex}
-          totalFiltered={total}
-          onJumpToQuestion={handleJump}
-          questionList={currentQuestionList}
-        >
-          {/* Back to Home + Framework Switcher */}
-          <div className="mb-6 space-y-3">
-            <button
-              onClick={handleBackToHome}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-            >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              <span>Change Framework</span>
-            </button>
+      <SidebarProvider value={sidebarContextValue}>
+        <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
+          <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)}>
+            {/* Back to Home + Framework Switcher */}
+            <div className="mb-6 space-y-3">
+              <button
+                onClick={handleBackToHome}
+                className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+                <span>Change Framework</span>
+              </button>
 
-            {/* Quick Framework Switch */}
-            <div className="grid grid-cols-4 gap-2">
-              {QUESTION_SETS.map((set) => (
-                <button
-                  key={set.id}
-                  onClick={() => handleFrameworkChange(set.id)}
-                  disabled={set.id === selectedFramework}
-                  className={`flex flex-col items-center gap-1 rounded-lg border p-2 text-center transition-all ${
-                    set.id === selectedFramework
-                      ? "border-blue-500 bg-blue-50 dark:border-blue-600 dark:bg-blue-900/20"
-                      : "border-gray-200 hover:scale-105 hover:border-blue-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:border-blue-600 dark:hover:bg-gray-700"
-                  }`}
-                  title={set.name}
-                >
-                  <FrameworkIcon framework={set.icon} size={20} />
-                  <div
-                    className={`text-[10px] font-medium ${set.id === selectedFramework ? "text-blue-600 dark:text-blue-400" : "text-gray-600 dark:text-gray-400"}`}
+              {/* Quick Framework Switch */}
+              <div className="grid grid-cols-4 gap-2">
+                {QUESTION_SETS.map((set) => (
+                  <button
+                    key={set.id}
+                    onClick={() => handleFrameworkChange(set.id)}
+                    disabled={set.id === selectedFramework}
+                    className={`flex flex-col items-center gap-1 rounded-lg border p-2 text-center transition-all ${
+                      set.id === selectedFramework
+                        ? "border-blue-500 bg-blue-50 dark:border-blue-600 dark:bg-blue-900/20"
+                        : "border-gray-200 hover:scale-105 hover:border-blue-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:border-blue-600 dark:hover:bg-gray-700"
+                    }`}
+                    title={set.name}
                   >
-                    {set.name.split(" ")[0]}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </Sidebar>
-
-        <main className="min-h-screen flex-1 lg:ml-80">
-          <div className="mx-auto max-w-4xl px-4 py-8">
-            {item ? (
-              <QuestionCard
-                item={item}
-                index={safeIndex}
-                total={total}
-                onPrev={goPrev}
-                onNext={goNext}
-                canPrev={safeIndex > 0}
-                canNext={safeIndex < total - 1}
-                isBookmarked={bookmarks.has(item.id)}
-                isCompleted={completed.has(item.id)}
-                onToggleBookmark={() => toggleBookmark(item.id)}
-                note={notes[item.id] || ""}
-                onSaveNote={saveNote}
-              />
-            ) : (
-              <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                <p className="text-gray-600 dark:text-gray-400">
-                  No questions match your filters. Try adjusting your search or filters.
-                </p>
+                    <FrameworkIcon framework={set.icon} size={20} />
+                    <div
+                      className={`text-[10px] font-medium ${
+                        set.id === selectedFramework
+                          ? "text-blue-600 dark:text-blue-400"
+                          : "text-gray-600 dark:text-gray-400"
+                      }`}
+                    >
+                      {set.name.split(" ")[0]}
+                    </div>
+                  </button>
+                ))}
               </div>
-            )}
-          </div>
-        </main>
+            </div>
+          </Sidebar>
 
-        {/* Toast Notifications */}
-        {toasts.map((toast) => (
-          <Toast
-            key={toast.id}
-            message={toast.message}
-            type={toast.type}
-            onClose={() => removeToast(toast.id)}
-          />
-        ))}
-      </div>
+          <main className="min-h-screen flex-1 lg:ml-80">
+            <div className="mx-auto max-w-6xl px-4 py-8">
+              {item ? (
+                <QuestionCard
+                  item={item}
+                  index={safeIndex}
+                  total={total}
+                  onPrev={handlePrev}
+                  onNext={handleNext}
+                  canPrev={safeIndex > 0}
+                  canNext={safeIndex < total - 1}
+                  isBookmarked={QuestionService.isBookmarked(item.id, bookmarks)}
+                  isCompleted={QuestionService.isCompleted(item.id, completed)}
+                  onToggleBookmark={handleToggleBookmark}
+                  note={notes[item.id] || ""}
+                  onSaveNote={handleSaveNote}
+                />
+              ) : (
+                <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    No questions match your filters. Try adjusting your search or filters.
+                  </p>
+                </div>
+              )}
+            </div>
+          </main>
+
+          {/* Toast Notifications */}
+          {toasts.map((toast) => (
+            <Toast
+              key={toast.id}
+              message={toast.message}
+              type={toast.type}
+              onClose={() => removeToast(toast.id)}
+            />
+          ))}
+        </div>
+      </SidebarProvider>
     </ErrorBoundary>
   );
 }

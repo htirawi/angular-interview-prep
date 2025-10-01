@@ -1,4 +1,0 @@
-question,answer,category,difficulty,tags
-"What is React 19?","React 19 is the latest version of React that introduces several new features including React Compiler, improved Suspense, and better performance optimizations.","React 19","intermediate","react-19;new-features;overview"
-"How do you use React Compiler?","React Compiler automatically optimizes your React code by memoizing components and values. You can enable it by adding the compiler to your build process.","React 19","hard","react-compiler;optimization;performance"
-"What are the new hooks in React 19?","React 19 introduces several new hooks including use() for reading promises and resources, and improved useTransition and useDeferredValue hooks.","React 19","intermediate","hooks;react-19;new-features"

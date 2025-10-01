@@ -1,12 +1,11 @@
 import { useState } from "react";
+import type { QuestionNotesProps } from "../../../types";
 
-type Props = {
-  questionId: number;
-  initialNote?: string;
-  onSave: (questionId: number, note: string) => void;
-};
-
-export default function QuestionNotes({ questionId, initialNote = "", onSave }: Props) {
+export default function QuestionNotes({
+  questionId,
+  initialNote = "",
+  onSave,
+}: QuestionNotesProps) {
   const [note, setNote] = useState(initialNote);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -89,4 +88,3 @@ export default function QuestionNotes({ questionId, initialNote = "", onSave }: 
     </div>
   );
 }
-

@@ -1,9 +1,6 @@
-type Props = {
-  size?: "sm" | "md" | "lg";
-  className?: string;
-};
+import type { LoadingSpinnerProps } from "../../types";
 
-export default function LoadingSpinner({ size = "md", className = "" }: Props) {
+export default function LoadingSpinner({ size = "md", className = "" }: LoadingSpinnerProps) {
   const sizeClasses = {
     sm: "h-4 w-4 border-2",
     md: "h-8 w-8 border-3",
@@ -20,4 +17,3 @@ export default function LoadingSpinner({ size = "md", className = "" }: Props) {
     </div>
   );
 }
-

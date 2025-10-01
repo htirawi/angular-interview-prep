@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
+import type { StudyTimerProps } from "../../../types";
 
-type Props = {
-  onTimeUpdate?: (seconds: number) => void;
-};
-
-export default function StudyTimer({ onTimeUpdate }: Props) {
+export default function StudyTimer({ onTimeUpdate }: StudyTimerProps) {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
 
@@ -70,4 +67,3 @@ export default function StudyTimer({ onTimeUpdate }: Props) {
     </div>
   );
 }
-

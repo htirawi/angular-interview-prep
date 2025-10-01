@@ -64,8 +64,10 @@ export interface StatsPanelProps {
 }
 
 export interface ProgressBarProps {
-  progress: number;
+  value: number;
+  max: number;
   className?: string;
+  showLabel?: boolean;
 }
 
 export type ToastType = "success" | "error" | "info" | "warning";
@@ -81,4 +83,73 @@ export interface ToastItem {
   id: string;
   message: string;
   type: ToastType;
+}
+
+// Component-specific types
+export interface MarkdownRendererProps {
+  content: string;
+}
+
+export interface ComparisonRow {
+  feature: string;
+  reactive: string;
+  template: string;
+}
+
+export interface ComparisonTableProps {
+  headers: string[];
+  rows: ComparisonRow[];
+}
+
+export interface TableRow {
+  cells: string[];
+  isHeader?: boolean;
+}
+
+export interface RegularTableProps {
+  rows: TableRow[];
+}
+
+export interface FrameworkIconProps {
+  framework: string;
+  size?: number;
+  className?: string;
+}
+
+export interface FrameworkSwitcherProps {
+  currentFramework: string;
+  onSwitch: (framework: string) => void;
+  onOpenModal: () => void;
+}
+
+export interface FrameworkSelectorProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSelect: (framework: string) => void;
+  currentFramework?: string;
+}
+
+export interface QuestionNotesProps {
+  questionId: number;
+  initialNote?: string;
+  onSave: (questionId: number, note: string) => void;
+}
+
+export interface StudyTimerProps {
+  onTimeUpdate?: (seconds: number) => void;
+}
+
+export interface LoadingSpinnerProps {
+  size?: "sm" | "md" | "lg";
+  className?: string;
+}
+
+export interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
 }

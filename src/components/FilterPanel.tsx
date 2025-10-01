@@ -1,13 +1,5 @@
 import { useMemo } from "react";
-import type { QA } from "../data/questions";
-
-type Props = {
-  questions: QA[];
-  selectedCategory: string;
-  selectedDifficulty: string;
-  onCategoryChange: (category: string) => void;
-  onDifficultyChange: (difficulty: string) => void;
-};
+import type { FilterPanelProps } from "../types";
 
 export default function FilterPanel({
   questions,
@@ -15,7 +7,7 @@ export default function FilterPanel({
   selectedDifficulty,
   onCategoryChange,
   onDifficultyChange,
-}: Props) {
+}: FilterPanelProps) {
   const categories = useMemo(() => {
     const cats = new Set(questions.map((q) => q.category).filter(Boolean));
     return Array.from(cats).sort();
@@ -23,8 +15,11 @@ export default function FilterPanel({
 
   return (
     <div className="flex flex-wrap gap-3">
-      <div className="flex-1 min-w-[200px]">
-        <label htmlFor="category-filter" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
+      <div className="min-w-[200px] flex-1">
+        <label
+          htmlFor="category-filter"
+          className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300"
+        >
           Category
         </label>
         <select
@@ -41,8 +36,11 @@ export default function FilterPanel({
           ))}
         </select>
       </div>
-      <div className="flex-1 min-w-[200px]">
-        <label htmlFor="difficulty-filter" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
+      <div className="min-w-[200px] flex-1">
+        <label
+          htmlFor="difficulty-filter"
+          className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300"
+        >
           Difficulty
         </label>
         <select
@@ -60,4 +58,3 @@ export default function FilterPanel({
     </div>
   );
 }
-

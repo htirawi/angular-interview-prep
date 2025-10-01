@@ -1,11 +1,11 @@
-type Props = {
-  value: number;
-  max: number;
-  className?: string;
-  showLabel?: boolean;
-};
+import type { ProgressBarProps } from "../../types";
 
-export default function ProgressBar({ value, max, className = "", showLabel = true }: Props) {
+export default function ProgressBar({
+  value,
+  max,
+  className = "",
+  showLabel = true,
+}: ProgressBarProps) {
   const percentage = Math.round((value / max) * 100);
 
   return (
@@ -29,4 +29,3 @@ export default function ProgressBar({ value, max, className = "", showLabel = tr
     </div>
   );
 }
-

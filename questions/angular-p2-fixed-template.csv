@@ -1,6 +1,0 @@
-question,answer,category,difficulty,tags
-"What is Angular?","Angular is a platform and framework for building single-page client applications using HTML, CSS and TypeScript.","Angular Basics","easy","angular;basics;framework"
-"What is TypeScript?","TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. It adds static type definitions to JavaScript.","Angular Basics","easy","typescript;javascript;types"
-"What is a component in Angular?","A component is a TypeScript class decorated with @Component that defines a view with its associated template and styles.","Angular Components","intermediate","components;decorators;templates"
-"What is dependency injection?","Dependency injection is a design pattern where dependencies are provided to a class rather than the class creating them itself.","Angular Services","intermediate","dependency-injection;services;design-patterns"
-"What is Angular CLI?","Angular CLI is a command-line interface tool that helps you create, build, and manage Angular applications.","Angular CLI","easy","cli;tools;development"

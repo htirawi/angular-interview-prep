@@ -3,12 +3,8 @@ import AngularIconSvg from "../../assets/icons/angular-icon.svg";
 import ReactIconSvg from "../../assets/icons/react-js-icon.svg";
 import NextJSIconSvg from "../../assets/icons/nextjs-icon.svg";
 import ReduxIconSvg from "../../assets/icons/redux-icon.svg";
-
-interface FrameworkIconProps {
-  framework: string;
-  size?: number;
-  className?: string;
-}
+import RandomIconSvg from "../../assets/icons/random-icon.svg";
+import type { FrameworkIconProps } from "../../types";
 
 export const FrameworkIcon: React.FC<FrameworkIconProps> = ({
   framework,
@@ -29,6 +25,8 @@ export const FrameworkIcon: React.FC<FrameworkIconProps> = ({
       return <img src={NextJSIconSvg} alt="Next.js" style={iconStyle} className={className} />;
     case "redux":
       return <img src={ReduxIconSvg} alt="Redux" style={iconStyle} className={className} />;
+    case "random":
+      return <img src={RandomIconSvg} alt="Random" style={iconStyle} className={className} />;
     default:
       return <div className={`rounded bg-gray-300 ${className}`} style={iconStyle} />;
   }

@@ -10683,6 +10683,15866 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "intermediate",
     tags: ["general"],
   },
+  {
+    id: 167,
+    question: "What are the key differences between template-driven and reactive forms in Angular?",
+    answer:
+      "Template-driven and reactive forms are two different approaches to handling forms in Angular, each with distinct characteristics:\n\n" +
+      "**Template-Driven Forms:**\n" +
+      "```typescript\n" +
+      "// Template-driven form example\n" +
+      "// app.component.html\n" +
+      '<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">\n' +
+      '  <div class="form-group">\n' +
+      '    <label for="name">Name:</label>\n' +
+      "    <input \n" +
+      '      type="text" \n' +
+      '      id="name" \n' +
+      '      name="name" \n' +
+      "      ngModel \n" +
+      "      required \n" +
+      '      #name="ngModel"\n' +
+      '      [class.is-invalid]="name.invalid && name.touched"\n' +
+      "    />\n" +
+      '    <div *ngIf="name.invalid && name.touched" class="invalid-feedback">\n' +
+      "      Name is required\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <div class="form-group">\n' +
+      '    <label for="email">Email:</label>\n' +
+      "    <input \n" +
+      '      type="email" \n' +
+      '      id="email" \n' +
+      '      name="email" \n' +
+      "      ngModel \n" +
+      "      required \n" +
+      "      email \n" +
+      '      #email="ngModel"\n' +
+      "    />\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="userForm.invalid">Submit</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "```typescript\n" +
+      "// app.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { NgForm } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-root',\n" +
+      "  templateUrl: './app.component.html'\n" +
+      "})\n" +
+      "export class AppComponent {\n" +
+      "  onSubmit(form: NgForm) {\n" +
+      "    if (form.valid) {\n" +
+      "      console.log('Form submitted:', form.value);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Reactive Forms:**\n" +
+      "```typescript\n" +
+      "// Reactive form example\n" +
+      "// app.component.ts\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, Validators } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-root',\n" +
+      "  templateUrl: './app.component.html'\n" +
+      "})\n" +
+      "export class AppComponent implements OnInit {\n" +
+      "  userForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {}\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      name: ['', [Validators.required]],\n" +
+      "      email: ['', [Validators.required, Validators.email]]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "```html\n" +
+      "<!-- app.component.html -->\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      '  <div class="form-group">\n' +
+      '    <label for="name">Name:</label>\n' +
+      "    <input \n" +
+      '      type="text" \n' +
+      '      id="name" \n' +
+      '      formControlName="name"\n' +
+      "      [class.is-invalid]=\"userForm.get('name')?.invalid && userForm.get('name')?.touched\"\n" +
+      "    />\n" +
+      "    <div *ngIf=\"userForm.get('name')?.invalid && userForm.get('name')?.touched\" class=\"invalid-feedback\">\n" +
+      "      Name is required\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <div class="form-group">\n' +
+      '    <label for="email">Email:</label>\n' +
+      "    <input \n" +
+      '      type="email" \n' +
+      '      id="email" \n' +
+      '      formControlName="email"\n' +
+      "    />\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="userForm.invalid">Submit</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "**Key Differences:**\n" +
+      "1. **Data Model**: Template-driven uses data binding, reactive uses FormControl/FormGroup\n" +
+      "2. **Validation**: Template-driven uses template directives, reactive uses validator functions\n" +
+      "3. **Immutability**: Template-driven mutates data model, reactive uses immutable approach\n" +
+      "4. **Testing**: Reactive forms are easier to unit test\n" +
+      "5. **Complexity**: Template-driven is simpler for basic forms, reactive is better for complex forms\n" +
+      "6. **Performance**: Reactive forms have better performance for large forms\n" +
+      "7. **Type Safety**: Reactive forms provide better TypeScript support",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["forms", "template-driven", "reactive", "validation"],
+  },
+  {
+    id: 168,
+    question:
+      "How do you create and manage FormControl, FormGroup, and FormArray in reactive forms?",
+    answer:
+      "Reactive forms provide three fundamental building blocks for form management:\n\n" +
+      "**FormControl:**\n" +
+      "```typescript\n" +
+      "import { FormControl } from '@angular/forms';\n" +
+      "\n" +
+      "// Creating a FormControl\n" +
+      "const nameControl = new FormControl('John');\n" +
+      "const emailControl = new FormControl('', [Validators.required, Validators.email]);\n" +
+      "\n" +
+      "// With initial value and validators\n" +
+      "const passwordControl = new FormControl('', {\n" +
+      "  validators: [Validators.required, Validators.minLength(8)],\n" +
+      "  updateOn: 'blur' // Update on blur instead of input\n" +
+      "});\n" +
+      "\n" +
+      "// Accessing control properties\n" +
+      "console.log(nameControl.value); // 'John'\n" +
+      "console.log(nameControl.valid); // true\n" +
+      "console.log(nameControl.errors); // null\n" +
+      "console.log(nameControl.status); // 'VALID'\n" +
+      "\n" +
+      "// Setting values programmatically\n" +
+      "nameControl.setValue('Jane');\n" +
+      "nameControl.patchValue('Bob'); // Partial update\n" +
+      "nameControl.reset(); // Reset to initial value\n" +
+      "\n" +
+      "// Subscribing to value changes\n" +
+      "nameControl.valueChanges.subscribe(value => {\n" +
+      "  console.log('Name changed:', value);\n" +
+      "});\n" +
+      "\n" +
+      "nameControl.statusChanges.subscribe(status => {\n" +
+      "  console.log('Status changed:', status);\n" +
+      "});\n" +
+      "```\n\n" +
+      "**FormGroup:**\n" +
+      "```typescript\n" +
+      "import { FormGroup, FormControl, Validators } from '@angular/forms';\n" +
+      "\n" +
+      "// Creating FormGroup with FormBuilder\n" +
+      "import { FormBuilder } from '@angular/forms';\n" +
+      "\n" +
+      "export class UserFormComponent {\n" +
+      "  userForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      name: ['', [Validators.required]],\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      age: [null, [Validators.min(18), Validators.max(100)]]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Alternative: Manual FormGroup creation\n" +
+      "  createFormManually() {\n" +
+      "    this.userForm = new FormGroup({\n" +
+      "      name: new FormControl('', [Validators.required]),\n" +
+      "      email: new FormControl('', [Validators.required, Validators.email]),\n" +
+      "      age: new FormControl(null, [Validators.min(18), Validators.max(100)])\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Accessing form controls\n" +
+      "  get nameControl() {\n" +
+      "    return this.userForm.get('name');\n" +
+      "  }\n" +
+      "\n" +
+      "  get emailControl() {\n" +
+      "    return this.userForm.get('email');\n" +
+      "  }\n" +
+      "\n" +
+      "  // Form operations\n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form value:', this.userForm.value);\n" +
+      "      console.log('Form raw value:', this.userForm.getRawValue());\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Programmatic form updates\n" +
+      "  updateForm() {\n" +
+      "    // Set all values\n" +
+      "    this.userForm.setValue({\n" +
+      "      name: 'John Doe',\n" +
+      "      email: 'john@example.com',\n" +
+      "      age: 30\n" +
+      "    });\n" +
+      "\n" +
+      "    // Partial update\n" +
+      "    this.userForm.patchValue({\n" +
+      "      name: 'Jane Doe'\n" +
+      "    });\n" +
+      "\n" +
+      "    // Reset form\n" +
+      "    this.userForm.reset();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**FormArray:**\n" +
+      "```typescript\n" +
+      "import { FormArray, FormControl, FormGroup } from '@angular/forms';\n" +
+      "\n" +
+      "export class DynamicFormComponent {\n" +
+      "  userForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      hobbies: this.fb.array([]), // Empty FormArray\n" +
+      "      addresses: this.fb.array([\n" +
+      "        this.createAddressGroup() // Initial address\n" +
+      "      ])\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Create address FormGroup\n" +
+      "  createAddressGroup(): FormGroup {\n" +
+      "    return this.fb.group({\n" +
+      "      street: ['', Validators.required],\n" +
+      "      city: ['', Validators.required],\n" +
+      "      zipCode: ['', Validators.required]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get FormArray\n" +
+      "  get hobbiesArray(): FormArray {\n" +
+      "    return this.userForm.get('hobbies') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  get addressesArray(): FormArray {\n" +
+      "    return this.userForm.get('addresses') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Add/Remove FormArray items\n" +
+      "  addHobby() {\n" +
+      "    this.hobbiesArray.push(new FormControl('', Validators.required));\n" +
+      "  }\n" +
+      "\n" +
+      "  removeHobby(index: number) {\n" +
+      "    this.hobbiesArray.removeAt(index);\n" +
+      "  }\n" +
+      "\n" +
+      "  addAddress() {\n" +
+      "    this.addressesArray.push(this.createAddressGroup());\n" +
+      "  }\n" +
+      "\n" +
+      "  removeAddress(index: number) {\n" +
+      "    this.addressesArray.removeAt(index);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Access FormArray controls\n" +
+      "  getHobbyControl(index: number): FormControl {\n" +
+      "    return this.hobbiesArray.at(index) as FormControl;\n" +
+      "  }\n" +
+      "\n" +
+      "  getAddressGroup(index: number): FormGroup {\n" +
+      "    return this.addressesArray.at(index) as FormGroup;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Usage:**\n" +
+      "```html\n" +
+      "<!-- FormGroup template -->\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      '  <input formControlName="name" placeholder="Name" />\n' +
+      '  <input formControlName="email" placeholder="Email" />\n' +
+      '  <input formControlName="age" placeholder="Age" />\n' +
+      "  \n" +
+      "  <!-- FormArray for hobbies -->\n" +
+      '  <div formArrayName="hobbies">\n' +
+      '    <div *ngFor="let hobby of hobbiesArray.controls; let i = index">\n' +
+      '      <input [formControlName]="i" placeholder="Hobby {{i + 1}}" />\n' +
+      '      <button type="button" (click)="removeHobby(i)">Remove</button>\n' +
+      "    </div>\n" +
+      '    <button type="button" (click)="addHobby()">Add Hobby</button>\n' +
+      "  </div>\n" +
+      "  \n" +
+      "  <!-- FormArray for addresses -->\n" +
+      '  <div formArrayName="addresses">\n' +
+      '    <div *ngFor="let address of addressesArray.controls; let i = index" [formGroupName]="i">\n' +
+      '      <input formControlName="street" placeholder="Street" />\n' +
+      '      <input formControlName="city" placeholder="City" />\n' +
+      '      <input formControlName="zipCode" placeholder="ZIP Code" />\n' +
+      '      <button type="button" (click)="removeAddress(i)">Remove Address</button>\n' +
+      "    </div>\n" +
+      '    <button type="button" (click)="addAddress()">Add Address</button>\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="userForm.invalid">Submit</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use FormBuilder for cleaner code\n" +
+      "- Implement proper validation\n" +
+      "- Use FormArray for dynamic lists\n" +
+      "- Subscribe to valueChanges for reactive updates\n" +
+      "- Use getter methods for cleaner template access\n" +
+      "- Implement proper error handling",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["forms", "reactive", "FormControl", "FormGroup", "FormArray"],
+  },
+  {
+    id: 169,
+    question: "How do you implement custom validators in Angular reactive forms?",
+    answer:
+      "Custom validators in Angular reactive forms allow you to create reusable validation logic beyond the built-in validators:\n\n" +
+      "**Basic Custom Validator:**\n" +
+      "```typescript\n" +
+      "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n" +
+      "\n" +
+      "// Simple custom validator function\n" +
+      "export function noSpacesValidator(control: AbstractControl): ValidationErrors | null {\n" +
+      "  if (control.value && control.value.includes(' ')) {\n" +
+      "    return { noSpaces: { value: control.value } };\n" +
+      "  }\n" +
+      "  return null;\n" +
+      "}\n" +
+      "\n" +
+      "// Validator factory function\n" +
+      "export function minLengthValidator(minLength: number): ValidatorFn {\n" +
+      "  return (control: AbstractControl): ValidationErrors | null => {\n" +
+      "    if (control.value && control.value.length < minLength) {\n" +
+      "      return { \n" +
+      "        minLength: { \n" +
+      "          requiredLength: minLength, \n" +
+      "          actualLength: control.value.length \n" +
+      "        } \n" +
+      "      };\n" +
+      "    }\n" +
+      "    return null;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "// Using custom validators\n" +
+      "export class UserFormComponent {\n" +
+      "  userForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      username: ['', [Validators.required, noSpacesValidator]],\n" +
+      "      password: ['', [Validators.required, minLengthValidator(8)]]\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Async Custom Validator:**\n" +
+      "```typescript\n" +
+      "import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';\n" +
+      "import { Observable, of } from 'rxjs';\n" +
+      "import { map, catchError, delay } from 'rxjs/operators';\n" +
+      "\n" +
+      "// Async validator for checking username availability\n" +
+      "export function usernameAvailabilityValidator(\n" +
+      "  userService: UserService\n" +
+      "): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "\n" +
+      "    return userService.checkUsernameAvailability(control.value).pipe(\n" +
+      "      map(isAvailable => isAvailable ? null : { usernameTaken: true }),\n" +
+      "      catchError(() => of({ usernameCheckFailed: true }))\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "// Using async validator\n" +
+      "export class RegistrationFormComponent {\n" +
+      "  registrationForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private fb: FormBuilder,\n" +
+      "    private userService: UserService\n" +
+      "  ) {\n" +
+      "    this.registrationForm = this.fb.group({\n" +
+      "      username: ['', \n" +
+      "        [Validators.required, noSpacesValidator],\n" +
+      "        [usernameAvailabilityValidator(this.userService)]\n" +
+      "      ]\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Cross-Field Validator:**\n" +
+      "```typescript\n" +
+      "// Cross-field validator for password confirmation\n" +
+      "export function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {\n" +
+      "  const password = control.get('password');\n" +
+      "  const confirmPassword = control.get('confirmPassword');\n" +
+      "\n" +
+      "  if (!password || !confirmPassword) {\n" +
+      "    return null;\n" +
+      "  }\n" +
+      "\n" +
+      "  return password.value === confirmPassword.value ? null : { passwordMismatch: true };\n" +
+      "}\n" +
+      "\n" +
+      "// Using cross-field validator\n" +
+      "export class PasswordFormComponent {\n" +
+      "  passwordForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.passwordForm = this.fb.group({\n" +
+      "      password: ['', [Validators.required, Validators.minLength(8)]],\n" +
+      "      confirmPassword: ['', Validators.required]\n" +
+      "    }, { validators: passwordMatchValidator });\n" +
+      "  }\n" +
+      "\n" +
+      "  get passwordError() {\n" +
+      "    return this.passwordForm.get('password')?.errors;\n" +
+      "  }\n" +
+      "\n" +
+      "  get confirmPasswordError() {\n" +
+      "    return this.passwordForm.get('confirmPassword')?.errors;\n" +
+      "  }\n" +
+      "\n" +
+      "  get formError() {\n" +
+      "    return this.passwordForm.errors;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Error Handling:**\n" +
+      "```html\n" +
+      "<!-- Custom validator error display -->\n" +
+      '<form [formGroup]="userForm">\n' +
+      '  <div class="form-group">\n' +
+      "    <label>Username:</label>\n" +
+      '    <input formControlName="username" />\n' +
+      "    \n" +
+      "    <!-- Custom validator errors -->\n" +
+      "    <div *ngIf=\"userForm.get('username')?.hasError('noSpaces')\" class=\"error\">\n" +
+      "      Username cannot contain spaces\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <div *ngIf=\"userForm.get('username')?.hasError('usernameTaken')\" class=\"error\">\n" +
+      "      Username is already taken\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <div *ngIf=\"userForm.get('username')?.hasError('usernameCheckFailed')\" class=\"error\">\n" +
+      "      Unable to verify username availability\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "  \n" +
+      "  <!-- Cross-field validator error -->\n" +
+      '  <div *ngIf="passwordForm.hasError(\'passwordMismatch\')" class="error">\n' +
+      "    Passwords do not match\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Advanced Custom Validator with Parameters:**\n" +
+      "```typescript\n" +
+      "// Validator with multiple parameters\n" +
+      "export function rangeValidator(min: number, max: number): ValidatorFn {\n" +
+      "  return (control: AbstractControl): ValidationErrors | null => {\n" +
+      "    const value = control.value;\n" +
+      "    if (value === null || value === undefined) {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "\n" +
+      "    if (value < min || value > max) {\n" +
+      "      return {\n" +
+      "        range: {\n" +
+      "          min: min,\n" +
+      "          max: max,\n" +
+      "          actual: value\n" +
+      "        }\n" +
+      "      };\n" +
+      "    }\n" +
+      "    return null;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "// Email domain validator\n" +
+      "export function emailDomainValidator(allowedDomains: string[]): ValidatorFn {\n" +
+      "  return (control: AbstractControl): ValidationErrors | null => {\n" +
+      "    if (!control.value) {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "\n" +
+      "    const email = control.value;\n" +
+      "    const domain = email.split('@')[1];\n" +
+      "\n" +
+      "    if (!allowedDomains.includes(domain)) {\n" +
+      "      return {\n" +
+      "        invalidDomain: {\n" +
+      "          allowedDomains: allowedDomains,\n" +
+      "          actualDomain: domain\n" +
+      "        }\n" +
+      "      };\n" +
+      "    }\n" +
+      "    return null;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "// Using parameterized validators\n" +
+      "export class AdvancedFormComponent {\n" +
+      "  advancedForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.advancedForm = this.fb.group({\n" +
+      "      age: [null, [rangeValidator(18, 65)]],\n" +
+      "      email: ['', [\n" +
+      "        Validators.required,\n" +
+      "        Validators.email,\n" +
+      "        emailDomainValidator(['company.com', 'partner.com'])\n" +
+      "      ]]\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Keep validators pure and stateless\n" +
+      "- Return null for valid values\n" +
+      "- Use descriptive error keys\n" +
+      "- Include context in error objects\n" +
+      "- Handle async validators properly\n" +
+      "- Test validators thoroughly\n" +
+      "- Use TypeScript for better type safety",
+    category: "Forms",
+    difficulty: "advanced",
+    tags: ["forms", "reactive", "validators", "custom", "async"],
+  },
+  {
+    id: 170,
+    question:
+      "How do you handle form validation errors and display them in Angular reactive forms?",
+    answer:
+      "Proper error handling and display in Angular reactive forms provides a better user experience:\n\n" +
+      "**Basic Error Handling:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-form',\n" +
+      "  templateUrl: './user-form.component.html'\n" +
+      "})\n" +
+      "export class UserFormComponent implements OnInit {\n" +
+      "  userForm: FormGroup;\n" +
+      "  submitted = false;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {}\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      name: ['', [Validators.required, Validators.minLength(2)]],\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      age: [null, [Validators.required, Validators.min(18), Validators.max(100)]]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Helper method to get form control\n" +
+      "  getFormControl(controlName: string): AbstractControl | null {\n" +
+      "    return this.userForm.get(controlName);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if control has error\n" +
+      "  hasError(controlName: string, errorType: string): boolean {\n" +
+      "    const control = this.getFormControl(controlName);\n" +
+      "    return control ? control.hasError(errorType) : false;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if control should show error\n" +
+      "  shouldShowError(controlName: string): boolean {\n" +
+      "    const control = this.getFormControl(controlName);\n" +
+      "    return control ? (control.invalid && (control.dirty || control.touched || this.submitted)) : false;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get error message\n" +
+      "  getErrorMessage(controlName: string): string {\n" +
+      "    const control = this.getFormControl(controlName);\n" +
+      "    if (!control || !control.errors) return '';\n" +
+      "\n" +
+      "    const errors = control.errors;\n" +
+      "    \n" +
+      "    if (errors['required']) return `${controlName} is required`;\n" +
+      "    if (errors['email']) return 'Please enter a valid email';\n" +
+      "    if (errors['minlength']) return `${controlName} must be at least ${errors['minlength'].requiredLength} characters`;\n" +
+      "    if (errors['min']) return `${controlName} must be at least ${errors['min'].min}`;\n" +
+      "    if (errors['max']) return `${controlName} must be at most ${errors['max'].max}`;\n" +
+      "    \n" +
+      "    return 'Invalid input';\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit() {\n" +
+      "    this.submitted = true;\n" +
+      "    \n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "    } else {\n" +
+      "      // Mark all fields as touched to show errors\n" +
+      "      this.markFormGroupTouched(this.userForm);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Mark all form controls as touched\n" +
+      "  private markFormGroupTouched(formGroup: FormGroup) {\n" +
+      "    Object.keys(formGroup.controls).forEach(key => {\n" +
+      "      const control = formGroup.get(key);\n" +
+      "      control?.markAsTouched();\n" +
+      "      \n" +
+      "      if (control instanceof FormGroup) {\n" +
+      "        this.markFormGroupTouched(control);\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Error Display:**\n" +
+      "```html\n" +
+      "<!-- user-form.component.html -->\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      "  <!-- Name field with error handling -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="name">Name:</label>\n' +
+      "    <input \n" +
+      '      type="text" \n' +
+      '      id="name" \n' +
+      '      formControlName="name"\n' +
+      "      [class.is-invalid]=\"shouldShowError('name')\"\n" +
+      "      [class.is-valid]=\"getFormControl('name')?.valid && getFormControl('name')?.touched\"\n" +
+      "    />\n" +
+      "    \n" +
+      "    <!-- Error messages -->\n" +
+      '    <div *ngIf="shouldShowError(\'name\')" class="invalid-feedback">\n' +
+      "      {{ getErrorMessage('name') }}\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Email field with error handling -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="email">Email:</label>\n' +
+      "    <input \n" +
+      '      type="email" \n' +
+      '      id="email" \n' +
+      '      formControlName="email"\n' +
+      "      [class.is-invalid]=\"shouldShowError('email')\"\n" +
+      "    />\n" +
+      "    \n" +
+      '    <div *ngIf="shouldShowError(\'email\')" class="invalid-feedback">\n' +
+      "      {{ getErrorMessage('email') }}\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Age field with error handling -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="age">Age:</label>\n' +
+      "    <input \n" +
+      '      type="number" \n' +
+      '      id="age" \n' +
+      '      formControlName="age"\n' +
+      "      [class.is-invalid]=\"shouldShowError('age')\"\n" +
+      "    />\n" +
+      "    \n" +
+      '    <div *ngIf="shouldShowError(\'age\')" class="invalid-feedback">\n' +
+      "      {{ getErrorMessage('age') }}\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Submit button -->\n" +
+      '  <button type="submit" [disabled]="userForm.invalid && submitted">\n' +
+      "    Submit\n" +
+      "  </button>\n" +
+      "  \n" +
+      "  <!-- Form-level error summary -->\n" +
+      '  <div *ngIf="submitted && userForm.invalid" class="alert alert-danger">\n' +
+      "    <h6>Please fix the following errors:</h6>\n" +
+      '    <ul class="mb-0">\n' +
+      "      <li *ngIf=\"hasError('name', 'required')\">Name is required</li>\n" +
+      "      <li *ngIf=\"hasError('email', 'required')\">Email is required</li>\n" +
+      "      <li *ngIf=\"hasError('email', 'email')\">Please enter a valid email</li>\n" +
+      "      <li *ngIf=\"hasError('age', 'required')\">Age is required</li>\n" +
+      "    </ul>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Advanced Error Handling Service:**\n" +
+      "```typescript\n" +
+      "// error-handler.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { AbstractControl, ValidationErrors } from '@angular/forms';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class ErrorHandlerService {\n" +
+      "  private errorMessages: { [key: string]: string } = {\n" +
+      "    required: 'This field is required',\n" +
+      "    email: 'Please enter a valid email address',\n" +
+      "    minlength: 'Minimum length is {requiredLength} characters',\n" +
+      "    maxlength: 'Maximum length is {requiredLength} characters',\n" +
+      "    min: 'Minimum value is {min}',\n" +
+      "    max: 'Maximum value is {max}',\n" +
+      "    pattern: 'Please enter a valid format',\n" +
+      "    noSpaces: 'This field cannot contain spaces',\n" +
+      "    usernameTaken: 'This username is already taken',\n" +
+      "    passwordMismatch: 'Passwords do not match'\n" +
+      "  };\n" +
+      "\n" +
+      "  getErrorMessage(control: AbstractControl, fieldName: string = 'This field'): string {\n" +
+      "    if (!control || !control.errors) return '';\n" +
+      "\n" +
+      "    const errors = control.errors;\n" +
+      "    const firstError = Object.keys(errors)[0];\n" +
+      "    \n" +
+      "    let message = this.errorMessages[firstError] || 'Invalid input';\n" +
+      "    \n" +
+      "    // Replace placeholders with actual values\n" +
+      "    const errorData = errors[firstError];\n" +
+      "    if (errorData && typeof errorData === 'object') {\n" +
+      "      Object.keys(errorData).forEach(key => {\n" +
+      "        message = message.replace(`{${key}}`, errorData[key]);\n" +
+      "      });\n" +
+      "    }\n" +
+      "    \n" +
+      "    return message.replace('This field', fieldName);\n" +
+      "  }\n" +
+      "\n" +
+      "  shouldShowError(control: AbstractControl, submitted: boolean = false): boolean {\n" +
+      "    if (!control) return false;\n" +
+      "    return control.invalid && (control.dirty || control.touched || submitted);\n" +
+      "  }\n" +
+      "\n" +
+      "  getFieldErrors(control: AbstractControl): string[] {\n" +
+      "    if (!control || !control.errors) return [];\n" +
+      "    \n" +
+      "    return Object.keys(control.errors).map(errorKey => {\n" +
+      "      return this.getErrorMessage(control, 'Field');\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using Error Handler Service:**\n" +
+      "```typescript\n" +
+      "// user-form.component.ts\n" +
+      "import { ErrorHandlerService } from './error-handler.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-form',\n" +
+      "  templateUrl: './user-form.component.html'\n" +
+      "})\n" +
+      "export class UserFormComponent {\n" +
+      "  userForm: FormGroup;\n" +
+      "  submitted = false;\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private fb: FormBuilder,\n" +
+      "    private errorHandler: ErrorHandlerService\n" +
+      "  ) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      name: ['', [Validators.required, Validators.minLength(2)]],\n" +
+      "      email: ['', [Validators.required, Validators.email]]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  getErrorMessage(controlName: string): string {\n" +
+      "    const control = this.userForm.get(controlName);\n" +
+      "    return this.errorHandler.getErrorMessage(control!, controlName);\n" +
+      "  }\n" +
+      "\n" +
+      "  shouldShowError(controlName: string): boolean {\n" +
+      "    const control = this.userForm.get(controlName);\n" +
+      "    return this.errorHandler.shouldShowError(control!, this.submitted);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**CSS for Error States:**\n" +
+      "```css\n" +
+      "/* user-form.component.css */\n" +
+      ".form-group {\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-control.is-invalid {\n" +
+      "  border-color: #dc3545;\n" +
+      "  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);\n" +
+      "}\n" +
+      "\n" +
+      ".form-control.is-valid {\n" +
+      "  border-color: #28a745;\n" +
+      "  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);\n" +
+      "}\n" +
+      "\n" +
+      ".invalid-feedback {\n" +
+      "  display: block;\n" +
+      "  width: 100%;\n" +
+      "  margin-top: 0.25rem;\n" +
+      "  font-size: 0.875rem;\n" +
+      "  color: #dc3545;\n" +
+      "}\n" +
+      "\n" +
+      ".valid-feedback {\n" +
+      "  display: block;\n" +
+      "  width: 100%;\n" +
+      "  margin-top: 0.25rem;\n" +
+      "  font-size: 0.875rem;\n" +
+      "  color: #28a745;\n" +
+      "}\n" +
+      "\n" +
+      ".alert {\n" +
+      "  padding: 0.75rem 1.25rem;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "  border: 1px solid transparent;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".alert-danger {\n" +
+      "  color: #721c24;\n" +
+      "  background-color: #f8d7da;\n" +
+      "  border-color: #f5c6cb;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Show errors only after user interaction\n" +
+      "- Use consistent error messaging\n" +
+      "- Provide clear, actionable error messages\n" +
+      "- Handle both field-level and form-level errors\n" +
+      "- Use CSS classes for visual feedback\n" +
+      "- Implement error summary for complex forms\n" +
+      "- Test error scenarios thoroughly",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["forms", "reactive", "validation", "error-handling", "UX"],
+  },
+  {
+    id: 171,
+    question: "How do you implement dynamic forms with FormArray in Angular reactive forms?",
+    answer:
+      "Dynamic forms with FormArray allow users to add/remove form fields dynamically, perfect for scenarios like multiple addresses, phone numbers, or skills:\n\n" +
+      "**Basic Dynamic Form Implementation:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-dynamic-form',\n" +
+      "  templateUrl: './dynamic-form.component.html'\n" +
+      "})\n" +
+      "export class DynamicFormComponent implements OnInit {\n" +
+      "  dynamicForm: FormGroup;\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {}\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    this.dynamicForm = this.fb.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      skills: this.fb.array([]), // Empty FormArray for skills\n" +
+      "      addresses: this.fb.array([\n" +
+      "        this.createAddressGroup() // Start with one address\n" +
+      "      ])\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Create a new skill FormControl\n" +
+      "  createSkillControl(): FormControl {\n" +
+      "    return this.fb.control('', [Validators.required, Validators.minLength(2)]);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Create a new address FormGroup\n" +
+      "  createAddressGroup(): FormGroup {\n" +
+      "    return this.fb.group({\n" +
+      "      street: ['', Validators.required],\n" +
+      "      city: ['', Validators.required],\n" +
+      "      zipCode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],\n" +
+      "      country: ['', Validators.required]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get FormArray getters\n" +
+      "  get skillsArray(): FormArray {\n" +
+      "    return this.dynamicForm.get('skills') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  get addressesArray(): FormArray {\n" +
+      "    return this.dynamicForm.get('addresses') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Add/Remove methods for skills\n" +
+      "  addSkill() {\n" +
+      "    this.skillsArray.push(this.createSkillControl());\n" +
+      "  }\n" +
+      "\n" +
+      "  removeSkill(index: number) {\n" +
+      "    if (this.skillsArray.length > 1) {\n" +
+      "      this.skillsArray.removeAt(index);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Add/Remove methods for addresses\n" +
+      "  addAddress() {\n" +
+      "    this.addressesArray.push(this.createAddressGroup());\n" +
+      "  }\n" +
+      "\n" +
+      "  removeAddress(index: number) {\n" +
+      "    if (this.addressesArray.length > 1) {\n" +
+      "      this.addressesArray.removeAt(index);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get skill control by index\n" +
+      "  getSkillControl(index: number): FormControl {\n" +
+      "    return this.skillsArray.at(index) as FormControl;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get address group by index\n" +
+      "  getAddressGroup(index: number): FormGroup {\n" +
+      "    return this.addressesArray.at(index) as FormGroup;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Form submission\n" +
+      "  onSubmit() {\n" +
+      "    if (this.dynamicForm.valid) {\n" +
+      "      console.log('Form submitted:', this.dynamicForm.value);\n" +
+      "      console.log('Raw form value:', this.dynamicForm.getRawValue());\n" +
+      "    } else {\n" +
+      "      this.markFormGroupTouched(this.dynamicForm);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Mark all controls as touched\n" +
+      "  private markFormGroupTouched(formGroup: FormGroup) {\n" +
+      "    Object.keys(formGroup.controls).forEach(key => {\n" +
+      "      const control = formGroup.get(key);\n" +
+      "      \n" +
+      "      if (control instanceof FormGroup) {\n" +
+      "        this.markFormGroupTouched(control);\n" +
+      "      } else if (control instanceof FormArray) {\n" +
+      "        control.controls.forEach(arrayControl => {\n" +
+      "          if (arrayControl instanceof FormGroup) {\n" +
+      "            this.markFormGroupTouched(arrayControl);\n" +
+      "          } else {\n" +
+      "            arrayControl.markAsTouched();\n" +
+      "          }\n" +
+      "        });\n" +
+      "      } else {\n" +
+      "        control?.markAsTouched();\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Implementation:**\n" +
+      "```html\n" +
+      "<!-- dynamic-form.component.html -->\n" +
+      '<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">\n' +
+      "  <!-- Basic fields -->\n" +
+      '  <div class="form-group">\n' +
+      "    <label>Name:</label>\n" +
+      '    <input formControlName="name" placeholder="Enter your name" />\n' +
+      "  </div>\n" +
+      "\n" +
+      '  <div class="form-group">\n' +
+      "    <label>Email:</label>\n" +
+      '    <input formControlName="email" placeholder="Enter your email" />\n' +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Dynamic Skills Section -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>Skills</h3>\n" +
+      '    <div formArrayName="skills">\n' +
+      "      <div \n" +
+      '        *ngFor="let skill of skillsArray.controls; let i = index" \n' +
+      '        class="skill-item"\n' +
+      "      >\n" +
+      '        <div class="form-group">\n' +
+      "          <input \n" +
+      '            [formControlName]="i" \n' +
+      '            placeholder="Enter skill {{i + 1}}"\n' +
+      '            [class.is-invalid]="getSkillControl(i).invalid && getSkillControl(i).touched"\n' +
+      "          />\n" +
+      "          <button \n" +
+      '            type="button" \n' +
+      '            class="btn btn-danger btn-sm" \n' +
+      '            (click)="removeSkill(i)"\n' +
+      '            [disabled]="skillsArray.length <= 1"\n' +
+      "          >\n" +
+      "            Remove\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "        \n" +
+      "        <!-- Error display for skills -->\n" +
+      "        <div \n" +
+      '          *ngIf="getSkillControl(i).invalid && getSkillControl(i).touched" \n' +
+      '          class="error-message"\n' +
+      "        >\n" +
+      "          <span *ngIf=\"getSkillControl(i).hasError('required')\">Skill is required</span>\n" +
+      "          <span *ngIf=\"getSkillControl(i).hasError('minlength')\">Skill must be at least 2 characters</span>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <button \n" +
+      '      type="button" \n' +
+      '      class="btn btn-primary" \n' +
+      '      (click)="addSkill()"\n' +
+      "    >\n" +
+      "      Add Skill\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Dynamic Addresses Section -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>Addresses</h3>\n" +
+      '    <div formArrayName="addresses">\n' +
+      "      <div \n" +
+      '        *ngFor="let address of addressesArray.controls; let i = index" \n' +
+      '        [formGroupName]="i"\n' +
+      '        class="address-item"\n' +
+      "      >\n" +
+      '        <div class="address-header">\n' +
+      "          <h4>Address {{i + 1}}</h4>\n" +
+      "          <button \n" +
+      '            type="button" \n' +
+      '            class="btn btn-danger btn-sm" \n' +
+      '            (click)="removeAddress(i)"\n' +
+      '            [disabled]="addressesArray.length <= 1"\n' +
+      "          >\n" +
+      "            Remove Address\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="form-row">\n' +
+      '          <div class="form-group">\n' +
+      "            <label>Street:</label>\n" +
+      "            <input \n" +
+      '              formControlName="street" \n' +
+      '              placeholder="Enter street address"\n' +
+      "              [class.is-invalid]=\"getAddressGroup(i).get('street')?.invalid && getAddressGroup(i).get('street')?.touched\"\n" +
+      "            />\n" +
+      "            <div \n" +
+      "              *ngIf=\"getAddressGroup(i).get('street')?.invalid && getAddressGroup(i).get('street')?.touched\" \n" +
+      '              class="error-message"\n' +
+      "            >\n" +
+      "              Street is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "          \n" +
+      '          <div class="form-group">\n' +
+      "            <label>City:</label>\n" +
+      "            <input \n" +
+      '              formControlName="city" \n' +
+      '              placeholder="Enter city"\n' +
+      "              [class.is-invalid]=\"getAddressGroup(i).get('city')?.invalid && getAddressGroup(i).get('city')?.touched\"\n" +
+      "            />\n" +
+      "            <div \n" +
+      "              *ngIf=\"getAddressGroup(i).get('city')?.invalid && getAddressGroup(i).get('city')?.touched\" \n" +
+      '              class="error-message"\n' +
+      "            >\n" +
+      "              City is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="form-row">\n' +
+      '          <div class="form-group">\n' +
+      "            <label>ZIP Code:</label>\n" +
+      "            <input \n" +
+      '              formControlName="zipCode" \n' +
+      '              placeholder="Enter ZIP code"\n' +
+      "              [class.is-invalid]=\"getAddressGroup(i).get('zipCode')?.invalid && getAddressGroup(i).get('zipCode')?.touched\"\n" +
+      "            />\n" +
+      "            <div \n" +
+      "              *ngIf=\"getAddressGroup(i).get('zipCode')?.invalid && getAddressGroup(i).get('zipCode')?.touched\" \n" +
+      '              class="error-message"\n' +
+      "            >\n" +
+      "              <span *ngIf=\"getAddressGroup(i).get('zipCode')?.hasError('required')\">ZIP code is required</span>\n" +
+      "              <span *ngIf=\"getAddressGroup(i).get('zipCode')?.hasError('pattern')\">ZIP code must be 5 digits</span>\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "          \n" +
+      '          <div class="form-group">\n' +
+      "            <label>Country:</label>\n" +
+      "            <select \n" +
+      '              formControlName="country"\n' +
+      "              [class.is-invalid]=\"getAddressGroup(i).get('country')?.invalid && getAddressGroup(i).get('country')?.touched\"\n" +
+      "            >\n" +
+      '              <option value="">Select Country</option>\n' +
+      '              <option value="US">United States</option>\n' +
+      '              <option value="CA">Canada</option>\n' +
+      '              <option value="UK">United Kingdom</option>\n' +
+      '              <option value="DE">Germany</option>\n' +
+      "            </select>\n" +
+      "            <div \n" +
+      "              *ngIf=\"getAddressGroup(i).get('country')?.invalid && getAddressGroup(i).get('country')?.touched\" \n" +
+      '              class="error-message"\n' +
+      "            >\n" +
+      "              Country is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <button \n" +
+      '      type="button" \n' +
+      '      class="btn btn-primary" \n' +
+      '      (click)="addAddress()"\n' +
+      "    >\n" +
+      "      Add Address\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Submit button -->\n" +
+      '  <div class="form-actions">\n' +
+      "    <button \n" +
+      '      type="submit" \n' +
+      '      class="btn btn-success"\n' +
+      '      [disabled]="dynamicForm.invalid"\n' +
+      "    >\n" +
+      "      Submit Form\n" +
+      "    </button>\n" +
+      "    \n" +
+      "    <button \n" +
+      '      type="button" \n' +
+      '      class="btn btn-secondary" \n' +
+      '      (click)="dynamicForm.reset()"\n' +
+      "    >\n" +
+      "      Reset Form\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Advanced Dynamic Form with Conditional Fields:**\n" +
+      "```typescript\n" +
+      "// Advanced dynamic form with conditional logic\n" +
+      "export class AdvancedDynamicFormComponent {\n" +
+      "  dynamicForm: FormGroup;\n" +
+      "  \n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.dynamicForm = this.fb.group({\n" +
+      "      userType: ['individual', Validators.required],\n" +
+      "      personalInfo: this.fb.group({\n" +
+      "        firstName: ['', Validators.required],\n" +
+      "        lastName: ['', Validators.required],\n" +
+      "        dateOfBirth: ['', Validators.required]\n" +
+      "      }),\n" +
+      "      companyInfo: this.fb.group({\n" +
+      "        companyName: [''],\n" +
+      "        taxId: [''],\n      " +
+      "        employees: this.fb.array([])\n" +
+      "      }),\n" +
+      "      contacts: this.fb.array([\n" +
+      "        this.createContactGroup()\n" +
+      "      ])\n" +
+      "    });\n" +
+      "\n" +
+      "    // Watch for userType changes\n" +
+      "    this.dynamicForm.get('userType')?.valueChanges.subscribe(userType => {\n" +
+      "      this.handleUserTypeChange(userType);\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  createContactGroup(): FormGroup {\n" +
+      "    return this.fb.group({\n" +
+      "      type: ['email', Validators.required],\n" +
+      "      value: ['', Validators.required],\n" +
+      "      isPrimary: [false]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  createEmployeeGroup(): FormGroup {\n" +
+      "    return this.fb.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      position: ['', Validators.required],\n" +
+      "      salary: [null, [Validators.required, Validators.min(0)]]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  handleUserTypeChange(userType: string) {\n" +
+      "    const companyInfo = this.dynamicForm.get('companyInfo');\n" +
+      "    \n" +
+      "    if (userType === 'company') {\n" +
+      "      // Enable company fields\n" +
+      "      companyInfo?.get('companyName')?.setValidators([Validators.required]);\n" +
+      "      companyInfo?.get('taxId')?.setValidators([Validators.required]);\n" +
+      "    } else {\n" +
+      "      // Disable company fields\n" +
+      "      companyInfo?.get('companyName')?.clearValidators();\n" +
+      "      companyInfo?.get('taxId')?.clearValidators();\n" +
+      "      \n" +
+      "      // Clear company values\n" +
+      "      companyInfo?.patchValue({\n" +
+      "        companyName: '',\n" +
+      "        taxId: ''\n" +
+      "      });\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Update validation\n" +
+      "    companyInfo?.get('companyName')?.updateValueAndValidity();\n" +
+      "    companyInfo?.get('taxId')?.updateValueAndValidity();\n" +
+      "  }\n" +
+      "\n" +
+      "  get contactsArray(): FormArray {\n" +
+      "    return this.dynamicForm.get('contacts') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  get employeesArray(): FormArray {\n" +
+      "    return this.dynamicForm.get('companyInfo.employees') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  addContact() {\n" +
+      "    this.contactsArray.push(this.createContactGroup());\n" +
+      "  }\n" +
+      "\n" +
+      "  removeContact(index: number) {\n" +
+      "    this.contactsArray.removeAt(index);\n" +
+      "  }\n" +
+      "\n" +
+      "  addEmployee() {\n" +
+      "    this.employeesArray.push(this.createEmployeeGroup());\n" +
+      "  }\n" +
+      "\n" +
+      "  removeEmployee(index: number) {\n" +
+      "    this.employeesArray.removeAt(index);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**CSS for Dynamic Forms:**\n" +
+      "```css\n" +
+      "/* dynamic-form.component.css */\n" +
+      ".form-section {\n" +
+      "  margin-bottom: 2rem;\n" +
+      "  padding: 1rem;\n" +
+      "  border: 1px solid #dee2e6;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".skill-item, .address-item {\n" +
+      "  margin-bottom: 1rem;\n" +
+      "  padding: 1rem;\n" +
+      "  background-color: #f8f9fa;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".address-header {\n" +
+      "  display: flex;\n" +
+      "  justify-content: space-between;\n" +
+      "  align-items: center;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-row {\n" +
+      "  display: flex;\n" +
+      "  gap: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-group {\n" +
+      "  flex: 1;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-actions {\n" +
+      "  margin-top: 2rem;\n" +
+      "  display: flex;\n" +
+      "  gap: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".error-message {\n" +
+      "  color: #dc3545;\n" +
+      "  font-size: 0.875rem;\n" +
+      "  margin-top: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".btn {\n" +
+      "  padding: 0.375rem 0.75rem;\n" +
+      "  border: 1px solid transparent;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  cursor: pointer;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-primary {\n" +
+      "  background-color: #007bff;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-danger {\n" +
+      "  background-color: #dc3545;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-success {\n" +
+      "  background-color: #28a745;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-secondary {\n" +
+      "  background-color: #6c757d;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-sm {\n" +
+      "  padding: 0.25rem 0.5rem;\n" +
+      "  font-size: 0.875rem;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Always provide minimum one item in FormArray\n" +
+      "- Use proper validation for dynamic fields\n" +
+      "- Implement proper error handling\n" +
+      "- Use getter methods for cleaner templates\n" +
+      "- Handle form state properly\n" +
+      "- Provide clear visual feedback\n" +
+      "- Test dynamic form scenarios thoroughly",
+    category: "Forms",
+    difficulty: "advanced",
+    tags: ["forms", "reactive", "FormArray", "dynamic", "validation"],
+  },
+  {
+    id: 172,
+    question:
+      "How do you implement form state management and persistence in Angular reactive forms?",
+    answer:
+      "Form state management and persistence in Angular reactive forms involves saving, restoring, and managing form data across sessions:\n\n" +
+      "**Basic Form State Management:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit, OnDestroy } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, Validators } from '@angular/forms';\n" +
+      "import { Subscription } from 'rxjs';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-form-state',\n" +
+      "  templateUrl: './form-state.component.html'\n" +
+      "})\n" +
+      "export class FormStateComponent implements OnInit, OnDestroy {\n" +
+      "  userForm: FormGroup;\n" +
+      "  private formSubscription: Subscription;\n" +
+      "  private readonly FORM_STORAGE_KEY = 'userFormData';\n" +
+      "  private readonly FORM_STATE_KEY = 'userFormState';\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      phone: ['', Validators.required],\n" +
+      "      address: this.fb.group({\n" +
+      "        street: ['', Validators.required],\n" +
+      "        city: ['', Validators.required],\n" +
+      "        zipCode: ['', Validators.required]\n" +
+      "      })\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    // Restore form data from localStorage\n" +
+      "    this.restoreFormData();\n" +
+      "    \n" +
+      "    // Subscribe to form changes for auto-save\n" +
+      "    this.formSubscription = this.userForm.valueChanges.subscribe(formData => {\n" +
+      "      this.saveFormData(formData);\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy() {\n" +
+      "    if (this.formSubscription) {\n" +
+      "      this.formSubscription.unsubscribe();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Save form data to localStorage\n" +
+      "  private saveFormData(formData: any) {\n" +
+      "    try {\n" +
+      "      localStorage.setItem(this.FORM_STORAGE_KEY, JSON.stringify(formData));\n" +
+      "      \n" +
+      "      // Save form state (touched, dirty, etc.)\n" +
+      "      const formState = {\n" +
+      "        touched: this.userForm.touched,\n" +
+      "        dirty: this.userForm.dirty,\n" +
+      "        valid: this.userForm.valid,\n" +
+      "        timestamp: new Date().toISOString()\n" +
+      "      };\n" +
+      "      localStorage.setItem(this.FORM_STATE_KEY, JSON.stringify(formState));\n" +
+      "    } catch (error) {\n" +
+      "      console.error('Error saving form data:', error);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Restore form data from localStorage\n" +
+      "  private restoreFormData() {\n" +
+      "    try {\n" +
+      "      const savedData = localStorage.getItem(this.FORM_STORAGE_KEY);\n" +
+      "      const savedState = localStorage.getItem(this.FORM_STATE_KEY);\n" +
+      "      \n" +
+      "      if (savedData) {\n" +
+      "        const formData = JSON.parse(savedData);\n" +
+      "        this.userForm.patchValue(formData);\n" +
+      "        \n" +
+      "        // Restore form state if available\n" +
+      "        if (savedState) {\n" +
+      "          const formState = JSON.parse(savedState);\n" +
+      "          this.restoreFormState(formState);\n" +
+      "        }\n" +
+      "      }\n" +
+      "    } catch (error) {\n" +
+      "      console.error('Error restoring form data:', error);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Restore form state\n" +
+      "  private restoreFormState(formState: any) {\n" +
+      "    if (formState.touched) {\n" +
+      "      this.userForm.markAsTouched();\n" +
+      "    }\n" +
+      "    if (formState.dirty) {\n" +
+      "      this.userForm.markAsDirty();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Clear saved form data\n" +
+      "  clearFormData() {\n" +
+      "    localStorage.removeItem(this.FORM_STORAGE_KEY);\n" +
+      "    localStorage.removeItem(this.FORM_STATE_KEY);\n" +
+      "    this.userForm.reset();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if form has saved data\n" +
+      "  hasSavedData(): boolean {\n" +
+      "    return localStorage.getItem(this.FORM_STORAGE_KEY) !== null;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get saved data timestamp\n" +
+      "  getSavedDataTimestamp(): string | null {\n" +
+      "    const savedState = localStorage.getItem(this.FORM_STATE_KEY);\n" +
+      "    if (savedState) {\n" +
+      "      const formState = JSON.parse(savedState);\n" +
+      "      return formState.timestamp;\n" +
+      "    }\n" +
+      "    return null;\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "      // Clear saved data after successful submission\n" +
+      "      this.clearFormData();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Form State Service:**\n" +
+      "```typescript\n" +
+      "// form-state.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { FormGroup, AbstractControl } from '@angular/forms';\n" +
+      "import { BehaviorSubject, Observable } from 'rxjs';\n" +
+      "\n" +
+      "export interface FormState {\n" +
+      "  data: any;\n" +
+      "  state: {\n" +
+      "    touched: boolean;\n" +
+      "    dirty: boolean;\n" +
+      "    valid: boolean;\n" +
+      "    timestamp: string;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class FormStateService {\n" +
+      "  private formStates = new Map<string, FormState>();\n" +
+      "  private stateSubject = new BehaviorSubject<Map<string, FormState>>(new Map());\n" +
+      "\n" +
+      "  constructor() {\n" +
+      "    // Load all saved form states on service initialization\n" +
+      "    this.loadAllFormStates();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Save form state\n" +
+      "  saveFormState(formId: string, form: FormGroup): void {\n" +
+      "    const formState: FormState = {\n" +
+      "      data: form.value,\n" +
+      "      state: {\n" +
+      "        touched: form.touched,\n" +
+      "        dirty: form.dirty,\n" +
+      "        valid: form.valid,\n" +
+      "        timestamp: new Date().toISOString()\n" +
+      "      }\n" +
+      "    };\n" +
+      "\n" +
+      "    this.formStates.set(formId, formState);\n" +
+      "    this.persistFormState(formId, formState);\n" +
+      "    this.stateSubject.next(this.formStates);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Restore form state\n" +
+      "  restoreFormState(formId: string, form: FormGroup): boolean {\n" +
+      "    const savedState = this.formStates.get(formId);\n" +
+      "    \n" +
+      "    if (savedState) {\n" +
+      "      form.patchValue(savedState.data);\n" +
+      "      \n" +
+      "      // Restore form state\n" +
+      "      if (savedState.state.touched) {\n" +
+      "        form.markAsTouched();\n" +
+      "      }\n" +
+      "      if (savedState.state.dirty) {\n" +
+      "        form.markAsDirty();\n" +
+      "      }\n" +
+      "      \n" +
+      "      return true;\n" +
+      "    }\n" +
+      "    \n" +
+      "    return false;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Clear form state\n" +
+      "  clearFormState(formId: string): void {\n" +
+      "    this.formStates.delete(formId);\n" +
+      "    localStorage.removeItem(`form_${formId}`);\n" +
+      "    this.stateSubject.next(this.formStates);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get all form states\n" +
+      "  getAllFormStates(): Observable<Map<string, FormState>> {\n" +
+      "    return this.stateSubject.asObservable();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if form has saved state\n" +
+      "  hasFormState(formId: string): boolean {\n" +
+      "    return this.formStates.has(formId);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get form state timestamp\n" +
+      "  getFormStateTimestamp(formId: string): string | null {\n" +
+      "    const formState = this.formStates.get(formId);\n" +
+      "    return formState ? formState.state.timestamp : null;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Persist form state to localStorage\n" +
+      "  private persistFormState(formId: string, formState: FormState): void {\n" +
+      "    try {\n" +
+      "      localStorage.setItem(`form_${formId}`, JSON.stringify(formState));\n" +
+      "    } catch (error) {\n" +
+      "      console.error(`Error persisting form state for ${formId}:`, error);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Load all form states from localStorage\n" +
+      "  private loadAllFormStates(): void {\n" +
+      "    for (let i = 0; i < localStorage.length; i++) {\n" +
+      "      const key = localStorage.key(i);\n" +
+      "      if (key?.startsWith('form_')) {\n" +
+      "        try {\n" +
+      "          const formId = key.replace('form_', '');\n" +
+      "          const formState = JSON.parse(localStorage.getItem(key) || '{}');\n" +
+      "          this.formStates.set(formId, formState);\n" +
+      "        } catch (error) {\n" +
+      "          console.error(`Error loading form state for ${key}:`, error);\n" +
+      "        }\n" +
+      "      }\n" +
+      "    }\n" +
+      "    this.stateSubject.next(this.formStates);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using Form State Service:**\n" +
+      "```typescript\n" +
+      "// user-form.component.ts\n" +
+      "import { FormStateService } from './form-state.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-form',\n" +
+      "  templateUrl: './user-form.component.html'\n" +
+      "})\n" +
+      "export class UserFormComponent implements OnInit, OnDestroy {\n" +
+      "  userForm: FormGroup;\n" +
+      "  private readonly FORM_ID = 'userForm';\n" +
+      "  private formSubscription: Subscription;\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private fb: FormBuilder,\n" +
+      "    private formStateService: FormStateService\n" +
+      "  ) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      phone: ['', Validators.required]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    // Restore form state if available\n" +
+      "    const restored = this.formStateService.restoreFormState(this.FORM_ID, this.userForm);\n" +
+      "    \n" +
+      "    if (restored) {\n" +
+      "      console.log('Form state restored from:', this.formStateService.getFormStateTimestamp(this.FORM_ID));\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Auto-save form changes\n" +
+      "    this.formSubscription = this.userForm.valueChanges.pipe(\n" +
+      "      debounceTime(500) // Debounce to avoid excessive saves\n" +
+      "    ).subscribe(() => {\n" +
+      "      this.formStateService.saveFormState(this.FORM_ID, this.userForm);\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy() {\n" +
+      "    if (this.formSubscription) {\n" +
+      "      this.formSubscription.unsubscribe();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "      // Clear saved state after successful submission\n" +
+      "      this.formStateService.clearFormState(this.FORM_ID);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Manual save\n" +
+      "  saveForm() {\n" +
+      "    this.formStateService.saveFormState(this.FORM_ID, this.userForm);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if form has saved data\n" +
+      "  hasSavedData(): boolean {\n" +
+      "    return this.formStateService.hasFormState(this.FORM_ID);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template with State Management:**\n" +
+      "```html\n" +
+      "<!-- user-form.component.html -->\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      "  <!-- Form state indicator -->\n" +
+      '  <div *ngIf="hasSavedData()" class="form-state-indicator">\n' +
+      '    <i class="fas fa-save"></i>\n' +
+      "    <span>Form data saved</span>\n" +
+      '    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="saveForm()">\n' +
+      "      Save Now\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      '  <div class="form-group">\n' +
+      "    <label>Name:</label>\n" +
+      '    <input formControlName="name" placeholder="Enter your name" />\n' +
+      "  </div>\n" +
+      "\n" +
+      '  <div class="form-group">\n' +
+      "    <label>Email:</label>\n" +
+      '    <input formControlName="email" placeholder="Enter your email" />\n' +
+      "  </div>\n" +
+      "\n" +
+      '  <div class="form-group">\n' +
+      "    <label>Phone:</label>\n" +
+      '    <input formControlName="phone" placeholder="Enter your phone" />\n' +
+      "  </div>\n" +
+      "\n" +
+      '  <div class="form-actions">\n' +
+      '    <button type="submit" [disabled]="userForm.invalid">Submit</button>\n' +
+      '    <button type="button" (click)="saveForm()">Save Draft</button>\n' +
+      '    <button type="button" (click)="userForm.reset()">Reset</button>\n' +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Form State Management with IndexedDB:**\n" +
+      "```typescript\n" +
+      "// indexeddb-form-state.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { FormGroup } from '@angular/forms';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class IndexedDBFormStateService {\n" +
+      "  private dbName = 'FormStateDB';\n" +
+      "  private dbVersion = 1;\n" +
+      "  private storeName = 'formStates';\n" +
+      "\n" +
+      "  async saveFormState(formId: string, form: FormGroup): Promise<void> {\n" +
+      "    const db = await this.openDatabase();\n" +
+      "    const transaction = db.transaction([this.storeName], 'readwrite');\n" +
+      "    const store = transaction.objectStore(this.storeName);\n" +
+      "    \n" +
+      "    const formState = {\n" +
+      "      id: formId,\n" +
+      "      data: form.value,\n      " +
+      "      state: {\n" +
+      "        touched: form.touched,\n" +
+      "        dirty: form.dirty,\n" +
+      "        valid: form.valid,\n" +
+      "        timestamp: new Date().toISOString()\n" +
+      "      }\n" +
+      "    };\n" +
+      "    \n" +
+      "    await store.put(formState);\n" +
+      "  }\n" +
+      "\n" +
+      "  async restoreFormState(formId: string, form: FormGroup): Promise<boolean> {\n" +
+      "    const db = await this.openDatabase();\n" +
+      "    const transaction = db.transaction([this.storeName], 'readonly');\n" +
+      "    const store = transaction.objectStore(this.storeName);\n" +
+      "    \n" +
+      "    const request = store.get(formId);\n" +
+      "    \n" +
+      "    return new Promise((resolve) => {\n" +
+      "      request.onsuccess = () => {\n" +
+      "        const result = request.result;\n" +
+      "        if (result) {\n" +
+      "          form.patchValue(result.data);\n" +
+      "          if (result.state.touched) form.markAsTouched();\n" +
+      "          if (result.state.dirty) form.markAsDirty();\n" +
+      "          resolve(true);\n" +
+      "        } else {\n" +
+      "          resolve(false);\n" +
+      "        }\n" +
+      "      };\n" +
+      "      \n" +
+      "      request.onerror = () => resolve(false);\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  private openDatabase(): Promise<IDBDatabase> {\n" +
+      "    return new Promise((resolve, reject) => {\n" +
+      "      const request = indexedDB.open(this.dbName, this.dbVersion);\n" +
+      "      \n" +
+      "      request.onupgradeneeded = (event) => {\n" +
+      "        const db = (event.target as IDBOpenDBRequest).result;\n" +
+      "        if (!db.objectStoreNames.contains(this.storeName)) {\n" +
+      "          db.createObjectStore(this.storeName, { keyPath: 'id' });\n" +
+      "        }\n" +
+      "      };\n" +
+      "      \n" +
+      "      request.onsuccess = () => resolve(request.result);\n" +
+      "      request.onerror = () => reject(request.error);\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use debouncing for auto-save to avoid excessive storage operations\n" +
+      "- Implement proper error handling for storage operations\n" +
+      "- Consider using IndexedDB for large form data\n" +
+      "- Provide clear user feedback about saved state\n" +
+      "- Implement data expiration policies\n" +
+      "- Use proper TypeScript interfaces for type safety\n" +
+      "- Test form state persistence thoroughly",
+    category: "Forms",
+    difficulty: "advanced",
+    tags: ["forms", "reactive", "state-management", "persistence", "localStorage"],
+  },
+  {
+    id: 173,
+    question:
+      "How do you implement template-driven forms in Angular and what are their limitations?",
+    answer:
+      "Template-driven forms in Angular use directives in the template to create and manage form controls, providing a simpler approach for basic forms:\n\n" +
+      "**Basic Template-Driven Form Implementation:**\n" +
+      "```typescript\n" +
+      "// app.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { NgForm } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-root',\n" +
+      "  templateUrl: './app.component.html',\n" +
+      "  styleUrls: ['./app.component.css']\n" +
+      "})\n" +
+      "export class AppComponent {\n" +
+      "  user = {\n" +
+      "    name: '',\n" +
+      "    email: '',\n" +
+      "    age: null,\n" +
+      "    country: '',\n" +
+      "    newsletter: false\n" +
+      "  };\n" +
+      "\n" +
+      "  countries = [\n" +
+      "    { code: 'US', name: 'United States' },\n" +
+      "    { code: 'CA', name: 'Canada' },\n" +
+      "    { code: 'UK', name: 'United Kingdom' },\n" +
+      "    { code: 'DE', name: 'Germany' }\n" +
+      "  ];\n" +
+      "\n" +
+      "  onSubmit(form: NgForm) {\n" +
+      "    if (form.valid) {\n" +
+      "      console.log('Form submitted:', form.value);\n" +
+      "      console.log('Form status:', form.status);\n" +
+      "      console.log('Form touched:', form.touched);\n" +
+      "      console.log('Form dirty:', form.dirty);\n" +
+      "    } else {\n" +
+      "      console.log('Form is invalid');\n" +
+      "      this.markFormGroupTouched(form);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  onReset(form: NgForm) {\n" +
+      "    form.resetForm();\n" +
+      "    this.user = {\n" +
+      "      name: '',\n" +
+      "      email: '',\n      " +
+      "      age: null,\n" +
+      "      country: '',\n" +
+      "      newsletter: false\n" +
+      "    };\n" +
+      "  }\n" +
+      "\n" +
+      "  // Helper method to mark all fields as touched\n" +
+      "  private markFormGroupTouched(form: NgForm) {\n" +
+      "    Object.keys(form.controls).forEach(key => {\n" +
+      "      const control = form.controls[key];\n" +
+      "      control.markAsTouched();\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Implementation:**\n" +
+      "```html\n" +
+      "<!-- app.component.html -->\n" +
+      '<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" novalidate>\n' +
+      "  <!-- Form status display -->\n" +
+      '  <div class="form-status">\n' +
+      "    <p>Form Status: {{ userForm.status }}</p>\n" +
+      "    <p>Form Valid: {{ userForm.valid }}</p>\n" +
+      "    <p>Form Touched: {{ userForm.touched }}</p>\n" +
+      "    <p>Form Dirty: {{ userForm.dirty }}</p>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Name field -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="name">Name:</label>\n' +
+      "    <input \n" +
+      '      type="text" \n' +
+      '      id="name" \n' +
+      '      name="name" \n' +
+      '      [(ngModel)]="user.name" \n' +
+      "      required \n" +
+      '      minlength="2" \n' +
+      '      maxlength="50"\n' +
+      '      #name="ngModel"\n' +
+      '      [class.is-invalid]="name.invalid && name.touched"\n' +
+      '      [class.is-valid]="name.valid && name.touched"\n' +
+      "    />\n" +
+      "    \n" +
+      "    <!-- Validation messages -->\n" +
+      '    <div *ngIf="name.invalid && name.touched" class="invalid-feedback">\n' +
+      "      <div *ngIf=\"name.errors?.['required']\">Name is required</div>\n" +
+      "      <div *ngIf=\"name.errors?.['minlength']\">\n" +
+      "        Name must be at least {{ name.errors?.['minlength'].requiredLength }} characters\n" +
+      "      </div>\n" +
+      "      <div *ngIf=\"name.errors?.['maxlength']\">\n" +
+      "        Name cannot exceed {{ name.errors?.['maxlength'].requiredLength }} characters\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Email field -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="email">Email:</label>\n' +
+      "    <input \n" +
+      '      type="email" \n' +
+      '      id="email" \n' +
+      '      name="email" \n' +
+      '      [(ngModel)]="user.email" \n' +
+      "      required \n" +
+      "      email\n" +
+      '      #email="ngModel"\n' +
+      '      [class.is-invalid]="email.invalid && email.touched"\n' +
+      "    />\n" +
+      "    \n" +
+      '    <div *ngIf="email.invalid && email.touched" class="invalid-feedback">\n' +
+      "      <div *ngIf=\"email.errors?.['required']\">Email is required</div>\n" +
+      "      <div *ngIf=\"email.errors?.['email']\">Please enter a valid email address</div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Age field -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="age">Age:</label>\n' +
+      "    <input \n" +
+      '      type="number" \n' +
+      '      id="age" \n' +
+      '      name="age" \n' +
+      '      [(ngModel)]="user.age" \n' +
+      "      required \n" +
+      '      min="18" \n' +
+      '      max="100"\n' +
+      '      #age="ngModel"\n' +
+      '      [class.is-invalid]="age.invalid && age.touched"\n' +
+      "    />\n" +
+      "    \n" +
+      '    <div *ngIf="age.invalid && age.touched" class="invalid-feedback">\n' +
+      "      <div *ngIf=\"age.errors?.['required']\">Age is required</div>\n" +
+      "      <div *ngIf=\"age.errors?.['min']\">Age must be at least {{ age.errors?.['min'].min }}</div>\n" +
+      "      <div *ngIf=\"age.errors?.['max']\">Age cannot exceed {{ age.errors?.['max'].max }}</div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Country dropdown -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="country">Country:</label>\n' +
+      "    <select \n" +
+      '      id="country" \n' +
+      '      name="country" \n' +
+      '      [(ngModel)]="user.country" \n' +
+      "      required\n" +
+      '      #country="ngModel"\n' +
+      '      [class.is-invalid]="country.invalid && country.touched"\n' +
+      "    >\n" +
+      '      <option value="">Select a country</option>\n' +
+      '      <option *ngFor="let country of countries" [value]="country.code">\n' +
+      "        {{ country.name }}\n" +
+      "      </option>\n" +
+      "    </select>\n" +
+      "    \n" +
+      '    <div *ngIf="country.invalid && country.touched" class="invalid-feedback">\n' +
+      "      <div *ngIf=\"country.errors?.['required']\">Please select a country</div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Newsletter checkbox -->\n" +
+      '  <div class="form-group">\n' +
+      '    <div class="form-check">\n' +
+      "      <input \n" +
+      '        type="checkbox" \n' +
+      '        id="newsletter" \n' +
+      '        name="newsletter" \n' +
+      '        [(ngModel)]="user.newsletter"\n' +
+      '        #newsletter="ngModel"\n' +
+      "      />\n" +
+      '      <label class="form-check-label" for="newsletter">\n' +
+      "        Subscribe to newsletter\n" +
+      "      </label>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Form actions -->\n" +
+      '  <div class="form-actions">\n' +
+      "    <button \n" +
+      '      type="submit" \n' +
+      '      [disabled]="userForm.invalid"\n' +
+      '      class="btn btn-primary"\n' +
+      "    >\n" +
+      "      Submit\n" +
+      "    </button>\n" +
+      "    \n" +
+      "    <button \n" +
+      '      type="button" \n' +
+      '      (click)="onReset(userForm)"\n' +
+      '      class="btn btn-secondary"\n' +
+      "    >\n" +
+      "      Reset\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Form debug info -->\n" +
+      '  <div class="form-debug" *ngIf="userForm.touched">\n' +
+      "    <h4>Form Debug Information:</h4>\n" +
+      "    <pre>{{ userForm.value | json }}</pre>\n" +
+      "    <pre>{{ userForm.errors | json }}</pre>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Module Configuration:**\n" +
+      "```typescript\n" +
+      "// app.module.ts\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { BrowserModule } from '@angular/platform-browser';\n" +
+      "import { FormsModule } from '@angular/forms'; // Required for template-driven forms\n" +
+      "\n" +
+      "import { AppComponent } from './app.component';\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  declarations: [\n" +
+      "    AppComponent\n" +
+      "  ],\n" +
+      "  imports: [\n" +
+      "    BrowserModule,\n" +
+      "    FormsModule // Import FormsModule for template-driven forms\n" +
+      "  ],\n" +
+      "  providers: [],\n" +
+      "  bootstrap: [AppComponent]\n" +
+      "})\n" +
+      "export class AppModule { }\n" +
+      "```\n\n" +
+      "**Advanced Template-Driven Form with Custom Validation:**\n" +
+      "```typescript\n" +
+      "// Custom validator directive\n" +
+      "import { Directive, Input } from '@angular/core';\n" +
+      "import { NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';\n" +
+      "\n" +
+      "@Directive({\n" +
+      "  selector: '[appCustomValidator]',\n" +
+      "  providers: [{\n" +
+      "    provide: NG_VALIDATORS,\n" +
+      "    useExisting: CustomValidatorDirective,\n" +
+      "    multi: true\n" +
+      "  }]\n" +
+      "})\n" +
+      "export class CustomValidatorDirective implements Validator {\n" +
+      "  @Input() appCustomValidator: string = '';\n" +
+      "\n" +
+      "  validate(control: AbstractControl): ValidationErrors | null {\n" +
+      "    if (!control.value) {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "\n" +
+      "    // Example: Check if value contains forbidden words\n" +
+      "    const forbiddenWords = this.appCustomValidator.split(',');\n" +
+      "    const hasForbiddenWord = forbiddenWords.some(word => \n" +
+      "      control.value.toLowerCase().includes(word.toLowerCase())\n" +
+      "    );\n" +
+      "\n" +
+      "    return hasForbiddenWord ? { forbiddenWord: { value: control.value } } : null;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using Custom Validator in Template:**\n" +
+      "```html\n" +
+      "<!-- Using custom validator directive -->\n" +
+      '<div class="form-group">\n' +
+      '  <label for="username">Username:</label>\n' +
+      "  <input \n" +
+      '    type="text" \n' +
+      '    id="username" \n' +
+      '    name="username" \n' +
+      '    [(ngModel)]="user.username" \n' +
+      "    required \n" +
+      '    minlength="3"\n' +
+      '    appCustomValidator="admin,root,user"\n' +
+      '    #username="ngModel"\n' +
+      '    [class.is-invalid]="username.invalid && username.touched"\n' +
+      "  />\n" +
+      "  \n" +
+      '  <div *ngIf="username.invalid && username.touched" class="invalid-feedback">\n' +
+      "    <div *ngIf=\"username.errors?.['required']\">Username is required</div>\n" +
+      "    <div *ngIf=\"username.errors?.['minlength']\">Username must be at least 3 characters</div>\n" +
+      "    <div *ngIf=\"username.errors?.['forbiddenWord']\">Username contains forbidden words</div>\n" +
+      "  </div>\n" +
+      "</div>\n" +
+      "```\n\n" +
+      "**Template-Driven Form Limitations:**\n" +
+      "```typescript\n" +
+      "// Limitations and when to avoid template-driven forms\n" +
+      "export class TemplateDrivenLimitations {\n" +
+      "  /*\n" +
+      "   * LIMITATIONS:\n" +
+      "   * \n" +
+      "   * 1. Limited Programmatic Control:\n" +
+      "   *    - Cannot easily add/remove validators at runtime\n" +
+      "   *    - Difficult to implement complex validation logic\n" +
+      "   *    - Hard to manage form state programmatically\n" +
+      "   * \n" +
+      "   * 2. Performance Issues:\n" +
+      "   *    - Forms are created after view initialization\n" +
+      "   *    - Can cause performance issues with large forms\n" +
+      "   *    - Less efficient change detection\n" +
+      "   * \n" +
+      "   * 3. Testing Difficulties:\n" +
+      "   *    - Harder to unit test form logic\n" +
+      "   *    - Validation logic is mixed with template\n" +
+      "   *    - Difficult to test form state changes\n" +
+      "   * \n" +
+      "   * 4. Type Safety:\n" +
+      "   *    - Less TypeScript support\n" +
+      "   *    - No compile-time validation of form structure\n" +
+      "   *    - Runtime errors for form control access\n" +
+      "   * \n" +
+      "   * 5. Complex Forms:\n" +
+      "   *    - Difficult to handle dynamic form fields\n" +
+      "   *    - Hard to implement conditional validation\n" +
+      "   *    - Limited support for nested form groups\n" +
+      "   * \n" +
+      "   * 6. Form State Management:\n" +
+      "   *    - No built-in support for form state persistence\n" +
+      "   *    - Difficult to implement auto-save functionality\n" +
+      "   *    - Limited control over form lifecycle\n" +
+      "   */\n" +
+      "\n" +
+      "  // Example of what's difficult with template-driven forms\n" +
+      "  difficultOperations() {\n" +
+      "    // ❌ Cannot easily add validators dynamically\n" +
+      "    // ❌ Cannot easily create forms programmatically\n" +
+      "    // ❌ Cannot easily implement complex validation rules\n" +
+      "    // ❌ Cannot easily manage form state\n" +
+      "    // ❌ Cannot easily implement form arrays\n" +
+      "    // ❌ Cannot easily implement conditional fields\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Template-Driven Forms:**\n" +
+      "```typescript\n" +
+      "/*\n" +
+      " * USE TEMPLATE-DRIVEN FORMS WHEN:\n" +
+      " * \n" +
+      " * ✅ Simple forms with basic validation\n" +
+      " * ✅ Quick prototyping\n" +
+      " * ✅ Forms with minimal business logic\n" +
+      " * ✅ When you prefer declarative approach\n" +
+      " * ✅ When form structure is static\n" +
+      " * ✅ When you don't need complex validation\n" +
+      " * ✅ When you don't need programmatic control\n" +
+      " * \n" +
+      " * AVOID TEMPLATE-DRIVEN FORMS WHEN:\n" +
+      " * \n" +
+      " * ❌ Complex forms with dynamic fields\n" +
+      " * ❌ Forms requiring programmatic control\n" +
+      " * ❌ Forms with complex validation logic\n" +
+      " * ❌ Forms requiring extensive testing\n" +
+      " * ❌ Forms with performance requirements\n" +
+      " * ❌ Forms requiring type safety\n" +
+      " * ❌ Forms with state management needs\n" +
+      " */\n" +
+      "```\n\n" +
+      "**CSS for Template-Driven Forms:**\n" +
+      "```css\n" +
+      "/* app.component.css */\n" +
+      ".form-group {\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-group label {\n" +
+      "  display: block;\n" +
+      "  margin-bottom: 0.5rem;\n" +
+      "  font-weight: bold;\n" +
+      "}\n" +
+      "\n" +
+      ".form-group input,\n" +
+      ".form-group select {\n" +
+      "  width: 100%;\n" +
+      "  padding: 0.5rem;\n" +
+      "  border: 1px solid #ccc;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".is-invalid {\n" +
+      "  border-color: #dc3545;\n" +
+      "  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);\n" +
+      "}\n" +
+      "\n" +
+      ".is-valid {\n" +
+      "  border-color: #28a745;\n" +
+      "  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);\n" +
+      "}\n" +
+      "\n" +
+      ".invalid-feedback {\n" +
+      "  display: block;\n" +
+      "  width: 100%;\n" +
+      "  margin-top: 0.25rem;\n" +
+      "  font-size: 0.875rem;\n" +
+      "  color: #dc3545;\n" +
+      "}\n" +
+      "\n" +
+      ".form-check {\n" +
+      "  display: flex;\n" +
+      "  align-items: center;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-check input {\n" +
+      "  width: auto;\n" +
+      "  margin-right: 0.5rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-actions {\n" +
+      "  margin-top: 2rem;\n" +
+      "  display: flex;\n" +
+      "  gap: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".btn {\n" +
+      "  padding: 0.5rem 1rem;\n" +
+      "  border: none;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  cursor: pointer;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-primary {\n" +
+      "  background-color: #007bff;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-secondary {\n" +
+      "  background-color: #6c757d;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn:disabled {\n" +
+      "  opacity: 0.6;\n" +
+      "  cursor: not-allowed;\n" +
+      "}\n" +
+      "\n" +
+      ".form-status {\n" +
+      "  background-color: #f8f9fa;\n" +
+      "  padding: 1rem;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-debug {\n" +
+      "  background-color: #f8f9fa;\n" +
+      "  padding: 1rem;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  margin-top: 2rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-debug pre {\n" +
+      "  background-color: #e9ecef;\n" +
+      "  padding: 0.5rem;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  overflow-x: auto;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices for Template-Driven Forms:**\n" +
+      "- Use `novalidate` attribute to disable browser validation\n" +
+      "- Always provide proper error messages\n" +
+      "- Use template reference variables for form controls\n" +
+      "- Implement proper CSS classes for validation states\n" +
+      "- Use `resetForm()` instead of `reset()` for proper cleanup\n" +
+      "- Consider using reactive forms for complex scenarios\n" +
+      "- Test form validation thoroughly\n" +
+      "- Use proper TypeScript interfaces for form data",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["forms", "template-driven", "ngModel", "validation", "limitations"],
+  },
+  {
+    id: 174,
+    question:
+      "How do you implement form validation with async validators in Angular reactive forms?",
+    answer:
+      "Async validators in Angular reactive forms allow you to perform asynchronous validation operations like checking server-side data:\n\n" +
+      "**Basic Async Validator Implementation:**\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';\n" +
+      "import { Observable, of, timer } from 'rxjs';\n" +
+      "import { map, switchMap, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class UserService {\n" +
+      "  // Simulate API call to check username availability\n" +
+      "  checkUsernameAvailability(username: string): Observable<boolean> {\n" +
+      "    // Simulate network delay\n" +
+      "    return timer(1000).pipe(\n" +
+      "      map(() => {\n" +
+      "        // Simulate some usernames that are taken\n" +
+      "        const takenUsernames = ['admin', 'user', 'test', 'john', 'jane'];\n" +
+      "        return !takenUsernames.includes(username.toLowerCase());\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Simulate API call to check email availability\n" +
+      "  checkEmailAvailability(email: string): Observable<boolean> {\n" +
+      "    return timer(800).pipe(\n" +
+      "      map(() => {\n" +
+      "        // Simulate some emails that are taken\n" +
+      "        const takenEmails = ['admin@example.com', 'user@example.com', 'test@example.com'];\n" +
+      "        return !takenEmails.includes(email.toLowerCase());\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// Username availability validator\n" +
+      "export function usernameAvailabilityValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value || control.value.length < 3) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "\n" +
+      "    return control.valueChanges.pipe(\n" +
+      "      debounceTime(500), // Wait 500ms after user stops typing\n" +
+      "      distinctUntilChanged(), // Only check if value actually changed\n" +
+      "      switchMap(value => {\n" +
+      "        if (!value || value.length < 3) {\n" +
+      "          return of(null);\n" +
+      "        }\n" +
+      "        \n" +
+      "        return userService.checkUsernameAvailability(value).pipe(\n" +
+      "          map(isAvailable => isAvailable ? null : { usernameTaken: true }),\n" +
+      "          catchError(() => of({ usernameCheckFailed: true }))\n" +
+      "        );\n" +
+      "      })\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "// Email availability validator\n" +
+      "export function emailAvailabilityValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "\n" +
+      "    return control.valueChanges.pipe(\n" +
+      "      debounceTime(500),\n" +
+      "      distinctUntilChanged(),\n" +
+      "      switchMap(value => {\n" +
+      "        if (!value) {\n" +
+      "          return of(null);\n" +
+      "        }\n" +
+      "        \n" +
+      "        return userService.checkEmailAvailability(value).pipe(\n" +
+      "          map(isAvailable => isAvailable ? null : { emailTaken: true }),\n" +
+      "          catchError(() => of({ emailCheckFailed: true }))\n" +
+      "        );\n" +
+      "      })\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using Async Validators in Component:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, Validators } from '@angular/forms';\n" +
+      "import { UserService, usernameAvailabilityValidator, emailAvailabilityValidator } from './user.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-form',\n" +
+      "  templateUrl: './user-form.component.html'\n" +
+      "})\n" +
+      "export class UserFormComponent implements OnInit {\n" +
+      "  userForm: FormGroup;\n" +
+      "  isSubmitting = false;\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private fb: FormBuilder,\n" +
+      "    private userService: UserService\n" +
+      "  ) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      username: ['', \n" +
+      "        [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z0-9_]+$/)]\n" +
+      "      ],\n" +
+      "      email: ['', \n" +
+      "        [Validators.required, Validators.email]\n" +
+      "      ],\n" +
+      "      password: ['', \n" +
+      "        [Validators.required, Validators.minLength(8)]\n" +
+      "      ],\n      " +
+      "      confirmPassword: ['', Validators.required]\n" +
+      "    }, {\n" +
+      "      validators: this.passwordMatchValidator,\n" +
+      "      asyncValidators: [\n" +
+      "        usernameAvailabilityValidator(this.userService),\n" +
+      "        emailAvailabilityValidator(this.userService)\n" +
+      "      ]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    // Add async validators to individual controls\n" +
+      "    this.userForm.get('username')?.setAsyncValidators(\n" +
+      "      usernameAvailabilityValidator(this.userService)\n" +
+      "    );\n" +
+      "    \n" +
+      "    this.userForm.get('email')?.setAsyncValidators(\n" +
+      "      emailAvailabilityValidator(this.userService)\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Password match validator\n" +
+      "  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {\n" +
+      "    const password = control.get('password');\n" +
+      "    const confirmPassword = control.get('confirmPassword');\n" +
+      "\n" +
+      "    if (!password || !confirmPassword) {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "\n" +
+      "    return password.value === confirmPassword.value ? null : { passwordMismatch: true };\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get form control for easier access\n" +
+      "  getFormControl(controlName: string) {\n" +
+      "    return this.userForm.get(controlName);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if control is pending (async validation in progress)\n" +
+      "  isControlPending(controlName: string): boolean {\n" +
+      "    const control = this.getFormControl(controlName);\n" +
+      "    return control ? control.pending : false;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get error message for control\n" +
+      "  getErrorMessage(controlName: string): string {\n" +
+      "    const control = this.getFormControl(controlName);\n" +
+      "    if (!control || !control.errors) return '';\n" +
+      "\n" +
+      "    const errors = control.errors;\n" +
+      "    \n" +
+      "    if (errors['required']) return `${controlName} is required`;\n" +
+      "    if (errors['email']) return 'Please enter a valid email';\n" +
+      "    if (errors['minlength']) return `${controlName} must be at least ${errors['minlength'].requiredLength} characters`;\n" +
+      "    if (errors['pattern']) return `${controlName} contains invalid characters`;\n" +
+      "    if (errors['usernameTaken']) return 'Username is already taken';\n" +
+      "    if (errors['emailTaken']) return 'Email is already registered';\n" +
+      "    if (errors['usernameCheckFailed']) return 'Unable to verify username availability';\n" +
+      "    if (errors['emailCheckFailed']) return 'Unable to verify email availability';\n" +
+      "    if (errors['passwordMismatch']) return 'Passwords do not match';\n" +
+      "    \n" +
+      "    return 'Invalid input';\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if control should show error\n" +
+      "  shouldShowError(controlName: string): boolean {\n" +
+      "    const control = this.getFormControl(controlName);\n" +
+      "    return control ? (control.invalid && (control.dirty || control.touched)) : false;\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      this.isSubmitting = true;\n" +
+      "      \n" +
+      "      // Simulate form submission\n" +
+      "      setTimeout(() => {\n" +
+      "        console.log('Form submitted:', this.userForm.value);\n" +
+      "        this.isSubmitting = false;\n" +
+      "        this.userForm.reset();\n" +
+      "      }, 2000);\n" +
+      "    } else {\n" +
+      "      // Mark all fields as touched to show errors\n" +
+      "      Object.keys(this.userForm.controls).forEach(key => {\n" +
+      "        this.userForm.get(key)?.markAsTouched();\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template with Async Validation:**\n" +
+      "```html\n" +
+      "<!-- user-form.component.html -->\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      "  <!-- Username field with async validation -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="username">Username:</label>\n' +
+      '    <div class="input-group">\n' +
+      "      <input \n" +
+      '        type="text" \n' +
+      '        id="username" \n' +
+      '        formControlName="username"\n' +
+      '        placeholder="Enter username"\n' +
+      "        [class.is-invalid]=\"shouldShowError('username')\"\n" +
+      "        [class.is-valid]=\"getFormControl('username')?.valid && getFormControl('username')?.touched\"\n" +
+      "      />\n" +
+      "      \n" +
+      "      <!-- Loading spinner for async validation -->\n" +
+      '      <div *ngIf="isControlPending(\'username\')" class="input-group-append">\n' +
+      '        <span class="input-group-text">\n' +
+      '          <i class="fas fa-spinner fa-spin"></i>\n' +
+      "        </span>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Success indicator -->\n" +
+      "      <div *ngIf=\"getFormControl('username')?.valid && !isControlPending('username')\" class=\"input-group-append\">\n" +
+      '        <span class="input-group-text text-success">\n' +
+      '          <i class="fas fa-check"></i>\n' +
+      "        </span>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <!-- Error messages -->\n" +
+      '    <div *ngIf="shouldShowError(\'username\')" class="invalid-feedback">\n' +
+      "      {{ getErrorMessage('username') }}\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <!-- Help text -->\n" +
+      '    <small class="form-text text-muted">\n' +
+      "      Username must be at least 3 characters and contain only letters, numbers, and underscores.\n" +
+      "    </small>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Email field with async validation -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="email">Email:</label>\n' +
+      '    <div class="input-group">\n' +
+      "      <input \n" +
+      '        type="email" \n' +
+      '        id="email" \n' +
+      '        formControlName="email"\n' +
+      '        placeholder="Enter email address"\n' +
+      "        [class.is-invalid]=\"shouldShowError('email')\"\n" +
+      "        [class.is-valid]=\"getFormControl('email')?.valid && getFormControl('email')?.touched\"\n" +
+      "      />\n" +
+      "      \n" +
+      "      <!-- Loading spinner -->\n" +
+      '      <div *ngIf="isControlPending(\'email\')" class="input-group-append">\n' +
+      '        <span class="input-group-text">\n' +
+      '          <i class="fas fa-spinner fa-spin"></i>\n' +
+      "        </span>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Success indicator -->\n" +
+      "      <div *ngIf=\"getFormControl('email')?.valid && !isControlPending('email')\" class=\"input-group-append\">\n" +
+      '        <span class="input-group-text text-success">\n' +
+      '          <i class="fas fa-check"></i>\n' +
+      "        </span>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <div *ngIf="shouldShowError(\'email\')" class="invalid-feedback">\n' +
+      "      {{ getErrorMessage('email') }}\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Password field -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="password">Password:</label>\n' +
+      "    <input \n" +
+      '      type="password" \n' +
+      '      id="password" \n' +
+      '      formControlName="password"\n' +
+      '      placeholder="Enter password"\n' +
+      "      [class.is-invalid]=\"shouldShowError('password')\"\n" +
+      "    />\n" +
+      "    \n" +
+      '    <div *ngIf="shouldShowError(\'password\')" class="invalid-feedback">\n' +
+      "      {{ getErrorMessage('password') }}\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <small class="form-text text-muted">\n' +
+      "      Password must be at least 8 characters long.\n" +
+      "    </small>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Confirm Password field -->\n" +
+      '  <div class="form-group">\n' +
+      '    <label for="confirmPassword">Confirm Password:</label>\n' +
+      "    <input \n" +
+      '      type="password" \n' +
+      '      id="confirmPassword" \n' +
+      '      formControlName="confirmPassword"\n' +
+      '      placeholder="Confirm password"\n' +
+      "      [class.is-invalid]=\"shouldShowError('confirmPassword')\"\n" +
+      "    />\n" +
+      "    \n" +
+      '    <div *ngIf="shouldShowError(\'confirmPassword\')" class="invalid-feedback">\n' +
+      "      {{ getErrorMessage('confirmPassword') }}\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Form-level error for password mismatch -->\n" +
+      '  <div *ngIf="userForm.hasError(\'passwordMismatch\')" class="alert alert-danger">\n' +
+      "    Passwords do not match\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Submit button -->\n" +
+      '  <div class="form-actions">\n' +
+      "    <button \n" +
+      '      type="submit" \n' +
+      '      [disabled]="userForm.invalid || isSubmitting"\n' +
+      '      class="btn btn-primary"\n' +
+      "    >\n" +
+      '      <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm mr-2"></span>\n' +
+      "      {{ isSubmitting ? 'Creating Account...' : 'Create Account' }}\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Form status display -->\n" +
+      '  <div class="form-status mt-3">\n' +
+      "    <p><strong>Form Status:</strong> {{ userForm.status }}</p>\n" +
+      "    <p><strong>Form Valid:</strong> {{ userForm.valid }}</p>\n" +
+      "    <p><strong>Form Pending:</strong> {{ userForm.pending }}</p>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Advanced Async Validator with Caching:**\n" +
+      "```typescript\n" +
+      "// Advanced async validator with caching and error handling\n" +
+      "export class AdvancedAsyncValidator {\n" +
+      "  private static cache = new Map<string, { result: boolean; timestamp: number }>();\n" +
+      "  private static CACHE_DURATION = 5 * 60 * 1000; // 5 minutes\n" +
+      "\n" +
+      "  static usernameAvailabilityValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "    return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "      if (!control.value || control.value.length < 3) {\n" +
+      "        return of(null);\n" +
+      "      }\n" +
+      "\n" +
+      "      const username = control.value.toLowerCase();\n" +
+      "      const cacheKey = `username_${username}`;\n" +
+      "      const cached = this.cache.get(cacheKey);\n" +
+      "      \n" +
+      "      // Check cache first\n" +
+      "      if (cached && (Date.now() - cached.timestamp) < this.CACHE_DURATION) {\n" +
+      "        return of(cached.result ? null : { usernameTaken: true });\n" +
+      "      }\n" +
+      "\n" +
+      "      return control.valueChanges.pipe(\n" +
+      "        debounceTime(500),\n" +
+      "        distinctUntilChanged(),\n" +
+      "        switchMap(value => {\n" +
+      "          if (!value || value.length < 3) {\n" +
+      "            return of(null);\n" +
+      "          }\n" +
+      "          \n" +
+      "          return userService.checkUsernameAvailability(value).pipe(\n" +
+      "            map(isAvailable => {\n" +
+      "              // Cache the result\n" +
+      "              this.cache.set(cacheKey, {\n" +
+      "                result: isAvailable,\n" +
+      "                timestamp: Date.now()\n" +
+      "              });\n" +
+      "              \n" +
+      "              return isAvailable ? null : { usernameTaken: true };\n" +
+      "            }),\n" +
+      "            catchError(error => {\n" +
+      "              console.error('Username validation error:', error);\n" +
+      "              return of({ usernameCheckFailed: true });\n" +
+      "            })\n" +
+      "          );\n" +
+      "        })\n" +
+      "      );\n" +
+      "    };\n" +
+      "  }\n" +
+      "\n" +
+      "  // Clear cache method\n" +
+      "  static clearCache(): void {\n" +
+      "    this.cache.clear();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Clear specific cache entry\n" +
+      "  static clearCacheEntry(key: string): void {\n" +
+      "    this.cache.delete(key);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**CSS for Async Validation:**\n" +
+      "```css\n" +
+      "/* user-form.component.css */\n" +
+      ".form-group {\n" +
+      "  margin-bottom: 1.5rem;\n" +
+      "}\n" +
+      "\n" +
+      ".input-group {\n" +
+      "  position: relative;\n" +
+      "}\n" +
+      "\n" +
+      ".input-group-text {\n" +
+      "  background-color: #f8f9fa;\n" +
+      "  border: 1px solid #ced4da;\n" +
+      "  border-left: none;\n" +
+      "}\n" +
+      "\n" +
+      ".text-success {\n" +
+      "  color: #28a745 !important;\n" +
+      "}\n" +
+      "\n" +
+      ".fa-spinner {\n" +
+      "  animation: spin 1s linear infinite;\n" +
+      "}\n" +
+      "\n" +
+      "@keyframes spin {\n" +
+      "  0% { transform: rotate(0deg); }\n" +
+      "  100% { transform: rotate(360deg); }\n" +
+      "}\n" +
+      "\n" +
+      ".spinner-border-sm {\n" +
+      "  width: 1rem;\n" +
+      "  height: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-status {\n" +
+      "  background-color: #f8f9fa;\n" +
+      "  padding: 1rem;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  border: 1px solid #dee2e6;\n" +
+      "}\n" +
+      "\n" +
+      ".alert {\n" +
+      "  padding: 0.75rem 1.25rem;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "  border: 1px solid transparent;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".alert-danger {\n" +
+      "  color: #721c24;\n" +
+      "  background-color: #f8d7da;\n" +
+      "  border-color: #f5c6cb;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices for Async Validators:**\n" +
+      "- Use debouncing to avoid excessive API calls\n" +
+      "- Implement proper error handling\n" +
+      "- Use caching to improve performance\n" +
+      "- Provide visual feedback for pending validation\n" +
+      "- Handle network errors gracefully\n" +
+      "- Use distinctUntilChanged to avoid duplicate calls\n" +
+      "- Consider implementing retry logic for failed validations\n" +
+      "- Test async validators thoroughly\n" +
+      "- Use proper TypeScript types for better type safety",
+    category: "Forms",
+    difficulty: "advanced",
+    tags: ["forms", "reactive", "async-validators", "validation", "rxjs"],
+  },
+  {
+    id: 175,
+    question: "How do you implement form arrays with nested form groups in Angular reactive forms?",
+    answer:
+      "Form arrays with nested form groups allow you to create complex dynamic forms with multiple levels of data structure:\n\n" +
+      "**Complex Form Array Implementation:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';\n" +
+      "\n" +
+      "interface Address {\n" +
+      "  street: string;\n" +
+      "  city: string;\n" +
+      "  zipCode: string;\n" +
+      "  country: string;\n" +
+      "}\n" +
+      "\n" +
+      "interface Contact {\n" +
+      "  type: string;\n" +
+      "  value: string;\n" +
+      "  isPrimary: boolean;\n" +
+      "}\n" +
+      "\n" +
+      "interface Employee {\n" +
+      "  name: string;\n" +
+      "  position: string;\n" +
+      "  salary: number;\n" +
+      "  addresses: Address[];\n" +
+      "  contacts: Contact[];\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-complex-form',\n" +
+      "  templateUrl: './complex-form.component.html'\n" +
+      "})\n" +
+      "export class ComplexFormComponent implements OnInit {\n" +
+      "  employeeForm: FormGroup;\n" +
+      "  \n" +
+      "  contactTypes = [\n" +
+      "    { value: 'email', label: 'Email' },\n" +
+      "    { value: 'phone', label: 'Phone' },\n" +
+      "    { value: 'mobile', label: 'Mobile' }\n" +
+      "  ];\n" +
+      "  \n" +
+      "  countries = [\n" +
+      "    { code: 'US', name: 'United States' },\n" +
+      "    { code: 'CA', name: 'Canada' },\n" +
+      "    { code: 'UK', name: 'United Kingdom' },\n" +
+      "    { code: 'DE', name: 'Germany' }\n" +
+      "  ];\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.employeeForm = this.fb.group({\n" +
+      "      name: ['', [Validators.required, Validators.minLength(2)]],\n" +
+      "      position: ['', Validators.required],\n" +
+      "      salary: [null, [Validators.required, Validators.min(0)]],\n" +
+      "      addresses: this.fb.array([\n" +
+      "        this.createAddressGroup()\n" +
+      "      ]),\n" +
+      "      contacts: this.fb.array([\n" +
+      "        this.createContactGroup()\n" +
+      "      ])\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    // Load existing data if available\n" +
+      "    this.loadEmployeeData();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Create address FormGroup\n" +
+      "  createAddressGroup(): FormGroup {\n" +
+      "    return this.fb.group({\n" +
+      "      street: ['', Validators.required],\n" +
+      "      city: ['', Validators.required],\n" +
+      "      zipCode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],\n" +
+      "      country: ['', Validators.required]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Create contact FormGroup\n" +
+      "  createContactGroup(): FormGroup {\n" +
+      "    return this.fb.group({\n" +
+      "      type: ['email', Validators.required],\n" +
+      "      value: ['', Validators.required],\n" +
+      "      isPrimary: [false]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get FormArray getters\n" +
+      "  get addressesArray(): FormArray {\n" +
+      "    return this.employeeForm.get('addresses') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  get contactsArray(): FormArray {\n" +
+      "    return this.employeeForm.get('contacts') as FormArray;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Address methods\n" +
+      "  addAddress() {\n" +
+      "    this.addressesArray.push(this.createAddressGroup());\n" +
+      "  }\n" +
+      "\n" +
+      "  removeAddress(index: number) {\n" +
+      "    if (this.addressesArray.length > 1) {\n" +
+      "      this.addressesArray.removeAt(index);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getAddressGroup(index: number): FormGroup {\n" +
+      "    return this.addressesArray.at(index) as FormGroup;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Contact methods\n" +
+      "  addContact() {\n" +
+      "    this.contactsArray.push(this.createContactGroup());\n" +
+      "  }\n" +
+      "\n" +
+      "  removeContact(index: number) {\n" +
+      "    if (this.contactsArray.length > 1) {\n" +
+      "      this.contactsArray.removeAt(index);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getContactGroup(index: number): FormGroup {\n" +
+      "    return this.contactsArray.at(index) as FormGroup;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Handle primary contact selection\n" +
+      "  onPrimaryContactChange(selectedIndex: number) {\n" +
+      "    this.contactsArray.controls.forEach((control, index) => {\n" +
+      "      if (index !== selectedIndex) {\n" +
+      "        control.get('isPrimary')?.setValue(false);\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Load employee data (simulate API call)\n" +
+      "  loadEmployeeData() {\n" +
+      "    const employeeData: Employee = {\n" +
+      "      name: 'John Doe',\n" +
+      "      position: 'Senior Developer',\n" +
+      "      salary: 75000,\n" +
+      "      addresses: [\n" +
+      "        {\n" +
+      "          street: '123 Main St',\n" +
+      "          city: 'New York',\n" +
+      "          zipCode: '10001',\n" +
+      "          country: 'US'\n" +
+      "        }\n" +
+      "      ],\n" +
+      "      contacts: [\n" +
+      "        {\n" +
+      "          type: 'email',\n" +
+      "          value: 'john.doe@example.com',\n" +
+      "          isPrimary: true\n" +
+      "        },\n" +
+      "        {\n" +
+      "          type: 'phone',\n" +
+      "          value: '+1-555-123-4567',\n" +
+      "          isPrimary: false\n" +
+      "        }\n" +
+      "      ]\n" +
+      "    };\n" +
+      "\n" +
+      "    this.populateForm(employeeData);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Populate form with data\n" +
+      "  populateForm(employeeData: Employee) {\n" +
+      "    // Set basic fields\n" +
+      "    this.employeeForm.patchValue({\n" +
+      "      name: employeeData.name,\n" +
+      "      position: employeeData.position,\n" +
+      "      salary: employeeData.salary\n" +
+      "    });\n" +
+      "\n" +
+      "    // Clear existing arrays\n" +
+      "    this.addressesArray.clear();\n" +
+      "    this.contactsArray.clear();\n" +
+      "\n" +
+      "    // Add addresses\n" +
+      "    employeeData.addresses.forEach(address => {\n" +
+      "      this.addressesArray.push(this.fb.group({\n" +
+      "        street: [address.street, Validators.required],\n" +
+      "        city: [address.city, Validators.required],\n" +
+      "        zipCode: [address.zipCode, [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],\n" +
+      "        country: [address.country, Validators.required]\n" +
+      "      }));\n" +
+      "    });\n" +
+      "\n" +
+      "    // Add contacts\n" +
+      "    employeeData.contacts.forEach(contact => {\n" +
+      "      this.contactsArray.push(this.fb.group({\n" +
+      "        type: [contact.type, Validators.required],\n" +
+      "        value: [contact.value, Validators.required],\n" +
+      "        isPrimary: [contact.isPrimary]\n" +
+      "      }));\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Form submission\n" +
+      "  onSubmit() {\n" +
+      "    if (this.employeeForm.valid) {\n" +
+      "      console.log('Form submitted:', this.employeeForm.value);\n" +
+      "      console.log('Raw form value:', this.employeeForm.getRawValue());\n" +
+      "      \n" +
+      "      // Process the form data\n" +
+      "      this.processFormData();\n" +
+      "    } else {\n" +
+      "      this.markFormGroupTouched(this.employeeForm);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Process form data\n" +
+      "  processFormData() {\n" +
+      "    const formValue = this.employeeForm.value;\n" +
+      "    \n" +
+      "    // Find primary contact\n" +
+      "    const primaryContact = formValue.contacts.find((contact: Contact) => contact.isPrimary);\n" +
+      "    \n" +
+      "    // Process addresses\n" +
+      "    const processedAddresses = formValue.addresses.map((address: Address) => ({\n" +
+      "      ...address,\n" +
+      "      fullAddress: `${address.street}, ${address.city}, ${address.zipCode}, ${address.country}`\n" +
+      "    }));\n" +
+      "    \n" +
+      "    const processedData = {\n" +
+      "      ...formValue,\n" +
+      "      addresses: processedAddresses,\n" +
+      "      primaryContact: primaryContact,\n" +
+      "      totalContacts: formValue.contacts.length,\n      " +
+      "      totalAddresses: formValue.addresses.length\n" +
+      "    };\n" +
+      "    \n" +
+      "    console.log('Processed data:', processedData);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Mark all form controls as touched\n" +
+      "  private markFormGroupTouched(formGroup: FormGroup) {\n" +
+      "    Object.keys(formGroup.controls).forEach(key => {\n" +
+      "      const control = formGroup.get(key);\n" +
+      "      \n" +
+      "      if (control instanceof FormGroup) {\n" +
+      "        this.markFormGroupTouched(control);\n" +
+      "      } else if (control instanceof FormArray) {\n" +
+      "        control.controls.forEach(arrayControl => {\n" +
+      "          if (arrayControl instanceof FormGroup) {\n" +
+      "            this.markFormGroupTouched(arrayControl);\n" +
+      "          } else {\n" +
+      "            arrayControl.markAsTouched();\n" +
+      "          }\n" +
+      "        });\n" +
+      "      } else {\n" +
+      "        control?.markAsTouched();\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  // Reset form\n" +
+      "  resetForm() {\n" +
+      "    this.employeeForm.reset();\n" +
+      "    \n" +
+      "    // Reset arrays to have one item each\n" +
+      "    this.addressesArray.clear();\n" +
+      "    this.contactsArray.clear();\n" +
+      "    \n" +
+      "    this.addressesArray.push(this.createAddressGroup());\n" +
+      "    this.contactsArray.push(this.createContactGroup());\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Implementation:**\n" +
+      "```html\n" +
+      "<!-- complex-form.component.html -->\n" +
+      '<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">\n' +
+      "  <!-- Basic Information -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>Basic Information</h3>\n" +
+      "    \n" +
+      '    <div class="form-row">\n' +
+      '      <div class="form-group">\n' +
+      "        <label>Name:</label>\n" +
+      '        <input formControlName="name" placeholder="Enter employee name" />\n' +
+      "        <div *ngIf=\"employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched\" class=\"error\">\n" +
+      "          Name is required and must be at least 2 characters\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Position:</label>\n" +
+      '        <input formControlName="position" placeholder="Enter position" />\n' +
+      "        <div *ngIf=\"employeeForm.get('position')?.invalid && employeeForm.get('position')?.touched\" class=\"error\">\n" +
+      "          Position is required\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Salary:</label>\n" +
+      '        <input type="number" formControlName="salary" placeholder="Enter salary" />\n' +
+      "        <div *ngIf=\"employeeForm.get('salary')?.invalid && employeeForm.get('salary')?.touched\" class=\"error\">\n" +
+      "          Salary is required and must be positive\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Addresses Section -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>Addresses</h3>\n" +
+      "    \n" +
+      '    <div formArrayName="addresses">\n' +
+      "      <div \n" +
+      '        *ngFor="let address of addressesArray.controls; let i = index" \n' +
+      '        [formGroupName]="i"\n' +
+      '        class="address-item"\n' +
+      "      >\n" +
+      '        <div class="address-header">\n' +
+      "          <h4>Address {{i + 1}}</h4>\n" +
+      "          <button \n" +
+      '            type="button" \n' +
+      '            (click)="removeAddress(i)"\n' +
+      '            [disabled]="addressesArray.length <= 1"\n' +
+      '            class="btn btn-danger btn-sm"\n' +
+      "          >\n" +
+      "            Remove\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="form-row">\n' +
+      '          <div class="form-group">\n' +
+      "            <label>Street:</label>\n" +
+      '            <input formControlName="street" placeholder="Enter street address" />\n' +
+      "            <div *ngIf=\"getAddressGroup(i).get('street')?.invalid && getAddressGroup(i).get('street')?.touched\" class=\"error\">\n" +
+      "              Street is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "          \n" +
+      '          <div class="form-group">\n' +
+      "            <label>City:</label>\n" +
+      '            <input formControlName="city" placeholder="Enter city" />\n' +
+      "            <div *ngIf=\"getAddressGroup(i).get('city')?.invalid && getAddressGroup(i).get('city')?.touched\" class=\"error\">\n" +
+      "              City is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="form-row">\n' +
+      '          <div class="form-group">\n' +
+      "            <label>ZIP Code:</label>\n" +
+      '            <input formControlName="zipCode" placeholder="Enter ZIP code" />\n' +
+      "            <div *ngIf=\"getAddressGroup(i).get('zipCode')?.invalid && getAddressGroup(i).get('zipCode')?.touched\" class=\"error\">\n" +
+      "              ZIP code is required and must be 5 digits\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "          \n" +
+      '          <div class="form-group">\n' +
+      "            <label>Country:</label>\n" +
+      '            <select formControlName="country">\n' +
+      '              <option value="">Select Country</option>\n' +
+      '              <option *ngFor="let country of countries" [value]="country.code">\n' +
+      "                {{ country.name }}\n" +
+      "              </option>\n" +
+      "            </select>\n" +
+      "            <div *ngIf=\"getAddressGroup(i).get('country')?.invalid && getAddressGroup(i).get('country')?.touched\" class=\"error\">\n" +
+      "              Country is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <button type="button" (click)="addAddress()" class="btn btn-primary">\n' +
+      "      Add Address\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Contacts Section -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>Contacts</h3>\n" +
+      "    \n" +
+      '    <div formArrayName="contacts">\n' +
+      "      <div \n" +
+      '        *ngFor="let contact of contactsArray.controls; let i = index" \n' +
+      '        [formGroupName]="i"\n' +
+      '        class="contact-item"\n' +
+      "      >\n" +
+      '        <div class="contact-header">\n' +
+      "          <h4>Contact {{i + 1}}</h4>\n" +
+      "          <button \n" +
+      '            type="button" \n' +
+      '            (click)="removeContact(i)"\n' +
+      '            [disabled]="contactsArray.length <= 1"\n' +
+      '            class="btn btn-danger btn-sm"\n' +
+      "          >\n" +
+      "            Remove\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="form-row">\n' +
+      '          <div class="form-group">\n' +
+      "            <label>Type:</label>\n" +
+      '            <select formControlName="type">\n' +
+      '              <option *ngFor="let type of contactTypes" [value]="type.value">\n' +
+      "                {{ type.label }}\n" +
+      "              </option>\n" +
+      "            </select>\n" +
+      "            <div *ngIf=\"getContactGroup(i).get('type')?.invalid && getContactGroup(i).get('type')?.touched\" class=\"error\">\n" +
+      "              Contact type is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "          \n" +
+      '          <div class="form-group">\n' +
+      "            <label>Value:</label>\n" +
+      '            <input formControlName="value" placeholder="Enter contact value" />\n' +
+      "            <div *ngIf=\"getContactGroup(i).get('value')?.invalid && getContactGroup(i).get('value')?.touched\" class=\"error\">\n" +
+      "              Contact value is required\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "          \n" +
+      '          <div class="form-group">\n' +
+      '            <div class="form-check">\n' +
+      "              <input \n" +
+      '                type="checkbox" \n' +
+      '                formControlName="isPrimary"\n' +
+      '                (change)="onPrimaryContactChange(i)"\n' +
+      '                id="primary_{{i}}"\n' +
+      "              />\n" +
+      '              <label for="primary_{{i}}">Primary Contact</label>\n' +
+      "            </div>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <button type="button" (click)="addContact()" class="btn btn-primary">\n' +
+      "      Add Contact\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Form Actions -->\n" +
+      '  <div class="form-actions">\n' +
+      '    <button type="submit" [disabled]="employeeForm.invalid" class="btn btn-success">\n' +
+      "      Submit\n" +
+      "    </button>\n" +
+      "    \n" +
+      '    <button type="button" (click)="resetForm()" class="btn btn-secondary">\n' +
+      "      Reset\n" +
+      "    </button>\n" +
+      "    \n" +
+      '    <button type="button" (click)="loadEmployeeData()" class="btn btn-info">\n' +
+      "      Load Sample Data\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Form Debug Info -->\n" +
+      '  <div class="form-debug" *ngIf="employeeForm.touched">\n' +
+      "    <h4>Form Debug Information:</h4>\n" +
+      "    <pre>{{ employeeForm.value | json }}</pre>\n" +
+      "    <pre>{{ employeeForm.errors | json }}</pre>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**CSS for Complex Forms:**\n" +
+      "```css\n" +
+      "/* complex-form.component.css */\n" +
+      ".form-section {\n" +
+      "  margin-bottom: 2rem;\n" +
+      "  padding: 1.5rem;\n" +
+      "  border: 1px solid #dee2e6;\n" +
+      "  border-radius: 0.5rem;\n" +
+      "  background-color: #f8f9fa;\n" +
+      "}\n" +
+      "\n" +
+      ".form-section h3 {\n" +
+      "  margin-bottom: 1.5rem;\n" +
+      "  color: #495057;\n" +
+      "  border-bottom: 2px solid #007bff;\n" +
+      "  padding-bottom: 0.5rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-row {\n" +
+      "  display: flex;\n" +
+      "  gap: 1rem;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-group {\n" +
+      "  flex: 1;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-group label {\n" +
+      "  display: block;\n" +
+      "  margin-bottom: 0.5rem;\n" +
+      "  font-weight: bold;\n" +
+      "  color: #495057;\n" +
+      "}\n" +
+      "\n" +
+      ".form-group input,\n" +
+      ".form-group select {\n" +
+      "  width: 100%;\n" +
+      "  padding: 0.5rem;\n" +
+      "  border: 1px solid #ced4da;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  font-size: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".address-item,\n" +
+      ".contact-item {\n" +
+      "  margin-bottom: 1.5rem;\n" +
+      "  padding: 1rem;\n" +
+      "  background-color: white;\n" +
+      "  border: 1px solid #dee2e6;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".address-header,\n" +
+      ".contact-header {\n" +
+      "  display: flex;\n" +
+      "  justify-content: space-between;\n" +
+      "  align-items: center;\n" +
+      "  margin-bottom: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".address-header h4,\n" +
+      ".contact-header h4 {\n" +
+      "  margin: 0;\n" +
+      "  color: #495057;\n" +
+      "}\n" +
+      "\n" +
+      ".form-check {\n" +
+      "  display: flex;\n" +
+      "  align-items: center;\n" +
+      "  margin-top: 1.5rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-check input {\n" +
+      "  width: auto;\n" +
+      "  margin-right: 0.5rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-check label {\n" +
+      "  margin: 0;\n" +
+      "  font-weight: normal;\n" +
+      "}\n" +
+      "\n" +
+      ".error {\n" +
+      "  color: #dc3545;\n" +
+      "  font-size: 0.875rem;\n" +
+      "  margin-top: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-actions {\n" +
+      "  margin-top: 2rem;\n" +
+      "  display: flex;\n" +
+      "  gap: 1rem;\n" +
+      "  justify-content: center;\n" +
+      "}\n" +
+      "\n" +
+      ".btn {\n" +
+      "  padding: 0.5rem 1rem;\n" +
+      "  border: none;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  cursor: pointer;\n" +
+      "  font-size: 1rem;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-primary {\n" +
+      "  background-color: #007bff;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-danger {\n" +
+      "  background-color: #dc3545;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-success {\n" +
+      "  background-color: #28a745;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-secondary {\n" +
+      "  background-color: #6c757d;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-info {\n" +
+      "  background-color: #17a2b8;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-sm {\n" +
+      "  padding: 0.25rem 0.5rem;\n" +
+      "  font-size: 0.875rem;\n" +
+      "}\n" +
+      "\n" +
+      ".btn:disabled {\n" +
+      "  opacity: 0.6;\n" +
+      "  cursor: not-allowed;\n" +
+      "}\n" +
+      "\n" +
+      ".form-debug {\n" +
+      "  margin-top: 2rem;\n" +
+      "  padding: 1rem;\n" +
+      "  background-color: #f8f9fa;\n" +
+      "  border: 1px solid #dee2e6;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "}\n" +
+      "\n" +
+      ".form-debug pre {\n" +
+      "  background-color: #e9ecef;\n" +
+      "  padding: 0.5rem;\n" +
+      "  border-radius: 0.25rem;\n" +
+      "  overflow-x: auto;\n" +
+      "  font-size: 0.875rem;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices for Complex Form Arrays:**\n" +
+      "- Use proper TypeScript interfaces for type safety\n" +
+      "- Implement proper validation at all levels\n" +
+      "- Use getter methods for cleaner template access\n" +
+      "- Handle form state properly (touched, dirty, valid)\n" +
+      "- Implement proper error handling and display\n" +
+      "- Use consistent naming conventions\n" +
+      "- Provide clear visual feedback\n" +
+      "- Test complex form scenarios thoroughly\n" +
+      "- Consider performance implications of large forms\n" +
+      "- Implement proper form reset functionality",
+    category: "Forms",
+    difficulty: "advanced",
+    tags: ["forms", "reactive", "FormArray", "nested", "complex"],
+  },
+  {
+    id: 176,
+    question:
+      "How do you implement form validation with conditional logic in Angular reactive forms?",
+    answer:
+      "Conditional validation in Angular reactive forms allows you to dynamically add/remove validators based on form state or user input:\n\n" +
+      "**Conditional Validation Implementation:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-conditional-form',\n" +
+      "  templateUrl: './conditional-form.component.html'\n" +
+      "})\n" +
+      "export class ConditionalFormComponent implements OnInit {\n" +
+      "  userForm: FormGroup;\n" +
+      "  \n" +
+      "  userTypes = [\n" +
+      "    { value: 'individual', label: 'Individual' },\n" +
+      "    { value: 'company', label: 'Company' },\n" +
+      "    { value: 'nonprofit', label: 'Non-Profit' }\n" +
+      "  ];\n" +
+      "  \n" +
+      "  countries = [\n" +
+      "    { code: 'US', name: 'United States' },\n" +
+      "    { code: 'CA', name: 'Canada' },\n" +
+      "    { code: 'UK', name: 'United Kingdom' }\n" +
+      "  ];\n" +
+      "\n" +
+      "  constructor(private fb: FormBuilder) {\n" +
+      "    this.userForm = this.fb.group({\n" +
+      "      userType: ['individual', Validators.required],\n" +
+      "      \n" +
+      "      // Individual fields\n" +
+      "      firstName: ['', Validators.required],\n" +
+      "      lastName: ['', Validators.required],\n" +
+      "      dateOfBirth: ['', Validators.required],\n" +
+      "      \n" +
+      "      // Company fields\n" +
+      "      companyName: [''],\n" +
+      "      taxId: [''],\n" +
+      "      businessType: [''],\n" +
+      "      \n" +
+      "      // Non-profit fields\n" +
+      "      nonprofitName: [''],\n" +
+      "      registrationNumber: [''],\n" +
+      "      \n" +
+      "      // Common fields\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      phone: ['', Validators.required],\n" +
+      "      address: this.fb.group({\n" +
+      "        street: ['', Validators.required],\n" +
+      "        city: ['', Validators.required],\n" +
+      "        zipCode: ['', Validators.required],\n" +
+      "        country: ['', Validators.required]\n" +
+      "      }),\n" +
+      "      \n" +
+      "      // Conditional fields\n" +
+      "      hasSpouse: [false],\n" +
+      "      spouseName: [''],\n" +
+      "      spouseEmail: [''],\n      " +
+      "      \n" +
+      "      // Age-dependent fields\n" +
+      "      isMinor: [false],\n" +
+      "      guardianName: [''],\n" +
+      "      guardianPhone: [''],\n" +
+      "      \n" +
+      "      // Country-specific fields\n" +
+      "      ssn: [''],\n" +
+      "      sin: [''],\n" +
+      "      ni: [''],\n" +
+      "      \n" +
+      "      // Terms and conditions\n" +
+      "      acceptTerms: [false, Validators.requiredTrue],\n" +
+      "      acceptMarketing: [false]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    // Set up conditional validation\n" +
+      "    this.setupConditionalValidation();\n" +
+      "  }\n" +
+      "\n" +
+      "  setupConditionalValidation() {\n" +
+      "    // User type change handler\n" +
+      "    this.userForm.get('userType')?.valueChanges.subscribe(userType => {\n" +
+      "      this.handleUserTypeChange(userType);\n" +
+      "    });\n" +
+      "\n" +
+      "    // Spouse fields handler\n" +
+      "    this.userForm.get('hasSpouse')?.valueChanges.subscribe(hasSpouse => {\n" +
+      "      this.handleSpouseFields(hasSpouse);\n" +
+      "    });\n" +
+      "\n" +
+      "    // Age-dependent fields handler\n" +
+      "    this.userForm.get('dateOfBirth')?.valueChanges.subscribe(dateOfBirth => {\n" +
+      "      this.handleAgeDependentFields(dateOfBirth);\n" +
+      "    });\n" +
+      "\n" +
+      "    // Country-specific fields handler\n" +
+      "    this.userForm.get('address.country')?.valueChanges.subscribe(country => {\n" +
+      "      this.handleCountrySpecificFields(country);\n" +
+      "    });\n" +
+      "\n" +
+      "    // Initial setup\n" +
+      "    this.handleUserTypeChange(this.userForm.get('userType')?.value);\n" +
+      "    this.handleSpouseFields(this.userForm.get('hasSpouse')?.value);\n" +
+      "    this.handleAgeDependentFields(this.userForm.get('dateOfBirth')?.value);\n" +
+      "    this.handleCountrySpecificFields(this.userForm.get('address.country')?.value);\n" +
+      "  }\n" +
+      "\n" +
+      "  handleUserTypeChange(userType: string) {\n" +
+      "    const companyName = this.userForm.get('companyName');\n" +
+      "    const taxId = this.userForm.get('taxId');\n" +
+      "    const businessType = this.userForm.get('businessType');\n" +
+      "    const nonprofitName = this.userForm.get('nonprofitName');\n" +
+      "    const registrationNumber = this.userForm.get('registrationNumber');\n" +
+      "\n" +
+      "    if (userType === 'company') {\n" +
+      "      // Enable company fields\n" +
+      "      companyName?.setValidators([Validators.required, Validators.minLength(2)]);\n" +
+      "      taxId?.setValidators([Validators.required, Validators.pattern(/^[0-9]{2}-[0-9]{7}$/)]);\n" +
+      "      businessType?.setValidators([Validators.required]);\n" +
+      "      \n" +
+      "      // Disable non-profit fields\n" +
+      "      nonprofitName?.clearValidators();\n" +
+      "      registrationNumber?.clearValidators();\n" +
+      "      nonprofitName?.setValue('');\n" +
+      "      registrationNumber?.setValue('');\n" +
+      "    } else if (userType === 'nonprofit') {\n" +
+      "      // Enable non-profit fields\n" +
+      "      nonprofitName?.setValidators([Validators.required, Validators.minLength(2)]);\n" +
+      "      registrationNumber?.setValidators([Validators.required, Validators.pattern(/^[A-Z]{2}[0-9]{6}$/)]);\n" +
+      "      \n" +
+      "      // Disable company fields\n" +
+      "      companyName?.clearValidators();\n" +
+      "      taxId?.clearValidators();\n" +
+      "      businessType?.clearValidators();\n" +
+      "      companyName?.setValue('');\n" +
+      "      taxId?.setValue('');\n" +
+      "      businessType?.setValue('');\n" +
+      "    } else {\n" +
+      "      // Individual - disable both company and non-profit fields\n" +
+      "      companyName?.clearValidators();\n" +
+      "      taxId?.clearValidators();\n" +
+      "      businessType?.clearValidators();\n" +
+      "      nonprofitName?.clearValidators();\n" +
+      "      registrationNumber?.clearValidators();\n" +
+      "      \n" +
+      "      companyName?.setValue('');\n" +
+      "      taxId?.setValue('');\n" +
+      "      businessType?.setValue('');\n" +
+      "      nonprofitName?.setValue('');\n" +
+      "      registrationNumber?.setValue('');\n" +
+      "    }\n" +
+      "\n" +
+      "    // Update validation\n" +
+      "    companyName?.updateValueAndValidity();\n" +
+      "    taxId?.updateValueAndValidity();\n" +
+      "    businessType?.updateValueAndValidity();\n" +
+      "    nonprofitName?.updateValueAndValidity();\n" +
+      "    registrationNumber?.updateValueAndValidity();\n" +
+      "  }\n" +
+      "\n" +
+      "  handleSpouseFields(hasSpouse: boolean) {\n" +
+      "    const spouseName = this.userForm.get('spouseName');\n" +
+      "    const spouseEmail = this.userForm.get('spouseEmail');\n" +
+      "\n" +
+      "    if (hasSpouse) {\n" +
+      "      spouseName?.setValidators([Validators.required, Validators.minLength(2)]);\n" +
+      "      spouseEmail?.setValidators([Validators.required, Validators.email]);\n" +
+      "    } else {\n" +
+      "      spouseName?.clearValidators();\n" +
+      "      spouseEmail?.clearValidators();\n" +
+      "      spouseName?.setValue('');\n" +
+      "      spouseEmail?.setValue('');\n" +
+      "    }\n" +
+      "\n" +
+      "    spouseName?.updateValueAndValidity();\n" +
+      "    spouseEmail?.updateValueAndValidity();\n" +
+      "  }\n" +
+      "\n" +
+      "  handleAgeDependentFields(dateOfBirth: string) {\n" +
+      "    if (!dateOfBirth) return;\n" +
+      "\n" +
+      "    const birthDate = new Date(dateOfBirth);\n" +
+      "    const today = new Date();\n" +
+      "    const age = today.getFullYear() - birthDate.getFullYear();\n" +
+      "    const isMinor = age < 18;\n" +
+      "\n" +
+      "    const guardianName = this.userForm.get('guardianName');\n" +
+      "    const guardianPhone = this.userForm.get('guardianPhone');\n" +
+      "\n" +
+      "    this.userForm.patchValue({ isMinor });\n" +
+      "\n" +
+      "    if (isMinor) {\n" +
+      "      guardianName?.setValidators([Validators.required, Validators.minLength(2)]);\n" +
+      "      guardianPhone?.setValidators([Validators.required, Validators.pattern(/^[0-9]{10}$/)]);\n" +
+      "    } else {\n" +
+      "      guardianName?.clearValidators();\n" +
+      "      guardianPhone?.clearValidators();\n" +
+      "      guardianName?.setValue('');\n" +
+      "      guardianPhone?.setValue('');\n" +
+      "    }\n" +
+      "\n" +
+      "    guardianName?.updateValueAndValidity();\n" +
+      "    guardianPhone?.updateValueAndValidity();\n" +
+      "  }\n" +
+      "\n" +
+      "  handleCountrySpecificFields(country: string) {\n" +
+      "    const ssn = this.userForm.get('ssn');\n" +
+      "    const sin = this.userForm.get('sin');\n" +
+      "    const ni = this.userForm.get('ni');\n" +
+      "\n" +
+      "    // Clear all country-specific fields\n" +
+      "    ssn?.clearValidators();\n" +
+      "    sin?.clearValidators();\n" +
+      "    ni?.clearValidators();\n" +
+      "    ssn?.setValue('');\n" +
+      "    sin?.setValue('');\n" +
+      "    ni?.setValue('');\n" +
+      "\n" +
+      "    if (country === 'US') {\n" +
+      "      ssn?.setValidators([Validators.required, Validators.pattern(/^[0-9]{3}-[0-9]{2}-[0-9]{4}$/)]);\n" +
+      "    } else if (country === 'CA') {\n" +
+      "      sin?.setValidators([Validators.required, Validators.pattern(/^[0-9]{3} [0-9]{3} [0-9]{3}$/)]);\n" +
+      "    } else if (country === 'UK') {\n" +
+      "      ni?.setValidators([Validators.required, Validators.pattern(/^[A-Z]{2}[0-9]{6}[A-Z]$/)]);\n" +
+      "    }\n" +
+      "\n" +
+      "    ssn?.updateValueAndValidity();\n" +
+      "    sin?.updateValueAndValidity();\n" +
+      "    ni?.updateValueAndValidity();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Custom validator for conditional validation\n" +
+      "  conditionalValidator(condition: () => boolean, validator: any) {\n" +
+      "    return (control: AbstractControl) => {\n" +
+      "      if (condition()) {\n" +
+      "        return validator(control);\n" +
+      "      }\n" +
+      "      return null;\n" +
+      "    };\n" +
+      "  }\n" +
+      "\n" +
+      "  // Get error message for control\n" +
+      "  getErrorMessage(controlName: string): string {\n" +
+      "    const control = this.userForm.get(controlName);\n" +
+      "    if (!control || !control.errors) return '';\n" +
+      "\n" +
+      "    const errors = control.errors;\n" +
+      "    \n" +
+      "    if (errors['required']) return `${controlName} is required`;\n" +
+      "    if (errors['email']) return 'Please enter a valid email';\n      " +
+      "    if (errors['minlength']) return `${controlName} must be at least ${errors['minlength'].requiredLength} characters`;\n" +
+      "    if (errors['pattern']) return `${controlName} format is invalid`;\n" +
+      "    if (errors['requiredTrue']) return 'You must accept the terms and conditions';\n" +
+      "    \n" +
+      "    return 'Invalid input';\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if control should show error\n" +
+      "  shouldShowError(controlName: string): boolean {\n" +
+      "    const control = this.userForm.get(controlName);\n" +
+      "    return control ? (control.invalid && (control.dirty || control.touched)) : false;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Check if field should be visible\n" +
+      "  isFieldVisible(fieldName: string): boolean {\n" +
+      "    const userType = this.userForm.get('userType')?.value;\n" +
+      "    const hasSpouse = this.userForm.get('hasSpouse')?.value;\n" +
+      "    const isMinor = this.userForm.get('isMinor')?.value;\n" +
+      "    const country = this.userForm.get('address.country')?.value;\n" +
+      "\n" +
+      "    switch (fieldName) {\n" +
+      "      case 'companyName':\n" +
+      "      case 'taxId':\n" +
+      "      case 'businessType':\n" +
+      "        return userType === 'company';\n" +
+      "      \n" +
+      "      case 'nonprofitName':\n" +
+      "      case 'registrationNumber':\n" +
+      "        return userType === 'nonprofit';\n" +
+      "      \n" +
+      "      case 'spouseName':\n" +
+      "      case 'spouseEmail':\n" +
+      "        return hasSpouse;\n" +
+      "      \n" +
+      "      case 'guardianName':\n" +
+      "      case 'guardianPhone':\n" +
+      "        return isMinor;\n" +
+      "      \n" +
+      "      case 'ssn':\n" +
+      "        return country === 'US';\n" +
+      "      \n" +
+      "      case 'sin':\n" +
+      "        return country === 'CA';\n" +
+      "      \n" +
+      "      case 'ni':\n" +
+      "        return country === 'UK';\n" +
+      "      \n" +
+      "      default:\n" +
+      "        return true;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "      \n" +
+      "      // Process form data based on user type\n" +
+      "      this.processFormData();\n" +
+      "    } else {\n" +
+      "      this.markFormGroupTouched(this.userForm);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  processFormData() {\n" +
+      "    const formValue = this.userForm.value;\n" +
+      "    const userType = formValue.userType;\n" +
+      "    \n" +
+      "    let processedData;\n      " +
+      "    \n" +
+      "    if (userType === 'company') {\n" +
+      "      processedData = {\n" +
+      "        type: 'company',\n" +
+      "        companyName: formValue.companyName,\n" +
+      "        taxId: formValue.taxId,\n" +
+      "        businessType: formValue.businessType,\n" +
+      "        email: formValue.email,\n" +
+      "        phone: formValue.phone,\n" +
+      "        address: formValue.address\n" +
+      "      };\n" +
+      "    } else if (userType === 'nonprofit') {\n" +
+      "      processedData = {\n" +
+      "        type: 'nonprofit',\n" +
+      "        nonprofitName: formValue.nonprofitName,\n" +
+      "        registrationNumber: formValue.registrationNumber,\n" +
+      "        email: formValue.email,\n" +
+      "        phone: formValue.phone,\n" +
+      "        address: formValue.address\n" +
+      "      };\n" +
+      "    } else {\n" +
+      "      processedData = {\n" +
+      "        type: 'individual',\n      " +
+      "        firstName: formValue.firstName,\n" +
+      "        lastName: formValue.lastName,\n" +
+      "        dateOfBirth: formValue.dateOfBirth,\n" +
+      "        email: formValue.email,\n" +
+      "        phone: formValue.phone,\n" +
+      "        address: formValue.address,\n" +
+      "        hasSpouse: formValue.hasSpouse,\n" +
+      "        spouseName: formValue.spouseName,\n" +
+      "        spouseEmail: formValue.spouseEmail,\n" +
+      "        isMinor: formValue.isMinor,\n" +
+      "        guardianName: formValue.guardianName,\n" +
+      "        guardianPhone: formValue.guardianPhone\n" +
+      "      };\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Add country-specific ID\n" +
+      "    const country = formValue.address.country;\n" +
+      "    if (country === 'US') {\n" +
+      "      processedData.ssn = formValue.ssn;\n" +
+      "    } else if (country === 'CA') {\n" +
+      "      processedData.sin = formValue.sin;\n" +
+      "    } else if (country === 'UK') {\n" +
+      "      processedData.ni = formValue.ni;\n" +
+      "    }\n" +
+      "    \n" +
+      "    console.log('Processed data:', processedData);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Mark all form controls as touched\n" +
+      "  private markFormGroupTouched(formGroup: FormGroup) {\n" +
+      "    Object.keys(formGroup.controls).forEach(key => {\n" +
+      "      const control = formGroup.get(key);\n" +
+      "      \n" +
+      "      if (control instanceof FormGroup) {\n" +
+      "        this.markFormGroupTouched(control);\n" +
+      "      } else {\n" +
+      "        control?.markAsTouched();\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Implementation:**\n" +
+      "```html\n" +
+      "<!-- conditional-form.component.html -->\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      "  <!-- User Type Selection -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>User Type</h3>\n" +
+      '    <div class="form-group">\n' +
+      "      <label>Select User Type:</label>\n" +
+      '      <select formControlName="userType">\n' +
+      '        <option *ngFor="let type of userTypes" [value]="type.value">\n' +
+      "          {{ type.label }}\n" +
+      "        </option>\n" +
+      "      </select>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Individual Fields -->\n" +
+      "  <div class=\"form-section\" *ngIf=\"userForm.get('userType')?.value === 'individual'\">\n" +
+      "    <h3>Personal Information</h3>\n" +
+      "    \n" +
+      '    <div class="form-row">\n' +
+      '      <div class="form-group">\n' +
+      "        <label>First Name:</label>\n" +
+      '        <input formControlName="firstName" placeholder="Enter first name" />\n' +
+      '        <div *ngIf="shouldShowError(\'firstName\')" class="error">\n' +
+      "          {{ getErrorMessage('firstName') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n      " +
+      '      <div class="form-group">\n' +
+      "        <label>Last Name:</label>\n" +
+      '        <input formControlName="lastName" placeholder="Enter last name" />\n' +
+      '        <div *ngIf="shouldShowError(\'lastName\')" class="error">\n' +
+      "          {{ getErrorMessage('lastName') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Date of Birth:</label>\n" +
+      '        <input type="date" formControlName="dateOfBirth" />\n' +
+      '        <div *ngIf="shouldShowError(\'dateOfBirth\')" class="error">\n' +
+      "          {{ getErrorMessage('dateOfBirth') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Company Fields -->\n" +
+      "  <div class=\"form-section\" *ngIf=\"userForm.get('userType')?.value === 'company'\">\n" +
+      "    <h3>Company Information</h3>\n" +
+      "    \n" +
+      '    <div class="form-row">\n' +
+      '      <div class="form-group">\n' +
+      "        <label>Company Name:</label>\n" +
+      '        <input formControlName="companyName" placeholder="Enter company name" />\n' +
+      '        <div *ngIf="shouldShowError(\'companyName\')" class="error">\n' +
+      "          {{ getErrorMessage('companyName') }}\n" +
+      "        </div>\n" +
+      "      </div>\n      " +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Tax ID:</label>\n" +
+      '        <input formControlName="taxId" placeholder="XX-XXXXXXX" />\n' +
+      '        <div *ngIf="shouldShowError(\'taxId\')" class="error">\n' +
+      "          {{ getErrorMessage('taxId') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Business Type:</label>\n" +
+      '        <select formControlName="businessType">\n' +
+      '          <option value="">Select Business Type</option>\n' +
+      '          <option value="corporation">Corporation</option>\n' +
+      '          <option value="llc">LLC</option>\n' +
+      '          <option value="partnership">Partnership</option>\n' +
+      '          <option value="sole-proprietorship">Sole Proprietorship</option>\n' +
+      "        </select>\n" +
+      '        <div *ngIf="shouldShowError(\'businessType\')" class="error">\n' +
+      "          {{ getErrorMessage('businessType') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Non-Profit Fields -->\n" +
+      "  <div class=\"form-section\" *ngIf=\"userForm.get('userType')?.value === 'nonprofit'\">\n" +
+      "    <h3>Non-Profit Information</h3>\n" +
+      "    \n" +
+      '    <div class="form-row">\n' +
+      '      <div class="form-group">\n' +
+      "        <label>Non-Profit Name:</label>\n" +
+      '        <input formControlName="nonprofitName" placeholder="Enter non-profit name" />\n' +
+      '        <div *ngIf="shouldShowError(\'nonprofitName\')" class="error">\n' +
+      "          {{ getErrorMessage('nonprofitName') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Registration Number:</label>\n" +
+      '        <input formControlName="registrationNumber" placeholder="XX123456" />\n' +
+      '        <div *ngIf="shouldShowError(\'registrationNumber\')" class="error">\n' +
+      "          {{ getErrorMessage('registrationNumber') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Spouse Fields (Conditional) -->\n" +
+      "  <div class=\"form-section\" *ngIf=\"userForm.get('userType')?.value === 'individual'\">\n" +
+      "    <h3>Spouse Information</h3>\n" +
+      "    \n" +
+      '    <div class="form-group">\n' +
+      '      <div class="form-check">\n' +
+      '        <input type="checkbox" formControlName="hasSpouse" id="hasSpouse" />\n' +
+      '        <label for="hasSpouse">I have a spouse</label>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <div *ngIf="isFieldVisible(\'spouseName\')" class="form-row">\n' +
+      '      <div class="form-group">\n' +
+      "        <label>Spouse Name:</label>\n" +
+      '        <input formControlName="spouseName" placeholder="Enter spouse name" />\n' +
+      '        <div *ngIf="shouldShowError(\'spouseName\')" class="error">\n' +
+      "          {{ getErrorMessage('spouseName') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Spouse Email:</label>\n" +
+      '        <input formControlName="spouseEmail" placeholder="Enter spouse email" />\n' +
+      '        <div *ngIf="shouldShowError(\'spouseEmail\')" class="error">\n' +
+      "          {{ getErrorMessage('spouseEmail') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Guardian Fields (Age-dependent) -->\n" +
+      '  <div class="form-section" *ngIf="isFieldVisible(\'guardianName\')">\n' +
+      "    <h3>Guardian Information</h3>\n" +
+      "    \n" +
+      '    <div class="form-row">\n' +
+      '      <div class="form-group">\n' +
+      "        <label>Guardian Name:</label>\n" +
+      '        <input formControlName="guardianName" placeholder="Enter guardian name" />\n' +
+      '        <div *ngIf="shouldShowError(\'guardianName\')" class="error">\n' +
+      "          {{ getErrorMessage('guardianName') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="form-group">\n' +
+      "        <label>Guardian Phone:</label>\n" +
+      '        <input formControlName="guardianPhone" placeholder="Enter guardian phone" />\n' +
+      '        <div *ngIf="shouldShowError(\'guardianPhone\')" class="error">\n' +
+      "          {{ getErrorMessage('guardianPhone') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Country-specific ID Fields -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>Identification</h3>\n" +
+      "    \n" +
+      '    <div class="form-group" *ngIf="isFieldVisible(\'ssn\')">\n' +
+      "      <label>Social Security Number:</label>\n" +
+      '      <input formControlName="ssn" placeholder="XXX-XX-XXXX" />\n' +
+      '      <div *ngIf="shouldShowError(\'ssn\')" class="error">\n' +
+      "        {{ getErrorMessage('ssn') }}\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <div class="form-group" *ngIf="isFieldVisible(\'sin\')">\n' +
+      "      <label>SIN (Social Insurance Number):</label>\n" +
+      '      <input formControlName="sin" placeholder="XXX XXX XXX" />\n' +
+      '      <div *ngIf="shouldShowError(\'sin\')" class="error">\n' +
+      "        {{ getErrorMessage('sin') }}\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <div class="form-group" *ngIf="isFieldVisible(\'ni\')">\n' +
+      "      <label>National Insurance Number:</label>\n" +
+      '      <input formControlName="ni" placeholder="XX123456X" />\n' +
+      '      <div *ngIf="shouldShowError(\'ni\')" class="error">\n' +
+      "        {{ getErrorMessage('ni') }}\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Terms and Conditions -->\n" +
+      '  <div class="form-section">\n' +
+      "    <h3>Terms and Conditions</h3>\n" +
+      "    \n" +
+      '    <div class="form-group">\n' +
+      '      <div class="form-check">\n' +
+      '        <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" />\n' +
+      '        <label for="acceptTerms">I accept the terms and conditions</label>\n' +
+      '        <div *ngIf="shouldShowError(\'acceptTerms\')" class="error">\n' +
+      "          {{ getErrorMessage('acceptTerms') }}\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <div class="form-group">\n' +
+      '      <div class="form-check">\n' +
+      '        <input type="checkbox" formControlName="acceptMarketing" id="acceptMarketing" />\n' +
+      '        <label for="acceptMarketing">I would like to receive marketing communications</label>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "\n" +
+      "  <!-- Submit Button -->\n" +
+      '  <div class="form-actions">\n' +
+      '    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">\n' +
+      "      Submit\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Best Practices for Conditional Validation:**\n" +
+      "- Use valueChanges to react to form changes\n" +
+      "- Implement proper cleanup of conditional fields\n" +
+      "- Use clearValidators() and setValidators() appropriately\n" +
+      "- Always call updateValueAndValidity() after changing validators\n" +
+      "- Implement proper error handling\n" +
+      "- Use TypeScript for better type safety\n" +
+      "- Test all conditional scenarios thoroughly\n" +
+      "- Consider performance implications of complex conditional logic\n" +
+      "- Use proper naming conventions for conditional fields\n" +
+      "- Implement proper form state management",
+    category: "Forms",
+    difficulty: "advanced",
+    tags: ["forms", "reactive", "conditional", "validation", "dynamic"],
+  },
+  {
+    id: 177,
+    question: "What are Parent-Child Components in Angular and how do they communicate?",
+    answer:
+      "Parent-Child Components in Angular represent a hierarchical relationship where one component (parent) contains another component (child) in its template, enabling data flow and communication between them.\n\n" +
+      "**Parent-Child Component Structure:**\n" +
+      "```typescript\n" +
+      "// parent.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent',\n" +
+      "  template: `\n" +
+      '    <div class="parent-container">\n' +
+      "      <h2>Parent Component</h2>\n" +
+      "      <p>Parent Data: {{ parentMessage }}</p>\n" +
+      "      <p>Child Data Received: {{ childData }}</p>\n" +
+      "      \n" +
+      "      <!-- Child component with data binding -->\n" +
+      "      <app-child \n" +
+      '        [parentData]="parentMessage"\n' +
+      '        [userData]="user"\n' +
+      '        (childEvent)="onChildEvent($event)"\n' +
+      '        (dataChange)="onDataChange($event)"\n' +
+      "      ></app-child>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .parent-container {\n" +
+      "      padding: 20px;\n" +
+      "      border: 2px solid #007bff;\n" +
+      "      margin: 10px;\n" +
+      "      background-color: #f8f9fa;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class ParentComponent {\n" +
+      "  parentMessage = 'Hello from Parent!';\n" +
+      "  childData = '';\n" +
+      "  \n" +
+      "  user = {\n" +
+      "    name: 'John Doe',\n" +
+      "    email: 'john@example.com',\n" +
+      "    age: 30\n" +
+      "  };\n" +
+      "\n" +
+      "  // Handle events from child\n" +
+      "  onChildEvent(eventData: string) {\n" +
+      "    console.log('Received from child:', eventData);\n" +
+      "    this.childData = eventData;\n" +
+      "  }\n" +
+      "\n" +
+      "  onDataChange(newData: any) {\n" +
+      "    console.log('Data changed in child:', newData);\n" +
+      "    // Update parent data based on child changes\n" +
+      "    this.user = { ...this.user, ...newData };\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "```typescript\n" +
+      "// child.component.ts\n" +
+      "import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';\n" +
+      "\n" +
+      "interface User {\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "  age: number;\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child',\n" +
+      "  template: `\n" +
+      '    <div class="child-container">\n' +
+      "      <h3>Child Component</h3>\n" +
+      "      <p>Parent Data Received: {{ parentData }}</p>\n" +
+      "      <p>User Name: {{ userData?.name }}</p>\n" +
+      "      <p>User Email: {{ userData?.email }}</p>\n" +
+      "      \n" +
+      '      <div class="child-actions">\n' +
+      '        <button (click)="sendMessageToParent()">Send Message to Parent</button>\n' +
+      '        <button (click)="updateUserData()">Update User Data</button>\n' +
+      '        <button (click)="emitCustomEvent()">Emit Custom Event</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="child-form">\n' +
+      "        <input \n" +
+      '          [(ngModel)]="localMessage" \n' +
+      '          placeholder="Enter message"\n' +
+      '          (input)="onInputChange()"\n' +
+      "        />\n" +
+      "        <p>Local Message: {{ localMessage }}</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .child-container {\n" +
+      "      padding: 15px;\n" +
+      "      border: 1px solid #28a745;\n" +
+      "      margin: 10px;\n" +
+      "      background-color: #d4edda;\n" +
+      "    }\n" +
+      "    .child-actions {\n" +
+      "      margin: 10px 0;\n" +
+      "    }\n" +
+      "    .child-actions button {\n" +
+      "      margin: 5px;\n" +
+      "      padding: 8px 12px;\n" +
+      "      background-color: #28a745;\n" +
+      "      color: white;\n" +
+      "      border: none;\n" +
+      "      border-radius: 4px;\n" +
+      "      cursor: pointer;\n" +
+      "    }\n" +
+      "    .child-form {\n" +
+      "      margin-top: 10px;\n" +
+      "    }\n" +
+      "    .child-form input {\n" +
+      "      padding: 8px;\n" +
+      "      border: 1px solid #ccc;\n" +
+      "      border-radius: 4px;\n" +
+      "      width: 200px;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class ChildComponent implements OnInit, OnChanges {\n" +
+      "  @Input() parentData: string = '';\n" +
+      "  @Input() userData: User | null = null;\n" +
+      "  \n" +
+      "  @Output() childEvent = new EventEmitter<string>();\n" +
+      "  @Output() dataChange = new EventEmitter<any>();\n" +
+      "  @Output() customEvent = new EventEmitter<{ type: string; data: any }>();\n" +
+      "  \n" +
+      "  localMessage = '';\n" +
+      "  changeCount = 0;\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    console.log('Child component initialized');\n" +
+      "    console.log('Initial parent data:', this.parentData);\n" +
+      "    console.log('Initial user data:', this.userData);\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges) {\n" +
+      "    console.log('Child component changes detected:', changes);\n" +
+      "    \n" +
+      "    if (changes['parentData']) {\n" +
+      "      console.log('Parent data changed:', changes['parentData'].currentValue);\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (changes['userData']) {\n" +
+      "      console.log('User data changed:', changes['userData'].currentValue);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  sendMessageToParent() {\n" +
+      "    const message = `Message from child at ${new Date().toLocaleTimeString()}`;\n" +
+      "    this.childEvent.emit(message);\n" +
+      "  }\n" +
+      "\n" +
+      "  updateUserData() {\n" +
+      "    const updatedData = {\n" +
+      "      name: 'Jane Smith',\n" +
+      "      email: 'jane@example.com',\n" +
+      "      age: 25\n" +
+      "    };\n" +
+      "    this.dataChange.emit(updatedData);\n" +
+      "  }\n" +
+      "\n" +
+      "  emitCustomEvent() {\n" +
+      "    this.customEvent.emit({\n" +
+      "      type: 'custom',\n" +
+      "      data: { timestamp: new Date(), message: 'Custom event from child' }\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  onInputChange() {\n" +
+      "    this.changeCount++;\n" +
+      "    // Emit input changes to parent\n" +
+      "    this.childEvent.emit(`Input changed ${this.changeCount} times: ${this.localMessage}`);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Communication Patterns:**\n" +
+      "```typescript\n" +
+      "// 1. Parent to Child (Input Properties)\n" +
+      "// Parent passes data to child using property binding\n" +
+      '// <app-child [parentData]="parentMessage"></app-child>\n' +
+      "\n" +
+      "// 2. Child to Parent (Output Events)\n" +
+      "// Child emits events to parent using event binding\n" +
+      '// <app-child (childEvent)="onChildEvent($event)"></app-child>\n' +
+      "\n" +
+      "// 3. Two-way Data Binding\n" +
+      '// <app-child [(data)]="parentData"></app-child>\n' +
+      '// Equivalent to: [data]="parentData" (dataChange)="parentData = $event"\n' +
+      "\n" +
+      "// 4. Template Reference Variables\n" +
+      "// <app-child #childRef></app-child>\n" +
+      '// <button (click)="childRef.someMethod()">Call Child Method</button>\n' +
+      "```\n\n" +
+      "**Advanced Parent-Child Communication:**\n" +
+      "```typescript\n" +
+      "// parent.component.ts - Advanced example\n" +
+      "import { Component, ViewChild, AfterViewInit } from '@angular/core';\n" +
+      "import { ChildComponent } from './child.component';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-parent',\n" +
+      "  template: `\n" +
+      '    <div class="advanced-parent">\n' +
+      "      <h2>Advanced Parent Component</h2>\n" +
+      "      \n" +
+      "      <!-- Multiple children -->\n" +
+      '      <div class="children-container">\n' +
+      "        <app-child \n" +
+      '          *ngFor="let child of children; let i = index"\n' +
+      '          [parentData]="parentMessage"\n' +
+      '          [childId]="i"\n' +
+      '          (childEvent)="onChildEvent($event, i)"\n' +
+      "          #childRef\n" +
+      "        ></app-child>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Parent controls -->\n" +
+      '      <div class="parent-controls">\n' +
+      '        <button (click)="addChild()">Add Child</button>\n' +
+      '        <button (click)="removeChild()">Remove Child</button>\n' +
+      '        <button (click)="updateAllChildren()">Update All Children</button>\n' +
+      '        <button (click)="callChildMethod()">Call Child Method</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Child communication log -->\n" +
+      '      <div class="communication-log">\n' +
+      "        <h4>Communication Log:</h4>\n" +
+      "        <ul>\n" +
+      '          <li *ngFor="let log of communicationLog">{{ log }}</li>\n' +
+      "        </ul>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AdvancedParentComponent implements AfterViewInit {\n" +
+      "  @ViewChild(ChildComponent) childComponent!: ChildComponent;\n" +
+      "  \n" +
+      "  parentMessage = 'Advanced Parent Message';\n" +
+      "  children = [1, 2, 3]; // Array of child IDs\n" +
+      "  communicationLog: string[] = [];\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('Parent view initialized');\n" +
+      "    // Access child component after view init\n" +
+      "    if (this.childComponent) {\n" +
+      "      console.log('Child component reference:', this.childComponent);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  onChildEvent(eventData: string, childIndex: number) {\n" +
+      "    const logEntry = `Child ${childIndex}: ${eventData}`;\n" +
+      "    this.communicationLog.push(logEntry);\n" +
+      "    console.log(logEntry);\n" +
+      "  }\n" +
+      "\n" +
+      "  addChild() {\n" +
+      "    this.children.push(this.children.length + 1);\n" +
+      "    this.communicationLog.push(`Added child ${this.children.length}`);\n" +
+      "  }\n" +
+      "\n" +
+      "  removeChild() {\n" +
+      "    if (this.children.length > 1) {\n" +
+      "      const removed = this.children.pop();\n" +
+      "      this.communicationLog.push(`Removed child ${removed}`);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  updateAllChildren() {\n" +
+      "    this.parentMessage = `Updated at ${new Date().toLocaleTimeString()}`;\n" +
+      "    this.communicationLog.push('Updated all children');\n" +
+      "  }\n" +
+      "\n" +
+      "  callChildMethod() {\n" +
+      "    if (this.childComponent) {\n" +
+      "      // Call method directly on child component\n" +
+      "      this.childComponent.sendMessageToParent();\n" +
+      "      this.communicationLog.push('Called child method directly');\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices for Parent-Child Communication:**\n" +
+      "- Use @Input() for data flow from parent to child\n" +
+      "- Use @Output() with EventEmitter for child to parent communication\n" +
+      "- Implement OnChanges to react to input changes\n" +
+      "- Use ViewChild for direct component access when needed\n" +
+      "- Avoid tight coupling between components\n" +
+      "- Use interfaces for type safety\n" +
+      "- Implement proper error handling\n" +
+      "- Consider using services for complex communication patterns\n" +
+      "- Use ChangeDetectionStrategy.OnPush for performance optimization\n" +
+      "- Document component interfaces clearly",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "parent-child", "communication", "input", "output"],
+  },
+  {
+    id: 178,
+    question: "What is @Input Decorator and how to transfer data from Parent to Child component?",
+    answer:
+      "The @Input decorator in Angular is used to mark a property as an input property, allowing a parent component to pass data to a child component through property binding.\n\n" +
+      "**Basic @Input Usage:**\n" +
+      "```typescript\n" +
+      "// child.component.ts\n" +
+      "import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child',\n" +
+      "  template: `\n" +
+      '    <div class="child-component">\n' +
+      "      <h3>Child Component</h3>\n" +
+      "      <p>Received from parent: {{ parentMessage }}</p>\n" +
+      "      <p>User Name: {{ userName }}</p>\n" +
+      "      <p>User Age: {{ userAge }}</p>\n" +
+      "      <p>Is Active: {{ isActive ? 'Yes' : 'No' }}</p>\n" +
+      "      \n" +
+      "      <!-- Display user object -->\n" +
+      '      <div *ngIf="userData">\n' +
+      "        <h4>User Details:</h4>\n" +
+      "        <p>Name: {{ userData.name }}</p>\n" +
+      "        <p>Email: {{ userData.email }}</p>\n" +
+      "        <p>Role: {{ userData.role }}</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Display array data -->\n" +
+      '      <div *ngIf="items && items.length > 0">\n' +
+      "        <h4>Items List:</h4>\n" +
+      "        <ul>\n" +
+      '          <li *ngFor="let item of items">{{ item }}</li>\n' +
+      "        </ul>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ChildComponent implements OnChanges {\n" +
+      "  // Basic string input\n" +
+      "  @Input() parentMessage: string = '';\n" +
+      "  \n" +
+      "  // Input with alias\n" +
+      "  @Input('user-name') userName: string = '';\n" +
+      "  \n" +
+      "  // Input with default value\n" +
+      "  @Input() userAge: number = 0;\n" +
+      "  \n" +
+      "  // Boolean input\n" +
+      "  @Input() isActive: boolean = false;\n" +
+      "  \n" +
+      "  // Object input\n" +
+      "  @Input() userData: { name: string; email: string; role: string } | null = null;\n" +
+      "  \n" +
+      "  // Array input\n" +
+      "  @Input() items: string[] = [];\n" +
+      "  \n" +
+      "  // Input with setter (computed property)\n" +
+      "  private _computedValue: string = '';\n" +
+      "  \n" +
+      "  @Input()\n" +
+      "  set computedValue(value: string) {\n" +
+      "    this._computedValue = value.toUpperCase();\n" +
+      "  }\n" +
+      "  \n" +
+      "  get computedValue(): string {\n" +
+      "    return this._computedValue;\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges) {\n" +
+      "    console.log('Input changes detected:', changes);\n" +
+      "    \n" +
+      "    // Handle specific input changes\n" +
+      "    if (changes['parentMessage']) {\n" +
+      "      console.log('Parent message changed:', changes['parentMessage'].currentValue);\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (changes['userData']) {\n" +
+      "      console.log('User data changed:', changes['userData'].currentValue);\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (changes['items']) {\n      " +
+      "      console.log('Items array changed:', changes['items'].currentValue);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Parent Component Implementation:**\n" +
+      "```typescript\n" +
+      "// parent.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent',\n" +
+      "  template: `\n" +
+      '    <div class="parent-component">\n' +
+      "      <h2>Parent Component</h2>\n" +
+      "      \n" +
+      "      <!-- Basic property binding -->\n" +
+      "      <app-child \n" +
+      '        [parentMessage]="message"\n' +
+      '        [user-name]="user.name"\n' +
+      '        [userAge]="user.age"\n' +
+      '        [isActive]="isUserActive"\n' +
+      '        [userData]="user"\n' +
+      '        [items]="itemList"\n' +
+      '        [computedValue]="message"\n' +
+      "      ></app-child>\n" +
+      "      \n" +
+      "      <!-- Dynamic data binding -->\n" +
+      '      <div class="parent-controls">\n' +
+      '        <button (click)="updateMessage()">Update Message</button>\n' +
+      '        <button (click)="updateUser()">Update User</button>\n' +
+      '        <button (click)="addItem()">Add Item</button>\n' +
+      '        <button (click)="toggleActive()">Toggle Active</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Form to update data -->\n" +
+      '      <div class="parent-form">\n' +
+      '        <input [(ngModel)]="message" placeholder="Enter message" />\n' +
+      '        <input [(ngModel)]="user.name" placeholder="Enter name" />\n' +
+      '        <input [(ngModel)]="user.email" placeholder="Enter email" />\n' +
+      '        <input [(ngModel)]="user.age" type="number" placeholder="Enter age" />\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentComponent {\n" +
+      "  message = 'Hello from Parent!';\n" +
+      "  isUserActive = true;\n" +
+      "  \n" +
+      "  user = {\n" +
+      "    name: 'John Doe',\n" +
+      "    email: 'john@example.com',\n" +
+      "    age: 30,\n" +
+      "    role: 'Developer'\n" +
+      "  };\n" +
+      "  \n" +
+      "  itemList = ['Item 1', 'Item 2', 'Item 3'];\n" +
+      "\n" +
+      "  updateMessage() {\n" +
+      "    this.message = `Updated at ${new Date().toLocaleTimeString()}`;\n" +
+      "  }\n" +
+      "\n" +
+      "  updateUser() {\n" +
+      "    this.user = {\n" +
+      "      name: 'Jane Smith',\n" +
+      "      email: 'jane@example.com',\n" +
+      "      age: 25,\n" +
+      "      role: 'Designer'\n" +
+      "    };\n" +
+      "  }\n" +
+      "\n" +
+      "  addItem() {\n" +
+      "    this.itemList.push(`Item ${this.itemList.length + 1}`);\n" +
+      "  }\n" +
+      "\n" +
+      "  toggleActive() {\n" +
+      "    this.isUserActive = !this.isUserActive;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced @Input Patterns:**\n" +
+      "```typescript\n" +
+      "// advanced-child.component.ts\n" +
+      "import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';\n" +
+      "\n" +
+      "interface Config {\n" +
+      "  theme: 'light' | 'dark';\n" +
+      "  size: 'small' | 'medium' | 'large';\n" +
+      "  showHeader: boolean;\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-child',\n" +
+      "  template: `\n" +
+      '    <div [class]="getComponentClasses()">\n' +
+      '      <h3 *ngIf="config.showHeader">Advanced Child Component</h3>\n' +
+      "      \n" +
+      "      <!-- Conditional rendering based on input -->\n" +
+      '      <div *ngIf="data; else noDataTemplate">\n' +
+      "        <p>Data: {{ data }}</p>\n" +
+      "      </div>\n" +
+      "      \n      " +
+      "      <ng-template #noDataTemplate>\n" +
+      "        <p>No data provided</p>\n" +
+      "      </ng-template>\n" +
+      "      \n" +
+      "      <!-- Dynamic content based on input -->\n" +
+      '      <div [ngSwitch]="dataType">\n' +
+      "        <div *ngSwitchCase=\"'string'\">String data: {{ data }}</div>\n" +
+      "        <div *ngSwitchCase=\"'number'\">Number data: {{ data }}</div>\n" +
+      "        <div *ngSwitchCase=\"'object'\">Object data: {{ data | json }}</div>\n" +
+      "        <div *ngSwitchDefault>Unknown data type</div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .component {\n" +
+      "      padding: 20px;\n" +
+      "      border: 1px solid #ccc;\n" +
+      "      margin: 10px;\n" +
+      "    }\n" +
+      "    .theme-light { background-color: #f8f9fa; color: #333; }\n" +
+      "    .theme-dark { background-color: #333; color: #f8f9fa; }\n" +
+      "    .size-small { font-size: 12px; }\n" +
+      "    .size-medium { font-size: 16px; }\n" +
+      "    .size-large { font-size: 20px; }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class AdvancedChildComponent implements OnInit, OnChanges {\n" +
+      "  // Input with validation\n" +
+      "  @Input() data: any;\n" +
+      "  \n" +
+      "  // Input with default value and validation\n" +
+      "  @Input() config: Config = {\n" +
+      "    theme: 'light',\n" +
+      "    size: 'medium',\n      " +
+      "    showHeader: true\n" +
+      "  };\n" +
+      "  \n" +
+      "  // Computed property based on input\n" +
+      "  dataType: string = '';\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    this.updateDataType();\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges) {\n" +
+      "    if (changes['data']) {\n" +
+      "      this.updateDataType();\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (changes['config']) {\n" +
+      "      console.log('Config changed:', changes['config'].currentValue);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateDataType() {\n" +
+      "    if (this.data === null || this.data === undefined) {\n" +
+      "      this.dataType = 'null';\n" +
+      "    } else {\n" +
+      "      this.dataType = typeof this.data;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getComponentClasses(): string {\n" +
+      "    return `component theme-${this.config.theme} size-${this.config.size}`;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Input with Transform Functions:**\n" +
+      "```typescript\n" +
+      "// transform-child.component.ts\n" +
+      "import { Component, Input } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-transform-child',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h3>Transform Child Component</h3>\n" +
+      "      <p>Raw Input: {{ rawInput }}</p>\n" +
+      "      <p>Transformed Input: {{ transformedInput }}</p>\n" +
+      "      <p>Processed Data: {{ processedData }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class TransformChildComponent {\n" +
+      "  // Input with transform function\n" +
+      "  @Input({ transform: (value: string) => value?.toUpperCase() || '' })\n" +
+      "  rawInput: string = '';\n" +
+      "  \n" +
+      "  // Input with complex transform\n" +
+      "  @Input({ \n" +
+      "    transform: (value: any) => {\n" +
+      "      if (typeof value === 'string') {\n" +
+      "        return value.split('').reverse().join('');\n" +
+      "      }\n" +
+      "      return value;\n" +
+      "    }\n" +
+      "  })\n" +
+      "  transformedInput: string = '';\n" +
+      "  \n" +
+      "  // Input with validation and transform\n" +
+      "  @Input({ \n" +
+      "    transform: (value: number) => {\n" +
+      "      return Math.max(0, Math.min(100, value || 0));\n" +
+      "    }\n" +
+      "  })\n" +
+      "  processedData: number = 0;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices for @Input:**\n" +
+      "- Always provide default values for optional inputs\n" +
+      "- Use TypeScript interfaces for complex object inputs\n" +
+      "- Implement OnChanges to react to input changes\n" +
+      "- Use input aliases for better API design\n" +
+      "- Validate input data in setters or ngOnChanges\n" +
+      "- Use transform functions for data processing\n" +
+      "- Document input properties clearly\n" +
+      "- Consider using OnPush change detection for performance\n" +
+      "- Avoid mutating input objects directly\n" +
+      "- Use readonly inputs when data shouldn't be modified",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "input", "decorator", "parent-child", "data-binding"],
+  },
+  {
+    id: 179,
+    question: "What is @Output Decorator and EventEmitter in Angular?",
+    answer:
+      "The @Output decorator in Angular is used to mark a property as an output property, allowing a child component to emit events to its parent component. EventEmitter is a class that extends RxJS Subject and is used to emit custom events.\n\n" +
+      "**Basic @Output and EventEmitter Usage:**\n" +
+      "```typescript\n" +
+      "// child.component.ts\n" +
+      "import { Component, Output, EventEmitter } from '@angular/core';\n" +
+      "\n" +
+      "interface User {\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "  age: number;\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child',\n" +
+      "  template: `\n" +
+      '    <div class="child-component">\n' +
+      "      <h3>Child Component</h3>\n" +
+      "      \n" +
+      "      <!-- Basic event emission -->\n" +
+      '      <button (click)="emitSimpleEvent()">Emit Simple Event</button>\n' +
+      "      \n" +
+      "      <!-- Event with data -->\n" +
+      '      <button (click)="emitDataEvent()">Emit Data Event</button>\n' +
+      "      \n" +
+      "      <!-- Event with object -->\n" +
+      '      <button (click)="emitUserEvent()">Emit User Event</button>\n' +
+      "      \n" +
+      "      <!-- Form submission event -->\n" +
+      '      <form (ngSubmit)="onFormSubmit($event)">\n' +
+      '        <input [(ngModel)]="formData.name" name="name" placeholder="Name" required />\n' +
+      '        <input [(ngModel)]="formData.email" name="email" placeholder="Email" required />\n' +
+      '        <button type="submit">Submit Form</button>\n' +
+      "      </form>\n" +
+      "      \n" +
+      "      <!-- Custom event with multiple parameters -->\n" +
+      '      <button (click)="emitCustomEvent()">Emit Custom Event</button>\n' +
+      "      \n" +
+      "      <!-- Event with validation -->\n" +
+      "      <div>\n" +
+      '        <input [(ngModel)]="validationData" placeholder="Enter data" />\n' +
+      '        <button (click)="emitValidatedEvent()">Emit Validated Event</button>\n' +
+      '        <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .child-component {\n" +
+      "      padding: 20px;\n" +
+      "      border: 1px solid #28a745;\n" +
+      "      margin: 10px;\n" +
+      "      background-color: #d4edda;\n" +
+      "    }\n" +
+      "    button {\n" +
+      "      margin: 5px;\n" +
+      "      padding: 8px 12px;\n" +
+      "      background-color: #28a745;\n" +
+      "      color: white;\n" +
+      "      border: none;\n" +
+      "      border-radius: 4px;\n" +
+      "      cursor: pointer;\n" +
+      "    }\n" +
+      "    input {\n" +
+      "      margin: 5px;\n" +
+      "      padding: 8px;\n" +
+      "      border: 1px solid #ccc;\n" +
+      "      border-radius: 4px;\n" +
+      "    }\n" +
+      "    .error {\n" +
+      "      color: #dc3545;\n" +
+      "      font-size: 12px;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class ChildComponent {\n" +
+      "  // Basic string event\n" +
+      "  @Output() simpleEvent = new EventEmitter<string>();\n" +
+      "  \n" +
+      "  // Event with data\n" +
+      "  @Output() dataEvent = new EventEmitter<{ id: number; message: string }>();\n" +
+      "  \n" +
+      "  // Event with user object\n" +
+      "  @Output() userEvent = new EventEmitter<User>();\n" +
+      "  \n" +
+      "  // Form submission event\n" +
+      "  @Output() formSubmit = new EventEmitter<{ name: string; email: string }>();\n" +
+      "  \n" +
+      "  // Custom event with multiple parameters\n" +
+      "  @Output() customEvent = new EventEmitter<{\n" +
+      "    type: string;\n" +
+      "    data: any;\n" +
+      "    timestamp: Date;\n" +
+      "  }>();\n" +
+      "  \n" +
+      "  // Event with validation\n" +
+      "  @Output() validatedEvent = new EventEmitter<string>();\n" +
+      "  \n" +
+      "  // Event with alias\n" +
+      "  @Output('user-selected') userSelected = new EventEmitter<User>();\n" +
+      "  \n" +
+      "  formData = {\n" +
+      "    name: '',\n" +
+      "    email: ''\n" +
+      "  };\n" +
+      "  \n" +
+      "  validationData = '';\n" +
+      "  errorMessage = '';\n" +
+      "\n" +
+      "  emitSimpleEvent() {\n" +
+      "    const message = `Simple event emitted at ${new Date().toLocaleTimeString()}`;\n" +
+      "    this.simpleEvent.emit(message);\n" +
+      "  }\n" +
+      "\n" +
+      "  emitDataEvent() {\n" +
+      "    const data = {\n" +
+      "      id: Math.floor(Math.random() * 1000),\n" +
+      "      message: 'Data event with ID and message'\n" +
+      "    };\n" +
+      "    this.dataEvent.emit(data);\n" +
+      "  }\n" +
+      "\n" +
+      "  emitUserEvent() {\n" +
+      "    const user: User = {\n" +
+      "      name: 'John Doe',\n" +
+      "      email: 'john@example.com',\n" +
+      "      age: 30\n" +
+      "    };\n" +
+      "    this.userEvent.emit(user);\n" +
+      "    this.userSelected.emit(user); // Also emit with alias\n" +
+      "  }\n" +
+      "\n" +
+      "  onFormSubmit(event: Event) {\n" +
+      "    event.preventDefault();\n" +
+      "    \n" +
+      "    if (this.formData.name && this.formData.email) {\n" +
+      "      this.formSubmit.emit({\n" +
+      "        name: this.formData.name,\n" +
+      "        email: this.formData.email\n" +
+      "      });\n" +
+      "      \n" +
+      "      // Reset form\n" +
+      "      this.formData = { name: '', email: '' };\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  emitCustomEvent() {\n" +
+      "    const customData = {\n" +
+      "      type: 'custom',\n" +
+      "      data: {\n" +
+      "        action: 'button-click',\n" +
+      "        component: 'child',\n" +
+      "        metadata: { version: '1.0', build: '123' }\n" +
+      "      },\n" +
+      "      timestamp: new Date()\n" +
+      "    };\n" +
+      "    this.customEvent.emit(customData);\n" +
+      "  }\n" +
+      "\n" +
+      "  emitValidatedEvent() {\n" +
+      "    this.errorMessage = '';\n" +
+      "    \n" +
+      "    if (!this.validationData) {\n" +
+      "      this.errorMessage = 'Data is required';\n" +
+      "      return;\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (this.validationData.length < 3) {\n" +
+      "      this.errorMessage = 'Data must be at least 3 characters';\n" +
+      "      return;\n" +
+      "    }\n" +
+      "    \n" +
+      "    this.validatedEvent.emit(this.validationData);\n" +
+      "    this.validationData = '';\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Parent Component Implementation:**\n" +
+      "```typescript\n" +
+      "// parent.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent',\n" +
+      "  template: `\n" +
+      '    <div class="parent-component">\n' +
+      "      <h2>Parent Component</h2>\n" +
+      "      \n" +
+      "      <!-- Event handling -->\n" +
+      "      <app-child \n" +
+      '        (simpleEvent)="onSimpleEvent($event)"\n' +
+      '        (dataEvent)="onDataEvent($event)"\n' +
+      '        (userEvent)="onUserEvent($event)"\n' +
+      '        (formSubmit)="onFormSubmit($event)"\n' +
+      '        (customEvent)="onCustomEvent($event)"\n' +
+      '        (validatedEvent)="onValidatedEvent($event)"\n' +
+      '        (user-selected)="onUserSelected($event)"\n' +
+      "      ></app-child>\n" +
+      "      \n" +
+      "      <!-- Event log display -->\n" +
+      '      <div class="event-log">\n' +
+      "        <h3>Event Log:</h3>\n" +
+      "        <ul>\n" +
+      '          <li *ngFor="let log of eventLog">{{ log }}</li>\n' +
+      "        </ul>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Data display -->\n" +
+      '      <div class="data-display">\n' +
+      "        <h3>Received Data:</h3>\n" +
+      "        <p><strong>Last User:</strong> {{ lastUser | json }}</p>\n" +
+      "        <p><strong>Form Data:</strong> {{ formData | json }}</p>\n" +
+      "        <p><strong>Validated Data:</strong> {{ validatedData }}</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .parent-component {\n" +
+      "      padding: 20px;\n" +
+      "      border: 2px solid #007bff;\n" +
+      "      margin: 10px;\n" +
+      "      background-color: #f8f9fa;\n" +
+      "    }\n" +
+      "    .event-log {\n" +
+      "      margin: 20px 0;\n" +
+      "      padding: 15px;\n" +
+      "      background-color: #e9ecef;\n" +
+      "      border-radius: 4px;\n" +
+      "    }\n" +
+      "    .event-log ul {\n" +
+      "      list-style-type: none;\n" +
+      "      padding: 0;\n" +
+      "    }\n" +
+      "    .event-log li {\n" +
+      "      padding: 5px 0;\n" +
+      "      border-bottom: 1px solid #dee2e6;\n" +
+      "    }\n" +
+      "    .data-display {\n" +
+      "      margin: 20px 0;\n" +
+      "      padding: 15px;\n" +
+      "      background-color: #d1ecf1;\n" +
+      "      border-radius: 4px;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class ParentComponent {\n" +
+      "  eventLog: string[] = [];\n" +
+      "  lastUser: any = null;\n" +
+      "  formData: any = null;\n" +
+      "  validatedData: string = '';\n" +
+      "\n" +
+      "  onSimpleEvent(message: string) {\n" +
+      "    this.addToLog(`Simple Event: ${message}`);\n" +
+      "  }\n" +
+      "\n" +
+      "  onDataEvent(data: { id: number; message: string }) {\n" +
+      "    this.addToLog(`Data Event: ID=${data.id}, Message=${data.message}`);\n" +
+      "  }\n" +
+      "\n" +
+      "  onUserEvent(user: any) {\n" +
+      "    this.lastUser = user;\n" +
+      "    this.addToLog(`User Event: ${user.name} (${user.email})`);\n" +
+      "  }\n" +
+      "\n" +
+      "  onFormSubmit(data: { name: string; email: string }) {\n" +
+      "    this.formData = data;\n" +
+      "    this.addToLog(`Form Submit: ${data.name} - ${data.email}`);\n" +
+      "  }\n" +
+      "\n" +
+      "  onCustomEvent(event: any) {\n" +
+      "    this.addToLog(`Custom Event: ${event.type} at ${event.timestamp.toLocaleTimeString()}`);\n" +
+      "    console.log('Custom event data:', event.data);\n" +
+      "  }\n" +
+      "\n" +
+      "  onValidatedEvent(data: string) {\n" +
+      "    this.validatedData = data;\n" +
+      "    this.addToLog(`Validated Event: ${data}`);\n" +
+      "  }\n" +
+      "\n" +
+      "  onUserSelected(user: any) {\n" +
+      "    this.addToLog(`User Selected (Alias): ${user.name}`);\n" +
+      "  }\n" +
+      "\n" +
+      "  private addToLog(message: string) {\n" +
+      "    const timestamp = new Date().toLocaleTimeString();\n" +
+      "    this.eventLog.unshift(`[${timestamp}] ${message}`);\n" +
+      "    \n" +
+      "    // Keep only last 10 events\n" +
+      "    if (this.eventLog.length > 10) {\n" +
+      "      this.eventLog = this.eventLog.slice(0, 10);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced EventEmitter Patterns:**\n" +
+      "```typescript\n" +
+      "// advanced-child.component.ts\n" +
+      "import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';\n" +
+      "import { Subject, interval } from 'rxjs';\n" +
+      "import { takeUntil } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-child',\n" +
+      "  template: `\n" +
+      '    <div class="advanced-child">\n' +
+      "      <h3>Advanced Child Component</h3>\n" +
+      "      \n" +
+      "      <!-- Periodic event emission -->\n" +
+      '      <button (click)="startPeriodicEvents()">Start Periodic Events</button>\n' +
+      '      <button (click)="stopPeriodicEvents()">Stop Periodic Events</button>\n' +
+      "      <p>Periodic Events: {{ periodicCount }}</p>\n" +
+      "      \n" +
+      "      <!-- Batch event emission -->\n" +
+      '      <button (click)="emitBatchEvents()">Emit Batch Events</button>\n' +
+      "      \n" +
+      "      <!-- Conditional event emission -->\n" +
+      "      <div>\n" +
+      '        <input [(ngModel)]="conditionalData" placeholder="Enter data" />\n' +
+      '        <button (click)="emitConditionalEvent()">Emit Conditional Event</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Event with error handling -->\n" +
+      '      <button (click)="emitEventWithError()">Emit Event with Error</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AdvancedChildComponent implements OnDestroy {\n" +
+      "  @Output() periodicEvent = new EventEmitter<number>();\n" +
+      "  @Output() batchEvent = new EventEmitter<string[]>();\n" +
+      "  @Output() conditionalEvent = new EventEmitter<string>();\n" +
+      "  @Output() errorEvent = new EventEmitter<{ error: string; message: string }>();\n" +
+      "  \n" +
+      "  private destroy$ = new Subject<void>();\n" +
+      "  private periodicSubscription: any;\n" +
+      "  \n" +
+      "  periodicCount = 0;\n" +
+      "  conditionalData = '';\n" +
+      "\n" +
+      "  startPeriodicEvents() {\n" +
+      "    this.periodicCount = 0;\n" +
+      "    this.periodicSubscription = interval(1000)\n" +
+      "      .pipe(takeUntil(this.destroy$))\n" +
+      "      .subscribe(() => {\n" +
+      "        this.periodicCount++;\n" +
+      "        this.periodicEvent.emit(this.periodicCount);\n" +
+      "      });\n" +
+      "  }\n" +
+      "\n" +
+      "  stopPeriodicEvents() {\n" +
+      "    if (this.periodicSubscription) {\n" +
+      "      this.periodicSubscription.unsubscribe();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  emitBatchEvents() {\n" +
+      "    const batch = [\n" +
+      "      'Event 1',\n" +
+      "      'Event 2',\n" +
+      "      'Event 3',\n" +
+      "      'Event 4',\n" +
+      "      'Event 5'\n" +
+      "    ];\n" +
+      "    this.batchEvent.emit(batch);\n" +
+      "  }\n" +
+      "\n" +
+      "  emitConditionalEvent() {\n" +
+      "    if (this.conditionalData && this.conditionalData.length > 0) {\n" +
+      "      this.conditionalEvent.emit(this.conditionalData);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  emitEventWithError() {\n" +
+      "    try {\n" +
+      "      // Simulate an error\n" +
+      "      throw new Error('Simulated error in child component');\n" +
+      "    } catch (error) {\n" +
+      "      this.errorEvent.emit({\n" +
+      "        error: error.message,\n" +
+      "        message: 'Error occurred in child component'\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.destroy$.next();\n" +
+      "    this.destroy$.complete();\n" +
+      "    this.stopPeriodicEvents();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**EventEmitter vs Subject:**\n" +
+      "```typescript\n" +
+      "// Custom EventEmitter implementation\n" +
+      "import { EventEmitter } from '@angular/core';\n" +
+      "import { Subject } from 'rxjs';\n" +
+      "\n" +
+      "// EventEmitter extends Subject\n" +
+      "// EventEmitter<T> extends Subject<T>\n" +
+      "\n" +
+      "// Custom event emitter with additional functionality\n" +
+      "class CustomEventEmitter<T> extends EventEmitter<T> {\n" +
+      "  private eventHistory: T[] = [];\n" +
+      "  private maxHistory = 10;\n" +
+      "\n" +
+      "  emit(value: T): void {\n" +
+      "    // Store in history\n" +
+      "    this.eventHistory.unshift(value);\n" +
+      "    if (this.eventHistory.length > this.maxHistory) {\n" +
+      "      this.eventHistory = this.eventHistory.slice(0, this.maxHistory);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Emit the value\n" +
+      "    super.emit(value);\n" +
+      "  }\n" +
+      "\n" +
+      "  getHistory(): T[] {\n" +
+      "    return [...this.eventHistory];\n" +
+      "  }\n" +
+      "\n" +
+      "  clearHistory(): void {\n" +
+      "    this.eventHistory = [];\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices for @Output and EventEmitter:**\n" +
+      "- Use descriptive event names\n" +
+      "- Emit meaningful data with events\n" +
+      "- Use TypeScript interfaces for event data\n" +
+      "- Handle errors in event emission\n" +
+      "- Clean up subscriptions in ngOnDestroy\n" +
+      "- Use event aliases for better API design\n" +
+      "- Avoid emitting too frequently (debounce if needed)\n" +
+      "- Document event signatures clearly\n" +
+      "- Consider using services for complex event patterns\n" +
+      "- Test event emission and handling thoroughly",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "output", "eventemitter", "events", "parent-child"],
+  },
+  {
+    id: 180,
+    question: "What are Lifecycle Hooks in Angular and how do they work?",
+    answer:
+      "Lifecycle hooks in Angular are methods that Angular calls at specific points in a component's lifecycle, allowing you to tap into key moments in the component's existence to perform custom logic.\n\n" +
+      "**Angular Component Lifecycle Hooks:**\n" +
+      "```typescript\n" +
+      "// lifecycle-demo.component.ts\n" +
+      "import {\n" +
+      "  Component,\n" +
+      "  OnInit,\n" +
+      "  OnDestroy,\n" +
+      "  OnChanges,\n" +
+      "  AfterViewInit,\n" +
+      "  AfterViewChecked,\n" +
+      "  AfterContentInit,\n" +
+      "  AfterContentChecked,\n" +
+      "  DoCheck,\n" +
+      "  SimpleChanges,\n" +
+      "  Input,\n      " +
+      "  ViewChild,\n" +
+      "  ElementRef\n" +
+      "} from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-lifecycle-demo',\n" +
+      "  template: `\n" +
+      '    <div class="lifecycle-demo">\n' +
+      "      <h3>Lifecycle Demo Component</h3>\n" +
+      "      <p>Input Value: {{ inputValue }}</p>\n" +
+      "      <p>Component Data: {{ componentData }}</p>\n" +
+      "      <p>View Initialized: {{ viewInitialized }}</p>\n" +
+      "      \n" +
+      "      <div #contentRef>\n" +
+      "        <p>Content Reference Element</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <button (click)="updateData()">Update Data</button>\n' +
+      '      <button (click)="triggerChangeDetection()">Trigger Change Detection</button>\n' +
+      "      \n" +
+      '      <div class="lifecycle-log">\n' +
+      "        <h4>Lifecycle Log:</h4>\n" +
+      "        <ul>\n" +
+      '          <li *ngFor="let log of lifecycleLog">{{ log }}</li>\n' +
+      "        </ul>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .lifecycle-demo {\n" +
+      "      padding: 20px;\n" +
+      "      border: 1px solid #007bff;\n" +
+      "      margin: 10px;\n" +
+      "      background-color: #f8f9fa;\n" +
+      "    }\n" +
+      "    .lifecycle-log {\n" +
+      "      margin-top: 20px;\n" +
+      "      padding: 15px;\n" +
+      "      background-color: #e9ecef;\n" +
+      "      border-radius: 4px;\n" +
+      "    }\n" +
+      "    .lifecycle-log ul {\n" +
+      "      list-style-type: none;\n" +
+      "      padding: 0;\n" +
+      "    }\n" +
+      "    .lifecycle-log li {\n" +
+      "      padding: 2px 0;\n" +
+      "      font-family: monospace;\n" +
+      "      font-size: 12px;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class LifecycleDemoComponent implements\n" +
+      "  OnInit,\n" +
+      "  OnDestroy,\n" +
+      "  OnChanges,\n" +
+      "  AfterViewInit,\n" +
+      "  AfterViewChecked,\n" +
+      "  AfterContentInit,\n" +
+      "  AfterContentChecked,\n" +
+      "  DoCheck {\n" +
+      "\n" +
+      "  @Input() inputValue: string = '';\n" +
+      "  @ViewChild('contentRef') contentRef!: ElementRef;\n" +
+      "\n" +
+      "  componentData = 'Initial Data';\n" +
+      "  viewInitialized = false;\n" +
+      "  lifecycleLog: string[] = [];\n" +
+      "  private changeDetectionCount = 0;\n" +
+      "\n" +
+      "  // 1. Constructor - Called first\n" +
+      "  constructor() {\n" +
+      "    this.addToLog('Constructor called');\n" +
+      "    console.log('Constructor: Component instance created');\n" +
+      "  }\n" +
+      "\n" +
+      "  // 2. ngOnChanges - Called when input properties change\n" +
+      "  ngOnChanges(changes: SimpleChanges): void {\n" +
+      "    this.addToLog('ngOnChanges called');\n" +
+      "    console.log('ngOnChanges: Input changes detected', changes);\n" +
+      "    \n" +
+      "    if (changes['inputValue']) {\n" +
+      "      console.log('Input value changed from', changes['inputValue'].previousValue, 'to', changes['inputValue'].currentValue);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // 3. ngOnInit - Called once after first ngOnChanges\n" +
+      "  ngOnInit(): void {\n" +
+      "    this.addToLog('ngOnInit called');\n" +
+      "    console.log('ngOnInit: Component initialized');\n" +
+      "    \n" +
+      "    // Perfect place for:\n" +
+      "    // - Initial data loading\n" +
+      "    // - Setting up subscriptions\n" +
+      "    // - Component initialization logic\n" +
+      "    this.loadInitialData();\n" +
+      "  }\n" +
+      "\n" +
+      "  // 4. ngDoCheck - Called during every change detection cycle\n" +
+      "  ngDoCheck(): void {\n" +
+      "    this.changeDetectionCount++;\n" +
+      "    this.addToLog(`ngDoCheck called (${this.changeDetectionCount})`);\n" +
+      "    \n" +
+      "    // Use sparingly - called very frequently\n" +
+      "    // Good for custom change detection logic\n" +
+      "  }\n" +
+      "\n" +
+      "  // 5. ngAfterContentInit - Called once after content projection\n" +
+      "  ngAfterContentInit(): void {\n" +
+      "    this.addToLog('ngAfterContentInit called');\n" +
+      "    console.log('ngAfterContentInit: Content projection initialized');\n" +
+      "  }\n" +
+      "\n" +
+      "  // 6. ngAfterContentChecked - Called after every content check\n" +
+      "  ngAfterContentChecked(): void {\n" +
+      "    this.addToLog('ngAfterContentChecked called');\n" +
+      "    // Called after every change detection cycle\n" +
+      "  }\n" +
+      "\n" +
+      "  // 7. ngAfterViewInit - Called once after view initialization\n" +
+      "  ngAfterViewInit(): void {\n" +
+      "    this.addToLog('ngAfterViewInit called');\n" +
+      "    this.viewInitialized = true;\n" +
+      "    console.log('ngAfterViewInit: View initialized');\n" +
+      "    \n" +
+      "    // Perfect place for:\n" +
+      "    // - Accessing ViewChild elements\n" +
+      "    // - Setting up third-party libraries\n" +
+      "    // - DOM manipulation\n" +
+      "    if (this.contentRef) {\n" +
+      "      console.log('Content ref element:', this.contentRef.nativeElement);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // 8. ngAfterViewChecked - Called after every view check\n" +
+      "  ngAfterViewChecked(): void {\n" +
+      "    this.addToLog('ngAfterViewChecked called');\n" +
+      "    // Called after every change detection cycle\n" +
+      "    // Be careful not to modify data here to avoid infinite loops\n" +
+      "  }\n" +
+      "\n" +
+      "  // 9. ngOnDestroy - Called before component destruction\n" +
+      "  ngOnDestroy(): void {\n" +
+      "    this.addToLog('ngOnDestroy called');\n" +
+      "    console.log('ngOnDestroy: Component being destroyed');\n" +
+      "    \n" +
+      "    // Perfect place for:\n" +
+      "    // - Cleaning up subscriptions\n" +
+      "    // - Removing event listeners\n" +
+      "    // - Clearing timers\n" +
+      "    // - Saving data\n" +
+      "    this.cleanup();\n" +
+      "  }\n" +
+      "\n" +
+      "  updateData() {\n" +
+      "    this.componentData = `Updated at ${new Date().toLocaleTimeString()}`;\n" +
+      "    this.addToLog('Data updated manually');\n" +
+      "  }\n" +
+      "\n" +
+      "  triggerChangeDetection() {\n" +
+      "    // This will trigger ngDoCheck, ngAfterContentChecked, and ngAfterViewChecked\n" +
+      "    this.addToLog('Change detection triggered manually');\n" +
+      "  }\n" +
+      "\n" +
+      "  private loadInitialData() {\n" +
+      "    // Simulate data loading\n" +
+      "    setTimeout(() => {\n" +
+      "      this.componentData = 'Data loaded from server';\n" +
+      "      this.addToLog('Initial data loaded');\n" +
+      "    }, 1000);\n" +
+      "  }\n" +
+      "\n" +
+      "  private cleanup() {\n" +
+      "    // Cleanup logic\n" +
+      "    console.log('Cleaning up resources...');\n" +
+      "  }\n" +
+      "\n" +
+      "  private addToLog(message: string) {\n" +
+      "    const timestamp = new Date().toLocaleTimeString();\n" +
+      "    this.lifecycleLog.unshift(`[${timestamp}] ${message}`);\n" +
+      "    \n" +
+      "    // Keep only last 20 log entries\n" +
+      "    if (this.lifecycleLog.length > 20) {\n" +
+      "      this.lifecycleLog = this.lifecycleLog.slice(0, 20);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Lifecycle Hook Execution Order:**\n" +
+      "```typescript\n" +
+      "// Execution order for component lifecycle:\n" +
+      "// 1. Constructor\n" +
+      "// 2. ngOnChanges (if inputs exist)\n" +
+      "// 3. ngOnInit\n" +
+      "// 4. ngDoCheck\n" +
+      "// 5. ngAfterContentInit\n" +
+      "// 6. ngAfterContentChecked\n" +
+      "// 7. ngAfterViewInit\n" +
+      "// 8. ngAfterViewChecked\n" +
+      "// 9. ngDoCheck (on subsequent change detection cycles)\n" +
+      "// 10. ngAfterContentChecked (on subsequent change detection cycles)\n" +
+      "// 11. ngAfterViewChecked (on subsequent change detection cycles)\n" +
+      "// 12. ngOnDestroy (when component is destroyed)\n" +
+      "\n" +
+      "// For subsequent change detection cycles:\n" +
+      "// - ngOnChanges (only if inputs change)\n" +
+      "// - ngDoCheck\n" +
+      "// - ngAfterContentChecked\n" +
+      "// - ngAfterViewChecked\n" +
+      "```\n\n" +
+      "**Practical Lifecycle Hook Examples:**\n" +
+      "```typescript\n" +
+      "// data-service.component.ts\n" +
+      "import { Component, OnInit, OnDestroy } from '@angular/core';\n" +
+      "import { DataService } from './data.service';\n" +
+      "import { Subscription } from 'rxjs';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-data-service',\n" +
+      "  template: `\n" +
+      '    <div class="data-service">\n' +
+      "      <h3>Data Service Component</h3>\n" +
+      '      <div *ngIf="loading">Loading...</div>\n' +
+      '      <div *ngIf="!loading && data">\n' +
+      "        <h4>Data:</h4>\n" +
+      "        <pre>{{ data | json }}</pre>\n" +
+      "      </div>\n" +
+      '      <div *ngIf="error">Error: {{ error }}</div>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DataServiceComponent implements OnInit, OnDestroy {\n" +
+      "  data: any = null;\n" +
+      "  loading = false;\n" +
+      "  error: string | null = null;\n" +
+      "  \n" +
+      "  private subscription: Subscription = new Subscription();\n" +
+      "\n" +
+      "  constructor(private dataService: DataService) {}\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    this.loadData();\n" +
+      "    this.setupRealTimeUpdates();\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy(): void {\n" +
+      "    // Clean up all subscriptions\n" +
+      "    this.subscription.unsubscribe();\n" +
+      "  }\n" +
+      "\n" +
+      "  private loadData(): void {\n" +
+      "    this.loading = true;\n" +
+      "    this.error = null;\n" +
+      "    \n" +
+      "    const dataSub = this.dataService.getData().subscribe({\n" +
+      "      next: (data) => {\n" +
+      "        this.data = data;\n" +
+      "        this.loading = false;\n" +
+      "      },\n" +
+      "      error: (error) => {\n" +
+      "        this.error = error.message;\n" +
+      "        this.loading = false;\n" +
+      "      }\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.subscription.add(dataSub);\n" +
+      "  }\n" +
+      "\n" +
+      "  private setupRealTimeUpdates(): void {\n" +
+      "    const realTimeSub = this.dataService.getRealTimeUpdates().subscribe({\n" +
+      "      next: (update) => {\n" +
+      "        this.data = { ...this.data, ...update };\n" +
+      "      },\n" +
+      "      error: (error) => {\n" +
+      "        console.error('Real-time update error:', error);\n" +
+      "      }\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.subscription.add(realTimeSub);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices for Lifecycle Hooks:**\n" +
+      "- Use ngOnInit for initialization logic\n" +
+      "- Use ngOnDestroy for cleanup\n" +
+      "- Use ngOnChanges to react to input changes\n" +
+      "- Use ngAfterViewInit for DOM access\n" +
+      "- Avoid heavy operations in ngDoCheck\n" +
+      "- Don't modify data in ngAfterViewChecked\n" +
+      "- Always unsubscribe in ngOnDestroy\n" +
+      "- Use OnPush change detection when possible\n" +
+      "- Implement interfaces for better TypeScript support\n" +
+      "- Test lifecycle hooks thoroughly",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "lifecycle", "hooks", "ngOnInit", "ngOnDestroy"],
+  },
+  {
+    id: 181,
+    question: "What is a Constructor in Angular and how does it work?",
+    answer:
+      "The constructor in Angular is a TypeScript class constructor that is called when a component instance is created. It's the first method that runs in a component's lifecycle and is primarily used for dependency injection.\n\n" +
+      "**Constructor Basics:**\n" +
+      "```typescript\n" +
+      "// basic-constructor.component.ts\n" +
+      "import { Component, Inject } from '@angular/core';\n" +
+      "import { DOCUMENT } from '@angular/common';\n" +
+      "import { Router } from '@angular/router';\n" +
+      "import { DataService } from './data.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-basic-constructor',\n" +
+      "  template: `\n" +
+      '    <div class="constructor-demo">\n' +
+      "      <h3>Constructor Demo</h3>\n" +
+      "      <p>Service Data: {{ serviceData }}</p>\n" +
+      "      <p>Router URL: {{ routerUrl }}</p>\n" +
+      "      <p>Document Title: {{ documentTitle }}</p>\n" +
+      "      <p>Constructor Called: {{ constructorCalled }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class BasicConstructorComponent {\n" +
+      "  serviceData: string = '';\n" +
+      "  routerUrl: string = '';\n" +
+      "  documentTitle: string = '';\n" +
+      "  constructorCalled: string = '';\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private dataService: DataService,\n" +
+      "    private router: Router,\n" +
+      "    @Inject(DOCUMENT) private document: Document\n" +
+      "  ) {\n" +
+      "    console.log('Constructor called');\n" +
+      "    this.constructorCalled = `Called at ${new Date().toLocaleTimeString()}`;\n" +
+      "    \n" +
+      "    // Basic initialization\n" +
+      "    this.serviceData = this.dataService.getInitialData();\n" +
+      "    this.routerUrl = this.router.url;\n" +
+      "    this.documentTitle = this.document.title;\n" +
+      "    \n" +
+      "    // Log constructor execution\n" +
+      "    console.log('Constructor execution completed');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Constructor Patterns:**\n" +
+      "```typescript\n" +
+      "// advanced-constructor.component.ts\n" +
+      "import { Component, Inject, Optional, SkipSelf, Self } from '@angular/core';\n" +
+      "import { APP_CONFIG, AppConfig } from './app.config';\n" +
+      "import { LoggerService } from './logger.service';\n" +
+      "import { CacheService } from './cache.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-constructor',\n" +
+      "  template: `\n" +
+      '    <div class="advanced-constructor">\n' +
+      "      <h3>Advanced Constructor Demo</h3>\n" +
+      "      <p>App Config: {{ appConfig | json }}</p>\n" +
+      "      <p>Logger Available: {{ loggerAvailable }}</p>\n" +
+      "      <p>Cache Available: {{ cacheAvailable }}</p>\n" +
+      "      <p>Parent Service: {{ parentService }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AdvancedConstructorComponent {\n" +
+      "  appConfig: AppConfig | null = null;\n" +
+      "  loggerAvailable = false;\n" +
+      "  cacheAvailable = false;\n" +
+      "  parentService: string = '';\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    // Required dependency injection\n" +
+      "    @Inject(APP_CONFIG) private config: AppConfig,\n" +
+      "    \n" +
+      "    // Optional dependency injection\n" +
+      "    @Optional() private logger?: LoggerService,\n" +
+      "    \n" +
+      "    // Skip self and look in parent injector\n" +
+      "    @SkipSelf() private parentCache?: CacheService,\n" +
+      "    \n" +
+      "    // Only use self injector (don't look in parent)\n" +
+      "    @Self() private selfCache?: CacheService\n" +
+      "  ) {\n" +
+      "    console.log('Advanced constructor called');\n" +
+      "    \n" +
+      "    // Handle required dependencies\n" +
+      "    this.appConfig = this.config;\n" +
+      "    \n" +
+      "    // Handle optional dependencies\n" +
+      "    if (this.logger) {\n" +
+      "      this.loggerAvailable = true;\n" +
+      "      this.logger.log('Logger service available');\n" +
+      "    } else {\n" +
+      "      console.warn('Logger service not available');\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Handle parent service\n" +
+      "    if (this.parentCache) {\n" +
+      "      this.cacheAvailable = true;\n" +
+      "      this.parentService = 'Parent cache service found';\n" +
+      "    } else {\n" +
+      "      this.parentService = 'No parent cache service';\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Handle self service\n" +
+      "    if (this.selfCache) {\n" +
+      "      console.log('Self cache service found');\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Constructor with Multiple Dependencies:**\n" +
+      "```typescript\n" +
+      "// multi-dependency.component.ts\n" +
+      "import { Component, Inject } from '@angular/core';\n" +
+      "import { HttpClient } from '@angular/common/http';\n" +
+      "import { Router } from '@angular/router';\n" +
+      "import { ActivatedRoute } from '@angular/router';\n" +
+      "import { FormBuilder } from '@angular/forms';\n" +
+      "import { MatSnackBar } from '@angular/material/snack-bar';\n" +
+      "import { TranslateService } from '@ngx-translate/core';\n" +
+      "\n" +
+      "interface ComponentConfig {\n" +
+      "  apiUrl: string;\n" +
+      "  timeout: number;\n" +
+      "  retries: number;\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-multi-dependency',\n" +
+      "  template: `\n" +
+      '    <div class="multi-dependency">\n' +
+      "      <h3>Multi-Dependency Constructor</h3>\n" +
+      "      <p>API URL: {{ config.apiUrl }}</p>\n" +
+      "      <p>Timeout: {{ config.timeout }}ms</p>\n" +
+      "      <p>Retries: {{ config.retries }}</p>\n" +
+      "      <p>Current Route: {{ currentRoute }}</p>\n" +
+      "      <p>Language: {{ currentLanguage }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class MultiDependencyComponent {\n" +
+      "  config: ComponentConfig;\n" +
+      "  currentRoute: string = '';\n" +
+      "  currentLanguage: string = '';\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    // HTTP client for API calls\n" +
+      "    private http: HttpClient,\n" +
+      "    \n" +
+      "    // Router for navigation\n" +
+      "    private router: Router,\n" +
+      "    \n" +
+      "    // Activated route for current route info\n" +
+      "    private route: ActivatedRoute,\n" +
+      "    \n" +
+      "    // Form builder for reactive forms\n" +
+      "    private fb: FormBuilder,\n" +
+      "    \n" +
+      "    // Material snackbar for notifications\n" +
+      "    private snackBar: MatSnackBar,\n" +
+      "    \n" +
+      "    // Translation service\n" +
+      "    private translate: TranslateService,\n" +
+      "    \n" +
+      "    // Custom configuration\n" +
+      "    @Inject('COMPONENT_CONFIG') private componentConfig: ComponentConfig\n" +
+      "  ) {\n" +
+      "    console.log('Multi-dependency constructor called');\n" +
+      "    \n" +
+      "    // Initialize configuration\n" +
+      "    this.config = this.componentConfig;\n" +
+      "    \n" +
+      "    // Get current route information\n" +
+      "    this.currentRoute = this.router.url;\n" +
+      "    \n" +
+      "    // Get current language\n" +
+      "    this.currentLanguage = this.translate.currentLang || 'en';\n" +
+      "    \n" +
+      "    // Log all dependencies\n" +
+      "    console.log('All dependencies injected successfully');\n" +
+      "    console.log('HTTP Client:', this.http);\n" +
+      "    console.log('Router:', this.router);\n" +
+      "    console.log('Form Builder:', this.fb);\n" +
+      "    console.log('Snack Bar:', this.snackBar);\n" +
+      "    console.log('Translate Service:', this.translate);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Constructor Best Practices:**\n" +
+      "```typescript\n" +
+      "// best-practices.component.ts\n" +
+      "import { Component, Inject } from '@angular/core';\n" +
+      "import { DataService } from './data.service';\n" +
+      "import { LoggerService } from './logger.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-best-practices',\n" +
+      "  template: `\n" +
+      '    <div class="best-practices">\n' +
+      "      <h3>Constructor Best Practices</h3>\n" +
+      "      <p>Service Initialized: {{ serviceInitialized }}</p>\n" +
+      "      <p>Logger Ready: {{ loggerReady }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class BestPracticesComponent {\n" +
+      "  serviceInitialized = false;\n" +
+      "  loggerReady = false;\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    // Use private for services that are only used internally\n" +
+      "    private dataService: DataService,\n" +
+      "    \n" +
+      "    // Use readonly for services that shouldn't be reassigned\n" +
+      "    private readonly logger: LoggerService,\n" +
+      "    \n" +
+      "    // Use specific types instead of any\n" +
+      "    @Inject('API_BASE_URL') private readonly apiBaseUrl: string\n" +
+      "  ) {\n" +
+      "    // DO: Keep constructor lightweight\n" +
+      "    // DO: Only perform dependency injection\n" +
+      "    // DO: Initialize simple properties\n" +
+      "    \n" +
+      "    this.serviceInitialized = true;\n" +
+      "    this.loggerReady = this.logger.isReady();\n" +
+      "    \n" +
+      "    // DON'T: Perform heavy operations\n" +
+      "    // DON'T: Make HTTP requests\n" +
+      "    // DON'T: Access DOM elements\n" +
+      "    // DON'T: Subscribe to observables\n" +
+      "    \n" +
+      "    console.log('Constructor completed - ready for ngOnInit');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Constructor vs ngOnInit:**\n" +
+      "```typescript\n" +
+      "// constructor-vs-ngoninit.component.ts\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { DataService } from './data.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-constructor-vs-ngoninit',\n" +
+      "  template: `\n" +
+      '    <div class="comparison">\n' +
+      "      <h3>Constructor vs ngOnInit</h3>\n" +
+      "      <p>Constructor Data: {{ constructorData }}</p>\n" +
+      "      <p>ngOnInit Data: {{ ngOnInitData }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ConstructorVsNgOnInitComponent implements OnInit {\n" +
+      "  constructorData: string = '';\n" +
+      "  ngOnInitData: string = '';\n" +
+      "\n" +
+      "  constructor(private dataService: DataService) {\n" +
+      "    console.log('1. Constructor called');\n" +
+      "    \n" +
+      "    // Constructor: Dependency injection only\n" +
+      "    // Constructor: Simple property initialization\n" +
+      "    // Constructor: No access to @Input properties\n" +
+      "    // Constructor: No access to DOM elements\n" +
+      "    \n" +
+      "    this.constructorData = 'Constructor executed';\n" +
+      "    console.log('Constructor data:', this.constructorData);\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    console.log('2. ngOnInit called');\n" +
+      "    \n" +
+      "    // ngOnInit: Component initialization\n" +
+      "    // ngOnInit: Access to @Input properties\n" +
+      "    // ngOnInit: HTTP requests\n" +
+      "    // ngOnInit: Subscriptions\n" +
+      "    // ngOnInit: Complex initialization logic\n" +
+      "    \n" +
+      "    this.ngOnInitData = 'ngOnInit executed';\n" +
+      "    console.log('ngOnInit data:', this.ngOnInitData);\n" +
+      "    \n" +
+      "    // This is where you would typically load data\n" +
+      "    // this.dataService.getData().subscribe(...);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points about Constructors:**\n" +
+      "- Called first in component lifecycle\n" +
+      "- Used primarily for dependency injection\n" +
+      "- Should be kept lightweight\n" +
+      "- No access to @Input properties\n" +
+      "- No access to DOM elements\n" +
+      "- Perfect for simple property initialization\n" +
+      "- Avoid heavy operations or HTTP calls\n" +
+      "- Use TypeScript access modifiers (private, readonly)\n" +
+      "- Handle optional dependencies with @Optional()\n" +
+      "- Use @Inject() for custom tokens\n" +
+      "- Consider using @SkipSelf() and @Self() for complex injection scenarios",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "constructor", "dependency-injection", "lifecycle"],
+  },
+  {
+    id: 182,
+    question: "What is ngOnChanges lifecycle hook in Angular?",
+    answer:
+      "ngOnChanges is a lifecycle hook in Angular that is called whenever Angular detects changes to input properties of a component. It provides access to both the current and previous values of the changed properties.\n\n" +
+      "**Basic ngOnChanges Usage:**\n" +
+      "```typescript\n" +
+      "// ngOnchanges-demo.component.ts\n" +
+      "import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';\n" +
+      "\n" +
+      "interface User {\n" +
+      "  id: number;\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-ngonchanges-demo',\n" +
+      "  template: `\n" +
+      '    <div class="ngonchanges-demo">\n' +
+      "      <h3>ngOnChanges Demo</h3>\n      " +
+      "      <p>User Name: {{ userName }}</p>\n" +
+      "      <p>User Age: {{ userAge }}</p>\n" +
+      "      <p>User Object: {{ userObject | json }}</p>\n" +
+      "      <p>Change Count: {{ changeCount }}</p>\n" +
+      "      \n" +
+      '      <div class="change-log">\n' +
+      "        <h4>Change Log:</h4>\n" +
+      "        <ul>\n" +
+      '          <li *ngFor="let log of changeLog">{{ log }}</li>\n' +
+      "        </ul>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .ngonchanges-demo {\n" +
+      "      padding: 20px;\n" +
+      "      border: 1px solid #28a745;\n" +
+      "      margin: 10px;\n" +
+      "      background-color: #d4edda;\n" +
+      "    }\n" +
+      "    .change-log {\n" +
+      "      margin-top: 20px;\n" +
+      "      padding: 15px;\n" +
+      "      background-color: #e9ecef;\n" +
+      "      border-radius: 4px;\n" +
+      "    }\n" +
+      "    .change-log ul {\n" +
+      "      list-style-type: none;\n" +
+      "      padding: 0;\n" +
+      "    }\n" +
+      "    .change-log li {\n" +
+      "      padding: 2px 0;\n" +
+      "      font-family: monospace;\n" +
+      "      font-size: 12px;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class NgOnChangesDemoComponent implements OnChanges {\n" +
+      "  @Input() userName: string = '';\n" +
+      "  @Input() userAge: number = 0;\n" +
+      "  @Input() userObject: User | null = null;\n" +
+      "  \n" +
+      "  changeCount = 0;\n" +
+      "  changeLog: string[] = [];\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges): void {\n" +
+      "    console.log('ngOnChanges called with changes:', changes);\n" +
+      "    \n" +
+      "    this.changeCount++;\n" +
+      "    const timestamp = new Date().toLocaleTimeString();\n" +
+      "    \n" +
+      "    // Log all changes\n" +
+      "    Object.keys(changes).forEach(key => {\n" +
+      "      const change = changes[key];\n" +
+      "      const logEntry = `[${timestamp}] ${key}: ${change.previousValue} → ${change.currentValue}`;\n" +
+      "      this.changeLog.unshift(logEntry);\n" +
+      "      \n" +
+      "      console.log(`Property ${key} changed:`, {\n" +
+      "        previousValue: change.previousValue,\n" +
+      "        currentValue: change.currentValue,\n" +
+      "        firstChange: change.firstChange,\n" +
+      "        isFirstChange: change.isFirstChange()\n" +
+      "      });\n" +
+      "    });\n" +
+      "    \n" +
+      "    // Keep only last 10 log entries\n" +
+      "    if (this.changeLog.length > 10) {\n" +
+      "      this.changeLog = this.changeLog.slice(0, 10);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced ngOnChanges Patterns:**\n" +
+      "```typescript\n" +
+      "// advanced-ngonchanges.component.ts\n" +
+      "import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';\n" +
+      "import { DataService } from './data.service';\n" +
+      "\n" +
+      "interface Config {\n" +
+      "  theme: 'light' | 'dark';\n" +
+      "  language: string;\n" +
+      "  features: string[];\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-ngonchanges',\n" +
+      "  template: `\n" +
+      '    <div [class]="getComponentClasses()">\n' +
+      "      <h3>Advanced ngOnChanges</h3>\n" +
+      "      <p>Theme: {{ config.theme }}</p>\n" +
+      "      <p>Language: {{ config.language }}</p>\n" +
+      "      <p>Features: {{ config.features.join(', ') }}</p>\n" +
+      "      <p>Data Loaded: {{ dataLoaded }}</p>\n" +
+      "      <p>Last Update: {{ lastUpdate }}</p>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .component {\n" +
+      "      padding: 20px;\n" +
+      "      border: 1px solid #ccc;\n" +
+      "      margin: 10px;\n" +
+      "    }\n" +
+      "    .theme-light { background-color: #f8f9fa; color: #333; }\n" +
+      "    .theme-dark { background-color: #333; color: #f8f9fa; }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class AdvancedNgOnChangesComponent implements OnChanges, OnInit {\n" +
+      "  @Input() config: Config = {\n" +
+      "    theme: 'light',\n" +
+      "    language: 'en',\n" +
+      "    features: []\n" +
+      "  };\n" +
+      "  \n" +
+      "  @Input() userId: number = 0;\n" +
+      "  \n" +
+      "  dataLoaded = false;\n" +
+      "  lastUpdate: string = '';\n" +
+      "  private previousConfig: Config | null = null;\n" +
+      "\n" +
+      "  constructor(private dataService: DataService) {}\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    console.log('ngOnInit called');\n" +
+      "    this.loadInitialData();\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges): void {\n" +
+      "    console.log('ngOnChanges called with changes:', changes);\n" +
+      "    \n" +
+      "    // Handle config changes\n" +
+      "    if (changes['config']) {\n" +
+      "      this.handleConfigChange(changes['config']);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Handle user ID changes\n" +
+      "    if (changes['userId']) {\n" +
+      "      this.handleUserIdChange(changes['userId']);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Handle multiple changes\n" +
+      "    if (changes['config'] && changes['userId']) {\n" +
+      "      this.handleMultipleChanges();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private handleConfigChange(change: any): void {\n" +
+      "    console.log('Config changed:', change);\n" +
+      "    \n" +
+      "    // Check if theme changed\n" +
+      "    if (change.previousValue?.theme !== change.currentValue?.theme) {\n" +
+      "      console.log('Theme changed from', change.previousValue?.theme, 'to', change.currentValue?.theme);\n" +
+      "      this.applyTheme(change.currentValue.theme);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Check if language changed\n" +
+      "    if (change.previousValue?.language !== change.currentValue?.language) {\n" +
+      "      console.log('Language changed from', change.previousValue?.language, 'to', change.currentValue?.language);\n" +
+      "      this.updateLanguage(change.currentValue.language);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Check if features changed\n" +
+      "    if (JSON.stringify(change.previousValue?.features) !== JSON.stringify(change.currentValue?.features)) {\n" +
+      "      console.log('Features changed');\n" +
+      "      this.updateFeatures(change.currentValue.features);\n" +
+      "    }\n" +
+      "    \n" +
+      "    this.previousConfig = change.currentValue;\n" +
+      "  }\n" +
+      "\n" +
+      "  private handleUserIdChange(change: any): void {\n" +
+      "    console.log('User ID changed from', change.previousValue, 'to', change.currentValue);\n" +
+      "    \n" +
+      "    if (change.currentValue && change.currentValue !== change.previousValue) {\n" +
+      "      this.loadUserData(change.currentValue);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private handleMultipleChanges(): void {\n" +
+      "    console.log('Multiple properties changed simultaneously');\n" +
+      "    this.lastUpdate = new Date().toLocaleTimeString();\n" +
+      "  }\n" +
+      "\n" +
+      "  private applyTheme(theme: string): void {\n" +
+      "    console.log('Applying theme:', theme);\n" +
+      "    // Theme application logic\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateLanguage(language: string): void {\n" +
+      "    console.log('Updating language:', language);\n" +
+      "    // Language update logic\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateFeatures(features: string[]): void {\n" +
+      "    console.log('Updating features:', features);\n" +
+      "    // Features update logic\n" +
+      "  }\n" +
+      "\n" +
+      "  private loadUserData(userId: number): void {\n" +
+      "    console.log('Loading data for user:', userId);\n" +
+      "    this.dataLoaded = true;\n" +
+      "    // Data loading logic\n" +
+      "  }\n" +
+      "\n" +
+      "  private loadInitialData(): void {\n" +
+      "    console.log('Loading initial data');\n" +
+      "    // Initial data loading logic\n" +
+      "  }\n" +
+      "\n" +
+      "  getComponentClasses(): string {\n" +
+      "    return `component theme-${this.config.theme}`;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**ngOnChanges with Object Comparison:**\n" +
+      "```typescript\n" +
+      "// object-comparison.component.ts\n" +
+      "import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';\n" +
+      "\n" +
+      "interface ComplexObject {\n" +
+      "  id: number;\n" +
+      "  name: string;\n" +
+      "  metadata: {\n" +
+      "    tags: string[];\n" +
+      "    settings: Record<string, any>;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-object-comparison',\n" +
+      "  template: `\n" +
+      '    <div class="object-comparison">\n' +
+      "      <h3>Object Comparison in ngOnChanges</h3>\n" +
+      "      <p>Object ID: {{ complexObject.id }}</p>\n" +
+      "      <p>Object Name: {{ complexObject.name }}</p>\n      " +
+      "      <p>Tags: {{ complexObject.metadata.tags.join(', ') }}</p>\n" +
+      "      <p>Settings: {{ complexObject.metadata.settings | json }}</p>\n" +
+      "      <p>Deep Change Detected: {{ deepChangeDetected }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ObjectComparisonComponent implements OnChanges {\n" +
+      "  @Input() complexObject: ComplexObject = {\n" +
+      "    id: 0,\n" +
+      "    name: '',\n" +
+      "    metadata: {\n" +
+      "      tags: [],\n" +
+      "      settings: {}\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  deepChangeDetected = false;\n" +
+      "  private previousObject: ComplexObject | null = null;\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges): void {\n" +
+      "    if (changes['complexObject']) {\n" +
+      "      const change = changes['complexObject'];\n      " +
+      "      \n" +
+      "      // Angular only detects reference changes for objects\n" +
+      "      // It doesn't detect deep changes within objects\n" +
+      "      console.log('Object reference changed:', change);\n" +
+      "      \n" +
+      "      // Manual deep comparison\n" +
+      "      if (this.previousObject && this.hasDeepChanges(this.previousObject, change.currentValue)) {\n" +
+      "        this.deepChangeDetected = true;\n" +
+      "        console.log('Deep changes detected in object');\n" +
+      "        this.handleDeepChanges(this.previousObject, change.currentValue);\n" +
+      "      } else {\n" +
+      "        this.deepChangeDetected = false;\n" +
+      "      }\n" +
+      "      \n" +
+      "      this.previousObject = change.currentValue;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private hasDeepChanges(previous: ComplexObject, current: ComplexObject): boolean {\n" +
+      "    // Compare primitive properties\n" +
+      "    if (previous.id !== current.id || previous.name !== current.name) {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Compare arrays\n" +
+      "    if (JSON.stringify(previous.metadata.tags) !== JSON.stringify(current.metadata.tags)) {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Compare nested objects\n" +
+      "    if (JSON.stringify(previous.metadata.settings) !== JSON.stringify(current.metadata.settings)) {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "    \n" +
+      "    return false;\n" +
+      "  }\n" +
+      "\n" +
+      "  private handleDeepChanges(previous: ComplexObject, current: ComplexObject): void {\n" +
+      "    console.log('Handling deep changes:');\n" +
+      "    console.log('Previous:', previous);\n" +
+      "    console.log('Current:', current);\n" +
+      "    \n" +
+      "    // Handle specific deep changes\n" +
+      "    if (previous.metadata.tags.length !== current.metadata.tags.length) {\n" +
+      "      console.log('Tags array length changed');\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (Object.keys(previous.metadata.settings).length !== Object.keys(current.metadata.settings).length) {\n" +
+      "      console.log('Settings object properties changed');\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points about ngOnChanges:**\n" +
+      "- Called before ngOnInit and whenever input properties change\n" +
+      "- Receives SimpleChanges object with change information\n" +
+      "- Only detects reference changes for objects (not deep changes)\n" +
+      "- Use for reacting to input property changes\n" +
+      "- Perfect for validation, data processing, and side effects\n" +
+      "- Can be called multiple times during component lifecycle\n" +
+      "- First call happens before ngOnInit\n" +
+      "- Use change.isFirstChange() to detect first change\n" +
+      "- Compare previousValue and currentValue for change detection\n" +
+      "- Consider performance implications for complex objects\n" +
+      "- Use OnPush change detection strategy for better performance",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "ngOnChanges", "lifecycle", "input", "changes"],
+  },
+  {
+    id: 183,
+    question: "What is ngOnInit lifecycle hook in Angular?",
+    answer:
+      "ngOnInit is a lifecycle hook in Angular that is called once after the component's first ngOnChanges. It's the perfect place to perform component initialization logic, such as loading data, setting up subscriptions, and accessing @Input properties.\n\n" +
+      "**Basic ngOnInit Usage:**\n" +
+      "```typescript\n" +
+      "// ngOnInit-demo.component.ts\n" +
+      "import { Component, OnInit, Input } from '@angular/core';\n" +
+      "import { DataService } from './data.service';\n" +
+      "import { Subscription } from 'rxjs';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-ngoninit-demo',\n" +
+      "  template: `\n" +
+      '    <div class="ngoninit-demo">\n' +
+      "      <h3>ngOnInit Demo</h3>\n" +
+      "      <p>User ID: {{ userId }}</p>\n" +
+      "      <p>User Data: {{ userData | json }}</p>\n" +
+      "      <p>Loading: {{ loading }}</p>\n" +
+      "      <p>Error: {{ error }}</p>\n" +
+      "      <p>Initialization Complete: {{ initializationComplete }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class NgOnInitDemoComponent implements OnInit {\n" +
+      "  @Input() userId: number = 0;\n" +
+      "  \n" +
+      "  userData: any = null;\n" +
+      "  loading = false;\n" +
+      "  error: string | null = null;\n" +
+      "  initializationComplete = false;\n" +
+      "  \n" +
+      "  private subscription: Subscription = new Subscription();\n" +
+      "\n" +
+      "  constructor(private dataService: DataService) {\n" +
+      "    console.log('Constructor called - userId not yet available:', this.userId);\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    console.log('ngOnInit called - userId now available:', this.userId);\n" +
+      "    \n" +
+      "    // Perfect place for:\n" +
+      "    // 1. Initial data loading\n" +
+      "    // 2. Setting up subscriptions\n" +
+      "    // 3. Component initialization logic\n" +
+      "    // 4. Accessing @Input properties\n" +
+      "    \n" +
+      "    this.loadUserData();\n" +
+      "    this.setupSubscriptions();\n" +
+      "    this.performInitialization();\n" +
+      "  }\n" +
+      "\n" +
+      "  private loadUserData(): void {\n" +
+      "    if (this.userId > 0) {\n" +
+      "      this.loading = true;\n" +
+      "      this.error = null;\n" +
+      "      \n" +
+      "      const userSub = this.dataService.getUser(this.userId).subscribe({\n" +
+      "        next: (user) => {\n" +
+      "          this.userData = user;\n" +
+      "          this.loading = false;\n" +
+      "          console.log('User data loaded:', user);\n" +
+      "        },\n" +
+      "        error: (error) => {\n" +
+      "          this.error = error.message;\n" +
+      "          this.loading = false;\n" +
+      "          console.error('Error loading user data:', error);\n" +
+      "        }\n" +
+      "      });\n" +
+      "      \n" +
+      "      this.subscription.add(userSub);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private setupSubscriptions(): void {\n" +
+      "    console.log('Setting up subscriptions');\n" +
+      "    \n" +
+      "    // Example: Listen to global events\n" +
+      "    const globalEventSub = this.dataService.getGlobalEvents().subscribe({\n" +
+      "      next: (event) => {\n" +
+      "        console.log('Global event received:', event);\n" +
+      "        this.handleGlobalEvent(event);\n" +
+      "      },\n" +
+      "      error: (error) => {\n" +
+      "        console.error('Global event error:', error);\n" +
+      "      }\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.subscription.add(globalEventSub);\n" +
+      "  }\n" +
+      "\n" +
+      "  private performInitialization(): void {\n" +
+      "    console.log('Performing component initialization');\n" +
+      "    \n" +
+      "    // Initialize component state\n" +
+      "    this.initializationComplete = true;\n" +
+      "    \n" +
+      "    // Set up component-specific logic\n" +
+      "    this.setupComponentLogic();\n" +
+      "  }\n" +
+      "\n" +
+      "  private setupComponentLogic(): void {\n" +
+      "    console.log('Setting up component-specific logic');\n" +
+      "    // Component-specific initialization\n" +
+      "  }\n" +
+      "\n" +
+      "  private handleGlobalEvent(event: any): void {\n" +
+      "    console.log('Handling global event:', event);\n" +
+      "    // Handle global events\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy(): void {\n" +
+      "    console.log('ngOnDestroy called - cleaning up subscriptions');\n" +
+      "    this.subscription.unsubscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points about ngOnInit:**\n" +
+      "- Called once after first ngOnChanges\n" +
+      "- Perfect for component initialization\n" +
+      "- Access to @Input properties\n" +
+      "- Ideal for HTTP requests and subscriptions\n" +
+      "- Called before ngAfterViewInit\n" +
+      "- Use for complex initialization logic\n" +
+      "- Always implement OnInit interface\n" +
+      "- Clean up subscriptions in ngOnDestroy",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "ngOnInit", "lifecycle", "initialization"],
+  },
+  {
+    id: 184,
+    question: "What is the difference between constructor and ngOnInit in Angular?",
+    answer:
+      "The constructor and ngOnInit serve different purposes in Angular components. Understanding their differences is crucial for proper component initialization and lifecycle management.\n\n" +
+      "**Key Differences:**\n\n" +
+      "**1. Execution Order:**\n" +
+      "```typescript\n" +
+      "// execution-order.component.ts\n" +
+      "import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-execution-order',\n" +
+      "  template: `\n" +
+      '    <div class="execution-order">\n' +
+      "      <h3>Execution Order Demo</h3>\n" +
+      "      <p>Input Value: {{ inputValue }}</p>\n" +
+      "      <p>Execution Log:</p>\n" +
+      "      <ul>\n" +
+      '        <li *ngFor="let log of executionLog">{{ log }}</li>\n' +
+      "      </ul>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ExecutionOrderComponent implements OnInit, OnChanges {\n" +
+      "  @Input() inputValue: string = '';\n" +
+      "  executionLog: string[] = [];\n" +
+      "\n" +
+      "  constructor() {\n" +
+      "    this.addLog('1. Constructor called');\n" +
+      "    console.log('Constructor - inputValue:', this.inputValue); // Will be empty\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges): void {\n" +
+      "    this.addLog('2. ngOnChanges called');\n" +
+      "    console.log('ngOnChanges - inputValue:', this.inputValue);\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    this.addLog('3. ngOnInit called');\n" +
+      "    console.log('ngOnInit - inputValue:', this.inputValue); // Now has value\n" +
+      "  }\n" +
+      "\n" +
+      "  private addLog(message: string): void {\n" +
+      "    const timestamp = new Date().toLocaleTimeString();\n" +
+      "    this.executionLog.push(`[${timestamp}] ${message}`);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Access to @Input Properties:**\n" +
+      "```typescript\n" +
+      "// input-access.component.ts\n" +
+      "import { Component, OnInit, Input } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-input-access',\n" +
+      "  template: `\n" +
+      '    <div class="input-access">\n' +
+      "      <h3>@Input Access Demo</h3>\n" +
+      "      <p>User ID: {{ userId }}</p>\n" +
+      "      <p>User Name: {{ userName }}</p>\n" +
+      "      <p>Constructor Access: {{ constructorAccess }}</p>\n" +
+      "      <p>ngOnInit Access: {{ ngOnInitAccess }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class InputAccessComponent implements OnInit {\n" +
+      "  @Input() userId: number = 0;\n" +
+      "  @Input() userName: string = '';\n" +
+      "  \n" +
+      "  constructorAccess: string = '';\n" +
+      "  ngOnInitAccess: string = '';\n" +
+      "\n" +
+      "  constructor() {\n" +
+      "    // @Input properties are NOT available in constructor\n" +
+      "    this.constructorAccess = `User ID: ${this.userId}, Name: ${this.userName}`;\n" +
+      "    console.log('Constructor - @Input values:', { userId: this.userId, userName: this.userName });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    // @Input properties ARE available in ngOnInit\n" +
+      "    this.ngOnInitAccess = `User ID: ${this.userId}, Name: ${this.userName}`;\n" +
+      "    console.log('ngOnInit - @Input values:', { userId: this.userId, userName: this.userName });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Purpose and Usage:**\n" +
+      "```typescript\n" +
+      "// purpose-comparison.component.ts\n" +
+      "import { Component, OnInit, Input } from '@angular/core';\n" +
+      "import { DataService } from './data.service';\n" +
+      "import { Subscription } from 'rxjs';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-purpose-comparison',\n" +
+      "  template: `\n" +
+      '    <div class="purpose-comparison">\n' +
+      "      <h3>Purpose Comparison</h3>\n" +
+      "      <p>Data Loaded: {{ dataLoaded }}</p>\n" +
+      "      <p>Service Ready: {{ serviceReady }}</p>\n" +
+      "      <p>Initialization Complete: {{ initializationComplete }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class PurposeComparisonComponent implements OnInit {\n" +
+      "  @Input() userId: number = 0;\n" +
+      "  \n" +
+      "  dataLoaded = false;\n" +
+      "  serviceReady = false;\n" +
+      "  initializationComplete = false;\n" +
+      "  \n" +
+      "  private subscription: Subscription = new Subscription();\n" +
+      "\n" +
+      "  constructor(private dataService: DataService) {\n" +
+      "    // CONSTRUCTOR PURPOSE:\n" +
+      "    // - Dependency injection\n" +
+      "    // - Simple property initialization\n" +
+      "    // - Basic setup\n" +
+      "    \n" +
+      "    console.log('Constructor: Setting up dependencies');\n" +
+      "    this.serviceReady = true;\n" +
+      "    \n" +
+      "    // DON'T do these in constructor:\n" +
+      "    // - HTTP requests\n" +
+      "    // - Complex initialization\n" +
+      "    // - Access @Input properties\n" +
+      "    // - DOM manipulation\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    // NGONINIT PURPOSE:\n" +
+      "    // - Component initialization\n" +
+      "    // - Data loading\n" +
+      "    // - Setting up subscriptions\n" +
+      "    // - Accessing @Input properties\n" +
+      "    \n" +
+      "    console.log('ngOnInit: Starting component initialization');\n" +
+      "    \n" +
+      "    if (this.userId > 0) {\n" +
+      "      this.loadData();\n" +
+      "    }\n" +
+      "    \n" +
+      "    this.setupSubscriptions();\n" +
+      "    this.initializationComplete = true;\n" +
+      "  }\n" +
+      "\n" +
+      "  private loadData(): void {\n" +
+      "    console.log('Loading data for user:', this.userId);\n" +
+      "    \n" +
+      "    const dataSub = this.dataService.getUserData(this.userId).subscribe({\n" +
+      "      next: (data) => {\n" +
+      "        this.dataLoaded = true;\n" +
+      "        console.log('Data loaded successfully');\n" +
+      "      },\n" +
+      "      error: (error) => {\n" +
+      "        console.error('Error loading data:', error);\n" +
+      "      }\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.subscription.add(dataSub);\n" +
+      "  }\n" +
+      "\n" +
+      "  private setupSubscriptions(): void {\n" +
+      "    console.log('Setting up subscriptions');\n" +
+      "    // Subscription setup logic\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy(): void {\n" +
+      "    this.subscription.unsubscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Summary of Differences:**\n\n" +
+      "| Aspect | Constructor | ngOnInit |\n" +
+      "|--------|-------------|----------|\n" +
+      "| **Purpose** | Dependency injection | Component initialization |\n" +
+      "| **Execution** | First (before ngOnChanges) | After first ngOnChanges |\n" +
+      "| **@Input Access** | ❌ Not available | ✅ Available |\n" +
+      "| **DOM Access** | ❌ Not available | ❌ Not available (use ngAfterViewInit) |\n" +
+      "| **HTTP Requests** | ❌ Avoid | ✅ Perfect place |\n" +
+      "| **Subscriptions** | ❌ Avoid | ✅ Perfect place |\n" +
+      "| **Heavy Operations** | ❌ Avoid | ✅ Can handle |\n" +
+      "| **Called** | Once per instance | Once per instance |\n" +
+      "| **Best For** | Simple setup, DI | Complex initialization |\n\n" +
+      "**Best Practices:**\n" +
+      "- Use constructor for dependency injection only\n" +
+      "- Use ngOnInit for component initialization\n" +
+      "- Keep constructor lightweight\n" +
+      "- Always implement OnInit interface\n" +
+      "- Clean up subscriptions in ngOnDestroy\n" +
+      "- Don't access @Input properties in constructor\n" +
+      "- Use ngOnInit for data loading and setup",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "constructor", "ngOnInit", "lifecycle", "comparison"],
+  },
+  {
+    id: 185,
+    question: "What are the various ways to communicate between components in Angular?",
+    answer:
+      "Angular provides multiple ways for components to communicate with each other, each suited for different scenarios and component relationships.\n\n" +
+      "**1. Parent to Child Communication (@Input):**\n" +
+      "```typescript\n" +
+      "// parent.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent',\n" +
+      "  template: `\n" +
+      '    <div class="parent">\n' +
+      "      <h3>Parent Component</h3>\n" +
+      "      <p>Parent Data: {{ parentData }}</p>\n" +
+      '      <button (click)="updateData()">Update Data</button>\n' +
+      "      \n" +
+      "      <!-- Pass data to child -->\n" +
+      "      <app-child \n" +
+      '        [childInput]="parentData" \n' +
+      '        [userInfo]="userInfo"\n' +
+      '        [config]="config">\n' +
+      "      </app-child>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentComponent {\n" +
+      "  parentData = 'Initial Parent Data';\n" +
+      "  userInfo = {\n" +
+      "    name: 'John Doe',\n" +
+      "    email: 'john@example.com',\n" +
+      "    role: 'admin'\n" +
+      "  };\n" +
+      "  config = {\n" +
+      "    theme: 'dark',\n" +
+      "    language: 'en',\n" +
+      "    features: ['feature1', 'feature2']\n" +
+      "  };\n" +
+      "\n" +
+      "  updateData() {\n" +
+      "    this.parentData = `Updated at ${new Date().toLocaleTimeString()}`;\n" +
+      "    this.userInfo.name = 'Jane Smith';\n" +
+      "    this.config.theme = this.config.theme === 'dark' ? 'light' : 'dark';\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// child.component.ts\n" +
+      "import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child',\n" +
+      "  template: `\n" +
+      '    <div class="child">\n' +
+      "      <h4>Child Component</h4>\n" +
+      "      <p>Received Data: {{ childInput }}</p>\n" +
+      "      <p>User: {{ userInfo.name }} ({{ userInfo.email }})</p>\n" +
+      "      <p>Theme: {{ config.theme }}</p>\n" +
+      "      <p>Features: {{ config.features.join(', ') }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ChildComponent implements OnChanges {\n" +
+      "  @Input() childInput: string = '';\n" +
+      "  @Input() userInfo: any = {};\n" +
+      "  @Input() config: any = {};\n" +
+      "\n" +
+      "  ngOnChanges(changes: SimpleChanges): void {\n" +
+      "    console.log('Child received changes:', changes);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Child to Parent Communication (@Output + EventEmitter):**\n" +
+      "```typescript\n" +
+      "// child.component.ts\n" +
+      "import { Component, Output, EventEmitter } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child-output',\n" +
+      "  template: `\n" +
+      '    <div class="child-output">\n' +
+      "      <h4>Child Component with Output</h4>\n" +
+      '      <input [(ngModel)]="childData" placeholder="Enter data">\n' +
+      '      <button (click)="sendDataToParent()">Send to Parent</button>\n' +
+      '      <button (click)="notifyParent()">Notify Parent</button>\n' +
+      '      <button (click)="requestUpdate()">Request Update</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ChildOutputComponent {\n" +
+      "  childData = '';\n" +
+      "\n" +
+      "  // Output events to parent\n" +
+      "  @Output() dataChanged = new EventEmitter<string>();\n" +
+      "  @Output() notification = new EventEmitter<{type: string, message: string}>();\n" +
+      "  @Output() updateRequested = new EventEmitter<void>();\n" +
+      "\n" +
+      "  sendDataToParent() {\n" +
+      "    this.dataChanged.emit(this.childData);\n" +
+      "  }\n" +
+      "\n" +
+      "  notifyParent() {\n" +
+      "    this.notification.emit({\n" +
+      "      type: 'info',\n" +
+      "      message: 'Child component notification'\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  requestUpdate() {\n" +
+      "    this.updateRequested.emit();\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// parent.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent-output',\n" +
+      "  template: `\n" +
+      '    <div class="parent-output">\n' +
+      "      <h3>Parent Component</h3>\n" +
+      "      <p>Received from Child: {{ receivedData }}</p>\n" +
+      "      <p>Last Notification: {{ lastNotification }}</p>\n" +
+      "      <p>Update Count: {{ updateCount }}</p>\n" +
+      "      \n" +
+      "      <app-child-output\n" +
+      '        (dataChanged)="onDataChanged($event)"\n' +
+      '        (notification)="onNotification($event)"\n' +
+      '        (updateRequested)="onUpdateRequested()">\n' +
+      "      </app-child-output>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentOutputComponent {\n" +
+      "  receivedData = '';\n" +
+      "  lastNotification = '';\n" +
+      "  updateCount = 0;\n" +
+      "\n" +
+      "  onDataChanged(data: string) {\n" +
+      "    this.receivedData = data;\n" +
+      "    console.log('Parent received data:', data);\n" +
+      "  }\n" +
+      "\n" +
+      "  onNotification(notification: {type: string, message: string}) {\n" +
+      "    this.lastNotification = `${notification.type}: ${notification.message}`;\n" +
+      "    console.log('Parent received notification:', notification);\n" +
+      "  }\n" +
+      "\n" +
+      "  onUpdateRequested() {\n" +
+      "    this.updateCount++;\n" +
+      "    console.log('Parent received update request');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Sibling Component Communication (Service + Subject):**\n" +
+      "```typescript\n" +
+      "// communication.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { Subject, BehaviorSubject } from 'rxjs';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class CommunicationService {\n" +
+      "  // Subject for one-time events\n" +
+      "  private messageSubject = new Subject<string>();\n" +
+      "  public message$ = this.messageSubject.asObservable();\n" +
+      "\n" +
+      "  // BehaviorSubject for state that needs initial value\n" +
+      "  private stateSubject = new BehaviorSubject<any>({ count: 0, data: null });\n" +
+      "  public state$ = this.stateSubject.asObservable();\n" +
+      "\n" +
+      "  // Methods to send data\n" +
+      "  sendMessage(message: string) {\n" +
+      "    this.messageSubject.next(message);\n" +
+      "  }\n" +
+      "\n" +
+      "  updateState(newState: any) {\n" +
+      "    this.stateSubject.next(newState);\n" +
+      "  }\n" +
+      "\n" +
+      "  getCurrentState() {\n" +
+      "    return this.stateSubject.value;\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// sibling1.component.ts\n" +
+      "import { Component, OnInit, OnDestroy } from '@angular/core';\n" +
+      "import { CommunicationService } from './communication.service';\n" +
+      "import { Subscription } from 'rxjs';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-sibling1',\n" +
+      "  template: `\n" +
+      '    <div class="sibling1">\n' +
+      "      <h4>Sibling 1</h4>\n" +
+      '      <input [(ngModel)]="message" placeholder="Enter message">\n' +
+      '      <button (click)="sendMessage()">Send Message</button>\n' +
+      '      <button (click)="updateState()">Update State</button>\n' +
+      "      <p>Received State: {{ receivedState | json }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class Sibling1Component implements OnInit, OnDestroy {\n" +
+      "  message = '';\n" +
+      "  receivedState: any = {};\n" +
+      "  private subscription: Subscription = new Subscription();\n" +
+      "\n" +
+      "  constructor(private communicationService: CommunicationService) {}\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    // Listen to state changes\n" +
+      "    const stateSub = this.communicationService.state$.subscribe(state => {\n" +
+      "      this.receivedState = state;\n" +
+      "    });\n" +
+      "    this.subscription.add(stateSub);\n" +
+      "  }\n" +
+      "\n" +
+      "  sendMessage() {\n" +
+      "    this.communicationService.sendMessage(this.message);\n" +
+      "  }\n" +
+      "\n" +
+      "  updateState() {\n" +
+      "    const newState = {\n" +
+      "      count: this.receivedState.count + 1,\n" +
+      "      data: `Updated by Sibling1 at ${new Date().toLocaleTimeString()}`\n" +
+      "    };\n" +
+      "    this.communicationService.updateState(newState);\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.subscription.unsubscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// sibling2.component.ts\n" +
+      "import { Component, OnInit, OnDestroy } from '@angular/core';\n" +
+      "import { CommunicationService } from './communication.service';\n" +
+      "import { Subscription } from 'rxjs';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-sibling2',\n" +
+      "  template: `\n" +
+      '    <div class="sibling2">\n' +
+      "      <h4>Sibling 2</h4>\n" +
+      "      <p>Received Messages:</p>\n" +
+      "      <ul>\n" +
+      '        <li *ngFor="let msg of messages">{{ msg }}</li>\n' +
+      "      </ul>\n" +
+      "      <p>Current State: {{ currentState | json }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class Sibling2Component implements OnInit, OnDestroy {\n" +
+      "  messages: string[] = [];\n" +
+      "  currentState: any = {};\n" +
+      "  private subscription: Subscription = new Subscription();\n" +
+      "\n" +
+      "  constructor(private communicationService: CommunicationService) {}\n" +
+      "\n" +
+      "  ngOnInit() {\n" +
+      "    // Listen to messages\n" +
+      "    const messageSub = this.communicationService.message$.subscribe(message => {\n" +
+      "      this.messages.push(message);\n" +
+      "    });\n" +
+      "    this.subscription.add(messageSub);\n" +
+      "\n" +
+      "    // Listen to state changes\n" +
+      "    const stateSub = this.communicationService.state$.subscribe(state => {\n" +
+      "      this.currentState = state;\n" +
+      "    });\n" +
+      "    this.subscription.add(stateSub);\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnDestroy() {\n" +
+      "    this.subscription.unsubscribe();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. ViewChild Communication:**\n" +
+      "```typescript\n" +
+      "// child-viewchild.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child-viewchild',\n" +
+      "  template: `\n" +
+      '    <div class="child-viewchild">\n' +
+      "      <h4>Child Component (ViewChild)</h4>\n" +
+      "      <p>Child Data: {{ childData }}</p>\n" +
+      '      <button (click)="updateData()">Update Child Data</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ChildViewchildComponent {\n" +
+      "  childData = 'Initial Child Data';\n" +
+      "\n" +
+      "  updateData() {\n" +
+      "    this.childData = `Updated at ${new Date().toLocaleTimeString()}`;\n" +
+      "  }\n" +
+      "\n" +
+      "  getData() {\n" +
+      "    return this.childData;\n" +
+      "  }\n" +
+      "\n" +
+      "  setData(newData: string) {\n" +
+      "    this.childData = newData;\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// parent-viewchild.component.ts\n" +
+      "import { Component, ViewChild, AfterViewInit } from '@angular/core';\n" +
+      "import { ChildViewchildComponent } from './child-viewchild.component';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent-viewchild',\n" +
+      "  template: `\n" +
+      '    <div class="parent-viewchild">\n' +
+      "      <h3>Parent Component (ViewChild)</h3>\n" +
+      '      <button (click)="accessChild()">Access Child Component</button>\n' +
+      '      <button (click)="updateChild()">Update Child Data</button>\n' +
+      "      <p>Parent Message: {{ parentMessage }}</p>\n" +
+      "      \n" +
+      "      <app-child-viewchild #childRef></app-child-viewchild>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentViewchildComponent implements AfterViewInit {\n" +
+      "  @ViewChild(ChildViewchildComponent) childComponent!: ChildViewchildComponent;\n" +
+      "  @ViewChild('childRef') childRef!: ChildViewchildComponent;\n" +
+      "  \n" +
+      "  parentMessage = '';\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('Child component available:', this.childComponent);\n" +
+      "  }\n" +
+      "\n" +
+      "  accessChild() {\n" +
+      "    if (this.childComponent) {\n" +
+      "      const childData = this.childComponent.getData();\n" +
+      "      this.parentMessage = `Child data: ${childData}`;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  updateChild() {\n" +
+      "    if (this.childComponent) {\n" +
+      "      this.childComponent.setData(`Updated by parent at ${new Date().toLocaleTimeString()}`);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. Content Projection Communication:**\n" +
+      "```typescript\n" +
+      "// content-projection.component.ts\n" +
+      "import { Component, ContentChild, ContentChildren, QueryList } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-content-projection',\n" +
+      "  template: `\n" +
+      '    <div class="content-projection">\n' +
+      "      <h3>Content Projection Component</h3>\n" +
+      '      <div class="projected-content">\n' +
+      "        <ng-content></ng-content>\n" +
+      "      </div>\n" +
+      '      <div class="named-projection">\n' +
+      '        <ng-content select="[slot=header]"></ng-content>\n' +
+      '        <ng-content select="[slot=body]"></ng-content>\n' +
+      '        <ng-content select="[slot=footer]"></ng-content>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ContentProjectionComponent {\n" +
+      "  @ContentChild('projectedChild') projectedChild: any;\n" +
+      "  @ContentChildren('projectedChildren') projectedChildren!: QueryList<any>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Summary of Communication Methods:**\n\n" +
+      "| Method | Use Case | Direction | Best For |\n" +
+      "|--------|----------|-----------|----------|\n" +
+      "| @Input | Parent → Child | One-way | Passing data down |\n" +
+      "| @Output | Child → Parent | One-way | Events up |\n" +
+      "| Service + Subject | Any → Any | Bidirectional | Sibling communication |\n" +
+      "| ViewChild | Parent → Child | Direct access | Direct component access |\n" +
+      "| ContentChild | Parent → Projected | Direct access | Content projection |\n" +
+      "| Template Reference | Template → Component | Direct access | Template access |\n" +
+      "| State Management | Global | Any direction | Complex state |\n\n" +
+      "**Best Practices:**\n" +
+      "- Use @Input/@Output for simple parent-child communication\n" +
+      "- Use services for sibling or distant component communication\n" +
+      "- Use ViewChild sparingly - prefer @Input/@Output\n" +
+      "- Always unsubscribe from observables\n" +
+      "- Use TypeScript interfaces for type safety\n" +
+      "- Consider using state management for complex applications",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "communication", "@Input", "@Output", "ViewChild", "services"],
+  },
+  {
+    id: 186,
+    question: "What is Content Projection? What is <ng-content>?",
+    answer:
+      "Content Projection is an Angular feature that allows you to insert external content into a component's template. The `<ng-content>` directive is the mechanism that enables this functionality, making components more flexible and reusable.\n\n" +
+      "**Basic Content Projection:**\n" +
+      "```typescript\n" +
+      "// card.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-card',\n" +
+      "  template: `\n" +
+      '    <div class="card">\n' +
+      '      <div class="card-header">\n' +
+      "        <h3>Card Title</h3>\n" +
+      "      </div>\n" +
+      '      <div class="card-body">\n' +
+      "        <!-- Project content here -->\n" +
+      "        <ng-content></ng-content>\n" +
+      "      </div>\n" +
+      '      <div class="card-footer">\n' +
+      "        <p>Card Footer</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .card {\n" +
+      "      border: 1px solid #ddd;\n" +
+      "      border-radius: 8px;\n" +
+      "      padding: 16px;\n" +
+      "      margin: 16px;\n" +
+      "      box-shadow: 0 2px 4px rgba(0,0,0,0.1);\n" +
+      "    }\n" +
+      "    .card-header {\n" +
+      "      border-bottom: 1px solid #eee;\n" +
+      "      margin-bottom: 16px;\n" +
+      "    }\n" +
+      "    .card-body {\n" +
+      "      min-height: 100px;\n" +
+      "    }\n" +
+      "    .card-footer {\n" +
+      "      border-top: 1px solid #eee;\n" +
+      "      margin-top: 16px;\n" +
+      "      font-style: italic;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class CardComponent {}\n" +
+      "\n" +
+      "// app.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-root',\n" +
+      "  template: `\n" +
+      '    <div class="app">\n' +
+      "      <h1>Content Projection Demo</h1>\n" +
+      "      \n" +
+      "      <!-- Basic projection -->\n" +
+      "      <app-card>\n" +
+      "        <p>This content is projected into the card!</p>\n" +
+      "        <button>Click me</button>\n" +
+      "        <ul>\n" +
+      "          <li>Item 1</li>\n" +
+      "          <li>Item 2</li>\n" +
+      "          <li>Item 3</li>\n" +
+      "        </ul>\n" +
+      "      </app-card>\n" +
+      "      \n" +
+      "      <!-- Another card with different content -->\n" +
+      "      <app-card>\n" +
+      "        <h4>Different Content</h4>\n" +
+      "        <p>This card has completely different projected content.</p>\n" +
+      '        <img src="https://via.placeholder.com/150" alt="Placeholder">\n' +
+      "      </app-card>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AppComponent {}\n" +
+      "```\n\n" +
+      "**Named Content Projection (Multi-slot):**\n" +
+      "```typescript\n" +
+      "// multi-slot-card.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-multi-slot-card',\n" +
+      "  template: `\n" +
+      '    <div class="multi-slot-card">\n' +
+      "      <!-- Header slot -->\n" +
+      '      <div class="card-header">\n' +
+      '        <ng-content select="[slot=header]"></ng-content>\n' +
+      "        <!-- Fallback if no header provided -->\n" +
+      '        <ng-content select=".default-header"></ng-content>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Body slot -->\n" +
+      '      <div class="card-body">\n' +
+      '        <ng-content select="[slot=body]"></ng-content>\n' +
+      "        <!-- Default body content -->\n" +
+      "        <ng-content></ng-content>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Footer slot -->\n" +
+      '      <div class="card-footer">\n' +
+      '        <ng-content select="[slot=footer]"></ng-content>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Actions slot -->\n" +
+      '      <div class="card-actions">\n' +
+      '        <ng-content select="[slot=actions]"></ng-content>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .multi-slot-card {\n" +
+      "      border: 1px solid #ddd;\n" +
+      "      border-radius: 8px;\n" +
+      "      margin: 16px;\n" +
+      "      overflow: hidden;\n" +
+      "    }\n" +
+      "    .card-header {\n" +
+      "      background-color: #f8f9fa;\n" +
+      "      padding: 16px;\n" +
+      "      border-bottom: 1px solid #eee;\n" +
+      "    }\n" +
+      "    .card-body {\n" +
+      "      padding: 16px;\n" +
+      "    }\n" +
+      "    .card-footer {\n" +
+      "      background-color: #f8f9fa;\n" +
+      "      padding: 16px;\n" +
+      "      border-top: 1px solid #eee;\n" +
+      "      font-size: 14px;\n" +
+      "    }\n" +
+      "    .card-actions {\n" +
+      "      padding: 16px;\n" +
+      "      background-color: #f8f9fa;\n" +
+      "      border-top: 1px solid #eee;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class MultiSlotCardComponent {}\n" +
+      "\n" +
+      "// Usage in parent component\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent',\n" +
+      "  template: `\n" +
+      '    <div class="parent">\n' +
+      "      <h2>Multi-Slot Content Projection</h2>\n" +
+      "      \n" +
+      "      <!-- Card with all slots filled -->\n" +
+      "      <app-multi-slot-card>\n" +
+      '        <div slot="header">\n' +
+      "          <h3>Custom Header</h3>\n" +
+      "          <p>This is a custom header content</p>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div slot="body">\n' +
+      "          <p>This is the main body content.</p>\n" +
+      "          <p>It can contain any HTML elements.</p>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div slot="footer">\n' +
+      "          <small>Created on {{ currentDate | date }}</small>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div slot="actions">\n' +
+      '          <button class="btn btn-primary">Save</button>\n' +
+      '          <button class="btn btn-secondary">Cancel</button>\n' +
+      "        </div>\n" +
+      "      </app-multi-slot-card>\n" +
+      "      \n" +
+      "      <!-- Card with only some slots -->\n" +
+      "      <app-multi-slot-card>\n" +
+      '        <div slot="header">\n' +
+      "          <h3>Minimal Card</h3>\n" +
+      "        </div>\n" +
+      "        \n" +
+      "        <p>This content goes to the default slot (body).</p>\n" +
+      "        <p>No footer or actions provided.</p>\n" +
+      "      </app-multi-slot-card>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentComponent {\n" +
+      "  currentDate = new Date();\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Content Projection with ContentChild:**\n" +
+      "```typescript\n" +
+      "// advanced-projection.component.ts\n" +
+      "import { Component, ContentChild, ContentChildren, QueryList, AfterContentInit } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-projection',\n" +
+      "  template: `\n" +
+      '    <div class="advanced-projection">\n' +
+      '      <div class="projection-info">\n' +
+      "        <h3>Advanced Content Projection</h3>\n" +
+      "        <p>Projected Content Count: {{ projectedContentCount }}</p>\n" +
+      "        <p>Has Header: {{ hasHeader }}</p>\n" +
+      "        <p>Has Footer: {{ hasFooter }}</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="projected-content">\n' +
+      "        <ng-content></ng-content>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="projection-summary">\n' +
+      "        <h4>Projection Summary:</h4>\n" +
+      "        <ul>\n" +
+      '          <li *ngFor="let item of projectionSummary">{{ item }}</li>\n' +
+      "        </ul>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AdvancedProjectionComponent implements AfterContentInit {\n" +
+      "  @ContentChild('header') headerElement: any;\n" +
+      "  @ContentChildren('item') itemElements!: QueryList<any>;\n" +
+      "  \n" +
+      "  projectedContentCount = 0;\n" +
+      "  hasHeader = false;\n" +
+      "  hasFooter = false;\n" +
+      "  projectionSummary: string[] = [];\n" +
+      "\n" +
+      "  ngAfterContentInit() {\n" +
+      "    // Check if header exists\n" +
+      "    this.hasHeader = !!this.headerElement;\n" +
+      "    \n" +
+      "    // Count projected items\n" +
+      "    this.projectedContentCount = this.itemElements.length;\n" +
+      "    \n" +
+      "    // Build summary\n" +
+      "    this.buildProjectionSummary();\n" +
+      "    \n" +
+      "    console.log('Content projection initialized:', {\n" +
+      "      hasHeader: this.hasHeader,\n" +
+      "      itemCount: this.projectedContentCount,\n" +
+      "      headerElement: this.headerElement,\n" +
+      "      itemElements: this.itemElements.toArray()\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  private buildProjectionSummary() {\n" +
+      "    this.projectionSummary = [];\n" +
+      "    \n" +
+      "    if (this.hasHeader) {\n" +
+      "      this.projectionSummary.push('Header content detected');\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (this.projectedContentCount > 0) {\n" +
+      "      this.projectionSummary.push(`${this.projectedContentCount} items projected`);\n" +
+      "    }\n" +
+      "    \n" +
+      "    if (this.projectionSummary.length === 0) {\n" +
+      "      this.projectionSummary.push('No specific content detected');\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// Usage\n" +
+      "@Component({\n" +
+      "  selector: 'app-usage',\n" +
+      "  template: `\n" +
+      "    <app-advanced-projection>\n" +
+      '      <div #header class="custom-header">\n' +
+      "        <h2>Custom Header</h2>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div #item class="custom-item">\n' +
+      "        <p>Item 1</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div #item class="custom-item">\n' +
+      "        <p>Item 2</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div #item class="custom-item">\n' +
+      "        <p>Item 3</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <p>This is regular projected content</p>\n" +
+      "    </app-advanced-projection>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UsageComponent {}\n" +
+      "```\n\n" +
+      "**Content Projection Best Practices:**\n" +
+      "```typescript\n" +
+      "// best-practices.component.ts\n" +
+      "import { Component, Input } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-best-practices',\n" +
+      "  template: `\n" +
+      '    <div class="best-practices" [class]="theme">\n' +
+      "      <!-- Conditional projection -->\n" +
+      '      <div class="header" *ngIf="showHeader">\n' +
+      '        <ng-content select="[slot=header]"></ng-content>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Main content with fallback -->\n" +
+      '      <div class="content">\n' +
+      '        <ng-content select="[slot=content]"></ng-content>\n' +
+      "        <!-- Fallback content -->\n" +
+      "        <ng-content></ng-content>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Footer with default -->\n" +
+      '      <div class="footer">\n' +
+      '        <ng-content select="[slot=footer]"></ng-content>\n' +
+      '        <div class="default-footer" *ngIf="!hasFooter">\n' +
+      "          <p>Default footer content</p>\n      " +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class BestPracticesComponent {\n" +
+      "  @Input() theme: 'light' | 'dark' = 'light';\n" +
+      "  @Input() showHeader = true;\n" +
+      "  \n" +
+      "  // This would be set by ContentChild in real implementation\n" +
+      "  hasFooter = false;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points about Content Projection:**\n" +
+      "- `<ng-content>` projects external content into component templates\n" +
+      "- Use `select` attribute for named projection slots\n" +
+      "- Content is projected at runtime, not compile time\n" +
+      "- Projected content maintains its original context\n" +
+      "- Use ContentChild/ContentChildren to access projected elements\n" +
+      "- Fallback content can be provided for empty slots\n" +
+      "- CSS classes and styles are preserved in projected content\n" +
+      "- Event bindings work normally in projected content\n" +
+      "- Perfect for creating reusable, flexible components\n" +
+      "- Use with structural directives for dynamic content",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "content-projection", "ng-content", "slots", "projection"],
+  },
+  {
+    id: 187,
+    question: "What is Template Reference Variable in Angular?",
+    answer:
+      "Template Reference Variables (also called template variables) are a way to reference DOM elements or Angular components directly in templates. They use the `#` syntax and provide access to elements for manipulation, data binding, or method calls.\n\n" +
+      "**Basic Template Reference Variables:**\n" +
+      "```typescript\n" +
+      "// template-ref.component.ts\n" +
+      "import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-template-ref',\n" +
+      "  template: `\n" +
+      '    <div class="template-ref-demo">\n' +
+      "      <h3>Template Reference Variables Demo</h3>\n" +
+      "      \n" +
+      "      <!-- Basic DOM element reference -->\n" +
+      '      <input #inputRef type="text" placeholder="Enter text">\n' +
+      '      <button (click)="focusInput()">Focus Input</button>\n' +
+      '      <button (click)="getInputValue()">Get Input Value</button>\n' +
+      "      <p>Input Value: {{ inputValue }}</p>\n" +
+      "      \n" +
+      "      <!-- Div element reference -->\n" +
+      '      <div #divRef class="demo-div">\n' +
+      "        <p>This is a div with template reference</p>\n" +
+      "      </div>\n" +
+      '      <button (click)="changeDivContent()">Change Div Content</button>\n' +
+      '      <button (click)="changeDivStyle()">Change Div Style</button>\n' +
+      "      \n" +
+      "      <!-- Component reference -->\n" +
+      "      <app-child-component #childRef></app-child-component>\n" +
+      '      <button (click)="callChildMethod()">Call Child Method</button>\n' +
+      '      <button (click)="accessChildProperty()">Access Child Property</button>\n' +
+      "      <p>Child Data: {{ childData }}</p>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .template-ref-demo {\n" +
+      "      padding: 20px;\n" +
+      "      border: 1px solid #ddd;\n" +
+      "      margin: 10px;\n" +
+      "    }\n" +
+      "    .demo-div {\n" +
+      "      padding: 10px;\n" +
+      "      margin: 10px 0;\n" +
+      "      border: 1px solid #ccc;\n" +
+      "      background-color: #f9f9f9;\n" +
+      "    }\n" +
+      "    .highlighted {\n" +
+      "      background-color: yellow !important;\n" +
+      "      font-weight: bold;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class TemplateRefComponent implements AfterViewInit {\n" +
+      "  @ViewChild('inputRef') inputElement!: ElementRef;\n" +
+      "  @ViewChild('divRef') divElement!: ElementRef;\n" +
+      "  @ViewChild('childRef') childComponent!: any;\n" +
+      "  \n" +
+      "  inputValue = '';\n" +
+      "  childData = '';\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('Template references available:', {\n" +
+      "      inputElement: this.inputElement,\n" +
+      "      divElement: this.divElement,\n" +
+      "      childComponent: this.childComponent\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  focusInput() {\n" +
+      "    if (this.inputElement) {\n" +
+      "      this.inputElement.nativeElement.focus();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getInputValue() {\n" +
+      "    if (this.inputElement) {\n" +
+      "      this.inputValue = this.inputElement.nativeElement.value;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  changeDivContent() {\n" +
+      "    if (this.divElement) {\n" +
+      "      this.divElement.nativeElement.innerHTML = \n" +
+      "        '<p>Content changed at ' + new Date().toLocaleTimeString() + '</p>';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  changeDivStyle() {\n" +
+      "    if (this.divElement) {\n" +
+      "      this.divElement.nativeElement.classList.toggle('highlighted');\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  callChildMethod() {\n" +
+      "    if (this.childComponent) {\n" +
+      "      this.childComponent.updateData();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  accessChildProperty() {\n" +
+      "    if (this.childComponent) {\n" +
+      "      this.childData = this.childComponent.getData();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// child-component.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child-component',\n" +
+      "  template: `\n" +
+      '    <div class="child-component">\n' +
+      "      <h4>Child Component</h4>\n" +
+      "      <p>Child Data: {{ childData }}</p>\n" +
+      '      <button (click)="updateData()">Update Data</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ChildComponentComponent {\n" +
+      "  childData = 'Initial Child Data';\n" +
+      "\n" +
+      "  updateData() {\n" +
+      "    this.childData = `Updated at ${new Date().toLocaleTimeString()}`;\n" +
+      "  }\n" +
+      "\n" +
+      "  getData() {\n" +
+      "    return this.childData;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Template Reference Variables:**\n" +
+      "```typescript\n" +
+      "// advanced-template-ref.component.ts\n" +
+      "import { Component, ViewChild, ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-template-ref',\n" +
+      "  template: `\n" +
+      '    <div class="advanced-template-ref">\n' +
+      "      <h3>Advanced Template Reference Variables</h3>\n" +
+      "      \n" +
+      "      <!-- Multiple input references -->\n" +
+      '      <div class="input-group">\n' +
+      '        <input #firstName type="text" placeholder="First Name">\n' +
+      '        <input #lastName type="text" placeholder="Last Name">\n' +
+      '        <input #email type="email" placeholder="Email">\n' +
+      '        <button (click)="validateForm()">Validate Form</button>\n' +
+      '        <button (click)="clearForm()">Clear Form</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Dynamic list with references -->\n" +
+      '      <div class="list-group">\n' +
+      "        <h4>Dynamic List</h4>\n" +
+      '        <div *ngFor="let item of items; let i = index" #itemRef>\n' +
+      "          <span>{{ item.name }}</span>\n" +
+      '          <button (click)="removeItem(i)">Remove</button>\n' +
+      '          <button (click)="highlightItem(itemRef)">Highlight</button>\n' +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Form with template references -->\n" +
+      '      <form #formRef (ngSubmit)="onSubmit(formRef)">\n' +
+      '        <div class="form-group">\n' +
+      "          <label>Username:</label>\n" +
+      '          <input #usernameRef type="text" required>\n' +
+      "        </div>\n" +
+      '        <div class="form-group">\n' +
+      "          <label>Password:</label>\n" +
+      '          <input #passwordRef type="password" required>\n' +
+      "        </div>\n" +
+      '        <button type="submit">Submit</button>\n' +
+      '        <button type="button" (click)="resetForm(formRef)">Reset</button>\n' +
+      "      </form>\n" +
+      "      \n" +
+      "      <!-- Status display -->\n" +
+      '      <div class="status">\n' +
+      "        <p>Form Valid: {{ formValid }}</p>\n" +
+      "        <p>Last Action: {{ lastAction }}</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .advanced-template-ref {\n" +
+      "      padding: 20px;\n" +
+      "      border: 1px solid #ddd;\n" +
+      "      margin: 10px;\n" +
+      "    }\n" +
+      "    .input-group {\n" +
+      "      margin: 10px 0;\n" +
+      "    }\n" +
+      "    .input-group input {\n" +
+      "      margin: 5px;\n" +
+      "      padding: 5px;\n" +
+      "    }\n" +
+      "    .list-group {\n" +
+      "      margin: 10px 0;\n" +
+      "    }\n" +
+      "    .form-group {\n" +
+      "      margin: 10px 0;\n" +
+      "    }\n" +
+      "    .form-group input {\n" +
+      "      margin-left: 10px;\n" +
+      "      padding: 5px;\n" +
+      "    }\n" +
+      "    .highlighted {\n" +
+      "      background-color: yellow;\n" +
+      "      font-weight: bold;\n" +
+      "    }\n" +
+      "    .status {\n" +
+      "      margin-top: 20px;\n" +
+      "      padding: 10px;\n" +
+      "      background-color: #f0f0f0;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class AdvancedTemplateRefComponent implements AfterViewInit {\n" +
+      "  @ViewChild('firstName') firstNameInput!: ElementRef;\n" +
+      "  @ViewChild('lastName') lastNameInput!: ElementRef;\n" +
+      "  @ViewChild('email') emailInput!: ElementRef;\n" +
+      "  @ViewChild('formRef') formElement!: ElementRef;\n" +
+      "  @ViewChildren('itemRef') itemElements!: QueryList<ElementRef>;\n" +
+      "  \n" +
+      "  items = [\n" +
+      "    { name: 'Item 1' },\n" +
+      "    { name: 'Item 2' },\n" +
+      "    { name: 'Item 3' }\n" +
+      "  ];\n" +
+      "  \n" +
+      "  formValid = false;\n" +
+      "  lastAction = '';\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('Advanced template references available:', {\n" +
+      "      firstNameInput: this.firstNameInput,\n" +
+      "      lastNameInput: this.lastNameInput,\n" +
+      "      emailInput: this.emailInput,\n" +
+      "      formElement: this.formElement,\n" +
+      "      itemElements: this.itemElements.toArray()\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  validateForm() {\n" +
+      "    const firstName = this.firstNameInput.nativeElement.value;\n" +
+      "    const lastName = this.lastNameInput.nativeElement.value;\n" +
+      "    const email = this.emailInput.nativeElement.value;\n" +
+      "    \n" +
+      "    this.formValid = firstName && lastName && email;\n" +
+      "    this.lastAction = `Form validation: ${this.formValid ? 'Valid' : 'Invalid'}`;\n" +
+      "    \n" +
+      "    // Highlight invalid fields\n" +
+      "    [this.firstNameInput, this.lastNameInput, this.emailInput].forEach(input => {\n" +
+      "      if (!input.nativeElement.value) {\n" +
+      "        input.nativeElement.style.borderColor = 'red';\n" +
+      "      } else {\n" +
+      "        input.nativeElement.style.borderColor = 'green';\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  clearForm() {\n" +
+      "    [this.firstNameInput, this.lastNameInput, this.emailInput].forEach(input => {\n" +
+      "      input.nativeElement.value = '';\n" +
+      "      input.nativeElement.style.borderColor = '';\n" +
+      "    });\n" +
+      "    this.formValid = false;\n" +
+      "    this.lastAction = 'Form cleared';\n" +
+      "  }\n" +
+      "\n" +
+      "  removeItem(index: number) {\n" +
+      "    this.items.splice(index, 1);\n" +
+      "    this.lastAction = `Item ${index + 1} removed`;\n" +
+      "  }\n" +
+      "\n" +
+      "  highlightItem(itemRef: ElementRef) {\n" +
+      "    itemRef.nativeElement.classList.toggle('highlighted');\n" +
+      "    this.lastAction = 'Item highlighted';\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit(formRef: ElementRef) {\n" +
+      "    const form = formRef.nativeElement;\n" +
+      "    const formData = new FormData(form);\n" +
+      "    \n" +
+      "    console.log('Form submitted:', formData);\n" +
+      "    this.lastAction = 'Form submitted';\n" +
+      "  }\n" +
+      "\n" +
+      "  resetForm(formRef: ElementRef) {\n" +
+      "    formRef.nativeElement.reset();\n" +
+      "    this.lastAction = 'Form reset';\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Reference Variables with Directives:**\n" +
+      "```typescript\n" +
+      "// directive-template-ref.component.ts\n" +
+      "import { Component, ViewChild, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-directive-template-ref',\n" +
+      "  template: `\n" +
+      '    <div class="directive-template-ref">\n' +
+      "      <h3>Template References with Directives</h3>\n" +
+      "      \n" +
+      "      <!-- ngIf with template reference -->\n" +
+      '      <div *ngIf="showContent" #conditionalDiv>\n' +
+      "        <p>This content is conditionally shown</p>\n" +
+      "      </div>\n" +
+      '      <button (click)="toggleContent()">Toggle Content</button>\n' +
+      '      <button (click)="accessConditionalDiv()">Access Conditional Div</button>\n' +
+      "      \n" +
+      "      <!-- ngFor with template reference -->\n" +
+      '      <div *ngFor="let user of users; let i = index" #userDiv>\n' +
+      "        <span>{{ user.name }} - {{ user.email }}</span>\n" +
+      '        <button (click)="selectUser(userDiv, user)">Select</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Selected user display -->\n" +
+      '      <div *ngIf="selectedUser">\n' +
+      "        <h4>Selected User:</h4>\n" +
+      "        <p>Name: {{ selectedUser.name }}</p>\n" +
+      "        <p>Email: {{ selectedUser.email }}</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DirectiveTemplateRefComponent {\n" +
+      "  @ViewChild('conditionalDiv') conditionalDiv!: ElementRef;\n" +
+      "  \n" +
+      "  showContent = true;\n" +
+      "  selectedUser: any = null;\n" +
+      "  \n" +
+      "  users = [\n" +
+      "    { name: 'John Doe', email: 'john@example.com' },\n" +
+      "    { name: 'Jane Smith', email: 'jane@example.com' },\n" +
+      "    { name: 'Bob Johnson', email: 'bob@example.com' }\n" +
+      "  ];\n" +
+      "\n" +
+      "  toggleContent() {\n" +
+      "    this.showContent = !this.showContent;\n" +
+      "  }\n" +
+      "\n" +
+      "  accessConditionalDiv() {\n" +
+      "    if (this.conditionalDiv) {\n" +
+      "      console.log('Conditional div accessed:', this.conditionalDiv.nativeElement);\n" +
+      "      this.conditionalDiv.nativeElement.style.backgroundColor = 'lightblue';\n" +
+      "    } else {\n" +
+      "      console.log('Conditional div not available');\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  selectUser(userDiv: ElementRef, user: any) {\n      " +
+      "    // Remove previous selection\n" +
+      "    document.querySelectorAll('.selected').forEach(el => {\n" +
+      "      el.classList.remove('selected');\n" +
+      "    });\n" +
+      "    \n" +
+      "    // Add selection to current user\n" +
+      "    userDiv.nativeElement.classList.add('selected');\n" +
+      "    this.selectedUser = user;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points about Template Reference Variables:**\n" +
+      "- Use `#variableName` syntax to create template references\n" +
+      "- Can reference DOM elements, components, or directives\n" +
+      "- Available in component class via ViewChild/ViewChildren\n" +
+      "- Work with both static and dynamic content\n" +
+      "- Provide direct access to element properties and methods\n" +
+      "- Useful for form validation and DOM manipulation\n" +
+      "- Can be used in event handlers and method calls\n" +
+      "- Support both single and multiple element references\n" +
+      "- Work with structural directives (ngIf, ngFor)\n" +
+      "- Provide type safety when used with ViewChild decorators",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "template-reference", "ViewChild", "ElementRef", "DOM"],
+  },
+  {
+    id: 188,
+    question: "What is the role of ViewChild in Angular?",
+    answer:
+      "ViewChild is a decorator in Angular that allows you to access child components, directives, or DOM elements from a parent component. It provides a way to get references to elements in the component's view and interact with them programmatically.\n\n" +
+      "**Basic ViewChild Usage:**\n" +
+      "```typescript\n" +
+      "// viewchild-demo.component.ts\n" +
+      "import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-viewchild-demo',\n" +
+      "  template: `\n" +
+      '    <div class="viewchild-demo">\n' +
+      "      <h3>ViewChild Demo</h3>\n" +
+      "      \n" +
+      "      <!-- DOM Element Reference -->\n" +
+      '      <input #inputRef type="text" placeholder="Enter text">\n' +
+      '      <button (click)="focusInput()">Focus Input</button>\n' +
+      '      <button (click)="getInputValue()">Get Value</button>\n' +
+      "      <p>Input Value: {{ inputValue }}</p>\n" +
+      "      \n" +
+      "      <!-- Child Component Reference -->\n" +
+      "      <app-child-viewchild #childRef></app-child-viewchild>\n" +
+      '      <button (click)="callChildMethod()">Call Child Method</button>\n' +
+      '      <button (click)="updateChildData()">Update Child Data</button>\n' +
+      "      <p>Child Status: {{ childStatus }}</p>\n" +
+      "      \n" +
+      "      <!-- Div Element Reference -->\n" +
+      '      <div #divRef class="demo-div">\n' +
+      "        <p>This div can be manipulated via ViewChild</p>\n" +
+      "      </div>\n" +
+      '      <button (click)="changeDivContent()">Change Content</button>\n' +
+      '      <button (click)="changeDivStyle()">Change Style</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ViewchildDemoComponent implements AfterViewInit {\n" +
+      "  // ViewChild for DOM element\n" +
+      "  @ViewChild('inputRef') inputElement!: ElementRef;\n" +
+      "  \n" +
+      "  // ViewChild for child component\n" +
+      "  @ViewChild('childRef') childComponent!: any;\n" +
+      "  \n" +
+      "  // ViewChild for div element\n" +
+      "  @ViewChild('divRef') divElement!: ElementRef;\n" +
+      "  \n" +
+      "  inputValue = '';\n" +
+      "  childStatus = '';\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('ViewChild elements available:', {\n" +
+      "      inputElement: this.inputElement,\n" +
+      "      childComponent: this.childComponent,\n" +
+      "      divElement: this.divElement\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  focusInput() {\n" +
+      "    if (this.inputElement) {\n" +
+      "      this.inputElement.nativeElement.focus();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getInputValue() {\n" +
+      "    if (this.inputElement) {\n" +
+      "      this.inputValue = this.inputElement.nativeElement.value;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  callChildMethod() {\n" +
+      "    if (this.childComponent) {\n" +
+      "      this.childComponent.updateData();\n" +
+      "      this.childStatus = 'Child method called';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  updateChildData() {\n" +
+      "    if (this.childComponent) {\n" +
+      "      this.childComponent.setData('Updated from parent');\n" +
+      "      this.childStatus = 'Child data updated';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  changeDivContent() {\n" +
+      "    if (this.divElement) {\n" +
+      "      this.divElement.nativeElement.innerHTML = \n" +
+      "        '<p>Content changed at ' + new Date().toLocaleTimeString() + '</p>';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  changeDivStyle() {\n" +
+      "    if (this.divElement) {\n" +
+      "      this.divElement.nativeElement.style.backgroundColor = 'lightblue';\n" +
+      "      this.divElement.nativeElement.style.padding = '20px';\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**ViewChild with Different Selectors:**\n" +
+      "```typescript\n" +
+      "// viewchild-selectors.component.ts\n" +
+      "import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-viewchild-selectors',\n" +
+      "  template: `\n" +
+      '    <div class="viewchild-selectors">\n' +
+      "      <h3>ViewChild with Different Selectors</h3>\n" +
+      "      \n" +
+      "      <!-- Template Reference Variable -->\n" +
+      '      <input #templateRef type="text" placeholder="Template Ref">\n' +
+      "      \n" +
+      "      <!-- Component Selector -->\n" +
+      "      <app-child-viewchild></app-child-viewchild>\n" +
+      "      \n" +
+      "      <!-- CSS Class Selector -->\n" +
+      '      <div class="css-selector">CSS Class Selector</div>\n' +
+      "      \n" +
+      "      <!-- Attribute Selector -->\n" +
+      '      <div data-test="attribute-selector">Attribute Selector</div>\n' +
+      "      \n" +
+      "      <!-- Directive Selector -->\n      " +
+      "      <div appCustomDirective>Directive Selector</div>\n" +
+      "      \n" +
+      '      <button (click)="accessAllElements()">Access All Elements</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ViewchildSelectorsComponent implements AfterViewInit {\n" +
+      "  // Template reference variable\n      " +
+      "  @ViewChild('templateRef') templateRef!: ElementRef;\n" +
+      "  \n" +
+      "  // Component selector\n      " +
+      "  @ViewChild(ChildViewchildComponent) childComponent!: ChildViewchildComponent;\n" +
+      "  \n" +
+      "  // CSS class selector\n      " +
+      "  @ViewChild('.css-selector') cssSelector!: ElementRef;\n" +
+      "  \n" +
+      "  // Attribute selector\n      " +
+      "  @ViewChild('[data-test=\"attribute-selector\"]') attributeSelector!: ElementRef;\n" +
+      "  \n" +
+      "  // Directive selector\n      " +
+      "  @ViewChild(CustomDirective) customDirective!: CustomDirective;\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('All ViewChild elements:', {\n" +
+      "      templateRef: this.templateRef,\n" +
+      "      childComponent: this.childComponent,\n" +
+      "      cssSelector: this.cssSelector,\n" +
+      "      attributeSelector: this.attributeSelector,\n" +
+      "      customDirective: this.customDirective\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  accessAllElements() {\n" +
+      "    // Access template reference\n      " +
+      "    if (this.templateRef) {\n" +
+      "      this.templateRef.nativeElement.value = 'Updated via ViewChild';\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Access child component\n      " +
+      "    if (this.childComponent) {\n" +
+      "      this.childComponent.updateData();\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Access CSS selector element\n      " +
+      "    if (this.cssSelector) {\n" +
+      "      this.cssSelector.nativeElement.style.backgroundColor = 'yellow';\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Access attribute selector element\n      " +
+      "    if (this.attributeSelector) {\n" +
+      "      this.attributeSelector.nativeElement.style.border = '2px solid red';\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Access directive\n      " +
+      "    if (this.customDirective) {\n" +
+      "      this.customDirective.someMethod();\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**ViewChild with Static Option:**\n" +
+      "```typescript\n" +
+      "// viewchild-static.component.ts\n" +
+      "import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-viewchild-static',\n" +
+      "  template: `\n" +
+      '    <div class="viewchild-static">\n' +
+      "      <h3>ViewChild with Static Option</h3>\n" +
+      "      \n" +
+      "      <!-- Static element (always present) -->\n      " +
+      '      <div #staticElement class="static-element">\n      ' +
+      "        <p>This element is always present</p>\n      " +
+      "      </div>\n      " +
+      "      \n" +
+      "      <!-- Dynamic element (conditionally present) -->\n      " +
+      '      <div *ngIf="showDynamic" #dynamicElement class="dynamic-element">\n      ' +
+      "        <p>This element is conditionally present</p>\n      " +
+      "      </div>\n      " +
+      "      \n" +
+      '      <button (click)="toggleDynamic()">Toggle Dynamic Element</button>\n      ' +
+      '      <button (click)="accessElements()">Access Elements</button>\n      ' +
+      "      \n" +
+      "      <p>Static Element Available: {{ staticAvailable }}</p>\n      " +
+      "      <p>Dynamic Element Available: {{ dynamicAvailable }}</p>\n      " +
+      "    </div>\n      " +
+      "  `\n      " +
+      "})\n      " +
+      "export class ViewchildStaticComponent implements OnInit {\n      " +
+      "  // Static ViewChild - available immediately\n      " +
+      "  @ViewChild('staticElement', { static: true }) staticElement!: ElementRef;\n      " +
+      "  \n      " +
+      "  // Dynamic ViewChild - available after view init\n      " +
+      "  @ViewChild('dynamicElement', { static: false }) dynamicElement!: ElementRef;\n      " +
+      "  \n      " +
+      "  showDynamic = false;\n      " +
+      "  staticAvailable = false;\n      " +
+      "  dynamicAvailable = false;\n      " +
+      "\n      " +
+      "  ngOnInit() {\n      " +
+      "    // Static ViewChild is available in ngOnInit\n      " +
+      "    this.staticAvailable = !!this.staticElement;\n      " +
+      "    console.log('Static element in ngOnInit:', this.staticElement);\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  ngAfterViewInit() {\n      " +
+      "    // Both static and dynamic ViewChild are available in ngAfterViewInit\n      " +
+      "    this.staticAvailable = !!this.staticElement;\n      " +
+      "    this.dynamicAvailable = !!this.dynamicElement;\n      " +
+      "    console.log('All elements in ngAfterViewInit:', {\n      " +
+      "      staticElement: this.staticElement,\n      " +
+      "      dynamicElement: this.dynamicElement\n      " +
+      "    });\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  toggleDynamic() {\n      " +
+      "    this.showDynamic = !this.showDynamic;\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  accessElements() {\n      " +
+      "    if (this.staticElement) {\n      " +
+      "      this.staticElement.nativeElement.style.backgroundColor = 'lightgreen';\n      " +
+      "    }\n      " +
+      "    \n      " +
+      "    if (this.dynamicElement) {\n      " +
+      "      this.dynamicElement.nativeElement.style.backgroundColor = 'lightcoral';\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "}\n      " +
+      "```\n\n" +
+      "**Key Points about ViewChild:**\n" +
+      "- Used to access child components, directives, or DOM elements\n" +
+      "- Available in ngAfterViewInit lifecycle hook\n" +
+      "- Can use template reference variables, component selectors, CSS selectors\n" +
+      "- Static option makes it available in ngOnInit\n" +
+      "- Returns ElementRef for DOM elements, component instance for components\n" +
+      "- Useful for direct manipulation and method calls\n" +
+      "- Should be used sparingly - prefer @Input/@Output for communication\n" +
+      "- Provides type safety when properly typed\n" +
+      "- Can access both static and dynamic elements\n" +
+      "- Works with custom directives and components",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "ViewChild", "ElementRef", "lifecycle", "DOM"],
+  },
+  {
+    id: 189,
+    question: "How to access the child component from parent component with ViewChild?",
+    answer:
+      "ViewChild provides a way to access child components from parent components, allowing direct method calls, property access, and component manipulation. This is useful when you need to interact with child components programmatically.\n\n" +
+      "**Basic Child Component Access:**\n" +
+      "```typescript\n" +
+      "// child.component.ts\n" +
+      "import { Component, Input, Output, EventEmitter } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-child',\n" +
+      "  template: `\n" +
+      '    <div class="child-component">\n' +
+      "      <h4>Child Component</h4>\n" +
+      "      <p>Child Data: {{ childData }}</p>\n" +
+      "      <p>Counter: {{ counter }}</p>\n" +
+      "      <p>Status: {{ status }}</p>\n" +
+      "      \n" +
+      '      <div class="child-actions">\n' +
+      '        <button (click)="incrementCounter()">Increment</button>\n' +
+      '        <button (click)="decrementCounter()">Decrement</button>\n' +
+      '        <button (click)="resetCounter()">Reset</button>\n' +
+      '        <button (click)="updateStatus()">Update Status</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="child-input">\n' +
+      '        <input [(ngModel)]="inputValue" placeholder="Enter value">\n' +
+      '        <button (click)="processInput()">Process Input</button>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ChildComponent {\n" +
+      "  @Input() childData = 'Initial Child Data';\n" +
+      "  @Output() dataChanged = new EventEmitter<string>();\n" +
+      "  \n" +
+      "  counter = 0;\n" +
+      "  status = 'Ready';\n" +
+      "  inputValue = '';\n" +
+      "  \n      " +
+      "  // Public methods that can be called from parent\n      " +
+      "  incrementCounter() {\n      " +
+      "    this.counter++;\n      " +
+      "    this.status = `Incremented to ${this.counter}`;\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  decrementCounter() {\n      " +
+      "    this.counter--;\n      " +
+      "    this.status = `Decremented to ${this.counter}`;\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  resetCounter() {\n      " +
+      "    this.counter = 0;\n      " +
+      "    this.status = 'Reset';\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  updateStatus() {\n      " +
+      "    this.status = `Updated at ${new Date().toLocaleTimeString()}`;\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  processInput() {\n      " +
+      "    if (this.inputValue) {\n      " +
+      "      this.childData = this.inputValue;\n      " +
+      "      this.dataChanged.emit(this.inputValue);\n      " +
+      "      this.status = `Processed: ${this.inputValue}`;\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  // Public getter methods\n      " +
+      "  getCounter() {\n      " +
+      "    return this.counter;\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  getStatus() {\n      " +
+      "    return this.status;\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  getData() {\n      " +
+      "    return this.childData;\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  // Public setter methods\n      " +
+      "  setCounter(value: number) {\n      " +
+      "    this.counter = value;\n      " +
+      "    this.status = `Set to ${value}`;\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  setData(data: string) {\n      " +
+      "    this.childData = data;\n      " +
+      "    this.status = 'Data updated';\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  setStatus(status: string) {\n      " +
+      "    this.status = status;\n      " +
+      "  }\n      " +
+      "}\n      " +
+      "\n      " +
+      "// parent.component.ts\n      " +
+      "import { Component, ViewChild, AfterViewInit } from '@angular/core';\n      " +
+      "import { ChildComponent } from './child.component';\n      " +
+      "\n      " +
+      "@Component({\n      " +
+      "  selector: 'app-parent',\n      " +
+      "  template: `\n      " +
+      '    <div class="parent-component">\n      ' +
+      "      <h3>Parent Component</h3>\n      " +
+      "      \n      " +
+      "      <!-- Child component with template reference -->\n      " +
+      '      <app-child #childRef [childData]="parentData"></app-child>\n      ' +
+      "      \n      " +
+      '      <div class="parent-actions">\n      ' +
+      "        <h4>Parent Actions (Accessing Child):</h4>\n      " +
+      '        <button (click)="incrementChildCounter()">Increment Child Counter</button>\n      ' +
+      '        <button (click)="decrementChildCounter()">Decrement Child Counter</button>\n      ' +
+      '        <button (click)="resetChildCounter()">Reset Child Counter</button>\n      ' +
+      '        <button (click)="updateChildStatus()">Update Child Status</button>\n      ' +
+      '        <button (click)="setChildData()">Set Child Data</button>\n      ' +
+      '        <button (click)="getChildInfo()">Get Child Info</button>\n      ' +
+      "      </div>\n      " +
+      "      \n      " +
+      '      <div class="parent-info">\n      ' +
+      "        <h4>Parent Info:</h4>\n      " +
+      "        <p>Parent Data: {{ parentData }}</p>\n      " +
+      "        <p>Child Counter: {{ childCounter }}</p>\n      " +
+      "        <p>Child Status: {{ childStatus }}</p>\n      " +
+      "        <p>Child Data: {{ childData }}</p>\n      " +
+      "        <p>Last Action: {{ lastAction }}</p>\n      " +
+      "      </div>\n      " +
+      "    </div>\n      " +
+      "  `\n      " +
+      "})\n      " +
+      "export class ParentComponent implements AfterViewInit {\n      " +
+      "  // ViewChild to access child component\n      " +
+      "  @ViewChild('childRef') childComponent!: ChildComponent;\n      " +
+      "  \n      " +
+      "  parentData = 'Parent Data';\n      " +
+      "  childCounter = 0;\n      " +
+      "  childStatus = '';\n      " +
+      "  childData = '';\n      " +
+      "  lastAction = '';\n      " +
+      "\n      " +
+      "  ngAfterViewInit() {\n      " +
+      "    console.log('Child component available:', this.childComponent);\n      " +
+      "    // Initial access to child component\n      " +
+      "    this.getChildInfo();\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  incrementChildCounter() {\n      " +
+      "    if (this.childComponent) {\n      " +
+      "      this.childComponent.incrementCounter();\n      " +
+      "      this.lastAction = 'Incremented child counter';\n      " +
+      "      this.updateParentInfo();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  decrementChildCounter() {\n      " +
+      "    if (this.childComponent) {\n      " +
+      "      this.childComponent.decrementCounter();\n      " +
+      "      this.lastAction = 'Decremented child counter';\n      " +
+      "      this.updateParentInfo();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  resetChildCounter() {\n      " +
+      "    if (this.childComponent) {\n      " +
+      "      this.childComponent.resetCounter();\n      " +
+      "      this.lastAction = 'Reset child counter';\n      " +
+      "      this.updateParentInfo();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  updateChildStatus() {\n      " +
+      "    if (this.childComponent) {\n      " +
+      "      this.childComponent.setStatus(`Updated by parent at ${new Date().toLocaleTimeString()}`);\n      " +
+      "      this.lastAction = 'Updated child status';\n      " +
+      "      this.updateParentInfo();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  setChildData() {\n      " +
+      "    if (this.childComponent) {\n      " +
+      "      const newData = `Parent set data at ${new Date().toLocaleTimeString()}`;\n      " +
+      "      this.childComponent.setData(newData);\n      " +
+      "      this.lastAction = 'Set child data';\n      " +
+      "      this.updateParentInfo();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  getChildInfo() {\n      " +
+      "    if (this.childComponent) {\n      " +
+      "      this.childCounter = this.childComponent.getCounter();\n      " +
+      "      this.childStatus = this.childComponent.getStatus();\n      " +
+      "      this.childData = this.childComponent.getData();\n      " +
+      "      this.lastAction = 'Retrieved child info';\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  private updateParentInfo() {\n      " +
+      "    // Update parent's view of child state\n      " +
+      "    this.getChildInfo();\n      " +
+      "  }\n      " +
+      "}\n      " +
+      "```\n\n" +
+      "**Advanced Child Component Access:**\n" +
+      "```typescript\n      " +
+      "// advanced-child.component.ts\n      " +
+      "import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';\n      " +
+      "import { Subject, Subscription } from 'rxjs';\n      " +
+      "\n      " +
+      "@Component({\n      " +
+      "  selector: 'app-advanced-child',\n      " +
+      "  template: `\n      " +
+      '    <div class="advanced-child">\n      ' +
+      "      <h4>Advanced Child Component</h4>\n      " +
+      "      <p>Data: {{ data }}</p>\n      " +
+      "      <p>Count: {{ count }}</p>\n      " +
+      "      <p>Is Active: {{ isActive }}</p>\n      " +
+      "      <p>Last Update: {{ lastUpdate }}</p>\n      " +
+      "      \n      " +
+      '      <div class="child-controls">\n      ' +
+      '        <button (click)="startProcess()">Start Process</button>\n      ' +
+      '        <button (click)="stopProcess()">Stop Process</button>\n      ' +
+      '        <button (click)="toggleActive()">Toggle Active</button>\n      ' +
+      "      </div>\n      " +
+      "    </div>\n      " +
+      "  `\n      " +
+      "})\n      " +
+      "export class AdvancedChildComponent implements OnInit, OnDestroy {\n      " +
+      "  @Input() data = 'Initial Data';\n      " +
+      "  @Output() processStarted = new EventEmitter<void>();\n      " +
+      "  @Output() processStopped = new EventEmitter<void>();\n      " +
+      "  \n      " +
+      "  count = 0;\n      " +
+      "  isActive = false;\n      " +
+      "  lastUpdate = '';\n      " +
+      "  \n      " +
+      "  private processSubject = new Subject<boolean>();\n      " +
+      "  private subscription: Subscription = new Subscription();\n      " +
+      "  \n      " +
+      "  ngOnInit() {\n      " +
+      "    // Subscribe to process changes\n      " +
+      "    const processSub = this.processSubject.subscribe(isRunning => {\n      " +
+      "      this.isActive = isRunning;\n      " +
+      "      this.lastUpdate = new Date().toLocaleTimeString();\n      " +
+      "    });\n      " +
+      "    this.subscription.add(processSub);\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  ngOnDestroy() {\n      " +
+      "    this.subscription.unsubscribe();\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  // Public methods for parent access\n      " +
+      "  startProcess() {\n      " +
+      "    this.processSubject.next(true);\n      " +
+      "    this.processStarted.emit();\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  stopProcess() {\n      " +
+      "    this.processSubject.next(false);\n      " +
+      "    this.processStopped.emit();\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  toggleActive() {\n      " +
+      "    this.isActive = !this.isActive;\n      " +
+      "    this.lastUpdate = new Date().toLocaleTimeString();\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  incrementCount() {\n      " +
+      "    this.count++;\n      " +
+      "    this.lastUpdate = new Date().toLocaleTimeString();\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  setCount(value: number) {\n      " +
+      "    this.count = value;\n      " +
+      "    this.lastUpdate = new Date().toLocaleTimeString();\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  setData(data: string) {\n      " +
+      "    this.data = data;\n      " +
+      "    this.lastUpdate = new Date().toLocaleTimeString();\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  getState() {\n      " +
+      "    return {\n      " +
+      "      data: this.data,\n      " +
+      "      count: this.count,\n      " +
+      "      isActive: this.isActive,\n      " +
+      "      lastUpdate: this.lastUpdate\n      " +
+      "    };\n      " +
+      "  }\n      " +
+      "  \n      " +
+      "  reset() {\n      " +
+      "    this.data = 'Initial Data';\n      " +
+      "    this.count = 0;\n      " +
+      "    this.isActive = false;\n      " +
+      "    this.lastUpdate = new Date().toLocaleTimeString();\n      " +
+      "  }\n      " +
+      "}\n      " +
+      "\n      " +
+      "// advanced-parent.component.ts\n      " +
+      "import { Component, ViewChild, AfterViewInit } from '@angular/core';\n      " +
+      "import { AdvancedChildComponent } from './advanced-child.component';\n      " +
+      "\n      " +
+      "@Component({\n      " +
+      "  selector: 'app-advanced-parent',\n      " +
+      "  template: `\n      " +
+      '    <div class="advanced-parent">\n      ' +
+      "      <h3>Advanced Parent Component</h3>\n      " +
+      "      \n      " +
+      "      <app-advanced-child #advancedChildRef></app-advanced-child>\n      " +
+      "      \n      " +
+      '      <div class="parent-controls">\n      ' +
+      "        <h4>Parent Controls:</h4>\n      " +
+      '        <button (click)="startChildProcess()">Start Child Process</button>\n      ' +
+      '        <button (click)="stopChildProcess()">Stop Child Process</button>\n      ' +
+      '        <button (click)="toggleChildActive()">Toggle Child Active</button>\n      ' +
+      '        <button (click)="incrementChildCount()">Increment Child Count</button>\n      ' +
+      '        <button (click)="setChildCount()">Set Child Count</button>\n      ' +
+      '        <button (click)="setChildData()">Set Child Data</button>\n      ' +
+      '        <button (click)="getChildState()">Get Child State</button>\n      ' +
+      '        <button (click)="resetChild()">Reset Child</button>\n      ' +
+      "      </div>\n      " +
+      "      \n      " +
+      '      <div class="parent-info">\n      ' +
+      "        <h4>Parent Info:</h4>\n      " +
+      "        <p>Child State: {{ childState | json }}</p>\n      " +
+      "        <p>Last Action: {{ lastAction }}</p>\n      " +
+      "      </div>\n      " +
+      "    </div>\n      " +
+      "  `\n      " +
+      "})\n      " +
+      "export class AdvancedParentComponent implements AfterViewInit {\n      " +
+      "  @ViewChild('advancedChildRef') advancedChild!: AdvancedChildComponent;\n      " +
+      "  \n      " +
+      "  childState: any = {};\n      " +
+      "  lastAction = '';\n      " +
+      "\n      " +
+      "  ngAfterViewInit() {\n      " +
+      "    console.log('Advanced child component available:', this.advancedChild);\n      " +
+      "    this.getChildState();\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  startChildProcess() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      this.advancedChild.startProcess();\n      " +
+      "      this.lastAction = 'Started child process';\n      " +
+      "      this.getChildState();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  stopChildProcess() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      this.advancedChild.stopProcess();\n      " +
+      "      this.lastAction = 'Stopped child process';\n      " +
+      "      this.getChildState();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  toggleChildActive() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      this.advancedChild.toggleActive();\n      " +
+      "      this.lastAction = 'Toggled child active state';\n      " +
+      "      this.getChildState();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  incrementChildCount() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      this.advancedChild.incrementCount();\n      " +
+      "      this.lastAction = 'Incremented child count';\n      " +
+      "      this.getChildState();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  setChildCount() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      const newCount = Math.floor(Math.random() * 100);\n      " +
+      "      this.advancedChild.setCount(newCount);\n      " +
+      "      this.lastAction = `Set child count to ${newCount}`;\n      " +
+      "      this.getChildState();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  setChildData() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      const newData = `Parent data at ${new Date().toLocaleTimeString()}`;\n      " +
+      "      this.advancedChild.setData(newData);\n      " +
+      "      this.lastAction = 'Set child data';\n      " +
+      "      this.getChildState();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  getChildState() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      this.childState = this.advancedChild.getState();\n      " +
+      "      this.lastAction = 'Retrieved child state';\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  resetChild() {\n      " +
+      "    if (this.advancedChild) {\n      " +
+      "      this.advancedChild.reset();\n      " +
+      "      this.lastAction = 'Reset child component';\n      " +
+      "      this.getChildState();\n      " +
+      "    }\n      " +
+      "  }\n      " +
+      "}\n      " +
+      "```\n\n" +
+      "**Key Points about ViewChild Child Access:**\n" +
+      "- Use @ViewChild decorator to get child component reference\n" +
+      "- Child component must have public methods/properties to access\n" +
+      "- Available in ngAfterViewInit lifecycle hook\n" +
+      "- Can call child methods, access properties, and manipulate state\n" +
+      "- Useful for complex parent-child interactions\n" +
+      "- Should be used sparingly - prefer @Input/@Output for simple communication\n" +
+      "- Provides direct access to child component functionality\n" +
+      "- Works with both template reference variables and component selectors\n" +
+      "- Can access child component's public API\n" +
+      "- Useful for imperative operations and complex state management",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "ViewChild", "parent-child", "communication", "access"],
+  },
+  {
+    id: 190,
+    question: "Difference between ViewChild and ViewChildren? What is QueryList?",
+    answer:
+      "ViewChild and ViewChildren are both decorators in Angular for accessing child elements, but they serve different purposes. ViewChild accesses a single element, while ViewChildren accesses multiple elements and returns a QueryList.\n\n" +
+      "**ViewChild vs ViewChildren:**\n" +
+      "```typescript\n" +
+      "// viewchild-vs-viewchildren.component.ts\n" +
+      "import { Component, ViewChild, ViewChildren, QueryList, AfterViewInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-viewchild-vs-viewchildren',\n" +
+      "  template: `\n" +
+      '    <div class="comparison-demo">\n' +
+      "      <h3>ViewChild vs ViewChildren Comparison</h3>\n" +
+      "      \n" +
+      "      <!-- Single element for ViewChild -->\n" +
+      '      <div #singleElement class="single-element">\n' +
+      "        <p>Single Element (ViewChild)</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Multiple elements for ViewChildren -->\n" +
+      '      <div #multipleElement class="multiple-element">\n' +
+      "        <p>Multiple Element 1</p>\n" +
+      "      </div>\n" +
+      '      <div #multipleElement class="multiple-element">\n' +
+      "        <p>Multiple Element 2</p>\n" +
+      "      </div>\n" +
+      '      <div #multipleElement class="multiple-element">\n' +
+      "        <p>Multiple Element 3</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <!-- Dynamic elements -->\n" +
+      '      <div *ngFor="let item of dynamicItems; let i = index" #dynamicElement class="dynamic-element">\n' +
+      "        <p>Dynamic Element {{ i + 1 }}: {{ item }}</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <button (click)="addDynamicItem()">Add Dynamic Item</button>\n' +
+      '      <button (click)="removeDynamicItem()">Remove Dynamic Item</button>\n' +
+      "      \n" +
+      '      <div class="info">\n' +
+      "        <h4>Info:</h4>\n" +
+      "        <p>Single Element Available: {{ singleElementAvailable }}</p>\n" +
+      "        <p>Multiple Elements Count: {{ multipleElementsCount }}</p>\n" +
+      "        <p>Dynamic Elements Count: {{ dynamicElementsCount }}</p>\n" +
+      "        <p>Last Action: {{ lastAction }}</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ViewchildVsViewchildrenComponent implements AfterViewInit {\n" +
+      "  // ViewChild - single element\n" +
+      "  @ViewChild('singleElement') singleElement!: ElementRef;\n" +
+      "  \n" +
+      "  // ViewChildren - multiple elements\n" +
+      "  @ViewChildren('multipleElement') multipleElements!: QueryList<ElementRef>;\n" +
+      "  \n" +
+      "  // ViewChildren - dynamic elements\n" +
+      "  @ViewChildren('dynamicElement') dynamicElements!: QueryList<ElementRef>;\n" +
+      "  \n" +
+      "  dynamicItems = ['Item 1', 'Item 2', 'Item 3'];\n" +
+      "  singleElementAvailable = false;\n" +
+      "  multipleElementsCount = 0;\n" +
+      "  dynamicElementsCount = 0;\n" +
+      "  lastAction = '';\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('ViewChild single element:', this.singleElement);\n" +
+      "    console.log('ViewChildren multiple elements:', this.multipleElements);\n" +
+      "    console.log('ViewChildren dynamic elements:', this.dynamicElements);\n" +
+      "    \n" +
+      "    this.updateInfo();\n" +
+      "    \n" +
+      "    // Subscribe to changes in ViewChildren\n" +
+      "    this.multipleElements.changes.subscribe(() => {\n" +
+      "      console.log('Multiple elements changed:', this.multipleElements.length);\n" +
+      "      this.updateInfo();\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.dynamicElements.changes.subscribe(() => {\n" +
+      "      console.log('Dynamic elements changed:', this.dynamicElements.length);\n" +
+      "      this.updateInfo();\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  addDynamicItem() {\n" +
+      "    this.dynamicItems.push(`Item ${this.dynamicItems.length + 1}`);\n" +
+      "    this.lastAction = 'Added dynamic item';\n" +
+      "  }\n" +
+      "\n" +
+      "  removeDynamicItem() {\n" +
+      "    if (this.dynamicItems.length > 0) {\n" +
+      "      this.dynamicItems.pop();\n" +
+      "      this.lastAction = 'Removed dynamic item';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  updateInfo() {\n" +
+      "    this.singleElementAvailable = !!this.singleElement;\n" +
+      "    this.multipleElementsCount = this.multipleElements.length;\n" +
+      "    this.dynamicElementsCount = this.dynamicElements.length;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**QueryList Features and Methods:**\n" +
+      "```typescript\n" +
+      "// querylist-demo.component.ts\n" +
+      "import { Component, ViewChildren, QueryList, AfterViewInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-querylist-demo',\n" +
+      "  template: `\n" +
+      '    <div class="querylist-demo">\n' +
+      "      <h3>QueryList Demo</h3>\n" +
+      "      \n" +
+      "      <!-- Elements with same template reference -->\n" +
+      '      <div #itemRef class="item" *ngFor="let item of items; let i = index">\n' +
+      "        <span>{{ item.name }}</span>\n" +
+      "        <span>{{ item.value }}</span>\n" +
+      '        <button (click)="selectItem(i)">Select</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="controls">\n' +
+      '        <button (click)="addItem()">Add Item</button>\n' +
+      '        <button (click)="removeItem()">Remove Item</button>\n' +
+      '        <button (click)="highlightAll()">Highlight All</button>\n' +
+      '        <button (click)="clearAll()">Clear All</button>\n' +
+      '        <button (click)="getFirstItem()">Get First Item</button>\n' +
+      '        <button (click)="getLastItem()">Get Last Item</button>\n' +
+      '        <button (click)="forEachItem()">For Each Item</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="info">\n' +
+      "        <h4>QueryList Info:</h4>\n" +
+      "        <p>Total Items: {{ totalItems }}</p>\n" +
+      "        <p>First Item: {{ firstItem }}</p>\n" +
+      "        <p>Last Item: {{ lastItem }}</p>\n" +
+      "        <p>Selected Item: {{ selectedItem }}</p>\n" +
+      "        <p>Last Action: {{ lastAction }}</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class QuerylistDemoComponent implements AfterViewInit {\n" +
+      "  @ViewChildren('itemRef') itemElements!: QueryList<ElementRef>;\n" +
+      "  \n" +
+      "  items = [\n" +
+      "    { name: 'Item 1', value: 100 },\n" +
+      "    { name: 'Item 2', value: 200 },\n" +
+      "    { name: 'Item 3', value: 300 }\n" +
+      "  ];\n" +
+      "  \n" +
+      "  totalItems = 0;\n" +
+      "  firstItem = '';\n" +
+      "  lastItem = '';\n" +
+      "  selectedItem = '';\n" +
+      "  lastAction = '';\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('QueryList initialized:', this.itemElements);\n" +
+      "    this.updateInfo();\n" +
+      "    \n" +
+      "    // Subscribe to changes\n" +
+      "    this.itemElements.changes.subscribe(() => {\n" +
+      "      console.log('QueryList changed:', this.itemElements.length);\n" +
+      "      this.updateInfo();\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  addItem() {\n" +
+      "    const newItem = {\n" +
+      "      name: `Item ${this.items.length + 1}`,\n" +
+      "      value: Math.floor(Math.random() * 1000)\n" +
+      "    };\n" +
+      "    this.items.push(newItem);\n" +
+      "    this.lastAction = 'Added item';\n" +
+      "  }\n" +
+      "\n" +
+      "  removeItem() {\n" +
+      "    if (this.items.length > 0) {\n" +
+      "      this.items.pop();\n" +
+      "      this.lastAction = 'Removed item';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  selectItem(index: number) {\n" +
+      "    this.selectedItem = this.items[index].name;\n" +
+      "    this.lastAction = `Selected ${this.selectedItem}`;\n" +
+      "  }\n" +
+      "\n" +
+      "  highlightAll() {\n" +
+      "    this.itemElements.forEach((element, index) => {\n" +
+      "      element.nativeElement.style.backgroundColor = 'yellow';\n" +
+      "      console.log(`Highlighted element ${index}:`, element.nativeElement);\n" +
+      "    });\n" +
+      "    this.lastAction = 'Highlighted all items';\n" +
+      "  }\n" +
+      "\n" +
+      "  clearAll() {\n" +
+      "    this.itemElements.forEach(element => {\n" +
+      "      element.nativeElement.style.backgroundColor = '';\n" +
+      "    });\n" +
+      "    this.lastAction = 'Cleared all highlights';\n" +
+      "  }\n" +
+      "\n" +
+      "  getFirstItem() {\n" +
+      "    if (this.itemElements.length > 0) {\n" +
+      "      const firstElement = this.itemElements.first;\n" +
+      "      this.firstItem = firstElement.nativeElement.textContent.trim();\n" +
+      "      this.lastAction = 'Retrieved first item';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getLastItem() {\n" +
+      "    if (this.itemElements.length > 0) {\n" +
+      "      const lastElement = this.itemElements.last;\n" +
+      "      this.lastItem = lastElement.nativeElement.textContent.trim();\n" +
+      "      this.lastAction = 'Retrieved last item';\n" +
+      "    }\n" +
+      "  }\n      " +
+      "\n      " +
+      "  forEachItem() {\n      " +
+      "    this.itemElements.forEach((element, index) => {\n      " +
+      "      console.log(`Element ${index}:`, element.nativeElement);\n      " +
+      "      element.nativeElement.style.border = '2px solid blue';\n      " +
+      "    });\n      " +
+      "    this.lastAction = 'Processed all items';\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  private updateInfo() {\n      " +
+      "    this.totalItems = this.itemElements.length;\n      " +
+      "  }\n      " +
+      "}\n      " +
+      "```\n\n" +
+      "**QueryList Methods and Properties:**\n      " +
+      "```typescript\n      " +
+      "// querylist-methods.component.ts\n      " +
+      "import { Component, ViewChildren, QueryList, AfterViewInit, ElementRef } from '@angular/core';\n      " +
+      "\n      " +
+      "@Component({\n      " +
+      "  selector: 'app-querylist-methods',\n      " +
+      "  template: `\n      " +
+      '    <div class="querylist-methods">\n      ' +
+      "      <h3>QueryList Methods and Properties</h3>\n      " +
+      "      \n      " +
+      '      <div #methodRef class="method-item" *ngFor="let method of methods">\n      ' +
+      "        <span>{{ method.name }}</span>\n      " +
+      "        <span>{{ method.description }}</span>\n      " +
+      "      </div>\n      " +
+      "      \n      " +
+      '      <div class="controls">\n      ' +
+      '        <button (click)="demonstrateMethods()">Demonstrate Methods</button>\n      ' +
+      '        <button (click)="demonstrateProperties()">Demonstrate Properties</button>\n      ' +
+      '        <button (click)="demonstrateChanges()">Demonstrate Changes</button>\n      ' +
+      "      </div>\n      " +
+      "      \n      " +
+      '      <div class="output">\n      ' +
+      "        <h4>Output:</h4>\n      " +
+      "        <pre>{{ output }}</pre>\n      " +
+      "      </div>\n      " +
+      "    </div>\n      " +
+      "  `\n      " +
+      "})\n      " +
+      "export class QuerylistMethodsComponent implements AfterViewInit {\n      " +
+      "  @ViewChildren('methodRef') methodElements!: QueryList<ElementRef>;\n      " +
+      "  \n      " +
+      "  methods = [\n      " +
+      "    { name: 'length', description: 'Number of elements' },\n      " +
+      "    { name: 'first', description: 'First element' },\n      " +
+      "    { name: 'last', description: 'Last element' },\n      " +
+      "    { name: 'changes', description: 'Observable of changes' }\n      " +
+      "  ];\n      " +
+      "  \n      " +
+      "  output = '';\n      " +
+      "\n      " +
+      "  ngAfterViewInit() {\n      " +
+      "    console.log('QueryList methods component initialized');\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  demonstrateMethods() {\n      " +
+      "    let result = 'QueryList Methods:\\n';\n      " +
+      "    \n      " +
+      "    // length property\n      " +
+      "    result += `length: ${this.methodElements.length}\\n`;\n      " +
+      "    \n      " +
+      "    // first property\n      " +
+      "    if (this.methodElements.length > 0) {\n      " +
+      "      result += `first: ${this.methodElements.first.nativeElement.textContent}\\n`;\n      " +
+      "    }\n      " +
+      "    \n      " +
+      "    // last property\n      " +
+      "    if (this.methodElements.length > 0) {\n      " +
+      "      result += `last: ${this.methodElements.last.nativeElement.textContent}\\n`;\n      " +
+      "    }\n      " +
+      "    \n      " +
+      "    // forEach method\n      " +
+      "    result += 'forEach:\\n';\n      " +
+      "    this.methodElements.forEach((element, index) => {\n      " +
+      "      result += `  ${index}: ${element.nativeElement.textContent}\\n`;\n      " +
+      "    });\n      " +
+      "    \n      " +
+      "    // toArray method\n      " +
+      "    const array = this.methodElements.toArray();\n      " +
+      "    result += `toArray length: ${array.length}\\n`;\n      " +
+      "    \n      " +
+      "    // some method\n      " +
+      "    const hasFirst = this.methodElements.some(element => \n      " +
+      "      element.nativeElement.textContent.includes('first')\n      " +
+      "    );\n      " +
+      "    result += `some (has 'first'): ${hasFirst}\\n`;\n      " +
+      "    \n      " +
+      "    // every method\n      " +
+      "    const allHaveText = this.methodElements.every(element => \n      " +
+      "      element.nativeElement.textContent.trim().length > 0\n      " +
+      "    );\n      " +
+      "    result += `every (has text): ${allHaveText}\\n`;\n      " +
+      "    \n      " +
+      "    // find method\n      " +
+      "    const found = this.methodElements.find(element => \n      " +
+      "      element.nativeElement.textContent.includes('last')\n      " +
+      "    );\n      " +
+      "    result += `find ('last'): ${found ? found.nativeElement.textContent : 'Not found'}\\n`;\n      " +
+      "    \n      " +
+      "    // filter method\n      " +
+      "    const filtered = this.methodElements.filter(element => \n      " +
+      "      element.nativeElement.textContent.includes('element')\n      " +
+      "    );\n      " +
+      "    result += `filter ('element'): ${filtered.length} items\\n`;\n      " +
+      "    \n      " +
+      "    // map method\n      " +
+      "    const mapped = this.methodElements.map(element => \n      " +
+      "      element.nativeElement.textContent.trim()\n      " +
+      "    );\n      " +
+      "    result += `map (text content): ${mapped.join(', ')}\\n`;\n      " +
+      "    \n      " +
+      "    // reduce method\n      " +
+      "    const reduced = this.methodElements.reduce((acc, element) => {\n      " +
+      "      return acc + element.nativeElement.textContent.length;\n      " +
+      "    }, 0);\n      " +
+      "    result += `reduce (total text length): ${reduced}\\n`;\n      " +
+      "    \n      " +
+      "    this.output = result;\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  demonstrateProperties() {\n      " +
+      "    let result = 'QueryList Properties:\\n';\n      " +
+      "    \n      " +
+      "    result += `length: ${this.methodElements.length}\\n`;\n      " +
+      "    result += `first: ${this.methodElements.first ? 'Available' : 'Not available'}\\n`;\n      " +
+      "    result += `last: ${this.methodElements.last ? 'Available' : 'Not available'}\\n`;\n      " +
+      "    result += `changes: ${this.methodElements.changes ? 'Available' : 'Not available'}\\n`;\n      " +
+      "    \n      " +
+      "    this.output = result;\n      " +
+      "  }\n      " +
+      "\n      " +
+      "  demonstrateChanges() {\n      " +
+      "    let result = 'QueryList Changes:\\n';\n      " +
+      "    \n      " +
+      "    // Subscribe to changes\n      " +
+      "    const subscription = this.methodElements.changes.subscribe(() => {\n      " +
+      "      result += `Elements changed, new count: ${this.methodElements.length}\\n`;\n      " +
+      "    });\n      " +
+      "    \n      " +
+      "    result += 'Subscribed to changes. Try adding/removing elements.\\n';\n      " +
+      "    \n      " +
+      "    this.output = result;\n      " +
+      "  }\n      " +
+      "}\n      " +
+      "```\n\n" +
+      "**Key Differences:**\n\n" +
+      "| Feature | ViewChild | ViewChildren |\n" +
+      "|---------|-----------|--------------|\n" +
+      "| **Purpose** | Single element access | Multiple elements access |\n" +
+      "| **Return Type** | ElementRef or Component | QueryList<ElementRef> |\n" +
+      "| **Element Count** | One | Multiple |\n" +
+      "| **Changes** | Static | Observable (changes) |\n" +
+      "| **Methods** | Direct access | QueryList methods |\n" +
+      "| **Use Case** | Single reference | Dynamic list |\n\n" +
+      "**QueryList Key Features:**\n" +
+      "- `length`: Number of elements\n" +
+      "- `first`: First element\n" +
+      "- `last`: Last element\n" +
+      "- `changes`: Observable of changes\n" +
+      "- `forEach()`: Iterate through elements\n" +
+      "- `toArray()`: Convert to array\n" +
+      "- `some()`: Check if any element matches\n" +
+      "- `every()`: Check if all elements match\n" +
+      "- `find()`: Find first matching element\n" +
+      "- `filter()`: Filter elements\n" +
+      "- `map()`: Transform elements\n" +
+      "- `reduce()`: Reduce elements to single value",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "ViewChild", "ViewChildren", "QueryList", "comparison"],
+  },
+  {
+    id: 191,
+    question: "What is ContentChild?",
+    answer:
+      "ContentChild is a decorator in Angular that allows you to access projected content (content that is passed between the opening and closing tags of a component). It's used to access elements that are projected into a component via ng-content.\n\n" +
+      "**Basic ContentChild Usage:**\n" +
+      "```typescript\n" +
+      "// content-child-demo.component.ts\n" +
+      "import { Component, ContentChild, AfterContentInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-content-child-demo',\n" +
+      "  template: `\n" +
+      '    <div class="content-child-demo">\n' +
+      "      <h3>ContentChild Demo</h3>\n" +
+      "      \n      " +
+      "      <!-- Projected content -->\n      " +
+      "      <ng-content></ng-content>\n      " +
+      "      \n      " +
+      '      <div class="info">\n      ' +
+      "        <h4>ContentChild Info:</h4>\n      " +
+      "        <p>Projected Element Available: {{ projectedElementAvailable }}</p>\n      " +
+      "        <p>Projected Element Text: {{ projectedElementText }}</p>\n      " +
+      "        <p>Last Action: {{ lastAction }}</p>\n      " +
+      "      </div>\n      " +
+      "      \n      " +
+      '      <div class="controls">\n      ' +
+      '        <button (click)="accessProjectedContent()">Access Projected Content</button>\n      ' +
+      '        <button (click)="manipulateProjectedContent()">Manipulate Projected Content</button>\n      ' +
+      "      </div>\n      " +
+      "    </div>\n      " +
+      "  `\n      " +
+      "})\n      " +
+      "export class ContentChildDemoComponent implements AfterContentInit {\n      " +
+      "  @ContentChild('projectedElement') projectedElement!: ElementRef;\n" +
+      "  \n" +
+      "  projectedElementAvailable = false;\n" +
+      "  projectedElementText = '';\n" +
+      "  lastAction = '';\n" +
+      "\n" +
+      "  ngAfterContentInit() {\n" +
+      "    console.log('ContentChild projected element:', this.projectedElement);\n" +
+      "    this.updateInfo();\n" +
+      "  }\n" +
+      "\n" +
+      "  accessProjectedContent() {\n" +
+      "    if (this.projectedElement) {\n" +
+      "      this.projectedElementText = this.projectedElement.nativeElement.textContent;\n" +
+      "      this.lastAction = 'Accessed projected content';\n" +
+      "      console.log('Projected element:', this.projectedElement.nativeElement);\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  manipulateProjectedContent() {\n" +
+      "    if (this.projectedElement) {\n" +
+      "      this.projectedElement.nativeElement.style.backgroundColor = 'lightblue';\n" +
+      "      this.projectedElement.nativeElement.style.padding = '10px';\n" +
+      "      this.projectedElement.nativeElement.style.border = '2px solid blue';\n" +
+      "      this.lastAction = 'Manipulated projected content';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateInfo() {\n" +
+      "    this.projectedElementAvailable = !!this.projectedElement;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using ContentChild in Parent Component:**\n" +
+      "```typescript\n" +
+      "// parent-with-content.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent-with-content',\n" +
+      "  template: `\n" +
+      '    <div class="parent-with-content">\n' +
+      "      <h3>Parent with Content</h3>\n" +
+      "      \n" +
+      "      <app-content-child-demo>\n" +
+      "        <!-- Projected content -->\n" +
+      '        <div #projectedElement class="projected-content">\n' +
+      "          <h4>This is projected content!</h4>\n" +
+      "          <p>This content is passed to the child component.</p>\n" +
+      "          <p>It can be accessed using ContentChild decorator.</p>\n" +
+      "        </div>\n" +
+      "      </app-content-child-demo>\n" +
+      "      \n" +
+      "      <app-content-child-demo>\n" +
+      "        <!-- Another projected content -->\n" +
+      '        <div #projectedElement class="projected-content">\n' +
+      "          <h4>Another projected content!</h4>\n" +
+      "          <p>This is a different projected content.</p>\n" +
+      "        </div>\n" +
+      "      </app-content-child-demo>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentWithContentComponent {\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced ContentChild with Multiple Elements:**\n" +
+      "```typescript\n" +
+      "// advanced-content-child.component.ts\n" +
+      "import { Component, ContentChild, ContentChildren, QueryList, AfterContentInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-advanced-content-child',\n" +
+      "  template: `\n" +
+      '    <div class="advanced-content-child">\n' +
+      "      <h3>Advanced ContentChild</h3>\n" +
+      "      \n" +
+      "      <!-- Projected content -->\n" +
+      "      <ng-content></ng-content>\n" +
+      "      \n" +
+      '      <div class="info">\n' +
+      "        <h4>ContentChild Info:</h4>\n" +
+      "        <p>First Element Available: {{ firstElementAvailable }}</p>\n" +
+      "        <p>All Elements Count: {{ allElementsCount }}</p>\n" +
+      "        <p>Last Action: {{ lastAction }}</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="controls">\n' +
+      '        <button (click)="accessFirstElement()">Access First Element</button>\n' +
+      '        <button (click)="accessAllElements()">Access All Elements</button>\n' +
+      '        <button (click)="manipulateAllElements()">Manipulate All Elements</button>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AdvancedContentChildComponent implements AfterContentInit {\n" +
+      "  @ContentChild('firstElement') firstElement!: ElementRef;\n" +
+      "  @ContentChildren('allElements') allElements!: QueryList<ElementRef>;\n" +
+      "  \n" +
+      "  firstElementAvailable = false;\n" +
+      "  allElementsCount = 0;\n" +
+      "  lastAction = '';\n" +
+      "\n" +
+      "  ngAfterContentInit() {\n" +
+      "    console.log('ContentChild first element:', this.firstElement);\n" +
+      "    console.log('ContentChildren all elements:', this.allElements);\n" +
+      "    \n" +
+      "    this.updateInfo();\n" +
+      "    \n" +
+      "    // Subscribe to changes in ContentChildren\n" +
+      "    this.allElements.changes.subscribe(() => {\n" +
+      "      console.log('ContentChildren changed:', this.allElements.length);\n" +
+      "      this.updateInfo();\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  accessFirstElement() {\n" +
+      "    if (this.firstElement) {\n" +
+      "      console.log('First element:', this.firstElement.nativeElement);\n" +
+      "      this.lastAction = 'Accessed first element';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  accessAllElements() {\n" +
+      "    this.allElements.forEach((element, index) => {\n" +
+      "      console.log(`Element ${index}:`, element.nativeElement);\n" +
+      "    });\n" +
+      "    this.lastAction = 'Accessed all elements';\n" +
+      "  }\n" +
+      "\n" +
+      "  manipulateAllElements() {\n" +
+      "    this.allElements.forEach((element, index) => {\n" +
+      "      element.nativeElement.style.backgroundColor = index % 2 === 0 ? 'lightgreen' : 'lightcoral';\n" +
+      "      element.nativeElement.style.padding = '5px';\n" +
+      "      element.nativeElement.style.margin = '2px';\n" +
+      "    });\n" +
+      "    this.lastAction = 'Manipulated all elements';\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateInfo() {\n" +
+      "    this.firstElementAvailable = !!this.firstElement;\n" +
+      "    this.allElementsCount = this.allElements.length;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**ContentChild with Component References:**\n" +
+      "```typescript\n" +
+      "// content-child-component.component.ts\n" +
+      "import { Component, ContentChild, AfterContentInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-content-child-component',\n" +
+      "  template: `\n" +
+      '    <div class="content-child-component">\n' +
+      "      <h3>ContentChild with Component</h3>\n" +
+      "      \n" +
+      "      <!-- Projected content -->\n" +
+      "      <ng-content></ng-content>\n" +
+      "      \n" +
+      '      <div class="info">\n' +
+      "        <h4>Component Info:</h4>\n" +
+      "        <p>Projected Component Available: {{ projectedComponentAvailable }}</p>\n" +
+      "        <p>Component Data: {{ componentData }}</p>\n" +
+      "        <p>Last Action: {{ lastAction }}</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="controls">\n' +
+      '        <button (click)="accessComponent()">Access Component</button>\n' +
+      '        <button (click)="callComponentMethod()">Call Component Method</button>\n' +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ContentChildComponentComponent implements AfterContentInit {\n" +
+      "  @ContentChild('projectedComponent') projectedComponent!: any;\n" +
+      "  \n" +
+      "  projectedComponentAvailable = false;\n" +
+      "  componentData = '';\n" +
+      "  lastAction = '';\n" +
+      "\n" +
+      "  ngAfterContentInit() {\n" +
+      "    console.log('ContentChild projected component:', this.projectedComponent);\n" +
+      "    this.updateInfo();\n" +
+      "  }\n" +
+      "\n" +
+      "  accessComponent() {\n" +
+      "    if (this.projectedComponent) {\n" +
+      "      console.log('Projected component:', this.projectedComponent);\n" +
+      "      this.componentData = JSON.stringify(this.projectedComponent);\n" +
+      "      this.lastAction = 'Accessed projected component';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  callComponentMethod() {\n" +
+      "    if (this.projectedComponent && this.projectedComponent.someMethod) {\n" +
+      "      this.projectedComponent.someMethod();\n" +
+      "      this.lastAction = 'Called component method';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateInfo() {\n" +
+      "    this.projectedComponentAvailable = !!this.projectedComponent;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points about ContentChild:**\n" +
+      "- Used to access projected content (ng-content)\n" +
+      "- Available in ngAfterContentInit lifecycle hook\n" +
+      "- Can access both ElementRef and Component references\n" +
+      "- Works with template reference variables\n" +
+      "- Useful for component composition and content projection\n" +
+      "- Can manipulate projected content programmatically\n" +
+      "- Supports both single (@ContentChild) and multiple (@ContentChildren) access\n" +
+      "- Changes are observable with ContentChildren\n" +
+      "- Essential for building reusable components with flexible content",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["components", "ContentChild", "content-projection", "ng-content"],
+  },
+  {
+    id: 192,
+    question: "Compare ng-Content, ViewChild, ViewChildren, ContentChild & ContentChildren?",
+    answer:
+      "These Angular decorators and directives serve different purposes in component communication and content management. Understanding their differences is crucial for effective Angular development.\n\n" +
+      "**Comprehensive Comparison:**\n\n" +
+      "| Feature | ng-content | ViewChild | ViewChildren | ContentChild | ContentChildren |\n" +
+      "|---------|------------|-----------|--------------|--------------|----------------|\n" +
+      "| **Purpose** | Content projection | Single view element access | Multiple view elements access | Single projected content access | Multiple projected content access |\n" +
+      "| **Type** | Directive | Decorator | Decorator | Decorator | Decorator |\n" +
+      "| **Content Source** | Parent component | Child component template | Child component template | Projected content | Projected content |\n" +
+      "| **Return Type** | N/A | ElementRef/Component | QueryList<ElementRef> | ElementRef/Component | QueryList<ElementRef> |\n" +
+      "| **Lifecycle Hook** | N/A | ngAfterViewInit | ngAfterViewInit | ngAfterContentInit | ngAfterContentInit |\n" +
+      "| **Changes Observable** | N/A | No | Yes | No | Yes |\n" +
+      "| **Use Case** | Content projection | Single element access | Dynamic list access | Single projected element | Multiple projected elements |\n\n" +
+      "**Practical Example with All Decorators:**\n" +
+      "```typescript\n" +
+      "// comprehensive-demo.component.ts\n" +
+      "import { Component, ViewChild, ViewChildren, ContentChild, ContentChildren, QueryList, AfterViewInit, AfterContentInit, ElementRef } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-comprehensive-demo',\n" +
+      "  template: `\n" +
+      '    <div class="comprehensive-demo">\n' +
+      "      <h3>Comprehensive Demo</h3>\n" +
+      "      \n" +
+      "      <!-- ViewChild/ViewChildren elements -->\n" +
+      '      <div #singleViewElement class="view-element">\n' +
+      "        <p>Single View Element</p>\n" +
+      "      </div>\n" +
+      "      \n      " +
+      '      <div #multipleViewElement class="view-element">\n      ' +
+      "        <p>Multiple View Element 1</p>\n      " +
+      "      </div>\n      " +
+      '      <div #multipleViewElement class="view-element">\n      ' +
+      "        <p>Multiple View Element 2</p>\n      " +
+      "      </div>\n      " +
+      "      \n      " +
+      "      <!-- Projected content (ng-content) -->\n      " +
+      "      <ng-content></ng-content>\n      " +
+      "      \n      " +
+      '      <div class="info">\n      ' +
+      "        <h4>All Decorators Info:</h4>\n      " +
+      "        <p>ViewChild Available: {{ viewChildAvailable }}</p>\n      " +
+      "        <p>ViewChildren Count: {{ viewChildrenCount }}</p>\n      " +
+      "        <p>ContentChild Available: {{ contentChildAvailable }}</p>\n      " +
+      "        <p>ContentChildren Count: {{ contentChildrenCount }}</p>\n      " +
+      "        <p>Last Action: {{ lastAction }}</p>\n      " +
+      "      </div>\n      " +
+      "      \n      " +
+      '      <div class="controls">\n      ' +
+      '        <button (click)="demonstrateViewChild()">Demonstrate ViewChild</button>\n      ' +
+      '        <button (click)="demonstrateViewChildren()">Demonstrate ViewChildren</button>\n      ' +
+      '        <button (click)="demonstrateContentChild()">Demonstrate ContentChild</button>\n      ' +
+      '        <button (click)="demonstrateContentChildren()">Demonstrate ContentChildren</button>\n      ' +
+      '        <button (click)="demonstrateAll()">Demonstrate All</button>\n      ' +
+      "      </div>\n      " +
+      "    </div>\n      " +
+      "  `\n      " +
+      "})\n      " +
+      "export class ComprehensiveDemoComponent implements AfterViewInit, AfterContentInit {\n      " +
+      "  // ViewChild - single view element\n" +
+      "  @ViewChild('singleViewElement') singleViewElement!: ElementRef;\n" +
+      "  \n" +
+      "  // ViewChildren - multiple view elements\n" +
+      "  @ViewChildren('multipleViewElement') multipleViewElements!: QueryList<ElementRef>;\n" +
+      "  \n" +
+      "  // ContentChild - single projected content\n" +
+      "  @ContentChild('projectedElement') projectedElement!: ElementRef;\n" +
+      "  \n" +
+      "  // ContentChildren - multiple projected content\n" +
+      "  @ContentChildren('projectedElement') projectedElements!: QueryList<ElementRef>;\n" +
+      "  \n" +
+      "  viewChildAvailable = false;\n" +
+      "  viewChildrenCount = 0;\n" +
+      "  contentChildAvailable = false;\n" +
+      "  contentChildrenCount = 0;\n" +
+      "  lastAction = '';\n" +
+      "\n" +
+      "  ngAfterViewInit() {\n" +
+      "    console.log('ViewChild single element:', this.singleViewElement);\n" +
+      "    console.log('ViewChildren multiple elements:', this.multipleViewElements);\n" +
+      "    \n" +
+      "    this.updateViewInfo();\n" +
+      "    \n" +
+      "    // Subscribe to ViewChildren changes\n" +
+      "    this.multipleViewElements.changes.subscribe(() => {\n" +
+      "      console.log('ViewChildren changed:', this.multipleViewElements.length);\n" +
+      "      this.updateViewInfo();\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngAfterContentInit() {\n" +
+      "    console.log('ContentChild projected element:', this.projectedElement);\n" +
+      "    console.log('ContentChildren projected elements:', this.projectedElements);\n" +
+      "    \n" +
+      "    this.updateContentInfo();\n" +
+      "    \n" +
+      "    // Subscribe to ContentChildren changes\n" +
+      "    this.projectedElements.changes.subscribe(() => {\n" +
+      "      console.log('ContentChildren changed:', this.projectedElements.length);\n" +
+      "      this.updateContentInfo();\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  demonstrateViewChild() {\n" +
+      "    if (this.singleViewElement) {\n" +
+      "      this.singleViewElement.nativeElement.style.backgroundColor = 'lightblue';\n" +
+      "      this.lastAction = 'ViewChild: Styled single view element';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  demonstrateViewChildren() {\n" +
+      "    this.multipleViewElements.forEach((element, index) => {\n" +
+      "      element.nativeElement.style.backgroundColor = index % 2 === 0 ? 'lightgreen' : 'lightcoral';\n" +
+      "    });\n" +
+      "    this.lastAction = 'ViewChildren: Styled multiple view elements';\n" +
+      "  }\n" +
+      "\n" +
+      "  demonstrateContentChild() {\n" +
+      "    if (this.projectedElement) {\n" +
+      "      this.projectedElement.nativeElement.style.backgroundColor = 'lightyellow';\n" +
+      "      this.lastAction = 'ContentChild: Styled single projected element';\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  demonstrateContentChildren() {\n" +
+      "    this.projectedElements.forEach((element, index) => {\n" +
+      "      element.nativeElement.style.backgroundColor = index % 2 === 0 ? 'lightpink' : 'lightgray';\n" +
+      "    });\n" +
+      "    this.lastAction = 'ContentChildren: Styled multiple projected elements';\n" +
+      "  }\n" +
+      "\n" +
+      "  demonstrateAll() {\n" +
+      "    // Demonstrate all decorators\n" +
+      "    this.demonstrateViewChild();\n" +
+      "    this.demonstrateViewChildren();\n" +
+      "    this.demonstrateContentChild();\n" +
+      "    this.demonstrateContentChildren();\n" +
+      "    this.lastAction = 'All: Demonstrated all decorators';\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateViewInfo() {\n" +
+      "    this.viewChildAvailable = !!this.singleViewElement;\n" +
+      "    this.viewChildrenCount = this.multipleViewElements.length;\n" +
+      "  }\n" +
+      "\n" +
+      "  private updateContentInfo() {\n" +
+      "    this.contentChildAvailable = !!this.projectedElement;\n" +
+      "    this.contentChildrenCount = this.projectedElements.length;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using the Comprehensive Demo:**\n" +
+      "```typescript\n" +
+      "// parent-comprehensive.component.ts\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-parent-comprehensive',\n" +
+      "  template: `\n" +
+      '    <div class="parent-comprehensive">\n' +
+      "      <h3>Parent Comprehensive</h3>\n" +
+      "      \n" +
+      "      <app-comprehensive-demo>\n" +
+      "        <!-- Projected content -->\n" +
+      '        <div #projectedElement class="projected-content">\n' +
+      "          <h4>Projected Content 1</h4>\n" +
+      "          <p>This is projected content.</p>\n" +
+      "        </div>\n" +
+      '        <div #projectedElement class="projected-content">\n' +
+      "          <h4>Projected Content 2</h4>\n" +
+      "          <p>This is another projected content.</p>\n" +
+      "        </div>\n" +
+      "      </app-comprehensive-demo>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ParentComprehensiveComponent {\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Each:**\n\n" +
+      "**ng-content:**\n" +
+      "- Use when you want to project content from parent to child\n" +
+      "- Essential for component composition\n" +
+      "- Provides flexibility in component design\n" +
+      "- Example: Modal, Card, Layout components\n\n" +
+      "**ViewChild:**\n" +
+      "- Use when you need to access a single child element\n" +
+      "- Perfect for form controls, single DOM elements\n" +
+      "- Example: Accessing input fields, single buttons\n\n" +
+      "**ViewChildren:**\n" +
+      "- Use when you need to access multiple child elements\n" +
+      "- Perfect for dynamic lists, multiple form controls\n" +
+      "- Example: Accessing all input fields, multiple buttons\n\n" +
+      "**ContentChild:**\n" +
+      "- Use when you need to access a single projected element\n" +
+      "- Perfect for accessing specific projected content\n" +
+      "- Example: Accessing a specific projected component\n\n" +
+      "**ContentChildren:**\n" +
+      "- Use when you need to access multiple projected elements\n" +
+      "- Perfect for accessing all projected content\n" +
+      "- Example: Accessing all projected components\n\n" +
+      "**Key Differences Summary:**\n" +
+      "- **ng-content**: Projects content, doesn't access it\n" +
+      "- **ViewChild/ViewChildren**: Access child template elements\n" +
+      "- **ContentChild/ContentChildren**: Access projected content\n" +
+      "- **ViewChild/ContentChild**: Single element access\n" +
+      "- **ViewChildren/ContentChildren**: Multiple elements access\n" +
+      "- **ViewChild/ViewChildren**: Available in ngAfterViewInit\n" +
+      "- **ContentChild/ContentChildren**: Available in ngAfterContentInit\n" +
+      "- **ViewChildren/ContentChildren**: Provide observable changes\n" +
+      "- **ViewChild/ContentChild**: Direct element access\n" +
+      "- **ViewChildren/ContentChildren**: QueryList with methods",
+    category: "Components",
+    difficulty: "advanced",
+    tags: [
+      "components",
+      "ng-content",
+      "ViewChild",
+      "ViewChildren",
+      "ContentChild",
+      "ContentChildren",
+      "comparison",
+    ],
+  },
+  {
+    id: 194,
+    question: "What is Authentication & Authorization in Angular?",
+    answer:
+      "Authentication and Authorization are fundamental security concepts in Angular applications. Authentication verifies who a user is, while Authorization determines what they can access.\n\n" +
+      "**Authentication vs Authorization:**\n\n" +
+      "| Concept | Purpose | Example |\n" +
+      "|---------|---------|---------|\n" +
+      "| **Authentication** | Verify user identity | Login with username/password |\n" +
+      "| **Authorization** | Control access to resources | Check if user can view admin panel |\n\n" +
+      "**Authentication Implementation:**\n" +
+      "```typescript\n" +
+      "// auth.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpClient } from '@angular/common/http';\n" +
+      "import { BehaviorSubject, Observable } from 'rxjs';\n" +
+      "import { tap } from 'rxjs/operators';\n" +
+      "\n" +
+      "export interface User {\n" +
+      "  id: number;\n" +
+      "  username: string;\n" +
+      "  email: string;\n" +
+      "  role: string;\n" +
+      "  permissions: string[];\n" +
+      "}\n" +
+      "\n" +
+      "export interface LoginRequest {\n" +
+      "  username: string;\n" +
+      "  password: string;\n" +
+      "}\n" +
+      "\n" +
+      "export interface LoginResponse {\n" +
+      "  token: string;\n" +
+      "  user: User;\n" +
+      "  expiresIn: number;\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class AuthService {\n" +
+      "  private readonly API_URL = 'http://localhost:3000/api';\n" +
+      "  private readonly TOKEN_KEY = 'auth_token';\n" +
+      "  private readonly USER_KEY = 'user_data';\n" +
+      "\n" +
+      "  private currentUserSubject = new BehaviorSubject<User | null>(null);\n" +
+      "  public currentUser$ = this.currentUserSubject.asObservable();\n" +
+      "\n" +
+      "  constructor(private http: HttpClient) {\n" +
+      "    this.loadUserFromStorage();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Authentication Methods\n" +
+      "  login(credentials: LoginRequest): Observable<LoginResponse> {\n" +
+      "    return this.http.post<LoginResponse>(`${this.API_URL}/auth/login`, credentials)\n" +
+      "      .pipe(\n" +
+      "        tap(response => {\n" +
+      "          this.setToken(response.token);\n" +
+      "          this.setUser(response.user);\n" +
+      "        })\n" +
+      "      );\n" +
+      "  }\n" +
+      "\n" +
+      "  logout(): void {\n" +
+      "    this.removeToken();\n" +
+      "    this.removeUser();\n" +
+      "    this.currentUserSubject.next(null);\n" +
+      "  }\n" +
+      "\n" +
+      "  register(userData: any): Observable<LoginResponse> {\n" +
+      "    return this.http.post<LoginResponse>(`${this.API_URL}/auth/register`, userData)\n" +
+      "      .pipe(\n" +
+      "        tap(response => {\n" +
+      "          this.setToken(response.token);\n" +
+      "          this.setUser(response.user);\n" +
+      "        })\n" +
+      "      );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Authorization Methods\n" +
+      "  isAuthenticated(): boolean {\n" +
+      "    const token = this.getToken();\n" +
+      "    if (!token) return false;\n" +
+      "    \n" +
+      "    // Check if token is expired\n" +
+      "    try {\n" +
+      "      const payload = JSON.parse(atob(token.split('.')[1]));\n" +
+      "      const currentTime = Math.floor(Date.now() / 1000);\n" +
+      "      return payload.exp > currentTime;\n" +
+      "    } catch {\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  hasRole(role: string): boolean {\n" +
+      "    const user = this.getCurrentUser();\n" +
+      "    return user?.role === role;\n" +
+      "  }\n" +
+      "\n" +
+      "  hasPermission(permission: string): boolean {\n" +
+      "    const user = this.getCurrentUser();\n" +
+      "    return user?.permissions?.includes(permission) || false;\n" +
+      "  }\n" +
+      "\n" +
+      "  hasAnyRole(roles: string[]): boolean {\n" +
+      "    const user = this.getCurrentUser();\n" +
+      "    return roles.includes(user?.role || '');\n" +
+      "  }\n" +
+      "\n" +
+      "  hasAllPermissions(permissions: string[]): boolean {\n" +
+      "    const user = this.getCurrentUser();\n" +
+      "    return permissions.every(permission => \n" +
+      "      user?.permissions?.includes(permission)\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Token Management\n" +
+      "  private setToken(token: string): void {\n" +
+      "    localStorage.setItem(this.TOKEN_KEY, token);\n" +
+      "  }\n" +
+      "\n" +
+      "  private getToken(): string | null {\n" +
+      "    return localStorage.getItem(this.TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  private removeToken(): void {\n" +
+      "    localStorage.removeItem(this.TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  // User Management\n" +
+      "  private setUser(user: User): void {\n" +
+      "    localStorage.setItem(this.USER_KEY, JSON.stringify(user));\n" +
+      "    this.currentUserSubject.next(user);\n" +
+      "  }\n" +
+      "\n" +
+      "  private getCurrentUser(): User | null {\n" +
+      "    return this.currentUserSubject.value;\n" +
+      "  }\n" +
+      "\n" +
+      "  private removeUser(): void {\n" +
+      "    localStorage.removeItem(this.USER_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  private loadUserFromStorage(): void {\n" +
+      "    const userData = localStorage.getItem(this.USER_KEY);\n" +
+      "    if (userData && this.isAuthenticated()) {\n" +
+      "      try {\n" +
+      "        const user = JSON.parse(userData);\n" +
+      "        this.currentUserSubject.next(user);\n" +
+      "      } catch {\n" +
+      "        this.logout();\n" +
+      "      }\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Token Refresh\n" +
+      "  refreshToken(): Observable<LoginResponse> {\n" +
+      "    return this.http.post<LoginResponse>(`${this.API_URL}/auth/refresh`, {\n" +
+      "      token: this.getToken()\n" +
+      "    }).pipe(\n" +
+      "      tap(response => {\n" +
+      "        this.setToken(response.token);\n" +
+      "        this.setUser(response.user);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Authorization Guard Implementation:**\n" +
+      "```typescript\n" +
+      "// auth.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class AuthGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(\n" +
+      "    route: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): boolean {\n" +
+      "    if (this.authService.isAuthenticated()) {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "\n" +
+      "    // Store attempted URL for redirect after login\n" +
+      "    this.router.navigate(['/login'], {\n" +
+      "      queryParams: { returnUrl: state.url }\n" +
+      "    });\n" +
+      "    return false;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Role-Based Authorization Guard:**\n" +
+      "```typescript\n" +
+      "// role.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class RoleGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(route: ActivatedRouteSnapshot): boolean {\n" +
+      "    const expectedRoles = route.data['roles'] as string[];\n" +
+      "    \n" +
+      "    if (!this.authService.isAuthenticated()) {\n" +
+      "      this.router.navigate(['/login']);\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "\n" +
+      "    if (expectedRoles && !this.authService.hasAnyRole(expectedRoles)) {\n" +
+      "      this.router.navigate(['/unauthorized']);\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "\n" +
+      "    return true;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Permission-Based Authorization Guard:**\n" +
+      "```typescript\n" +
+      "// permission.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class PermissionGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(route: ActivatedRouteSnapshot): boolean {\n" +
+      "    const requiredPermissions = route.data['permissions'] as string[];\n" +
+      "    \n" +
+      "    if (!this.authService.isAuthenticated()) {\n" +
+      "      this.router.navigate(['/login']);\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "\n" +
+      "    if (requiredPermissions && !this.authService.hasAllPermissions(requiredPermissions)) {\n" +
+      "      this.router.navigate(['/forbidden']);\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "\n" +
+      "    return true;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Route Configuration with Guards:**\n" +
+      "```typescript\n" +
+      "// app-routing.module.ts\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { RouterModule, Routes } from '@angular/router';\n" +
+      "import { AuthGuard } from './guards/auth.guard';\n" +
+      "import { RoleGuard } from './guards/role.guard';\n" +
+      "import { PermissionGuard } from './guards/permission.guard';\n" +
+      "\n" +
+      "const routes: Routes = [\n" +
+      "  { path: 'login', component: LoginComponent },\n" +
+      "  { \n" +
+      "    path: 'dashboard', \n" +
+      "    component: DashboardComponent,\n" +
+      "    canActivate: [AuthGuard]\n" +
+      "  },\n" +
+      "  {\n" +
+      "    path: 'admin',\n" +
+      "    component: AdminComponent,\n" +
+      "    canActivate: [AuthGuard, RoleGuard],\n" +
+      "    data: { roles: ['admin', 'super-admin'] }\n" +
+      "  },\n" +
+      "  {\n" +
+      "    path: 'reports',\n" +
+      "    component: ReportsComponent,\n" +
+      "    canActivate: [AuthGuard, PermissionGuard],\n" +
+      "    data: { permissions: ['read:reports', 'write:reports'] }\n" +
+      "  },\n" +
+      "  { path: 'unauthorized', component: UnauthorizedComponent },\n" +
+      "  { path: 'forbidden', component: ForbiddenComponent },\n" +
+      "  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }\n" +
+      "];\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  imports: [RouterModule.forRoot(routes)],\n" +
+      "  exports: [RouterModule]\n" +
+      "})\n" +
+      "export class AppRoutingModule { }\n" +
+      "```\n\n" +
+      "**Key Points:**\n" +
+      "- **Authentication**: Verifies user identity (login/logout)\n" +
+      "- **Authorization**: Controls access to resources (roles/permissions)\n" +
+      "- **Guards**: Protect routes based on authentication/authorization\n" +
+      "- **Token Management**: Secure storage and validation\n" +
+      "- **Role-Based Access**: Control access by user roles\n" +
+      "- **Permission-Based Access**: Fine-grained access control\n" +
+      "- **Route Protection**: Prevent unauthorized access to routes\n" +
+      "- **Token Refresh**: Maintain session without re-login\n" +
+      "- **Storage Security**: Use localStorage/sessionStorage appropriately",
+    category: "Security",
+    difficulty: "intermediate",
+    tags: ["authentication", "authorization", "security", "guards", "roles", "permissions"],
+  },
+  {
+    id: 195,
+    question: "What is JWT Token Authentication in Angular?",
+    answer:
+      "JWT (JSON Web Token) is a compact, URL-safe token format used for securely transmitting information between parties. In Angular, JWT tokens are commonly used for authentication and authorization.\n\n" +
+      "**JWT Token Structure:**\n" +
+      "JWT consists of three parts separated by dots (`.`):\n" +
+      "```\n" +
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\n" +
+      "```\n\n" +
+      "**JWT Implementation in Angular:**\n" +
+      "```typescript\n" +
+      "// jwt.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpClient, HttpHeaders } from '@angular/common/http';\n" +
+      "import { Observable, BehaviorSubject } from 'rxjs';\n" +
+      "import { tap, catchError } from 'rxjs/operators';\n" +
+      "\n" +
+      "export interface JWTPayload {\n" +
+      "  sub: string;        // Subject (user ID)\n" +
+      "  iat: number;       // Issued at\n" +
+      "  exp: number;       // Expiration time\n" +
+      "  username: string;   // Username\n" +
+      "  role: string;       // User role\n" +
+      "  permissions: string[]; // User permissions\n" +
+      "}\n" +
+      "\n" +
+      "export interface LoginCredentials {\n" +
+      "  username: string;\n" +
+      "  password: string;\n" +
+      "}\n" +
+      "\n" +
+      "export interface AuthResponse {\n" +
+      "  access_token: string;\n" +
+      "  refresh_token: string;\n" +
+      "  token_type: string;\n" +
+      "  expires_in: number;\n" +
+      "  user: {\n" +
+      "    id: string;\n" +
+      "    username: string;\n" +
+      "    email: string;\n" +
+      "    role: string;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class JWTService {\n" +
+      "  private readonly TOKEN_KEY = 'jwt_token';\n" +
+      "  private readonly REFRESH_TOKEN_KEY = 'refresh_token';\n" +
+      "  private readonly USER_KEY = 'user_data';\n" +
+      "  \n" +
+      "  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);\n" +
+      "  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();\n" +
+      "  \n" +
+      "  private currentUserSubject = new BehaviorSubject<any>(null);\n" +
+      "  public currentUser$ = this.currentUserSubject.asObservable();\n" +
+      "\n" +
+      "  constructor(private http: HttpClient) {\n" +
+      "    this.initializeAuth();\n" +
+      "  }\n" +
+      "\n" +
+      "  // JWT Token Management\n" +
+      "  login(credentials: LoginCredentials): Observable<AuthResponse> {\n" +
+      "    return this.http.post<AuthResponse>('/api/auth/login', credentials)\n" +
+      "      .pipe(\n" +
+      "        tap(response => {\n" +
+      "          this.setTokens(response);\n" +
+      "          this.setUser(response.user);\n" +
+      "          this.isAuthenticatedSubject.next(true);\n" +
+      "        }),\n" +
+      "        catchError(error => {\n" +
+      "          console.error('Login failed:', error);\n" +
+      "          throw error;\n" +
+      "        })\n" +
+      "      );\n" +
+      "  }\n" +
+      "\n" +
+      "  logout(): void {\n" +
+      "    this.removeTokens();\n" +
+      "    this.removeUser();\n" +
+      "    this.isAuthenticatedSubject.next(false);\n" +
+      "    this.currentUserSubject.next(null);\n" +
+      "  }\n" +
+      "\n" +
+      "  refreshToken(): Observable<AuthResponse> {\n" +
+      "    const refreshToken = this.getRefreshToken();\n" +
+      "    if (!refreshToken) {\n" +
+      "      throw new Error('No refresh token available');\n" +
+      "    }\n" +
+      "\n" +
+      "    return this.http.post<AuthResponse>('/api/auth/refresh', {\n" +
+      "      refresh_token: refreshToken\n" +
+      "    }).pipe(\n" +
+      "      tap(response => {\n" +
+      "        this.setTokens(response);\n" +
+      "      }),\n" +
+      "      catchError(error => {\n" +
+      "        this.logout();\n" +
+      "        throw error;\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Token Validation\n" +
+      "  isTokenValid(): boolean {\n" +
+      "    const token = this.getToken();\n" +
+      "    if (!token) return false;\n" +
+      "\n" +
+      "    try {\n" +
+      "      const payload = this.decodeToken(token);\n" +
+      "      const currentTime = Math.floor(Date.now() / 1000);\n" +
+      "      return payload.exp > currentTime;\n" +
+      "    } catch {\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  isTokenExpired(): boolean {\n" +
+      "    const token = this.getToken();\n" +
+      "    if (!token) return true;\n" +
+      "\n" +
+      "    try {\n" +
+      "      const payload = this.decodeToken(token);\n" +
+      "      const currentTime = Math.floor(Date.now() / 1000);\n" +
+      "      return payload.exp <= currentTime;\n" +
+      "    } catch {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Token Decoding\n" +
+      "  decodeToken(token: string): JWTPayload {\n" +
+      "    try {\n" +
+      "      const base64Url = token.split('.')[1];\n" +
+      "      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');\n" +
+      "      const jsonPayload = decodeURIComponent(\n" +
+      "        atob(base64)\n" +
+      "          .split('')\n" +
+      "          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))\n" +
+      "          .join('')\n" +
+      "      );\n" +
+      "      return JSON.parse(jsonPayload);\n" +
+      "    } catch (error) {\n" +
+      "      throw new Error('Invalid token format');\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // User Information from Token\n" +
+      "  getUserId(): string | null {\n" +
+      "    const token = this.getToken();\n" +
+      "    if (!token) return null;\n" +
+      "\n" +
+      "    try {\n" +
+      "      const payload = this.decodeToken(token);\n" +
+      "      return payload.sub;\n" +
+      "    } catch {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getUserRole(): string | null {\n" +
+      "    const token = this.getToken();\n" +
+      "    if (!token) return null;\n" +
+      "\n" +
+      "    try {\n" +
+      "      const payload = this.decodeToken(token);\n" +
+      "      return payload.role;\n" +
+      "    } catch {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  getUserPermissions(): string[] {\n" +
+      "    const token = this.getToken();\n" +
+      "    if (!token) return [];\n" +
+      "\n" +
+      "    try {\n" +
+      "      const payload = this.decodeToken(token);\n" +
+      "      return payload.permissions || [];\n" +
+      "    } catch {\n" +
+      "      return [];\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // Token Storage\n" +
+      "  private setTokens(response: AuthResponse): void {\n" +
+      "    localStorage.setItem(this.TOKEN_KEY, response.access_token);\n" +
+      "    localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refresh_token);\n" +
+      "  }\n" +
+      "\n" +
+      "  private getToken(): string | null {\n" +
+      "    return localStorage.getItem(this.TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  private getRefreshToken(): string | null {\n" +
+      "    return localStorage.getItem(this.REFRESH_TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  private removeTokens(): void {\n" +
+      "    localStorage.removeItem(this.TOKEN_KEY);\n" +
+      "    localStorage.removeItem(this.REFRESH_TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  // User Storage\n" +
+      "  private setUser(user: any): void {\n" +
+      "    localStorage.setItem(this.USER_KEY, JSON.stringify(user));\n" +
+      "    this.currentUserSubject.next(user);\n" +
+      "  }\n" +
+      "\n" +
+      "  private removeUser(): void {\n" +
+      "    localStorage.removeItem(this.USER_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Initialization\n" +
+      "  private initializeAuth(): void {\n" +
+      "    const token = this.getToken();\n" +
+      "    const userData = localStorage.getItem(this.USER_KEY);\n" +
+      "    \n" +
+      "    if (token && this.isTokenValid() && userData) {\n" +
+      "      try {\n" +
+      "        const user = JSON.parse(userData);\n" +
+      "        this.currentUserSubject.next(user);\n" +
+      "        this.isAuthenticatedSubject.next(true);\n" +
+      "      } catch {\n" +
+      "        this.logout();\n" +
+      "      }\n" +
+      "    } else {\n" +
+      "      this.logout();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  // HTTP Headers\n" +
+      "  getAuthHeaders(): HttpHeaders {\n" +
+      "    const token = this.getToken();\n" +
+      "    return new HttpHeaders({\n" +
+      "      'Authorization': `Bearer ${token}`,\n" +
+      "      'Content-Type': 'application/json'\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**JWT Interceptor for Automatic Token Attachment:**\n" +
+      "```typescript\n" +
+      "// jwt.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';\n" +
+      "import { Observable, throwError, BehaviorSubject } from 'rxjs';\n" +
+      "import { catchError, filter, take, switchMap } from 'rxjs/operators';\n" +
+      "import { JWTService } from './jwt.service';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class JWTInterceptor implements HttpInterceptor {\n" +
+      "  private isRefreshing = false;\n" +
+      "  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);\n" +
+      "\n" +
+      "  constructor(private jwtService: JWTService) {}\n" +
+      "\n" +
+      "  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "    // Add token to request if available\n" +
+      "    if (this.jwtService.isTokenValid()) {\n" +
+      "      request = this.addTokenToRequest(request);\n" +
+      "    }\n" +
+      "\n" +
+      "    return next.handle(request).pipe(\n" +
+      "      catchError(error => {\n" +
+      "        if (error instanceof HttpErrorResponse && error.status === 401) {\n" +
+      "          return this.handle401Error(request, next);\n" +
+      "        }\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  private addTokenToRequest(request: HttpRequest<any>): HttpRequest<any> {\n" +
+      "    const token = this.jwtService.getToken();\n" +
+      "    if (token) {\n" +
+      "      return request.clone({\n" +
+      "        setHeaders: {\n" +
+      "          Authorization: `Bearer ${token}`\n" +
+      "        }\n" +
+      "      });\n" +
+      "    }\n" +
+      "    return request;\n" +
+      "  }\n" +
+      "\n" +
+      "  private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "    if (!this.isRefreshing) {\n" +
+      "      this.isRefreshing = true;\n" +
+      "      this.refreshTokenSubject.next(null);\n" +
+      "\n" +
+      "      return this.jwtService.refreshToken().pipe(\n" +
+      "        switchMap((response: any) => {\n" +
+      "          this.isRefreshing = false;\n" +
+      "          this.refreshTokenSubject.next(response.access_token);\n" +
+      "          return next.handle(this.addTokenToRequest(request));\n" +
+      "        }),\n" +
+      "        catchError((error) => {\n" +
+      "          this.isRefreshing = false;\n" +
+      "          this.jwtService.logout();\n" +
+      "          return throwError(error);\n" +
+      "        })\n" +
+      "      );\n" +
+      "    }\n" +
+      "\n" +
+      "    return this.refreshTokenSubject.pipe(\n" +
+      "      filter(token => token !== null),\n" +
+      "      take(1),\n" +
+      "      switchMap(() => next.handle(this.addTokenToRequest(request)))\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**JWT Guard Implementation:**\n" +
+      "```typescript\n" +
+      "// jwt.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';\n" +
+      "import { JWTService } from './jwt.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class JWTGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private jwtService: JWTService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(\n" +
+      "    route: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): boolean {\n" +
+      "    if (this.jwtService.isTokenValid()) {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "\n" +
+      "    // Token is invalid or expired\n" +
+      "    this.jwtService.logout();\n" +
+      "    this.router.navigate(['/login'], {\n" +
+      "      queryParams: { returnUrl: state.url }\n" +
+      "    });\n" +
+      "    return false;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**JWT Token Benefits:**\n" +
+      "- **Stateless**: No server-side session storage\n" +
+      "- **Self-contained**: Contains user information\n" +
+      "- **Secure**: Cryptographically signed\n" +
+      "- **Cross-domain**: Can be used across different domains\n" +
+      "- **Scalable**: No server-side session management\n" +
+      "- **Mobile-friendly**: Works well with mobile apps\n" +
+      "- **Microservices**: Perfect for distributed systems\n\n" +
+      "**Security Considerations:**\n" +
+      "- Store tokens securely (httpOnly cookies preferred)\n" +
+      "- Use HTTPS in production\n" +
+      "- Implement token refresh mechanism\n" +
+      "- Set appropriate expiration times\n" +
+      "- Validate tokens on server-side\n" +
+      "- Handle token expiration gracefully\n" +
+      "- Use secure token storage (avoid localStorage for sensitive apps)",
+    category: "Security",
+    difficulty: "intermediate",
+    tags: ["JWT", "authentication", "tokens", "security", "interceptor", "guard"],
+  },
+  {
+    id: 196,
+    question: "How to Mock or Fake an API for JWT Authentication?",
+    answer:
+      "Mocking APIs for JWT authentication is essential for development, testing, and demos. There are several approaches to create fake APIs that simulate real authentication behavior.\n\n" +
+      "**1. JSON Server with Custom Routes:**\n" +
+      "```json\n" +
+      "// db.json\n" +
+      "{\n" +
+      '  "users": [\n' +
+      "    {\n" +
+      '      "id": 1,\n' +
+      '      "username": "admin",\n' +
+      '      "password": "admin123",\n' +
+      '      "email": "admin@example.com",\n' +
+      '      "role": "admin",\n' +
+      '      "permissions": ["read:users", "write:users", "delete:users"]\n' +
+      "    },\n" +
+      "    {\n" +
+      '      "id": 2,\n' +
+      '      "username": "user",\n' +
+      '      "password": "user123",\n' +
+      '      "email": "user@example.com",\n' +
+      '      "role": "user",\n' +
+      '      "permissions": ["read:profile"]\n' +
+      "    }\n" +
+      "  ],\n" +
+      '  "tokens": []\n' +
+      "}\n" +
+      "```\n\n" +
+      "```javascript\n" +
+      "// server.js (JSON Server with custom routes)\n" +
+      "const jsonServer = require('json-server');\n" +
+      "const jwt = require('jsonwebtoken');\n" +
+      "const server = jsonServer.create();\n" +
+      "const router = jsonServer.router('db.json');\n" +
+      "const middlewares = jsonServer.defaults();\n" +
+      "\n" +
+      "const SECRET_KEY = 'your-secret-key';\n" +
+      "\n" +
+      "server.use(middlewares);\n" +
+      "server.use(jsonServer.bodyParser);\n" +
+      "\n" +
+      "// Mock JWT Authentication Routes\n" +
+      "server.post('/api/auth/login', (req, res) => {\n" +
+      "  const { username, password } = req.body;\n" +
+      "  const db = router.db;\n" +
+      "  const user = db.get('users').find({ username, password }).value();\n" +
+      "\n" +
+      "  if (user) {\n" +
+      "    const payload = {\n" +
+      "      sub: user.id.toString(),\n" +
+      "      username: user.username,\n" +
+      "      role: user.role,\n" +
+      "      permissions: user.permissions,\n" +
+      "      iat: Math.floor(Date.now() / 1000),\n" +
+      "      exp: Math.floor(Date.now() / 1000) + (60 * 60) // 1 hour\n" +
+      "    };\n" +
+      "\n" +
+      "    const accessToken = jwt.sign(payload, SECRET_KEY);\n" +
+      "    const refreshToken = jwt.sign({ sub: user.id }, SECRET_KEY, { expiresIn: '7d' });\n" +
+      "\n" +
+      "    res.json({\n" +
+      "      access_token: accessToken,\n" +
+      "      refresh_token: refreshToken,\n" +
+      "      token_type: 'Bearer',\n" +
+      "      expires_in: 3600,\n" +
+      "      user: {\n" +
+      "        id: user.id,\n" +
+      "        username: user.username,\n" +
+      "        email: user.email,\n" +
+      "        role: user.role\n" +
+      "      }\n" +
+      "    });\n" +
+      "  } else {\n" +
+      "    res.status(401).json({ error: 'Invalid credentials' });\n" +
+      "  }\n" +
+      "});\n" +
+      "\n" +
+      "server.post('/api/auth/refresh', (req, res) => {\n" +
+      "  const { refresh_token } = req.body;\n" +
+      "  \n" +
+      "  try {\n" +
+      "    const decoded = jwt.verify(refresh_token, SECRET_KEY);\n" +
+      "    const db = router.db;\n" +
+      "    const user = db.get('users').find({ id: parseInt(decoded.sub) }).value();\n" +
+      "\n" +
+      "    if (user) {\n" +
+      "      const payload = {\n" +
+      "        sub: user.id.toString(),\n" +
+      "        username: user.username,\n" +
+      "        role: user.role,\n" +
+      "        permissions: user.permissions,\n" +
+      "        iat: Math.floor(Date.now() / 1000),\n" +
+      "        exp: Math.floor(Date.now() / 1000) + (60 * 60)\n" +
+      "      };\n" +
+      "\n" +
+      "      const accessToken = jwt.sign(payload, SECRET_KEY);\n" +
+      "\n" +
+      "      res.json({\n" +
+      "        access_token: accessToken,\n" +
+      "        token_type: 'Bearer',\n" +
+      "        expires_in: 3600\n" +
+      "      });\n" +
+      "    } else {\n" +
+      "      res.status(401).json({ error: 'Invalid refresh token' });\n" +
+      "    }\n" +
+      "  } catch (error) {\n" +
+      "    res.status(401).json({ error: 'Invalid refresh token' });\n" +
+      "  }\n" +
+      "});\n" +
+      "\n" +
+      "server.post('/api/auth/register', (req, res) => {\n" +
+      "  const { username, email, password } = req.body;\n" +
+      "  const db = router.db;\n" +
+      "  \n" +
+      "  // Check if user already exists\n" +
+      "  const existingUser = db.get('users').find({ username }).value();\n" +
+      "  if (existingUser) {\n" +
+      "    return res.status(400).json({ error: 'Username already exists' });\n" +
+      "  }\n" +
+      "\n" +
+      "  const newUser = {\n" +
+      "    id: Date.now(),\n" +
+      "    username,\n" +
+      "    email,\n" +
+      "    password,\n" +
+      "    role: 'user',\n" +
+      "    permissions: ['read:profile']\n" +
+      "  };\n" +
+      "\n" +
+      "  db.get('users').push(newUser).write();\n" +
+      "\n" +
+      "  // Generate tokens\n" +
+      "  const payload = {\n" +
+      "    sub: newUser.id.toString(),\n" +
+      "    username: newUser.username,\n" +
+      "    role: newUser.role,\n" +
+      "    permissions: newUser.permissions,\n" +
+      "    iat: Math.floor(Date.now() / 1000),\n" +
+      "    exp: Math.floor(Date.now() / 1000) + (60 * 60)\n" +
+      "  };\n" +
+      "\n" +
+      "  const accessToken = jwt.sign(payload, SECRET_KEY);\n" +
+      "  const refreshToken = jwt.sign({ sub: newUser.id }, SECRET_KEY, { expiresIn: '7d' });\n" +
+      "\n" +
+      "  res.json({\n" +
+      "    access_token: accessToken,\n" +
+      "    refresh_token: refreshToken,\n" +
+      "    token_type: 'Bearer',\n" +
+      "    expires_in: 3600,\n" +
+      "    user: {\n" +
+      "      id: newUser.id,\n" +
+      "      username: newUser.username,\n" +
+      "      email: newUser.email,\n" +
+      "      role: newUser.role\n" +
+      "    }\n" +
+      "  });\n" +
+      "});\n" +
+      "\n" +
+      "// Protected route middleware\n" +
+      "server.use('/api/protected', (req, res, next) => {\n" +
+      "  const authHeader = req.headers.authorization;\n" +
+      "  \n" +
+      "  if (!authHeader || !authHeader.startsWith('Bearer ')) {\n" +
+      "    return res.status(401).json({ error: 'No token provided' });\n" +
+      "  }\n" +
+      "\n" +
+      "  const token = authHeader.substring(7);\n" +
+      "  \n" +
+      "  try {\n" +
+      "    const decoded = jwt.verify(token, SECRET_KEY);\n" +
+      "    req.user = decoded;\n" +
+      "    next();\n" +
+      "  } catch (error) {\n" +
+      "    res.status(401).json({ error: 'Invalid token' });\n" +
+      "  }\n" +
+      "});\n" +
+      "\n" +
+      "server.use('/api', router);\n" +
+      "server.listen(3000, () => {\n" +
+      "  console.log('Mock API Server running on http://localhost:3000');\n" +
+      "});\n" +
+      "```\n\n" +
+      "**2. Angular HTTP Interceptor for Mocking:**\n" +
+      "```typescript\n" +
+      "// mock-api.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';\n" +
+      "import { Observable, of } from 'rxjs';\n" +
+      "import { delay } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class MockApiInterceptor implements HttpInterceptor {\n" +
+      "  private users = [\n" +
+      "    { id: 1, username: 'admin', password: 'admin123', email: 'admin@example.com', role: 'admin' },\n" +
+      "    { id: 2, username: 'user', password: 'user123', email: 'user@example.com', role: 'user' }\n" +
+      "  ];\n" +
+      "\n" +
+      "  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "    // Mock login endpoint\n" +
+      "    if (req.url.includes('/api/auth/login') && req.method === 'POST') {\n" +
+      "      const { username, password } = req.body;\n" +
+      "      const user = this.users.find(u => u.username === username && u.password === password);\n" +
+      "      \n" +
+      "      if (user) {\n" +
+      "        const mockToken = this.generateMockToken(user);\n" +
+      "        return of({\n" +
+      "          body: {\n" +
+      "            access_token: mockToken,\n" +
+      "            refresh_token: 'mock-refresh-token',\n" +
+      "            token_type: 'Bearer',\n" +
+      "            expires_in: 3600,\n" +
+      "            user: {\n" +
+      "              id: user.id,\n" +
+      "              username: user.username,\n" +
+      "              email: user.email,\n" +
+      "              role: user.role\n" +
+      "            }\n" +
+      "          },\n" +
+      "          status: 200,\n" +
+      "          statusText: 'OK'\n" +
+      "        } as any).pipe(delay(500));\n" +
+      "      } else {\n" +
+      "        return of({\n" +
+      "          body: { error: 'Invalid credentials' },\n" +
+      "          status: 401,\n" +
+      "          statusText: 'Unauthorized'\n" +
+      "        } as any).pipe(delay(500));\n" +
+      "      }\n" +
+      "    }\n" +
+      "\n" +
+      "    // Mock protected endpoints\n" +
+      "    if (req.url.includes('/api/protected') && req.headers.get('Authorization')) {\n" +
+      "      return of({\n" +
+      "        body: { message: 'Protected data', timestamp: new Date().toISOString() },\n" +
+      "        status: 200,\n" +
+      "        statusText: 'OK'\n" +
+      "      } as any).pipe(delay(300));\n" +
+      "    }\n" +
+      "\n" +
+      "    return next.handle(req);\n" +
+      "  }\n" +
+      "\n" +
+      "  private generateMockToken(user: any): string {\n" +
+      "    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));\n" +
+      "    const payload = btoa(JSON.stringify({\n" +
+      "      sub: user.id.toString(),\n" +
+      "      username: user.username,\n" +
+      "      role: user.role,\n" +
+      "      iat: Math.floor(Date.now() / 1000),\n" +
+      "      exp: Math.floor(Date.now() / 1000) + 3600\n" +
+      "    }));\n" +
+      "    const signature = btoa('mock-signature');\n" +
+      "    \n" +
+      "    return `${header}.${payload}.${signature}`;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. MSW (Mock Service Worker):**\n" +
+      "```typescript\n" +
+      "// mocks/handlers.ts\n" +
+      "import { rest } from 'msw';\n" +
+      "\n" +
+      "const users = [\n" +
+      "  { id: 1, username: 'admin', password: 'admin123', email: 'admin@example.com', role: 'admin' },\n" +
+      "  { id: 2, username: 'user', password: 'user123', email: 'user@example.com', role: 'user' }\n" +
+      "];\n" +
+      "\n" +
+      "export const handlers = [\n" +
+      "  // Login endpoint\n" +
+      "  rest.post('/api/auth/login', (req, res, ctx) => {\n" +
+      "    const { username, password } = req.body as any;\n" +
+      "    const user = users.find(u => u.username === username && u.password === password);\n" +
+      "    \n" +
+      "    if (user) {\n" +
+      "      const token = generateMockJWT(user);\n" +
+      "      return res(\n" +
+      "        ctx.json({\n" +
+      "          access_token: token,\n" +
+      "          refresh_token: 'mock-refresh-token',\n" +
+      "          token_type: 'Bearer',\n" +
+      "          expires_in: 3600,\n" +
+      "          user: {\n" +
+      "            id: user.id,\n" +
+      "            username: user.username,\n" +
+      "            email: user.email,\n" +
+      "            role: user.role\n" +
+      "          }\n" +
+      "        })\n" +
+      "      );\n" +
+      "    }\n" +
+      "    \n" +
+      "    return res(\n" +
+      "      ctx.status(401),\n" +
+      "      ctx.json({ error: 'Invalid credentials' })\n" +
+      "    );\n" +
+      "  }),\n" +
+      "\n" +
+      "  // Protected endpoint\n" +
+      "  rest.get('/api/protected/data', (req, res, ctx) => {\n" +
+      "    const authHeader = req.headers.get('Authorization');\n" +
+      "    \n" +
+      "    if (!authHeader || !authHeader.startsWith('Bearer ')) {\n" +
+      "      return res(\n" +
+      "        ctx.status(401),\n" +
+      "        ctx.json({ error: 'No token provided' })\n" +
+      "      );\n" +
+      "    }\n" +
+      "    \n" +
+      "    return res(\n" +
+      "      ctx.json({\n" +
+      "        message: 'Protected data',\n" +
+      "        timestamp: new Date().toISOString(),\n" +
+      "        data: ['item1', 'item2', 'item3']\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }),\n" +
+      "\n" +
+      "  // Refresh token endpoint\n" +
+      "  rest.post('/api/auth/refresh', (req, res, ctx) => {\n" +
+      "    const { refresh_token } = req.body as any;\n" +
+      "    \n" +
+      "    if (refresh_token === 'mock-refresh-token') {\n" +
+      "      const newToken = generateMockJWT({ id: 1, username: 'admin', role: 'admin' });\n" +
+      "      return res(\n" +
+      "        ctx.json({\n" +
+      "          access_token: newToken,\n" +
+      "          token_type: 'Bearer',\n" +
+      "          expires_in: 3600\n" +
+      "        })\n" +
+      "      );\n" +
+      "    }\n" +
+      "    \n" +
+      "    return res(\n" +
+      "      ctx.status(401),\n" +
+      "      ctx.json({ error: 'Invalid refresh token' })\n" +
+      "    );\n" +
+      "  })\n" +
+      "];\n" +
+      "\n" +
+      "function generateMockJWT(user: any): string {\n" +
+      "  const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));\n" +
+      "  const payload = btoa(JSON.stringify({\n" +
+      "    sub: user.id.toString(),\n" +
+      "    username: user.username,\n" +
+      "    role: user.role,\n" +
+      "    iat: Math.floor(Date.now() / 1000),\n" +
+      "    exp: Math.floor(Date.now() / 1000) + 3600\n" +
+      "  }));\n" +
+      "  const signature = btoa('mock-signature');\n" +
+      "  \n" +
+      "  return `${header}.${payload}.${signature}`;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. Angular Service with Mock Data:**\n" +
+      "```typescript\n" +
+      "// mock-auth.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { Observable, of, throwError } from 'rxjs';\n" +
+      "import { delay } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class MockAuthService {\n" +
+      "  private users = [\n" +
+      "    { id: 1, username: 'admin', password: 'admin123', email: 'admin@example.com', role: 'admin' },\n" +
+      "    { id: 2, username: 'user', password: 'user123', email: 'user@example.com', role: 'user' }\n" +
+      "  ];\n" +
+      "\n" +
+      "  login(credentials: { username: string; password: string }): Observable<any> {\n" +
+      "    const user = this.users.find(u => \n" +
+      "      u.username === credentials.username && \n" +
+      "      u.password === credentials.password\n" +
+      "    );\n" +
+      "\n" +
+      "    if (user) {\n" +
+      "      const token = this.generateMockToken(user);\n" +
+      "      return of({\n" +
+      "        access_token: token,\n" +
+      "        refresh_token: 'mock-refresh-token',\n" +
+      "        token_type: 'Bearer',\n" +
+      "        expires_in: 3600,\n" +
+      "        user: {\n" +
+      "          id: user.id,\n" +
+      "          username: user.username,\n" +
+      "          email: user.email,\n" +
+      "          role: user.role\n" +
+      "        }\n" +
+      "      }).pipe(delay(1000)); // Simulate network delay\n" +
+      "    }\n" +
+      "\n" +
+      "    return throwError({ error: 'Invalid credentials' });\n" +
+      "  }\n" +
+      "\n" +
+      "  refreshToken(refreshToken: string): Observable<any> {\n" +
+      "    if (refreshToken === 'mock-refresh-token') {\n" +
+      "      const user = this.users[0]; // Mock user\n" +
+      "      const token = this.generateMockToken(user);\n" +
+      "      return of({\n" +
+      "        access_token: token,\n" +
+      "        token_type: 'Bearer',\n" +
+      "        expires_in: 3600\n" +
+      "      }).pipe(delay(500));\n" +
+      "    }\n" +
+      "\n" +
+      "    return throwError({ error: 'Invalid refresh token' });\n" +
+      "  }\n" +
+      "\n" +
+      "  private generateMockToken(user: any): string {\n" +
+      "    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));\n" +
+      "    const payload = btoa(JSON.stringify({\n" +
+      "      sub: user.id.toString(),\n" +
+      "      username: user.username,\n" +
+      "      role: user.role,\n" +
+      "      iat: Math.floor(Date.now() / 1000),\n" +
+      "      exp: Math.floor(Date.now() / 1000) + 3600\n" +
+      "    }));\n" +
+      "    const signature = btoa('mock-signature');\n" +
+      "    \n" +
+      "    return `${header}.${payload}.${signature}`;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. Environment-based Mocking:**\n" +
+      "```typescript\n" +
+      "// environment.ts\n" +
+      "export const environment = {\n" +
+      "  production: false,\n" +
+      "  apiUrl: 'http://localhost:3000/api',\n" +
+      "  useMockApi: true\n" +
+      "};\n" +
+      "\n" +
+      "// auth.service.ts\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class AuthService {\n" +
+      "  constructor(\n" +
+      "    private http: HttpClient,\n" +
+      "    private mockAuthService: MockAuthService\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  login(credentials: LoginCredentials): Observable<AuthResponse> {\n" +
+      "    if (environment.useMockApi) {\n" +
+      "      return this.mockAuthService.login(credentials);\n" +
+      "    }\n" +
+      "    \n" +
+      "    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, credentials);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits of Mocking:**\n" +
+      "- **Development**: Work without backend dependencies\n" +
+      "- **Testing**: Consistent test data and scenarios\n" +
+      "- **Demo**: Show functionality without real API\n" +
+      "- **Offline**: Continue development without network\n" +
+      "- **Performance**: Faster response times\n" +
+      "- **Reliability**: No external API failures\n" +
+      "- **Flexibility**: Easy to modify responses\n" +
+      "- **Security**: No real credentials needed\n\n" +
+      "**Best Practices:**\n" +
+      "- Use realistic data structures\n" +
+      "- Simulate network delays\n" +
+      "- Handle error scenarios\n" +
+      "- Make tokens expire realistically\n" +
+      "- Support different user roles\n" +
+      "- Include refresh token logic\n" +
+      "- Validate token format\n" +
+      "- Test edge cases",
+    category: "Development",
+    difficulty: "intermediate",
+    tags: ["mocking", "API", "JWT", "testing", "development", "JSON-server", "MSW"],
+  },
+  {
+    id: 197,
+    question: "How to implement the Authentication with JWT in Angular?",
+    answer:
+      "Implementing JWT authentication in Angular involves creating a comprehensive authentication system with services, guards, interceptors, and proper token management. Here's a complete implementation:\n\n" +
+      "**1. Authentication Service:**\n" +
+      "```typescript\n" +
+      "// auth.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpClient, HttpHeaders } from '@angular/common/http';\n" +
+      "import { BehaviorSubject, Observable, throwError } from 'rxjs';\n" +
+      "import { tap, catchError, map } from 'rxjs/operators';\n" +
+      "import { Router } from '@angular/router';\n" +
+      "\n" +
+      "export interface User {\n" +
+      "  id: string;\n" +
+      "  username: string;\n" +
+      "  email: string;\n" +
+      "  role: string;\n" +
+      "  permissions: string[];\n" +
+      "}\n" +
+      "\n" +
+      "export interface LoginCredentials {\n" +
+      "  username: string;\n" +
+      "  password: string;\n" +
+      "}\n" +
+      "\n" +
+      "export interface AuthResponse {\n" +
+      "  access_token: string;\n" +
+      "  refresh_token: string;\n" +
+      "  token_type: string;\n" +
+      "  expires_in: number;\n" +
+      "  user: User;\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class AuthService {\n" +
+      "  private readonly API_URL = 'http://localhost:3000/api';\n" +
+      "  private readonly TOKEN_KEY = 'access_token';\n" +
+      "  private readonly REFRESH_TOKEN_KEY = 'refresh_token';\n" +
+      "  private readonly USER_KEY = 'user_data';\n" +
+      "\n" +
+      "  private currentUserSubject = new BehaviorSubject<User | null>(null);\n" +
+      "  public currentUser$ = this.currentUserSubject.asObservable();\n" +
+      "\n" +
+      "  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);\n" +
+      "  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private http: HttpClient,\n" +
+      "    private router: Router\n" +
+      "  ) {\n" +
+      "    this.initializeAuth();\n" +
+      "  }\n" +
+      "\n" +
+      "  // Login\n" +
+      "  login(credentials: LoginCredentials): Observable<AuthResponse> {\n" +
+      "    return this.http.post<AuthResponse>(`${this.API_URL}/auth/login`, credentials)\n" +
+      "      .pipe(\n" +
+      "        tap(response => {\n" +
+      "          this.setTokens(response);\n" +
+      "          this.setUser(response.user);\n" +
+      "          this.isAuthenticatedSubject.next(true);\n" +
+      "        }),\n" +
+      "        catchError(error => {\n" +
+      "          console.error('Login failed:', error);\n" +
+      "          return throwError(error);\n" +
+      "        })\n" +
+      "      );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Register\n" +
+      "  register(userData: { username: string; email: string; password: string }): Observable<AuthResponse> {\n" +
+      "    return this.http.post<AuthResponse>(`${this.API_URL}/auth/register`, userData)\n" +
+      "      .pipe(\n" +
+      "        tap(response => {\n" +
+      "          this.setTokens(response);\n" +
+      "          this.setUser(response.user);\n" +
+      "          this.isAuthenticatedSubject.next(true);\n" +
+      "        }),\n" +
+      "        catchError(error => {\n" +
+      "          console.error('Registration failed:', error);\n" +
+      "          return throwError(error);\n" +
+      "        })\n" +
+      "      );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Logout\n" +
+      "  logout(): void {\n" +
+      "    this.removeTokens();\n" +
+      "    this.removeUser();\n" +
+      "    this.isAuthenticatedSubject.next(false);\n" +
+      "    this.currentUserSubject.next(null);\n" +
+      "    this.router.navigate(['/login']);\n" +
+      "  }\n" +
+      "\n" +
+      "  // Refresh Token\n" +
+      "  refreshToken(): Observable<AuthResponse> {\n" +
+      "    const refreshToken = this.getRefreshToken();\n" +
+      "    if (!refreshToken) {\n" +
+      "      this.logout();\n" +
+      "      return throwError('No refresh token available');\n" +
+      "    }\n" +
+      "\n" +
+      "    return this.http.post<AuthResponse>(`${this.API_URL}/auth/refresh`, {\n" +
+      "      refresh_token: refreshToken\n" +
+      "    }).pipe(\n" +
+      "      tap(response => {\n" +
+      "        this.setTokens(response);\n" +
+      "      }),\n" +
+      "      catchError(error => {\n" +
+      "        this.logout();\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  // Token Management\n" +
+      "  getToken(): string | null {\n" +
+      "    return localStorage.getItem(this.TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  getRefreshToken(): string | null {\n" +
+      "    return localStorage.getItem(this.REFRESH_TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  isTokenValid(): boolean {\n" +
+      "    const token = this.getToken();\n" +
+      "    if (!token) return false;\n" +
+      "\n" +
+      "    try {\n" +
+      "      const payload = this.decodeToken(token);\n" +
+      "      const currentTime = Math.floor(Date.now() / 1000);\n" +
+      "      return payload.exp > currentTime;\n" +
+      "    } catch {\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  isTokenExpired(): boolean {\n" +
+      "    return !this.isTokenValid();\n" +
+      "  }\n" +
+      "\n" +
+      "  // User Management\n" +
+      "  getCurrentUser(): User | null {\n" +
+      "    return this.currentUserSubject.value;\n" +
+      "  }\n" +
+      "\n" +
+      "  hasRole(role: string): boolean {\n" +
+      "    const user = this.getCurrentUser();\n" +
+      "    return user ? user.role === role : false;\n" +
+      "  }\n" +
+      "\n" +
+      "  hasPermission(permission: string): boolean {\n" +
+      "    const user = this.getCurrentUser();\n" +
+      "    return user ? user.permissions.includes(permission) : false;\n" +
+      "  }\n" +
+      "\n" +
+      "  // Private Methods\n" +
+      "  private setTokens(response: AuthResponse): void {\n" +
+      "    localStorage.setItem(this.TOKEN_KEY, response.access_token);\n" +
+      "    localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refresh_token);\n" +
+      "  }\n" +
+      "\n" +
+      "  private setUser(user: User): void {\n" +
+      "    localStorage.setItem(this.USER_KEY, JSON.stringify(user));\n" +
+      "    this.currentUserSubject.next(user);\n" +
+      "  }\n" +
+      "\n" +
+      "  private removeTokens(): void {\n" +
+      "    localStorage.removeItem(this.TOKEN_KEY);\n" +
+      "    localStorage.removeItem(this.REFRESH_TOKEN_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  private removeUser(): void {\n" +
+      "    localStorage.removeItem(this.USER_KEY);\n" +
+      "  }\n" +
+      "\n" +
+      "  private initializeAuth(): void {\n" +
+      "    const token = this.getToken();\n" +
+      "    const userData = localStorage.getItem(this.USER_KEY);\n" +
+      "    \n" +
+      "    if (token && this.isTokenValid() && userData) {\n" +
+      "      try {\n" +
+      "        const user = JSON.parse(userData);\n" +
+      "        this.currentUserSubject.next(user);\n" +
+      "        this.isAuthenticatedSubject.next(true);\n" +
+      "      } catch {\n" +
+      "        this.logout();\n" +
+      "      }\n" +
+      "    } else {\n" +
+      "      this.logout();\n" +
+      "    }\n" +
+      "  }\n" +
+      "\n" +
+      "  private decodeToken(token: string): any {\n" +
+      "    try {\n" +
+      "      const base64Url = token.split('.')[1];\n" +
+      "      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');\n" +
+      "      const jsonPayload = decodeURIComponent(\n" +
+      "        atob(base64)\n" +
+      "          .split('')\n" +
+      "          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))\n" +
+      "          .join('')\n" +
+      "      );\n" +
+      "      return JSON.parse(jsonPayload);\n" +
+      "    } catch (error) {\n" +
+      "      throw new Error('Invalid token format');\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. HTTP Interceptor:**\n" +
+      "```typescript\n" +
+      "// auth.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';\n" +
+      "import { Observable, throwError, BehaviorSubject } from 'rxjs';\n" +
+      "import { catchError, filter, take, switchMap } from 'rxjs/operators';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class AuthInterceptor implements HttpInterceptor {\n" +
+      "  private isRefreshing = false;\n" +
+      "  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);\n" +
+      "\n" +
+      "  constructor(private authService: AuthService) {}\n" +
+      "\n" +
+      "  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "    // Add token to request if available\n" +
+      "    if (this.authService.isTokenValid()) {\n" +
+      "      request = this.addTokenToRequest(request);\n" +
+      "    }\n" +
+      "\n" +
+      "    return next.handle(request).pipe(\n" +
+      "      catchError(error => {\n" +
+      "        if (error instanceof HttpErrorResponse && error.status === 401) {\n" +
+      "          return this.handle401Error(request, next);\n" +
+      "        }\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  private addTokenToRequest(request: HttpRequest<any>): HttpRequest<any> {\n" +
+      "    const token = this.authService.getToken();\n" +
+      "    if (token) {\n" +
+      "      return request.clone({\n" +
+      "        setHeaders: {\n" +
+      "          Authorization: `Bearer ${token}`\n" +
+      "        }\n" +
+      "      });\n" +
+      "    }\n" +
+      "    return request;\n" +
+      "  }\n" +
+      "\n" +
+      "  private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n" +
+      "    if (!this.isRefreshing) {\n" +
+      "      this.isRefreshing = true;\n" +
+      "      this.refreshTokenSubject.next(null);\n" +
+      "\n" +
+      "      return this.authService.refreshToken().pipe(\n" +
+      "        switchMap((response: any) => {\n" +
+      "          this.isRefreshing = false;\n" +
+      "          this.refreshTokenSubject.next(response.access_token);\n" +
+      "          return next.handle(this.addTokenToRequest(request));\n" +
+      "        }),\n" +
+      "        catchError((error) => {\n" +
+      "          this.isRefreshing = false;\n" +
+      "          this.authService.logout();\n" +
+      "          return throwError(error);\n" +
+      "        })\n" +
+      "      );\n" +
+      "    }\n" +
+      "\n" +
+      "    return this.refreshTokenSubject.pipe(\n" +
+      "      filter(token => token !== null),\n" +
+      "      take(1),\n" +
+      "      switchMap(() => next.handle(this.addTokenToRequest(request)))\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Auth Guard:**\n" +
+      "```typescript\n" +
+      "// auth.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';\n" +
+      "import { Observable } from 'rxjs';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class AuthGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(\n" +
+      "    route: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): boolean {\n" +
+      "    if (this.authService.isTokenValid()) {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "\n" +
+      "    // Token is invalid or expired\n" +
+      "    this.authService.logout();\n" +
+      "    this.router.navigate(['/login'], {\n" +
+      "      queryParams: { returnUrl: state.url }\n" +
+      "    });\n" +
+      "    return false;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. Role Guard:**\n" +
+      "```typescript\n" +
+      "// role.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class RoleGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(\n" +
+      "    route: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): boolean {\n" +
+      "    const expectedRole = route.data['expectedRole'];\n" +
+      "    const user = this.authService.getCurrentUser();\n" +
+      "\n" +
+      "    if (!user || !this.authService.hasRole(expectedRole)) {\n" +
+      "      this.router.navigate(['/unauthorized']);\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "\n" +
+      "    return true;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. Login Component:**\n" +
+      "```typescript\n" +
+      "// login.component.ts\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, Validators } from '@angular/forms';\n" +
+      "import { Router, ActivatedRoute } from '@angular/router';\n" +
+      "import { AuthService, LoginCredentials } from './auth.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-login',\n" +
+      "  template: `\n" +
+      '    <div class="login-container">\n' +
+      '      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">\n' +
+      "        <h2>Login</h2>\n" +
+      "        \n" +
+      '        <div class="form-group">\n' +
+      '          <label for="username">Username</label>\n' +
+      "          <input \n" +
+      '            id="username" \n' +
+      '            type="text" \n' +
+      '            formControlName="username"\n' +
+      "            [class.error]=\"loginForm.get('username')?.invalid && loginForm.get('username')?.touched\"\n" +
+      "          >\n" +
+      "          <div *ngIf=\"loginForm.get('username')?.invalid && loginForm.get('username')?.touched\" class=\"error-message\">\n" +
+      "            Username is required\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "\n" +
+      '        <div class="form-group">\n' +
+      '          <label for="password">Password</label>\n' +
+      "          <input \n" +
+      '            id="password" \n' +
+      '            type="password" \n' +
+      '            formControlName="password"\n' +
+      "            [class.error]=\"loginForm.get('password')?.invalid && loginForm.get('password')?.touched\"\n" +
+      "          >\n" +
+      "          <div *ngIf=\"loginForm.get('password')?.invalid && loginForm.get('password')?.touched\" class=\"error-message\">\n" +
+      "            Password is required\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "\n" +
+      '        <button type="submit" [disabled]="loginForm.invalid || isLoading">\n' +
+      "          {{ isLoading ? 'Logging in...' : 'Login' }}\n" +
+      "        </button>\n" +
+      "\n" +
+      '        <div *ngIf="errorMessage" class="error-message">\n' +
+      "          {{ errorMessage }}\n" +
+      "        </div>\n" +
+      "      </form>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styleUrls: ['./login.component.css']\n" +
+      "})\n" +
+      "export class LoginComponent implements OnInit {\n" +
+      "  loginForm: FormGroup;\n" +
+      "  isLoading = false;\n" +
+      "  errorMessage = '';\n" +
+      "  returnUrl = '/dashboard';\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private formBuilder: FormBuilder,\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router,\n" +
+      "    private route: ActivatedRoute\n" +
+      "  ) {\n" +
+      "    this.loginForm = this.formBuilder.group({\n" +
+      "      username: ['', Validators.required],\n" +
+      "      password: ['', Validators.required]\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    // Get return URL from route parameters or default to '/dashboard'\n" +
+      "    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';\n" +
+      "  }\n" +
+      "\n" +
+      "  onSubmit(): void {\n" +
+      "    if (this.loginForm.valid) {\n" +
+      "      this.isLoading = true;\n" +
+      "      this.errorMessage = '';\n" +
+      "\n" +
+      "      const credentials: LoginCredentials = this.loginForm.value;\n" +
+      "\n" +
+      "      this.authService.login(credentials).subscribe({\n" +
+      "        next: (response) => {\n" +
+      "          this.isLoading = false;\n" +
+      "          this.router.navigate([this.returnUrl]);\n" +
+      "        },\n" +
+      "        error: (error) => {\n" +
+      "          this.isLoading = false;\n" +
+      "          this.errorMessage = error.error?.message || 'Login failed';\n" +
+      "        }\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**6. App Module Configuration:**\n" +
+      "```typescript\n" +
+      "// app.module.ts\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { BrowserModule } from '@angular/platform-browser';\n" +
+      "import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';\n" +
+      "import { ReactiveFormsModule } from '@angular/forms';\n" +
+      "import { RouterModule, Routes } from '@angular/router';\n" +
+      "\n" +
+      "import { AppComponent } from './app.component';\n" +
+      "import { LoginComponent } from './login/login.component';\n" +
+      "import { DashboardComponent } from './dashboard/dashboard.component';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "import { AuthInterceptor } from './auth.interceptor';\n" +
+      "import { AuthGuard } from './auth.guard';\n" +
+      "import { RoleGuard } from './role.guard';\n" +
+      "\n" +
+      "const routes: Routes = [\n" +
+      "  { path: 'login', component: LoginComponent },\n" +
+      "  { \n" +
+      "    path: 'dashboard', \n" +
+      "    component: DashboardComponent, \n" +
+      "    canActivate: [AuthGuard] \n" +
+      "  },\n" +
+      "  { \n" +
+      "    path: 'admin', \n" +
+      "    component: AdminComponent, \n" +
+      "    canActivate: [AuthGuard, RoleGuard],\n" +
+      "    data: { expectedRole: 'admin' }\n" +
+      "  },\n" +
+      "  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\n" +
+      "  { path: '**', redirectTo: '/dashboard' }\n" +
+      "];\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  declarations: [\n" +
+      "    AppComponent,\n" +
+      "    LoginComponent,\n" +
+      "    DashboardComponent\n" +
+      "  ],\n" +
+      "  imports: [\n" +
+      "    BrowserModule,\n" +
+      "    HttpClientModule,\n" +
+      "    ReactiveFormsModule,\n" +
+      "    RouterModule.forRoot(routes)\n" +
+      "  ],\n" +
+      "  providers: [\n" +
+      "    AuthService,\n" +
+      "    {\n" +
+      "      provide: HTTP_INTERCEPTORS,\n" +
+      "      useClass: AuthInterceptor,\n" +
+      "      multi: true\n" +
+      "    }\n" +
+      "  ],\n" +
+      "  bootstrap: [AppComponent]\n" +
+      "})\n" +
+      "export class AppModule { }\n" +
+      "```\n\n" +
+      "**7. Usage in Components:**\n" +
+      "```typescript\n" +
+      "// dashboard.component.ts\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { AuthService, User } from '../auth.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-dashboard',\n" +
+      "  template: `\n" +
+      '    <div class="dashboard">\n' +
+      "      <header>\n" +
+      "        <h1>Welcome, {{ currentUser?.username }}!</h1>\n" +
+      '        <button (click)="logout()">Logout</button>\n' +
+      "      </header>\n" +
+      "      \n" +
+      "      <nav>\n" +
+      '        <a routerLink="/profile">Profile</a>\n' +
+      '        <a *ngIf="hasAdminRole" routerLink="/admin">Admin Panel</a>\n' +
+      "      </nav>\n" +
+      "      \n" +
+      "      <main>\n" +
+      "        <p>Your role: {{ currentUser?.role }}</p>\n" +
+      "        <p>Permissions: {{ currentUser?.permissions?.join(', ') }}</p>\n" +
+      "      </main>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DashboardComponent implements OnInit {\n" +
+      "  currentUser: User | null = null;\n" +
+      "  hasAdminRole = false;\n" +
+      "\n" +
+      "  constructor(private authService: AuthService) {}\n" +
+      "\n" +
+      "  ngOnInit(): void {\n" +
+      "    this.currentUser = this.authService.getCurrentUser();\n" +
+      "    this.hasAdminRole = this.authService.hasRole('admin');\n" +
+      "  }\n" +
+      "\n" +
+      "  logout(): void {\n" +
+      "    this.authService.logout();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Features:**\n" +
+      "- **Automatic Token Management**: Tokens are automatically added to requests\n" +
+      "- **Token Refresh**: Automatic token refresh on 401 errors\n" +
+      "- **Route Protection**: Guards protect routes based on authentication\n" +
+      "- **Role-Based Access**: Role guards for admin-only routes\n" +
+      "- **Persistent Login**: User stays logged in across browser sessions\n" +
+      "- **Error Handling**: Comprehensive error handling for auth failures\n" +
+      "- **Security**: Secure token storage and validation\n" +
+      "- **User Management**: Current user state management\n" +
+      "- **Permission System**: Fine-grained permission checking\n" +
+      "- **Logout Handling**: Clean logout with token removal",
+    category: "Security",
+    difficulty: "intermediate",
+    tags: ["JWT", "authentication", "implementation", "service", "interceptor", "guard", "routing"],
+  },
+  {
+    id: 198,
+    question: "What is Auth Guard?",
+    answer:
+      "Auth Guard is a service in Angular that implements the `CanActivate` interface to control access to routes based on authentication status. It acts as a security layer that prevents unauthorized users from accessing protected routes.\n\n" +
+      "**Auth Guard Implementation:**\n" +
+      "```typescript\n" +
+      "// auth.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';\n" +
+      "import { Observable } from 'rxjs';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class AuthGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(\n" +
+      "    route: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {\n" +
+      "    \n" +
+      "    // Check if user is authenticated\n" +
+      "    if (this.authService.isAuthenticated()) {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "\n" +
+      "    // User is not authenticated, redirect to login\n" +
+      "    this.router.navigate(['/login'], {\n" +
+      "      queryParams: { returnUrl: state.url }\n" +
+      "    });\n" +
+      "    return false;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Auth Guard with Role-Based Access:**\n" +
+      "```typescript\n" +
+      "// role-auth.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class RoleAuthGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(\n" +
+      "    route: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): boolean {\n" +
+      "    \n" +
+      "    // First check if user is authenticated\n" +
+      "    if (!this.authService.isAuthenticated()) {\n" +
+      "      this.router.navigate(['/login'], {\n" +
+      "        queryParams: { returnUrl: state.url }\n" +
+      "      });\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "\n" +
+      "    // Get required roles from route data\n" +
+      "    const requiredRoles = route.data['roles'] as string[];\n" +
+      "    const requiredPermissions = route.data['permissions'] as string[];\n" +
+      "    \n" +
+      "    if (requiredRoles && requiredRoles.length > 0) {\n" +
+      "      const hasRequiredRole = requiredRoles.some(role => \n" +
+      "        this.authService.hasRole(role)\n" +
+      "      );\n" +
+      "      \n" +
+      "      if (!hasRequiredRole) {\n" +
+      "        this.router.navigate(['/unauthorized']);\n" +
+      "        return false;\n" +
+      "      }\n" +
+      "    }\n" +
+      "\n" +
+      "    if (requiredPermissions && requiredPermissions.length > 0) {\n" +
+      "      const hasRequiredPermission = requiredPermissions.some(permission => \n" +
+      "        this.authService.hasPermission(permission)\n" +
+      "      );\n" +
+      "      \n" +
+      "      if (!hasRequiredPermission) {\n" +
+      "        this.router.navigate(['/unauthorized']);\n" +
+      "        return false;\n" +
+      "      }\n" +
+      "    }\n" +
+      "\n" +
+      "    return true;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Async Auth Guard for Token Validation:**\n" +
+      "```typescript\n" +
+      "// async-auth.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';\n" +
+      "import { Observable, of } from 'rxjs';\n" +
+      "import { map, catchError } from 'rxjs/operators';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class AsyncAuthGuard implements CanActivate {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivate(\n" +
+      "    route: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): Observable<boolean> {\n" +
+      "    \n" +
+      "    // If token is valid, allow access\n" +
+      "    if (this.authService.isTokenValid()) {\n" +
+      "      return of(true);\n" +
+      "    }\n" +
+      "\n" +
+      "    // If token is expired, try to refresh\n" +
+      "    if (this.authService.getRefreshToken()) {\n" +
+      "      return this.authService.refreshToken().pipe(\n" +
+      "        map(() => true),\n" +
+      "        catchError(() => {\n" +
+      "          this.router.navigate(['/login'], {\n" +
+      "            queryParams: { returnUrl: state.url }\n" +
+      "          });\n" +
+      "          return of(false);\n" +
+      "        })\n" +
+      "      );\n" +
+      "    }\n" +
+      "\n" +
+      "    // No valid token or refresh token, redirect to login\n" +
+      "    this.router.navigate(['/login'], {\n" +
+      "      queryParams: { returnUrl: state.url }\n" +
+      "    });\n" +
+      "    return of(false);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Route Configuration with Guards:**\n" +
+      "```typescript\n" +
+      "// app-routing.module.ts\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { RouterModule, Routes } from '@angular/router';\n" +
+      "import { AuthGuard } from './guards/auth.guard';\n" +
+      "import { RoleAuthGuard } from './guards/role-auth.guard';\n" +
+      "import { AsyncAuthGuard } from './guards/async-auth.guard';\n" +
+      "\n" +
+      "const routes: Routes = [\n" +
+      "  // Public routes\n" +
+      "  { path: 'login', component: LoginComponent },\n" +
+      "  { path: 'register', component: RegisterComponent },\n" +
+      "  { path: 'forgot-password', component: ForgotPasswordComponent },\n" +
+      "  \n" +
+      "  // Protected routes\n" +
+      "  { \n" +
+      "    path: 'dashboard', \n" +
+      "    component: DashboardComponent, \n" +
+      "    canActivate: [AuthGuard] \n" +
+      "  },\n" +
+      "  \n" +
+      "  // Admin routes\n" +
+      "  { \n" +
+      "    path: 'admin', \n" +
+      "    component: AdminComponent, \n" +
+      "    canActivate: [RoleAuthGuard],\n" +
+      "    data: { roles: ['admin'] }\n" +
+      "  },\n" +
+      "  \n" +
+      "  // User management routes\n" +
+      "  { \n" +
+      "    path: 'users', \n" +
+      "    component: UserManagementComponent, \n" +
+      "    canActivate: [RoleAuthGuard],\n" +
+      "    data: { \n" +
+      "      roles: ['admin', 'moderator'],\n" +
+      "      permissions: ['read:users', 'write:users']\n" +
+      "    }\n" +
+      "  },\n" +
+      "  \n" +
+      "  // Profile routes\n" +
+      "  { \n" +
+      "    path: 'profile', \n" +
+      "    component: ProfileComponent, \n" +
+      "    canActivate: [AsyncAuthGuard]\n" +
+      "  },\n" +
+      "  \n" +
+      "  // Default routes\n" +
+      "  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\n" +
+      "  { path: '**', redirectTo: '/dashboard' }\n" +
+      "];\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  imports: [RouterModule.forRoot(routes)],\n" +
+      "  exports: [RouterModule]\n" +
+      "})\n" +
+      "export class AppRoutingModule { }\n" +
+      "```\n\n" +
+      "**Child Route Guards:**\n" +
+      "```typescript\n" +
+      "// child-routes.guard.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class ChildRoutesGuard implements CanActivateChild {\n" +
+      "  constructor(\n" +
+      "    private authService: AuthService,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  canActivateChild(\n" +
+      "    childRoute: ActivatedRouteSnapshot,\n" +
+      "    state: RouterStateSnapshot\n" +
+      "  ): boolean {\n" +
+      "    \n" +
+      "    // Check if user can access child routes\n" +
+      "    if (!this.authService.isAuthenticated()) {\n" +
+      "      this.router.navigate(['/login']);\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "\n" +
+      "    // Additional child-specific checks\n" +
+      "    const childRoles = childRoute.data['childRoles'] as string[];\n" +
+      "    if (childRoles && childRoles.length > 0) {\n" +
+      "      const hasChildRole = childRoles.some(role => \n" +
+      "        this.authService.hasRole(role)\n" +
+      "      );\n" +
+      "      \n" +
+      "      if (!hasChildRole) {\n" +
+      "        this.router.navigate(['/unauthorized']);\n" +
+      "        return false;\n" +
+      "      }\n" +
+      "    }\n" +
+      "\n" +
+      "    return true;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Guard Testing:**\n" +
+      "```typescript\n" +
+      "// auth.guard.spec.ts\n" +
+      "import { TestBed } from '@angular/core/testing';\n" +
+      "import { Router } from '@angular/router';\n" +
+      "import { AuthGuard } from './auth.guard';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "describe('AuthGuard', () => {\n" +
+      "  let guard: AuthGuard;\n" +
+      "  let authService: jasmine.SpyObj<AuthService>;\n" +
+      "  let router: jasmine.SpyObj<Router>;\n" +
+      "\n" +
+      "  beforeEach(() => {\n" +
+      "    const authServiceSpy = jasmine.createSpyObj('AuthService', ['isAuthenticated']);\n" +
+      "    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);\n" +
+      "\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      providers: [\n" +
+      "        AuthGuard,\n" +
+      "        { provide: AuthService, useValue: authServiceSpy },\n" +
+      "        { provide: Router, useValue: routerSpy }\n" +
+      "      ]\n" +
+      "    });\n" +
+      "\n" +
+      "    guard = TestBed.inject(AuthGuard);\n" +
+      "    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;\n" +
+      "    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;\n" +
+      "  });\n" +
+      "\n" +
+      "  it('should allow access when user is authenticated', () => {\n" +
+      "    authService.isAuthenticated.and.returnValue(true);\n" +
+      "    \n" +
+      "    const result = guard.canActivate(\n" +
+      "      {} as ActivatedRouteSnapshot,\n" +
+      "      {} as RouterStateSnapshot\n" +
+      "    );\n" +
+      "    \n" +
+      "    expect(result).toBe(true);\n" +
+      "  });\n" +
+      "\n" +
+      "  it('should redirect to login when user is not authenticated', () => {\n" +
+      "    authService.isAuthenticated.and.returnValue(false);\n" +
+      "    \n" +
+      "    const result = guard.canActivate(\n" +
+      "      {} as ActivatedRouteSnapshot,\n" +
+      "      { url: '/protected' } as RouterStateSnapshot\n" +
+      "    );\n" +
+      "    \n" +
+      "    expect(result).toBe(false);\n" +
+      "    expect(router.navigate).toHaveBeenCalledWith(['/login'], {\n" +
+      "      queryParams: { returnUrl: '/protected' }\n" +
+      "    });\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Key Features of Auth Guards:**\n" +
+      "- **Route Protection**: Prevent unauthorized access to routes\n" +
+      "- **Authentication Check**: Verify user authentication status\n" +
+      "- **Role-Based Access**: Control access based on user roles\n" +
+      "- **Permission-Based Access**: Fine-grained permission checking\n" +
+      "- **Automatic Redirects**: Redirect unauthorized users to login\n" +
+      "- **Return URL**: Remember where user was trying to go\n" +
+      "- **Async Support**: Handle asynchronous authentication checks\n" +
+      "- **Child Route Protection**: Protect nested routes\n" +
+      "- **Testing Support**: Easy to unit test guards\n" +
+      "- **Flexible Configuration**: Configurable through route data\n\n" +
+      "**Best Practices:**\n" +
+      "- Use guards for all protected routes\n" +
+      "- Implement role-based guards for admin areas\n" +
+      "- Test guards thoroughly\n" +
+      "- Handle edge cases (expired tokens, network errors)\n" +
+      "- Provide clear error messages\n" +
+      "- Use return URLs for better UX\n" +
+      "- Combine multiple guards when needed\n" +
+      "- Keep guards simple and focused",
+    category: "Security",
+    difficulty: "intermediate",
+    tags: ["auth-guard", "routing", "security", "canActivate", "authentication", "authorization"],
+  },
+  {
+    id: 199,
+    question: "What is HTTP Interceptor?",
+    answer:
+      "HTTP Interceptor is a service in Angular that implements the `HttpInterceptor` interface to intercept and modify HTTP requests and responses. It provides a centralized way to handle common concerns like authentication, error handling, logging, and request/response transformation.\n\n" +
+      "**Basic HTTP Interceptor:**\n" +
+      "```typescript\n" +
+      "// http.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';\n" +
+      "import { Observable } from 'rxjs';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class HttpInterceptor implements HttpInterceptor {\n" +
+      "  constructor() {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    // Modify request before sending\n" +
+      "    const modifiedRequest = request.clone({\n" +
+      "      setHeaders: {\n" +
+      "        'Content-Type': 'application/json',\n" +
+      "        'Accept': 'application/json'\n" +
+      "      }\n" +
+      "    });\n" +
+      "\n" +
+      "    // Continue with the modified request\n" +
+      "    return next.handle(modifiedRequest);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Authentication Interceptor:**\n" +
+      "```typescript\n" +
+      "// auth.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';\n" +
+      "import { Observable, throwError, BehaviorSubject } from 'rxjs';\n" +
+      "import { catchError, filter, take, switchMap } from 'rxjs/operators';\n" +
+      "import { AuthService } from './auth.service';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class AuthInterceptor implements HttpInterceptor {\n" +
+      "  private isRefreshing = false;\n" +
+      "  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);\n" +
+      "\n" +
+      "  constructor(private authService: AuthService) {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    // Add authentication token to request\n" +
+      "    if (this.authService.isTokenValid()) {\n" +
+      "      request = this.addTokenToRequest(request);\n" +
+      "    }\n" +
+      "\n" +
+      "    return next.handle(request).pipe(\n" +
+      "      catchError(error => {\n" +
+      "        if (error instanceof HttpErrorResponse && error.status === 401) {\n" +
+      "          return this.handle401Error(request, next);\n" +
+      "        }\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  private addTokenToRequest(request: HttpRequest<any>): HttpRequest<any> {\n" +
+      "    const token = this.authService.getToken();\n" +
+      "    if (token) {\n" +
+      "      return request.clone({\n" +
+      "        setHeaders: {\n" +
+      "          Authorization: `Bearer ${token}`\n" +
+      "        }\n" +
+      "      });\n" +
+      "    }\n" +
+      "    return request;\n" +
+      "  }\n" +
+      "\n" +
+      "  private handle401Error(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    if (!this.isRefreshing) {\n" +
+      "      this.isRefreshing = true;\n" +
+      "      this.refreshTokenSubject.next(null);\n" +
+      "\n" +
+      "      return this.authService.refreshToken().pipe(\n" +
+      "        switchMap((response: any) => {\n" +
+      "          this.isRefreshing = false;\n" +
+      "          this.refreshTokenSubject.next(response.access_token);\n" +
+      "          return next.handle(this.addTokenToRequest(request));\n" +
+      "        }),\n" +
+      "        catchError((error) => {\n" +
+      "          this.isRefreshing = false;\n" +
+      "          this.authService.logout();\n" +
+      "          return throwError(error);\n" +
+      "        })\n" +
+      "      );\n" +
+      "    }\n" +
+      "\n" +
+      "    return this.refreshTokenSubject.pipe(\n" +
+      "      filter(token => token !== null),\n" +
+      "      take(1),\n" +
+      "      switchMap(() => next.handle(this.addTokenToRequest(request)))\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Error Handling Interceptor:**\n" +
+      "```typescript\n" +
+      "// error.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';\n" +
+      "import { Observable, throwError } from 'rxjs';\n" +
+      "import { catchError } from 'rxjs/operators';\n" +
+      "import { ToastrService } from 'ngx-toastr';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class ErrorInterceptor implements HttpInterceptor {\n" +
+      "  constructor(private toastr: ToastrService) {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    return next.handle(request).pipe(\n" +
+      "      catchError((error: HttpErrorResponse) => {\n" +
+      "        let errorMessage = 'An error occurred';\n" +
+      "\n" +
+      "        if (error.error instanceof ErrorEvent) {\n" +
+      "          // Client-side error\n" +
+      "          errorMessage = `Error: ${error.error.message}`;\n" +
+      "        } else {\n" +
+      "          // Server-side error\n" +
+      "          switch (error.status) {\n" +
+      "            case 400:\n" +
+      "              errorMessage = 'Bad Request';\n" +
+      "              break;\n" +
+      "            case 401:\n" +
+      "              errorMessage = 'Unauthorized';\n" +
+      "              break;\n" +
+      "            case 403:\n" +
+      "              errorMessage = 'Forbidden';\n" +
+      "              break;\n" +
+      "            case 404:\n" +
+      "              errorMessage = 'Not Found';\n" +
+      "              break;\n" +
+      "            case 500:\n" +
+      "              errorMessage = 'Internal Server Error';\n" +
+      "              break;\n" +
+      "            default:\n" +
+      "              errorMessage = `Error Code: ${error.status}`;\n" +
+      "          }\n" +
+      "        }\n" +
+      "\n" +
+      "        // Show error message\n" +
+      "        this.toastr.error(errorMessage, 'Error');\n" +
+      "\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Logging Interceptor:**\n" +
+      "```typescript\n" +
+      "// logging.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';\n" +
+      "import { Observable } from 'rxjs';\n" +
+      "import { tap } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class LoggingInterceptor implements HttpInterceptor {\n" +
+      "  constructor() {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    const startTime = Date.now();\n" +
+      "    \n" +
+      "    console.log(`Request: ${request.method} ${request.url}`);\n" +
+      "    \n" +
+      "    return next.handle(request).pipe(\n" +
+      "      tap(\n" +
+      "        (event: HttpEvent<any>) => {\n" +
+      "          if (event instanceof HttpResponse) {\n" +
+      "            const endTime = Date.now();\n" +
+      "            const duration = endTime - startTime;\n" +
+      "            console.log(`Response: ${request.method} ${request.url} - ${event.status} (${duration}ms)`);\n" +
+      "          }\n" +
+      "        },\n" +
+      "        (error) => {\n" +
+      "          const endTime = Date.now();\n" +
+      "          const duration = endTime - startTime;\n" +
+      "          console.error(`Error: ${request.method} ${request.url} - ${error.status} (${duration}ms)`);\n" +
+      "        }\n" +
+      "      )\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Retry Interceptor:**\n" +
+      "```typescript\n" +
+      "// retry.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';\n" +
+      "import { Observable, throwError } from 'rxjs';\n" +
+      "import { retry, catchError } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class RetryInterceptor implements HttpInterceptor {\n" +
+      "  constructor() {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    return next.handle(request).pipe(\n" +
+      "      retry({\n" +
+      "        count: 3,\n" +
+      "        delay: (error: HttpErrorResponse, retryCount: number) => {\n" +
+      "          // Only retry on network errors or 5xx errors\n" +
+      "          if (error.status >= 500 || error.status === 0) {\n" +
+      "            return timer(retryCount * 1000);\n" +
+      "          }\n" +
+      "          return throwError(error);\n" +
+      "        }\n" +
+      "      }),\n" +
+      "      catchError((error: HttpErrorResponse) => {\n" +
+      "        console.error('Request failed after retries:', error);\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Loading Interceptor:**\n" +
+      "```typescript\n" +
+      "// loading.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';\n" +
+      "import { Observable } from 'rxjs';\n" +
+      "import { finalize } from 'rxjs/operators';\n" +
+      "import { LoadingService } from './loading.service';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class LoadingInterceptor implements HttpInterceptor {\n" +
+      "  constructor(private loadingService: LoadingService) {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    // Show loading indicator\n" +
+      "    this.loadingService.show();\n" +
+      "\n" +
+      "    return next.handle(request).pipe(\n" +
+      "      finalize(() => {\n" +
+      "        // Hide loading indicator\n" +
+      "        this.loadingService.hide();\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Multiple Interceptors Configuration:**\n" +
+      "```typescript\n" +
+      "// app.module.ts\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';\n" +
+      "import { AuthInterceptor } from './interceptors/auth.interceptor';\n" +
+      "import { ErrorInterceptor } from './interceptors/error.interceptor';\n" +
+      "import { LoggingInterceptor } from './interceptors/logging.interceptor';\n" +
+      "import { RetryInterceptor } from './interceptors/retry.interceptor';\n" +
+      "import { LoadingInterceptor } from './interceptors/loading.interceptor';\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  imports: [HttpClientModule],\n" +
+      "  providers: [\n" +
+      "    // Order matters - interceptors are executed in the order they are provided\n" +
+      "    {\n" +
+      "      provide: HTTP_INTERCEPTORS,\n" +
+      "      useClass: LoggingInterceptor,\n" +
+      "      multi: true\n" +
+      "    },\n" +
+      "    {\n" +
+      "      provide: HTTP_INTERCEPTORS,\n" +
+      "      useClass: AuthInterceptor,\n" +
+      "      multi: true\n" +
+      "    },\n" +
+      "    {\n" +
+      "      provide: HTTP_INTERCEPTORS,\n" +
+      "      useClass: RetryInterceptor,\n" +
+      "      multi: true\n" +
+      "    },\n" +
+      "    {\n" +
+      "      provide: HTTP_INTERCEPTORS,\n" +
+      "      useClass: ErrorInterceptor,\n" +
+      "      multi: true\n" +
+      "    },\n" +
+      "    {\n" +
+      "      provide: HTTP_INTERCEPTORS,\n" +
+      "      useClass: LoadingInterceptor,\n" +
+      "      multi: true\n" +
+      "    }\n" +
+      "  ]\n" +
+      "})\n" +
+      "export class AppModule { }\n" +
+      "```\n\n" +
+      "**Conditional Interceptor:**\n" +
+      "```typescript\n" +
+      "// conditional.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';\n" +
+      "import { Observable } from 'rxjs';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class ConditionalInterceptor implements HttpInterceptor {\n" +
+      "  constructor() {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    // Only apply interceptor to specific URLs\n" +
+      "    if (request.url.includes('/api/')) {\n" +
+      "      const modifiedRequest = request.clone({\n" +
+      "        setHeaders: {\n" +
+      "          'X-API-Version': '1.0'\n" +
+      "        }\n" +
+      "      });\n" +
+      "      return next.handle(modifiedRequest);\n" +
+      "    }\n" +
+      "\n" +
+      "    // Skip interceptor for other requests\n" +
+      "    return next.handle(request);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Features of HTTP Interceptors:**\n" +
+      "- **Request Modification**: Add headers, transform request data\n" +
+      "- **Response Handling**: Transform response data, handle errors\n" +
+      "- **Authentication**: Automatically add auth tokens\n" +
+      "- **Error Handling**: Centralized error processing\n" +
+      "- **Logging**: Track HTTP requests and responses\n" +
+      "- **Retry Logic**: Automatically retry failed requests\n" +
+      "- **Loading States**: Show/hide loading indicators\n" +
+      "- **Caching**: Implement request/response caching\n" +
+      "- **Conditional Logic**: Apply interceptors based on conditions\n" +
+      "- **Multiple Interceptors**: Chain multiple interceptors together\n\n" +
+      "**Best Practices:**\n" +
+      "- Keep interceptors focused on single responsibility\n" +
+      "- Order interceptors carefully (execution order matters)\n" +
+      "- Handle errors gracefully\n" +
+      "- Use conditional logic when needed\n" +
+      "- Test interceptors thoroughly\n" +
+      "- Avoid side effects in interceptors\n" +
+      "- Use proper error handling\n" +
+      "- Consider performance implications",
+    category: "HTTP",
+    difficulty: "intermediate",
+    tags: ["HTTP", "interceptor", "authentication", "error-handling", "logging", "retry"],
+  },
+  {
+    id: 200,
+    question: "How to Retry automatically if there is an error response from API?",
+    answer:
+      "Automatic retry for API errors can be implemented using RxJS operators, HTTP interceptors, or custom retry logic. This is essential for handling network issues, temporary server problems, and improving application reliability.\n\n" +
+      "**1. Using RxJS retry Operator:**\n" +
+      "```typescript\n" +
+      "// Basic retry with fixed count\n" +
+      "import { HttpClient } from '@angular/common/http';\n" +
+      "import { retry, catchError } from 'rxjs/operators';\n" +
+      "import { throwError } from 'rxjs';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class DataService {\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "\n" +
+      "  getData(): Observable<any> {\n" +
+      "    return this.http.get('/api/data').pipe(\n" +
+      "      retry(3), // Retry 3 times\n" +
+      "      catchError(error => {\n" +
+      "        console.error('Failed after retries:', error);\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Advanced Retry with Delay:**\n" +
+      "```typescript\n" +
+      "// Retry with exponential backoff\n" +
+      "import { retry, catchError, delay, take } from 'rxjs/operators';\n" +
+      "import { timer, throwError } from 'rxjs';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class RetryService {\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "\n" +
+      "  getDataWithRetry(): Observable<any> {\n" +
+      "    return this.http.get('/api/data').pipe(\n" +
+      "      retry({\n" +
+      "        count: 3,\n" +
+      "        delay: (error: HttpErrorResponse, retryCount: number) => {\n" +
+      "          // Exponential backoff: 1s, 2s, 4s\n" +
+      "          const delayTime = Math.pow(2, retryCount) * 1000;\n" +
+      "          console.log(`Retrying in ${delayTime}ms (attempt ${retryCount + 1})`);\n" +
+      "          return timer(delayTime);\n" +
+      "        }\n" +
+      "      }),\n" +
+      "      catchError(error => {\n" +
+      "        console.error('Failed after all retries:', error);\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Conditional Retry Logic:**\n" +
+      "```typescript\n" +
+      "// Retry only for specific error types\n" +
+      "import { retry, catchError } from 'rxjs/operators';\n" +
+      "import { throwError } from 'rxjs';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class ConditionalRetryService {\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "\n" +
+      "  getDataWithConditionalRetry(): Observable<any> {\n" +
+      "    return this.http.get('/api/data').pipe(\n" +
+      "      retry({\n" +
+      "        count: 3,\n" +
+      "        delay: (error: HttpErrorResponse, retryCount: number) => {\n" +
+      "          // Only retry for network errors or 5xx errors\n" +
+      "          if (error.status >= 500 || error.status === 0) {\n" +
+      "            const delayTime = retryCount * 1000; // Linear backoff\n" +
+      "            console.log(`Retrying ${error.status} error in ${delayTime}ms`);\n" +
+      "            return timer(delayTime);\n" +
+      "          }\n" +
+      "          // Don't retry for 4xx errors (client errors)\n" +
+      "          return throwError(error);\n" +
+      "        }\n" +
+      "      }),\n" +
+      "      catchError(error => {\n" +
+      "        console.error('Request failed:', error);\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. HTTP Interceptor for Global Retry:**\n" +
+      "```typescript\n" +
+      "// retry.interceptor.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';\n" +
+      "import { Observable, throwError } from 'rxjs';\n" +
+      "import { retry, catchError } from 'rxjs/operators';\n" +
+      "import { timer } from 'rxjs';\n" +
+      "\n" +
+      "@Injectable()\n" +
+      "export class RetryInterceptor implements HttpInterceptor {\n" +
+      "  private readonly MAX_RETRIES = 3;\n" +
+      "  private readonly RETRY_DELAY = 1000; // 1 second\n" +
+      "\n" +
+      "  constructor() {}\n" +
+      "\n" +
+      "  intercept(\n" +
+      "    request: HttpRequest<any>,\n" +
+      "    next: HttpHandler\n" +
+      "  ): Observable<HttpEvent<any>> {\n" +
+      "    \n" +
+      "    return next.handle(request).pipe(\n" +
+      "      retry({\n" +
+      "        count: this.MAX_RETRIES,\n" +
+      "        delay: (error: HttpErrorResponse, retryCount: number) => {\n" +
+      "          // Only retry for specific error conditions\n" +
+      "          if (this.shouldRetry(error)) {\n" +
+      "            const delayTime = this.calculateDelay(retryCount);\n" +
+      "            console.log(`Retrying ${request.method} ${request.url} in ${delayTime}ms`);\n" +
+      "            return timer(delayTime);\n" +
+      "          }\n" +
+      "          return throwError(error);\n" +
+      "        }\n" +
+      "      }),\n" +
+      "      catchError((error: HttpErrorResponse) => {\n" +
+      "        console.error(`Request failed after ${this.MAX_RETRIES} retries:`, error);\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  private shouldRetry(error: HttpErrorResponse): boolean {\n" +
+      "    // Retry for network errors (status 0) or server errors (5xx)\n" +
+      "    return error.status === 0 || error.status >= 500;\n" +
+      "  }\n" +
+      "\n" +
+      "  private calculateDelay(retryCount: number): number {\n" +
+      "    // Exponential backoff with jitter\n" +
+      "    const baseDelay = Math.pow(2, retryCount) * this.RETRY_DELAY;\n" +
+      "    const jitter = Math.random() * 1000; // Add randomness\n" +
+      "    return baseDelay + jitter;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. Custom Retry Service:**\n" +
+      "```typescript\n" +
+      "// custom-retry.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { Observable, throwError, timer } from 'rxjs';\n" +
+      "import { switchMap, catchError } from 'rxjs/operators';\n" +
+      "import { HttpClient, HttpErrorResponse } from '@angular/common/http';\n" +
+      "\n" +
+      "export interface RetryConfig {\n" +
+      "  maxRetries: number;\n" +
+      "  baseDelay: number;\n" +
+      "  maxDelay: number;\n" +
+      "  retryCondition: (error: HttpErrorResponse) => boolean;\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class CustomRetryService {\n" +
+      "  private defaultConfig: RetryConfig = {\n" +
+      "    maxRetries: 3,\n" +
+      "    baseDelay: 1000,\n" +
+      "    maxDelay: 10000,\n" +
+      "    retryCondition: (error: HttpErrorResponse) => {\n" +
+      "      return error.status === 0 || error.status >= 500;\n" +
+      "    }\n" +
+      "  };\n" +
+      "\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "\n" +
+      "  getWithRetry<T>(url: string, config?: Partial<RetryConfig>): Observable<T> {\n" +
+      "    const retryConfig = { ...this.defaultConfig, ...config };\n" +
+      "    \n" +
+      "    return this.http.get<T>(url).pipe(\n" +
+      "      catchError((error: HttpErrorResponse) => {\n" +
+      "        return this.handleRetry(error, retryConfig, 0);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  private handleRetry<T>(\n" +
+      "    error: HttpErrorResponse,\n" +
+      "    config: RetryConfig,\n" +
+      "    retryCount: number\n" +
+      "  ): Observable<T> {\n" +
+      "    \n" +
+      "    if (retryCount >= config.maxRetries || !config.retryCondition(error)) {\n" +
+      "      return throwError(error);\n" +
+      "    }\n" +
+      "\n" +
+      "    const delay = Math.min(\n" +
+      "      config.baseDelay * Math.pow(2, retryCount),\n" +
+      "      config.maxDelay\n" +
+      "    );\n" +
+      "\n" +
+      "    console.log(`Retrying in ${delay}ms (attempt ${retryCount + 1}/${config.maxRetries})`);\n" +
+      "\n" +
+      "    return timer(delay).pipe(\n" +
+      "      switchMap(() => {\n" +
+      "        // Retry the original request\n" +
+      "        return this.http.get<T>(error.url || '').pipe(\n" +
+      "          catchError((retryError: HttpErrorResponse) => {\n" +
+      "            return this.handleRetry(retryError, config, retryCount + 1);\n" +
+      "          })\n" +
+      "        );\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**6. Retry with Different Strategies:**\n" +
+      "```typescript\n" +
+      "// retry-strategies.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { Observable, throwError, timer } from 'rxjs';\n" +
+      "import { retry, catchError } from 'rxjs/operators';\n" +
+      "import { HttpClient, HttpErrorResponse } from '@angular/common/http';\n" +
+      "\n" +
+      "export enum RetryStrategy {\n" +
+      "  FIXED = 'fixed',\n" +
+      "  EXPONENTIAL = 'exponential',\n" +
+      "  LINEAR = 'linear',\n" +
+      "  CUSTOM = 'custom'\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class RetryStrategiesService {\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "\n" +
+      "  getDataWithStrategy(\n" +
+      "    url: string,\n" +
+      "    strategy: RetryStrategy = RetryStrategy.EXPONENTIAL\n" +
+      "  ): Observable<any> {\n" +
+      "    return this.http.get(url).pipe(\n" +
+      "      retry({\n" +
+      "        count: 3,\n" +
+      "        delay: (error: HttpErrorResponse, retryCount: number) => {\n" +
+      "          const delay = this.calculateDelay(strategy, retryCount);\n" +
+      "          console.log(`${strategy} retry in ${delay}ms`);\n" +
+      "          return timer(delay);\n" +
+      "        }\n" +
+      "      }),\n" +
+      "      catchError(error => {\n" +
+      "        console.error('Retry failed:', error);\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  private calculateDelay(strategy: RetryStrategy, retryCount: number): number {\n" +
+      "    const baseDelay = 1000;\n" +
+      "    \n" +
+      "    switch (strategy) {\n" +
+      "      case RetryStrategy.FIXED:\n" +
+      "        return baseDelay;\n" +
+      "      \n" +
+      "      case RetryStrategy.LINEAR:\n" +
+      "        return baseDelay * (retryCount + 1);\n" +
+      "      \n" +
+      "      case RetryStrategy.EXPONENTIAL:\n" +
+      "        return baseDelay * Math.pow(2, retryCount);\n" +
+      "      \n" +
+      "      case RetryStrategy.CUSTOM:\n" +
+      "        // Custom logic based on error type\n" +
+      "        return baseDelay * Math.pow(1.5, retryCount);\n" +
+      "      \n" +
+      "      default:\n" +
+      "        return baseDelay;\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**7. Retry with Circuit Breaker Pattern:**\n" +
+      "```typescript\n" +
+      "// circuit-breaker.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { Observable, throwError, timer } from 'rxjs';\n" +
+      "import { switchMap, catchError } from 'rxjs/operators';\n" +
+      "import { HttpClient, HttpErrorResponse } from '@angular/common/http';\n" +
+      "\n" +
+      "export enum CircuitState {\n" +
+      "  CLOSED = 'closed',\n" +
+      "  OPEN = 'open',\n" +
+      "  HALF_OPEN = 'half-open'\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class CircuitBreakerService {\n" +
+      "  private state: CircuitState = CircuitState.CLOSED;\n" +
+      "  private failureCount = 0;\n" +
+      "  private lastFailureTime = 0;\n" +
+      "  private readonly failureThreshold = 5;\n" +
+      "  private readonly timeout = 60000; // 1 minute\n" +
+      "\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "\n" +
+      "  getWithCircuitBreaker<T>(url: string): Observable<T> {\n" +
+      "    if (this.state === CircuitState.OPEN) {\n" +
+      "      if (Date.now() - this.lastFailureTime > this.timeout) {\n" +
+      "        this.state = CircuitState.HALF_OPEN;\n" +
+      "      } else {\n" +
+      "        return throwError(new Error('Circuit breaker is OPEN'));\n" +
+      "      }\n" +
+      "    }\n" +
+      "\n" +
+      "    return this.http.get<T>(url).pipe(\n" +
+      "      switchMap(response => {\n" +
+      "        this.onSuccess();\n" +
+      "        return [response];\n" +
+      "      }),\n" +
+      "      catchError((error: HttpErrorResponse) => {\n" +
+      "        this.onFailure();\n" +
+      "        return throwError(error);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "\n" +
+      "  private onSuccess(): void {\n" +
+      "    this.failureCount = 0;\n" +
+      "    this.state = CircuitState.CLOSED;\n" +
+      "  }\n" +
+      "\n" +
+      "  private onFailure(): void {\n" +
+      "    this.failureCount++;\n" +
+      "    this.lastFailureTime = Date.now();\n" +
+      "    \n" +
+      "    if (this.failureCount >= this.failureThreshold) {\n" +
+      "      this.state = CircuitState.OPEN;\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**8. Usage Examples:**\n" +
+      "```typescript\n" +
+      "// component.ts\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { RetryService } from './retry.service';\n" +
+      "import { RetryStrategiesService, RetryStrategy } from './retry-strategies.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-data',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      '      <button (click)="loadData()">Load Data</button>\n' +
+      '      <div *ngIf="loading">Loading...</div>\n' +
+      '      <div *ngIf="error">{{ error }}</div>\n' +
+      '      <div *ngIf="data">{{ data | json }}</div>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DataComponent implements OnInit {\n" +
+      "  data: any;\n" +
+      "  loading = false;\n" +
+      "  error: string | null = null;\n" +
+      "\n" +
+      "  constructor(\n" +
+      "    private retryService: RetryService,\n" +
+      "    private retryStrategiesService: RetryStrategiesService\n" +
+      "  ) {}\n" +
+      "\n" +
+      "  loadData(): void {\n" +
+      "    this.loading = true;\n" +
+      "    this.error = null;\n" +
+      "\n" +
+      "    this.retryService.getDataWithRetry().subscribe({\n" +
+      "      next: (response) => {\n" +
+      "        this.data = response;\n" +
+      "        this.loading = false;\n" +
+      "      },\n" +
+      "      error: (error) => {\n" +
+      "        this.error = 'Failed to load data after retries';\n" +
+      "        this.loading = false;\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  loadDataWithStrategy(): void {\n" +
+      "    this.retryStrategiesService.getDataWithStrategy(\n" +
+      "      '/api/data',\n" +
+      "      RetryStrategy.EXPONENTIAL\n" +
+      "    ).subscribe({\n" +
+      "      next: (response) => {\n" +
+      "        this.data = response;\n" +
+      "      },\n" +
+      "      error: (error) => {\n" +
+      "        this.error = 'Failed to load data';\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits of Automatic Retry:**\n" +
+      "- **Improved Reliability**: Handle temporary network issues\n" +
+      "- **Better User Experience**: Reduce failed requests\n" +
+      "- **Resilience**: Application continues working despite failures\n" +
+      "- **Flexibility**: Different retry strategies for different scenarios\n" +
+      "- **Monitoring**: Track retry attempts and success rates\n" +
+      "- **Performance**: Optimize retry timing and frequency\n" +
+      "- **Error Handling**: Graceful degradation when retries fail\n" +
+      "- **Circuit Breaker**: Prevent cascading failures\n\n" +
+      "**Best Practices:**\n" +
+      "- Use exponential backoff to avoid overwhelming servers\n" +
+      "- Set reasonable retry limits (3-5 attempts)\n" +
+      "- Only retry for appropriate error types (5xx, network errors)\n" +
+      "- Implement circuit breaker for critical services\n" +
+      "- Log retry attempts for monitoring\n" +
+      "- Consider user experience during retries\n" +
+      "- Test retry logic thoroughly\n" +
+      "- Monitor retry success rates",
+    category: "HTTP",
+    difficulty: "intermediate",
+    tags: ["retry", "HTTP", "error-handling", "resilience", "RxJS", "circuit-breaker"],
+  },
+  {
+    id: 201,
+    question: "What are the parts of JWT Token?",
+    answer:
+      "JWT (JSON Web Token) consists of three parts separated by dots (`.`): Header, Payload, and Signature. Each part is Base64URL encoded and contains specific information about the token.\n\n" +
+      "**JWT Structure:**\n" +
+      "```\n" +
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\n" +
+      "```\n\n" +
+      "**1. Header (Header.Payload.Signature):**\n" +
+      "```json\n" +
+      "{\n" +
+      '  "alg": "HS256",\n' +
+      '  "typ": "JWT"\n' +
+      "}\n" +
+      "```\n\n" +
+      "**Header Fields:**\n" +
+      "- **`alg` (Algorithm)**: The signing algorithm used (e.g., HS256, RS256, ES256)\n" +
+      '- **`typ` (Type)**: The token type, always "JWT"\n' +
+      "- **`kid` (Key ID)**: Optional key identifier for key rotation\n" +
+      "- **`cty` (Content Type)**: Optional content type for nested JWTs\n" +
+      "\n" +
+      "**2. Payload (Claims):**\n" +
+      "```json\n" +
+      "{\n" +
+      '  "sub": "1234567890",\n' +
+      '  "name": "John Doe",\n' +
+      '  "iat": 1516239022,\n' +
+      '  "exp": 1516242622,\n' +
+      '  "iss": "https://example.com",\n' +
+      '  "aud": "https://api.example.com",\n' +
+      '  "jti": "unique-token-id",\n' +
+      '  "role": "admin",\n' +
+      '  "permissions": ["read:users", "write:users"]\n' +
+      "}\n" +
+      "```\n\n" +
+      "**Standard Claims (Registered Claims):**\n" +
+      "- **`iss` (Issuer)**: Who issued the token\n" +
+      "- **`sub` (Subject)**: The subject (usually user ID)\n" +
+      "- **`aud` (Audience)**: Who the token is intended for\n" +
+      "- **`exp` (Expiration Time)**: When the token expires (Unix timestamp)\n" +
+      "- **`nbf` (Not Before)**: Token not valid before this time\n" +
+      "- **`iat` (Issued At)**: When the token was issued\n" +
+      "- **`jti` (JWT ID)**: Unique identifier for the token\n" +
+      "\n" +
+      "**Public Claims:**\n" +
+      "- **`name`**: User's full name\n" +
+      "- **`email`**: User's email address\n" +
+      "- **`role`**: User's role\n" +
+      "- **`permissions`**: Array of user permissions\n" +
+      "- **`department`**: User's department\n" +
+      "- **`company`**: User's company\n" +
+      "\n" +
+      "**Private Claims:**\n" +
+      "- **`custom_field`**: Any custom data\n" +
+      "- **`preferences`**: User preferences\n" +
+      "- **`metadata`**: Additional metadata\n" +
+      "\n" +
+      "**3. Signature:**\n" +
+      "```\n" +
+      "HMACSHA256(\n" +
+      '  base64UrlEncode(header) + "." +\n' +
+      "  base64UrlEncode(payload),\n" +
+      "  secret\n" +
+      ")\n" +
+      "```\n\n" +
+      "**Signature Purpose:**\n" +
+      "- **Integrity**: Ensures token hasn't been tampered with\n" +
+      "- **Authentication**: Verifies the token was issued by trusted party\n" +
+      "- **Non-repudiation**: Proves the token was created by the issuer\n" +
+      "\n" +
+      "**JWT Implementation in Angular:**\n" +
+      "```typescript\n" +
+      "// jwt-utils.service.ts\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "\n" +
+      "export interface JWTHeader {\n" +
+      "  alg: string;\n" +
+      "  typ: string;\n" +
+      "  kid?: string;\n" +
+      "  cty?: string;\n" +
+      "}\n" +
+      "\n" +
+      "export interface JWTPayload {\n" +
+      "  // Standard claims\n" +
+      "  iss?: string;    // Issuer\n" +
+      "  sub?: string;    // Subject\n" +
+      "  aud?: string;    // Audience\n" +
+      "  exp?: number;    // Expiration time\n" +
+      "  nbf?: number;    // Not before\n" +
+      "  iat?: number;    // Issued at\n" +
+      "  jti?: string;    // JWT ID\n" +
+      "  \n" +
+      "  // Public claims\n" +
+      "  name?: string;\n" +
+      "  email?: string;\n" +
+      "  role?: string;\n" +
+      "  permissions?: string[];\n" +
+      "  \n" +
+      "  // Private claims\n" +
+      "  [key: string]: any;\n" +
+      "}\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class JWTUtilsService {\n" +
+      "  \n" +
+      "  // Decode JWT token\n" +
+      "  decodeToken(token: string): { header: JWTHeader; payload: JWTPayload } {\n" +
+      "    try {\n" +
+      "      const parts = token.split('.');\n" +
+      "      \n" +
+      "      if (parts.length !== 3) {\n" +
+      "        throw new Error('Invalid JWT format');\n" +
+      "      }\n" +
+      "      \n" +
+      "      const header = this.base64UrlDecode(parts[0]);\n" +
+      "      const payload = this.base64UrlDecode(parts[1]);\n" +
+      "      \n" +
+      "      return {\n" +
+      "        header: JSON.parse(header),\n" +
+      "        payload: JSON.parse(payload)\n" +
+      "      };\n" +
+      "    } catch (error) {\n" +
+      "      throw new Error('Invalid JWT token');\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Check if token is expired\n" +
+      "  isTokenExpired(token: string): boolean {\n" +
+      "    try {\n" +
+      "      const { payload } = this.decodeToken(token);\n" +
+      "      const currentTime = Math.floor(Date.now() / 1000);\n" +
+      "      return payload.exp ? payload.exp < currentTime : true;\n" +
+      "    } catch {\n" +
+      "      return true;\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Get token expiration time\n" +
+      "  getTokenExpiration(token: string): Date | null {\n" +
+      "    try {\n" +
+      "      const { payload } = this.decodeToken(token);\n" +
+      "      return payload.exp ? new Date(payload.exp * 1000) : null;\n" +
+      "    } catch {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Get token issued time\n" +
+      "  getTokenIssuedAt(token: string): Date | null {\n" +
+      "    try {\n" +
+      "      const { payload } = this.decodeToken(token);\n" +
+      "      return payload.iat ? new Date(payload.iat * 1000) : null;\n" +
+      "    } catch {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Get user ID from token\n" +
+      "  getUserId(token: string): string | null {\n" +
+      "    try {\n" +
+      "      const { payload } = this.decodeToken(token);\n" +
+      "      return payload.sub || null;\n" +
+      "    } catch {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Get user role from token\n" +
+      "  getUserRole(token: string): string | null {\n" +
+      "    try {\n" +
+      "      const { payload } = this.decodeToken(token);\n" +
+      "      return payload.role || null;\n" +
+      "    } catch {\n" +
+      "      return null;\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Get user permissions from token\n" +
+      "  getUserPermissions(token: string): string[] {\n" +
+      "    try {\n" +
+      "      const { payload } = this.decodeToken(token);\n" +
+      "      return payload.permissions || [];\n" +
+      "    } catch {\n" +
+      "      return [];\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Get token time remaining\n" +
+      "  getTimeRemaining(token: string): number {\n" +
+      "    try {\n" +
+      "      const { payload } = this.decodeToken(token);\n" +
+      "      if (!payload.exp) return 0;\n" +
+      "      \n" +
+      "      const currentTime = Math.floor(Date.now() / 1000);\n" +
+      "      const remaining = payload.exp - currentTime;\n" +
+      "      return Math.max(0, remaining);\n" +
+      "    } catch {\n" +
+      "      return 0;\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Validate token structure\n" +
+      "  isValidTokenStructure(token: string): boolean {\n" +
+      "    try {\n" +
+      "      const parts = token.split('.');\n" +
+      "      return parts.length === 3 && parts.every(part => part.length > 0);\n" +
+      "    } catch {\n" +
+      "      return false;\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  // Base64URL decode\n" +
+      "  private base64UrlDecode(str: string): string {\n" +
+      "    const base64 = str.replace(/-/g, '+').replace(/_/g, '/');\n" +
+      "    const padded = base64.padEnd(base64.length + (4 - base64.length % 4) % 4, '=');\n" +
+      "    return decodeURIComponent(\n" +
+      "      atob(padded)\n" +
+      "        .split('')\n" +
+      "        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))\n" +
+      "        .join('')\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**JWT Token Analysis Component:**\n" +
+      "```typescript\n" +
+      "// jwt-analyzer.component.ts\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { JWTUtilsService, JWTHeader, JWTPayload } from './jwt-utils.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-jwt-analyzer',\n" +
+      "  template: `\n" +
+      '    <div class="jwt-analyzer">\n' +
+      "      <h2>JWT Token Analyzer</h2>\n" +
+      "      \n" +
+      '      <div class="token-input">\n' +
+      '        <label for="token">JWT Token:</label>\n' +
+      "        <textarea \n" +
+      '          id="token" \n' +
+      '          [(ngModel)]="token" \n' +
+      '          placeholder="Enter JWT token..."\n' +
+      '          rows="3"\n' +
+      "        ></textarea>\n" +
+      '        <button (click)="analyzeToken()">Analyze Token</button>\n' +
+      "      </div>\n" +
+      "      \n" +
+      '      <div *ngIf="analysis" class="analysis">\n' +
+      '        <div class="token-parts">\n' +
+      "          <h3>Token Parts</h3>\n" +
+      '          <div class="part">\n' +
+      "            <h4>Header</h4>\n" +
+      "            <pre>{{ analysis.header | json }}</pre>\n" +
+      "          </div>\n" +
+      '          <div class="part">\n' +
+      "            <h4>Payload</h4>\n" +
+      "            <pre>{{ analysis.payload | json }}</pre>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="token-info">\n' +
+      "          <h3>Token Information</h3>\n" +
+      '          <div class="info-item">\n' +
+      "            <strong>Issued At:</strong> {{ analysis.issuedAt | date:'medium' }}\n" +
+      "          </div>\n" +
+      '          <div class="info-item">\n' +
+      "            <strong>Expires At:</strong> {{ analysis.expiresAt | date:'medium' }}\n" +
+      "          </div>\n" +
+      '          <div class="info-item">\n' +
+      "            <strong>Time Remaining:</strong> {{ analysis.timeRemaining }} seconds\n" +
+      "          </div>\n" +
+      '          <div class="info-item">\n' +
+      "            <strong>User ID:</strong> {{ analysis.userId }}\n" +
+      "          </div>\n" +
+      '          <div class="info-item">\n' +
+      "            <strong>User Role:</strong> {{ analysis.userRole }}\n" +
+      "          </div>\n" +
+      '          <div class="info-item">\n' +
+      "            <strong>Permissions:</strong> {{ analysis.permissions.join(', ') }}\n" +
+      "          </div>\n" +
+      '          <div class="info-item">\n' +
+      "            <strong>Is Expired:</strong> {{ analysis.isExpired ? 'Yes' : 'No' }}\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `,\n" +
+      "  styles: [`\n" +
+      "    .jwt-analyzer {\n" +
+      "      max-width: 800px;\n" +
+      "      margin: 0 auto;\n" +
+      "      padding: 20px;\n" +
+      "    }\n" +
+      "    .token-input textarea {\n" +
+      "      width: 100%;\n" +
+      "      margin: 10px 0;\n" +
+      "    }\n" +
+      "    .analysis {\n" +
+      "      margin-top: 20px;\n" +
+      "    }\n" +
+      "    .token-parts {\n" +
+      "      display: grid;\n" +
+      "      grid-template-columns: 1fr 1fr;\n" +
+      "      gap: 20px;\n" +
+      "      margin-bottom: 20px;\n" +
+      "    }\n" +
+      "    .part pre {\n" +
+      "      background: #f5f5f5;\n" +
+      "      padding: 10px;\n" +
+      "      border-radius: 4px;\n" +
+      "      overflow-x: auto;\n" +
+      "    }\n" +
+      "    .info-item {\n" +
+      "      margin: 10px 0;\n" +
+      "    }\n" +
+      "  `]\n" +
+      "})\n" +
+      "export class JWTAnalyzerComponent implements OnInit {\n" +
+      "  token = '';\n" +
+      "  analysis: any = null;\n" +
+      "\n" +
+      "  constructor(private jwtUtils: JWTUtilsService) {}\n" +
+      "\n" +
+      "  ngOnInit(): void {}\n" +
+      "\n" +
+      "  analyzeToken(): void {\n" +
+      "    if (!this.token.trim()) {\n" +
+      "      alert('Please enter a JWT token');\n" +
+      "      return;\n" +
+      "    }\n" +
+      "\n" +
+      "    try {\n" +
+      "      const { header, payload } = this.jwtUtils.decodeToken(this.token);\n" +
+      "      \n" +
+      "      this.analysis = {\n" +
+      "        header,\n" +
+      "        payload,\n" +
+      "        issuedAt: this.jwtUtils.getTokenIssuedAt(this.token),\n" +
+      "        expiresAt: this.jwtUtils.getTokenExpiration(this.token),\n" +
+      "        timeRemaining: this.jwtUtils.getTimeRemaining(this.token),\n" +
+      "        userId: this.jwtUtils.getUserId(this.token),\n" +
+      "        userRole: this.jwtUtils.getUserRole(this.token),\n" +
+      "        permissions: this.jwtUtils.getUserPermissions(this.token),\n" +
+      "        isExpired: this.jwtUtils.isTokenExpired(this.token)\n" +
+      "      };\n" +
+      "    } catch (error) {\n" +
+      "      alert('Invalid JWT token: ' + error.message);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**JWT Security Considerations:**\n" +
+      "- **Token Size**: JWT tokens can be large due to Base64 encoding\n" +
+      "- **Sensitive Data**: Don't store sensitive data in the payload\n" +
+      "- **Expiration**: Always set reasonable expiration times\n" +
+      "- **Signature Verification**: Always verify the signature on the server\n" +
+      "- **Algorithm Security**: Use strong algorithms (RS256, ES256)\n" +
+      "- **Key Management**: Secure key storage and rotation\n" +
+      "- **Token Storage**: Store tokens securely (httpOnly cookies preferred)\n" +
+      "- **HTTPS**: Always use HTTPS in production\n" +
+      "- **Token Revocation**: Implement token blacklisting for security\n" +
+      "- **Audience Validation**: Validate the audience claim\n\n" +
+      "**Key Benefits of JWT Structure:**\n" +
+      "- **Self-contained**: Contains all necessary information\n" +
+      "- **Stateless**: No server-side session storage needed\n" +
+      "- **Compact**: Efficient for HTTP headers\n" +
+      "- **Standardized**: Based on RFC 7519 standard\n" +
+      "- **Cross-domain**: Works across different domains\n" +
+      "- **Extensible**: Can include custom claims\n" +
+      "- **Verifiable**: Signature ensures integrity\n" +
+      "- **Time-based**: Built-in expiration support",
+    category: "Security",
+    difficulty: "intermediate",
+    tags: ["JWT", "token", "authentication", "security", "header", "payload", "signature"],
+  },
+  {
+    id: 202,
+    question: "What are the lifecycle hooks of a zone?",
+    answer:
+      "Zone.js provides four lifecycle hooks for asynchronous operations that allow you to monitor and intercept different phases of async task execution. These hooks are essential for understanding how Angular's change detection works.\n\n" +
+      "**1. onScheduleTask Hook:**\n" +
+      "This hook triggers when a new asynchronous task is scheduled. It's called before the task is added to the task queue.\n" +
+      "```typescript\n" +
+      "onScheduleTask: function(delegate, curr, target, task) {\n" +
+      "  console.log('new task is scheduled:', task.type, task.source);\n" +
+      "  // task.type can be: 'macroTask', 'microTask', 'eventTask'\n" +
+      "  // task.source can be: 'setTimeout', 'setInterval', 'Promise', 'XMLHttpRequest', etc.\n" +
+      "  return delegate.scheduleTask(target, task);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. onInvokeTask Hook:**\n" +
+      "This hook triggers when an asynchronous task is about to execute. It's called just before the task's callback function runs.\n" +
+      "```typescript\n" +
+      "onInvokeTask: function(delegate, curr, target, task, applyThis, applyArgs) {\n" +
+      "  console.log('task will be invoked:', task.type, task.source);\n" +
+      "  // You can modify applyThis and applyArgs here\n" +
+      "  return delegate.invokeTask(target, task, applyThis, applyArgs);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. onHasTask Hook:**\n" +
+      "This hook triggers when the status of tasks inside a zone changes from stable (no tasks) to unstable (new tasks scheduled) or vice versa.\n" +
+      "```typescript\n" +
+      "onHasTask: function(delegate, curr, target, hasTaskState) {\n" +
+      "  console.log('task state changed in the zone:', hasTaskState);\n" +
+      "  // hasTaskState contains:\n" +
+      "  // - microTask: boolean\n" +
+      "  // - macroTask: boolean\n" +
+      "  // - eventTask: boolean\n" +
+      "  // - change: 'stable' | 'unstable'\n" +
+      "  return delegate.hasTask(target, hasTaskState);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. onInvoke Hook:**\n" +
+      "This hook triggers when a synchronous function is going to execute in the zone.\n" +
+      "```typescript\n" +
+      "onInvoke: function(delegate, curr, target, callback, applyThis, applyArgs) {\n" +
+      "  console.log('the callback will be invoked:', callback);\n" +
+      "  // This runs for synchronous operations\n" +
+      "  return delegate.invoke(target, callback, applyThis, applyArgs);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Complete Zone Implementation Example:**\n" +
+      "```typescript\n" +
+      "import { NgZone } from '@angular/core';\n" +
+      "\n" +
+      "export class ZoneMonitoringService {\n" +
+      "  private monitoringZone: Zone;\n" +
+      "\n" +
+      "  constructor(private ngZone: NgZone) {\n" +
+      "    this.setupZoneMonitoring();\n" +
+      "  }\n" +
+      "\n" +
+      "  private setupZoneMonitoring(): void {\n" +
+      "    this.monitoringZone = Zone.current.fork({\n" +
+      "      name: 'monitoring-zone',\n" +
+      "      onScheduleTask: (delegate, curr, target, task) => {\n" +
+      "        console.log(`[${task.type}] Task scheduled:`, task.source);\n" +
+      "        return delegate.scheduleTask(target, task);\n" +
+      "      },\n" +
+      "      onInvokeTask: (delegate, curr, target, task, applyThis, applyArgs) => {\n" +
+      "        console.log(`[${task.type}] Task executing:`, task.source);\n" +
+      "        return delegate.invokeTask(target, task, applyThis, applyArgs);\n" +
+      "      },\n" +
+      "      onHasTask: (delegate, curr, target, hasTaskState) => {\n" +
+      "        console.log('Zone state changed:', hasTaskState);\n" +
+      "        return delegate.hasTask(target, hasTaskState);\n" +
+      "      },\n" +
+      "      onInvoke: (delegate, curr, target, callback, applyThis, applyArgs) => {\n" +
+      "        console.log('Synchronous function invoked:', callback.name);\n" +
+      "        return delegate.invoke(target, callback, applyThis, applyArgs);\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  runInMonitoringZone(fn: Function): any {\n" +
+      "    return this.monitoringZone.run(fn);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Task Types:**\n" +
+      "- **macroTask**: setTimeout, setInterval, setImmediate, I/O operations\n" +
+      "- **microTask**: Promise.then, queueMicrotask, MutationObserver\n" +
+      "- **eventTask**: DOM events, WebSocket events\n\n" +
+      "**Practical Usage:**\n" +
+      "```typescript\n" +
+      "// Component using zone monitoring\n" +
+      "export class AppComponent {\n" +
+      "  constructor(private zoneMonitoring: ZoneMonitoringService) {\n" +
+      "    // Monitor async operations\n" +
+      "    this.zoneMonitoring.runInMonitoringZone(() => {\n" +
+      "      setTimeout(() => {\n" +
+      "        console.log('This will trigger onScheduleTask and onInvokeTask');\n" +
+      "      }, 1000);\n" +
+      "\n" +
+      "      Promise.resolve().then(() => {\n" +
+      "        console.log('This will trigger microTask hooks');\n" +
+      "      });\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- **Debugging**: Track async operations and their execution\n" +
+      "- **Performance Monitoring**: Identify performance bottlenecks\n" +
+      "- **Change Detection**: Understand when Angular triggers change detection\n" +
+      "- **Error Tracking**: Monitor task failures and exceptions\n" +
+      "- **Custom Behavior**: Intercept and modify task execution\n\n" +
+      "**Best Practices:**\n" +
+      "- Use zone hooks for debugging and monitoring\n" +
+      "- Avoid heavy operations in hooks to prevent performance issues\n" +
+      "- Be careful when modifying task execution\n" +
+      "- Use zone hooks to understand Angular's change detection cycle\n" +
+      "- Monitor both macro and micro tasks for complete coverage",
+    category: "Zone.js",
+    difficulty: "advanced",
+    tags: ["zone", "lifecycle", "hooks", "async", "change-detection", "monitoring"],
+  },
+  {
+    id: 203,
+    question: "What are the methods of NgZone used to control change detection?",
+    answer:
+      "NgZone service provides several methods to control change detection and execute code within or outside Angular's zone. These methods are essential for managing performance and integrating third-party libraries.\n\n" +
+      "**1. run() Method:**\n" +
+      "Executes a function inside Angular's zone, triggering change detection automatically.\n" +
+      "```typescript\n" +
+      "import { NgZone } from '@angular/core';\n" +
+      "\n" +
+      "export class AppComponent implements OnInit {\n" +
+      "  constructor(private ngZone: NgZone) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    // Use ngZone.run() to make the asynchronous operation in the angular zone\n" +
+      "    this.ngZone.run(() => {\n" +
+      "      someNewAsyncAPI(() => {\n" +
+      "        // Update the data of the component\n" +
+      "        this.data = 'Updated data';\n" +
+      "        // Change detection will run automatically\n" +
+      "      });\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. runOutsideAngular() Method:**\n" +
+      "Executes a function outside Angular's zone, preventing automatic change detection.\n" +
+      "```typescript\n" +
+      "export class PerformanceComponent {\n" +
+      "  constructor(private ngZone: NgZone) {}\n" +
+      "  \n" +
+      "  startHeavyComputation() {\n" +
+      "    // Run heavy computation outside Angular zone\n" +
+      "    this.ngZone.runOutsideAngular(() => {\n" +
+      "      const result = this.performHeavyCalculation();\n" +
+      "      \n" +
+      "      // When done, update UI inside Angular zone\n" +
+      "      this.ngZone.run(() => {\n" +
+      "        this.result = result;\n" +
+      "      });\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  private performHeavyCalculation(): number {\n" +
+      "    let result = 0;\n" +
+      "    for (let i = 0; i < 1000000; i++) {\n" +
+      "      result += Math.random();\n" +
+      "    }\n" +
+      "    return result;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. runGuarded() Method:**\n" +
+      "Executes a function inside Angular's zone with error handling.\n" +
+      "```typescript\n" +
+      "export class ErrorHandlingComponent {\n" +
+      "  constructor(private ngZone: NgZone) {}\n" +
+      "  \n" +
+      "  performRiskyOperation() {\n" +
+      "    this.ngZone.runGuarded(() => {\n" +
+      "      try {\n" +
+      "        // Risky operation that might throw\n" +
+      "        this.processData();\n" +
+      "      } catch (error) {\n" +
+      "        console.error('Error in guarded operation:', error);\n" +
+      "        this.handleError(error);\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. isStable Property:**\n" +
+      "Returns a boolean indicating whether the zone is stable (no pending tasks).\n" +
+      "```typescript\n" +
+      "export class StabilityComponent {\n" +
+      "  constructor(private ngZone: NgZone) {\n" +
+      "    // Check if zone is stable\n" +
+      "    console.log('Zone is stable:', this.ngZone.isStable);\n" +
+      "  }\n" +
+      "  \n" +
+      "  waitForStability() {\n" +
+      "    if (this.ngZone.isStable) {\n" +
+      "      this.performAction();\n" +
+      "    } else {\n" +
+      "      // Wait for stability\n" +
+      "      setTimeout(() => this.waitForStability(), 100);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. onStable Observable:**\n" +
+      "An observable that emits when the zone becomes stable.\n" +
+      "```typescript\n" +
+      "import { take } from 'rxjs/operators';\n" +
+      "\n" +
+      "export class StabilityObserverComponent {\n" +
+      "  constructor(private ngZone: NgZone) {\n" +
+      "    // Subscribe to stability changes\n" +
+      "    this.ngZone.onStable.pipe(\n" +
+      "      take(1) // Take only the first emission\n" +
+      "    ).subscribe(() => {\n" +
+      "      console.log('Zone became stable');\n" +
+      "      this.performPostStabilityAction();\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**6. onUnstable Observable:**\n" +
+      "An observable that emits when the zone becomes unstable.\n" +
+      "```typescript\n" +
+      "export class UnstableObserverComponent {\n" +
+      "  constructor(private ngZone: NgZone) {\n" +
+      "    // Monitor when zone becomes unstable\n" +
+      "    this.ngZone.onUnstable.subscribe(() => {\n" +
+      "      console.log('Zone became unstable - tasks are pending');\n" +
+      "      this.showLoadingIndicator();\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.ngZone.onStable.subscribe(() => {\n" +
+      "      console.log('Zone became stable - all tasks completed');\n" +
+      "      this.hideLoadingIndicator();\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Complete Example - Third-Party Integration:**\n" +
+      "```typescript\n" +
+      "export class ThirdPartyIntegrationComponent {\n" +
+      "  private chart: any;\n" +
+      "  \n" +
+      "  constructor(private ngZone: NgZone) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    // Initialize third-party library outside Angular zone\n" +
+      "    this.ngZone.runOutsideAngular(() => {\n" +
+      "      this.chart = new ThirdPartyChart({\n" +
+      "        onDataUpdate: (data) => {\n" +
+      "          // Update Angular component data inside zone\n" +
+      "          this.ngZone.run(() => {\n" +
+      "            this.chartData = data;\n" +
+      "          });\n" +
+      "        },\n" +
+      "        onError: (error) => {\n" +
+      "          // Handle errors inside zone\n" +
+      "          this.ngZone.runGuarded(() => {\n" +
+      "            this.handleChartError(error);\n" +
+      "          });\n" +
+      "        }\n" +
+      "      });\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  ngOnDestroy() {\n" +
+      "    // Cleanup outside Angular zone\n" +
+      "    this.ngZone.runOutsideAngular(() => {\n" +
+      "      if (this.chart) {\n" +
+      "        this.chart.destroy();\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Optimization Example:**\n" +
+      "```typescript\n" +
+      "export class PerformanceOptimizedComponent {\n" +
+      "  private animationFrameId: number;\n" +
+      "  \n" +
+      "  constructor(private ngZone: NgZone) {}\n" +
+      "  \n" +
+      "  startAnimation() {\n" +
+      "    const animate = () => {\n" +
+      "      // Run animation outside Angular zone for better performance\n" +
+      "      this.ngZone.runOutsideAngular(() => {\n" +
+      "        this.updateAnimationFrame();\n" +
+      "        this.animationFrameId = requestAnimationFrame(animate);\n" +
+      "      });\n" +
+      "    };\n" +
+      "    \n" +
+      "    animate();\n" +
+      "  }\n" +
+      "  \n" +
+      "  stopAnimation() {\n" +
+      "    if (this.animationFrameId) {\n" +
+      "      cancelAnimationFrame(this.animationFrameId);\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateUI() {\n" +
+      "    // Update UI inside Angular zone when needed\n" +
+      "    this.ngZone.run(() => {\n" +
+      "      this.uiData = this.calculateUIData();\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- **Performance Control**: Run heavy operations outside Angular zone\n" +
+      "- **Change Detection Management**: Control when change detection runs\n" +
+      "- **Third-Party Integration**: Integrate libraries that don't work with Angular zones\n" +
+      "- **Error Handling**: Handle errors gracefully with runGuarded\n" +
+      "- **Stability Monitoring**: Track zone stability for debugging\n" +
+      "- **Animation Optimization**: Optimize animations and heavy computations\n\n" +
+      "**Best Practices:**\n" +
+      "- Use `runOutsideAngular()` for performance-critical operations\n" +
+      "- Use `run()` to ensure change detection runs when needed\n" +
+      "- Use `runGuarded()` for error-prone operations\n" +
+      "- Monitor zone stability for debugging purposes\n" +
+      "- Clean up resources properly in ngOnDestroy\n" +
+      "- Be careful with third-party library integration",
+    category: "Zone.js",
+    difficulty: "intermediate",
+    tags: ["NgZone", "change-detection", "performance", "zone", "run", "runOutsideAngular"],
+  },
+  {
+    id: 204,
+    question: "What is an optional dependency?",
+    answer:
+      "An optional dependency is a parameter decorator (`@Optional()`) used on constructor parameters to mark them as optional. When Angular's dependency injection system cannot find a provider for the dependency, it will inject `null` instead of throwing an error.\n\n" +
+      "**Basic Usage:**\n" +
+      "```typescript\n" +
+      "import { Optional } from '@angular/core';\n" +
+      "\n" +
+      "export class AppComponent {\n" +
+      "  constructor(@Optional() private logger?: Logger) {\n" +
+      "    if (this.logger) {\n" +
+      "      this.logger.log('This is an optional dependency message');\n" +
+      "    } else {\n" +
+      "      console.log('The logger is not registered');\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Complete Example with Service:**\n" +
+      "```typescript\n" +
+      "// Logger service\n" +
+      "export class Logger {\n" +
+      "  log(message: string): void {\n" +
+      "    console.log(`[LOG]: ${message}`);\n" +
+      "  }\n" +
+      "  \n" +
+      "  error(message: string): void {\n" +
+      "    console.error(`[ERROR]: ${message}`);\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// Component using optional logger\n" +
+      "export class UserService {\n" +
+      "  constructor(@Optional() private logger?: Logger) {}\n" +
+      "  \n" +
+      "  getUser(id: string): User {\n" +
+      "    // Use logger if available\n" +
+      "    if (this.logger) {\n" +
+      "      this.logger.log(`Fetching user with ID: ${id}`);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Business logic here\n" +
+      "    return this.fetchUserFromAPI(id);\n" +
+      "  }\n" +
+      "  \n" +
+      "  private fetchUserFromAPI(id: string): User {\n" +
+      "    // Implementation\n" +
+      "    return { id, name: 'John Doe' };\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Module Configuration:**\n" +
+      "```typescript\n" +
+      "// app.module.ts\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { Logger } from './logger.service';\n" +
+      "import { UserService } from './user.service';\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  providers: [\n" +
+      "    // Logger is NOT provided here - it's optional\n" +
+      "    UserService,\n" +
+      "    // Uncomment to make logger available:\n" +
+      "    // Logger\n" +
+      "  ],\n" +
+      "})\n" +
+      "export class AppModule {}\n" +
+      "```\n\n" +
+      "**Advanced Example - Multiple Optional Dependencies:**\n" +
+      "```typescript\n" +
+      "export class AnalyticsService {\n" +
+      "  constructor(\n" +
+      "    @Optional() private googleAnalytics?: GoogleAnalytics,\n" +
+      "    @Optional() private mixpanel?: Mixpanel,\n" +
+      "    @Optional() private logger?: Logger\n" +
+      "  ) {}\n" +
+      "  \n" +
+      "  trackEvent(eventName: string, data: any): void {\n" +
+      "    // Track with Google Analytics if available\n" +
+      "    if (this.googleAnalytics) {\n" +
+      "      this.googleAnalytics.track(eventName, data);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Track with Mixpanel if available\n" +
+      "    if (this.mixpanel) {\n" +
+      "      this.mixpanel.track(eventName, data);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Log if logger is available\n" +
+      "    if (this.logger) {\n" +
+      "      this.logger.log(`Event tracked: ${eventName}`);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Conditional Service Registration:**\n" +
+      "```typescript\n" +
+      "// environment-based service registration\n" +
+      "export function provideAnalytics(): Provider[] {\n" +
+      "  const providers: Provider[] = [];\n" +
+      "  \n" +
+      "  if (environment.production) {\n" +
+      "    providers.push(GoogleAnalytics);\n" +
+      "  }\n" +
+      "  \n" +
+      "  if (environment.enableMixpanel) {\n" +
+      "    providers.push(Mixpanel);\n" +
+      "  }\n" +
+      "  \n" +
+      "  return providers;\n" +
+      "}\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  providers: [\n" +
+      "    AnalyticsService,\n" +
+      "    ...provideAnalytics() // Conditionally provide analytics services\n" +
+      "  ],\n" +
+      "})\n" +
+      "export class AppModule {}\n" +
+      "```\n\n" +
+      "**Testing with Optional Dependencies:**\n" +
+      "```typescript\n" +
+      "describe('UserService', () => {\n" +
+      "  let service: UserService;\n" +
+      "  let mockLogger: jasmine.SpyObj<Logger>;\n" +
+      "  \n" +
+      "  beforeEach(() => {\n" +
+      "    mockLogger = jasmine.createSpyObj('Logger', ['log', 'error']);\n" +
+      "    \n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      providers: [\n" +
+      "        UserService,\n" +
+      "        { provide: Logger, useValue: mockLogger } // Provide mock logger\n" +
+      "      ]\n" +
+      "    });\n" +
+      "    \n" +
+      "    service = TestBed.inject(UserService);\n" +
+      "  });\n" +
+      "  \n" +
+      "  it('should use logger when available', () => {\n" +
+      "    service.getUser('123');\n" +
+      "    expect(mockLogger.log).toHaveBeenCalledWith('Fetching user with ID: 123');\n" +
+      "  });\n" +
+      "});\n" +
+      "\n" +
+      "// Test without logger\n" +
+      "describe('UserService without Logger', () => {\n" +
+      "  let service: UserService;\n" +
+      "  \n" +
+      "  beforeEach(() => {\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      providers: [UserService] // No logger provided\n" +
+      "    });\n" +
+      "    \n" +
+      "    service = TestBed.inject(UserService);\n" +
+      "  });\n" +
+      "  \n" +
+      "  it('should work without logger', () => {\n" +
+      "    const user = service.getUser('123');\n" +
+      "    expect(user).toBeDefined();\n" +
+      "    expect(user.id).toBe('123');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Real-World Example - Feature Flags:**\n" +
+      "```typescript\n" +
+      "export class FeatureService {\n" +
+      "  constructor(\n" +
+      "    @Optional() private featureFlags?: FeatureFlagsService,\n" +
+      "    @Optional() private analytics?: AnalyticsService\n" +
+      "  ) {}\n" +
+      "  \n" +
+      "  isFeatureEnabled(featureName: string): boolean {\n" +
+      "    // Use feature flags service if available\n" +
+      "    if (this.featureFlags) {\n" +
+      "      return this.featureFlags.isEnabled(featureName);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Fallback to environment configuration\n" +
+      "    return environment.features[featureName] || false;\n" +
+      "  }\n" +
+      "  \n" +
+      "  trackFeatureUsage(featureName: string): void {\n" +
+      "    if (this.analytics) {\n" +
+      "      this.analytics.trackEvent('feature_used', { feature: featureName });\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Error Handling with Optional Dependencies:**\n" +
+      "```typescript\n" +
+      "export class ErrorHandlingService {\n" +
+      "  constructor(\n" +
+      "    @Optional() private logger?: Logger,\n" +
+      "    @Optional() private errorReporting?: ErrorReportingService\n" +
+      "  ) {}\n" +
+      "  \n" +
+      "  handleError(error: Error): void {\n" +
+      "    // Log error if logger is available\n" +
+      "    if (this.logger) {\n" +
+      "      this.logger.error(`Error occurred: ${error.message}`);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Report error if service is available\n" +
+      "    if (this.errorReporting) {\n" +
+      "      this.errorReporting.reportError(error);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Fallback to console\n" +
+      "    console.error('Unhandled error:', error);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- **Flexible Configuration**: Services can work with or without optional dependencies\n" +
+      "- **Environment-Specific**: Different services for different environments\n" +
+      "  - **Testing**: Easy to mock or omit dependencies in tests\n" +
+      "- **Feature Flags**: Enable/disable features based on configuration\n" +
+      "- **Graceful Degradation**: Application continues to work even if optional services are unavailable\n" +
+      "- **Modular Architecture**: Services can be added/removed without breaking existing code\n\n" +
+      "**Best Practices:**\n" +
+      "- Always check if optional dependency exists before using it\n" +
+      "- Provide meaningful fallbacks when optional dependencies are not available\n" +
+      "- Use optional dependencies for cross-cutting concerns (logging, analytics, monitoring)\n" +
+      "- Document which dependencies are optional in your service documentation\n" +
+      "- Consider using factory providers for complex optional dependency scenarios\n" +
+      "- Test both scenarios: with and without optional dependencies",
+    category: "Dependency Injection",
+    difficulty: "intermediate",
+    tags: ["@Optional", "dependency-injection", "optional", "decorator", "DI"],
+  },
+  {
+    id: 205,
+    question: "What are reactive forms?",
+    answer:
+      "Reactive forms is a model-driven approach for creating forms in Angular using a reactive style where form inputs and values are provided as streams of input values. They are built around observable streams and provide explicit, immutable access to the form data model.\n\n" +
+      "**Key Characteristics:**\n" +
+      "- **Model-driven**: Form structure is defined in the component class\n" +
+      "- **Reactive**: Built around observable streams\n" +
+      "- **Immutable**: Form state changes return new states\n" +
+      "- **Explicit**: Direct access to form control instances\n" +
+      "- **Testable**: Easy to unit test without UI interaction\n\n" +
+      "**Basic Setup:**\n" +
+      "```typescript\n" +
+      "// 1. Import ReactiveFormsModule\n" +
+      "import { ReactiveFormsModule } from '@angular/forms';\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  imports: [\n" +
+      "    // other imports ...\n" +
+      "    ReactiveFormsModule\n" +
+      "  ],\n" +
+      "})\n" +
+      "export class AppModule { }\n" +
+      "```\n\n" +
+      "**2. Create FormControl in Component:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { FormControl } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'user-profile',\n" +
+      "  styleUrls: ['./user-profile.component.css']\n" +
+      "})\n" +
+      "export class UserProfileComponent {\n" +
+      "  userName = new FormControl('');\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Register FormControl in Template:**\n" +
+      "```html\n" +
+      "<label>\n" +
+      "  User name:\n" +
+      '  <input type="text" [formControl]="userName">\n' +
+      "</label>\n" +
+      "```\n\n" +
+      "**Complete Example:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { FormControl } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'user-profile',\n" +
+      "  styleUrls: ['./user-profile.component.css'],\n" +
+      "  template: `\n" +
+      "    <label>\n" +
+      "      User name:\n" +
+      '      <input type="text" [formControl]="userName">\n' +
+      "    </label>\n" +
+      "    <p>Value: {{ userName.value }}</p>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserProfileComponent {\n" +
+      "  userName = new FormControl('');\n" +
+      "}\n" +
+      "```\n\n" +
+      "**FormGroup Example:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { FormGroup, FormControl, Validators } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'user-form',\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      "      <div>\n" +
+      "        <label>First Name:</label>\n" +
+      '        <input formControlName="firstName" placeholder="Enter first name">\n' +
+      "        <div *ngIf=\"userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched\">\n" +
+      "          First name is required\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      <div>\n" +
+      "        <label>Email:</label>\n" +
+      '        <input formControlName="email" placeholder="Enter email">\n' +
+      "        <div *ngIf=\"userForm.get('email')?.invalid && userForm.get('email')?.touched\">\n" +
+      "          <div *ngIf=\"userForm.get('email')?.errors?.['required']\">Email is required</div>\n" +
+      "          <div *ngIf=\"userForm.get('email')?.errors?.['email']\">Invalid email format</div>\n" +
+      "        </div>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <button type="submit" [disabled]="userForm.invalid">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserFormComponent {\n" +
+      "  userForm = new FormGroup({\n" +
+      "    firstName: new FormControl('', Validators.required),\n" +
+      "    email: new FormControl('', [Validators.required, Validators.email])\n" +
+      "  });\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**FormBuilder Example:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, Validators } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'user-profile',\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">\n' +
+      '      <div formGroupName="address">\n' +
+      '        <input formControlName="street" placeholder="Street">\n' +
+      '        <input formControlName="city" placeholder="City">\n' +
+      '        <input formControlName="state" placeholder="State">\n' +
+      '        <input formControlName="zip" placeholder="ZIP">\n' +
+      "      </div>\n" +
+      '      <button type="submit">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserProfileComponent {\n" +
+      "  profileForm = this.formBuilder.group({\n" +
+      "    firstName: ['', Validators.required],\n" +
+      "    lastName: ['', Validators.required],\n" +
+      "    address: this.formBuilder.group({\n" +
+      "      street: [''],\n" +
+      "      city: [''],\n" +
+      "      state: [''],\n" +
+      "      zip: ['']\n" +
+      "    }),\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    console.log('Profile form submitted:', this.profileForm.value);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**FormArray Example:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'dynamic-form',\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">\n' +
+      '      <div formArrayName="hobbies">\n' +
+      '        <div *ngFor="let hobby of hobbies.controls; let i = index" [formGroupName]="i">\n' +
+      '          <input formControlName="name" placeholder="Hobby name">\n' +
+      '          <button type="button" (click)="removeHobby(i)">Remove</button>\n' +
+      "        </div>\n" +
+      '        <button type="button" (click)="addHobby()">Add Hobby</button>\n' +
+      "      </div>\n" +
+      '      <button type="submit">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DynamicFormComponent {\n" +
+      "  dynamicForm = this.formBuilder.group({\n" +
+      "    hobbies: this.formBuilder.array([])\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "  \n" +
+      "  get hobbies() {\n" +
+      "    return this.dynamicForm.get('hobbies') as FormArray;\n" +
+      "  }\n" +
+      "  \n" +
+      "  addHobby() {\n" +
+      "    const hobbyGroup = this.formBuilder.group({\n" +
+      "      name: ['']\n" +
+      "    });\n" +
+      "    this.hobbies.push(hobbyGroup);\n" +
+      "  }\n" +
+      "  \n" +
+      "  removeHobby(index: number) {\n" +
+      "    this.hobbies.removeAt(index);\n" +
+      "  }\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    console.log('Dynamic form submitted:', this.dynamicForm.value);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Custom Validators:**\n" +
+      "```typescript\n" +
+      "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n" +
+      "\n" +
+      "export function passwordMatchValidator(): ValidatorFn {\n" +
+      "  return (control: AbstractControl): ValidationErrors | null => {\n" +
+      "    const password = control.get('password');\n" +
+      "    const confirmPassword = control.get('confirmPassword');\n" +
+      "    \n" +
+      "    if (password && confirmPassword && password.value !== confirmPassword.value) {\n" +
+      "      return { passwordMismatch: true };\n" +
+      "    }\n" +
+      "    \n" +
+      "    return null;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'password-form',\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="passwordForm">\n' +
+      '      <input formControlName="password" type="password" placeholder="Password">\n' +
+      '      <input formControlName="confirmPassword" type="password" placeholder="Confirm Password">\n' +
+      "      <div *ngIf=\"passwordForm.hasError('passwordMismatch')\">\n" +
+      "        Passwords do not match\n" +
+      "      </div>\n" +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class PasswordFormComponent {\n" +
+      "  passwordForm = this.formBuilder.group({\n" +
+      "    password: ['', Validators.required],\n" +
+      "    confirmPassword: ['', Validators.required]\n" +
+      "  }, { validators: passwordMatchValidator() });\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Async Validators:**\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';\n" +
+      "import { Observable, of } from 'rxjs';\n" +
+      "import { map, catchError } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class UserService {\n" +
+      "  checkEmailExists(email: string): Observable<boolean> {\n" +
+      "    // Simulate API call\n" +
+      "    return of(email === 'test@example.com').pipe(\n" +
+      "      map(exists => exists)\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "export function emailExistsValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "    \n" +
+      "    return userService.checkEmailExists(control.value).pipe(\n" +
+      "      map(exists => exists ? { emailExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'async-form',\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="asyncForm">\n' +
+      '      <input formControlName="email" placeholder="Email">\n' +
+      "      <div *ngIf=\"asyncForm.get('email')?.pending\">\n" +
+      "        Checking email availability...\n" +
+      "      </div>\n" +
+      "      <div *ngIf=\"asyncForm.get('email')?.errors?.['emailExists']\">\n" +
+      "        Email already exists\n" +
+      "      </div>\n" +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AsyncFormComponent {\n" +
+      "  asyncForm = this.formBuilder.group({\n" +
+      "    email: ['', Validators.email, emailExistsValidator(this.userService)]\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(\n" +
+      "    private formBuilder: FormBuilder,\n" +
+      "    private userService: UserService\n" +
+      "  ) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- **Predictable**: Form state is explicit and immutable\n" +
+      "- **Testable**: Easy to unit test without DOM interaction\n" +
+      "- **Scalable**: Better for complex forms with dynamic behavior\n" +
+      "- **Type-safe**: Full TypeScript support\n" +
+      "- **Reactive**: Built around observable streams\n" +
+      "- **Flexible**: Easy to add custom validators and async validation\n" +
+      "- **Performance**: Better performance for complex forms\n\n" +
+      "**Best Practices:**\n" +
+      "- Use FormBuilder for cleaner syntax\n" +
+      "- Implement custom validators for complex validation logic\n" +
+      "- Use async validators for server-side validation\n" +
+      "- Handle form state changes reactively\n" +
+      "- Validate on blur or submit to improve UX\n" +
+      "- Use FormArray for dynamic form sections\n" +
+      "- Implement proper error handling and user feedback",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["reactive-forms", "FormControl", "FormGroup", "FormBuilder", "validation", "observable"],
+  },
+  {
+    id: 206,
+    question: "What are template driven forms?",
+    answer:
+      "Template-driven forms are model-driven forms where you write the logic, validations, controls, etc., in the template part of the code using directives. They are suitable for simple scenarios and use two-way binding with `[(ngModel)]` syntax.\n\n" +
+      "**Key Characteristics:**\n" +
+      "- **Template-driven**: Form logic is defined in the template\n" +
+      "- **Two-way binding**: Uses `[(ngModel)]` for data binding\n" +
+      "- **Implicit**: Form controls are created automatically by directives\n" +
+      "- **Asynchronous**: Form state changes are asynchronous\n" +
+      "- **Mutable**: Form state is mutable\n" +
+      "- **Simple**: Easy to implement for basic forms\n\n" +
+      "**Basic Setup:**\n" +
+      "```typescript\n" +
+      "// 1. Import FormsModule\n" +
+      "import { BrowserModule } from '@angular/platform-browser';\n" +
+      "import { NgModule } from '@angular/core';\n" +
+      "import { FormsModule } from '@angular/forms';\n" +
+      "import { RegisterComponent } from './app.component';\n" +
+      "\n" +
+      "@NgModule({\n" +
+      "  declarations: [\n" +
+      "    RegisterComponent,\n" +
+      "  ],\n" +
+      "  imports: [\n" +
+      "    BrowserModule,\n" +
+      "    FormsModule\n" +
+      "  ],\n" +
+      "  providers: [],\n" +
+      "  bootstrap: [RegisterComponent]\n" +
+      "})\n" +
+      "export class AppModule { }\n" +
+      "```\n\n" +
+      "**2. Component with Template-Driven Form:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "export class RegisterComponent {\n" +
+      "  model = {\n" +
+      "    name: '',\n" +
+      "    email: '',\n" +
+      "    password: ''\n" +
+      "  };\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    console.log('Form submitted:', this.model);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Template with Form Directives:**\n" +
+      "```html\n" +
+      '<div class="container">\n' +
+      "  <h1>Registration Form</h1>\n" +
+      '  <form (ngSubmit)="onSubmit()" #registerForm="ngForm">\n' +
+      '    <div class="form-group">\n' +
+      '      <label for="name">Name</label>\n' +
+      '      <input type="text" class="form-control" id="name"\n' +
+      "             required\n" +
+      '             [(ngModel)]="model.name" name="name"\n' +
+      '             #name="ngModel">\n' +
+      '      <div [hidden]="name.valid || name.pristine"\n' +
+      '           class="alert alert-danger">\n' +
+      "        Please enter your name\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <div class="form-group">\n' +
+      '      <label for="email">Email</label>\n' +
+      '      <input type="email" class="form-control" id="email"\n' +
+      "             required email\n" +
+      '             [(ngModel)]="model.email" name="email"\n' +
+      '             #email="ngModel">\n' +
+      '      <div [hidden]="email.valid || email.pristine"\n' +
+      '           class="alert alert-danger">\n' +
+      "        <div *ngIf=\"email.errors?.['required']\">Email is required</div>\n" +
+      "        <div *ngIf=\"email.errors?.['email']\">Invalid email format</div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <div class="form-group">\n' +
+      '      <label for="password">Password</label>\n' +
+      '      <input type="password" class="form-control" id="password"\n' +
+      '             required minlength="6"\n' +
+      '             [(ngModel)]="model.password" name="password"\n' +
+      '             #password="ngModel">\n' +
+      '      <div [hidden]="password.valid || password.pristine"\n' +
+      '           class="alert alert-danger">\n' +
+      "        <div *ngIf=\"password.errors?.['required']\">Password is required</div>\n" +
+      "        <div *ngIf=\"password.errors?.['minlength']\">Password must be at least 6 characters</div>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "    \n" +
+      '    <button type="submit" class="btn btn-success" \n' +
+      '            [disabled]="!registerForm.form.valid">Submit</button>\n' +
+      "  </form>\n" +
+      "</div>\n" +
+      "```\n\n" +
+      "**Complete Example:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-register',\n" +
+      "  template: `\n" +
+      '    <div class="container">\n' +
+      "      <h1>Registration Form</h1>\n" +
+      '      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="name">Name</label>\n' +
+      '          <input type="text" class="form-control" id="name"\n' +
+      "                 required\n" +
+      '                 [(ngModel)]="model.name" name="name"\n' +
+      '                 #name="ngModel">\n' +
+      '          <div [hidden]="name.valid || name.pristine"\n' +
+      '               class="alert alert-danger">\n' +
+      "            Please enter your name\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="form-group">\n' +
+      '          <label for="email">Email</label>\n' +
+      '          <input type="email" class="form-control" id="email"\n' +
+      "                 required email\n" +
+      '                 [(ngModel)]="model.email" name="email"\n' +
+      '                 #email="ngModel">\n' +
+      '          <div [hidden]="email.valid || email.pristine"\n' +
+      '               class="alert alert-danger">\n' +
+      "            <div *ngIf=\"email.errors?.['required']\">Email is required</div>\n" +
+      "            <div *ngIf=\"email.errors?.['email']\">Invalid email format</div>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <div class="form-group">\n' +
+      '          <label for="password">Password</label>\n' +
+      '          <input type="password" class="form-control" id="password"\n' +
+      '                 required minlength="6"\n' +
+      '                 [(ngModel)]="model.password" name="password"\n' +
+      '                 #password="ngModel">\n' +
+      '          <div [hidden]="password.valid || password.pristine"\n' +
+      '               class="alert alert-danger">\n' +
+      "            <div *ngIf=\"password.errors?.['required']\">Password is required</div>\n" +
+      "            <div *ngIf=\"password.errors?.['minlength']\">Password must be at least 6 characters</div>\n" +
+      "          </div>\n" +
+      "        </div>\n" +
+      "        \n" +
+      '        <button type="submit" class="btn btn-success" \n' +
+      '                [disabled]="!registerForm.form.valid">Submit</button>\n' +
+      "      </form>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class RegisterComponent {\n" +
+      "  model = {\n" +
+      "    name: '',\n" +
+      "    email: '',\n" +
+      "    password: ''\n" +
+      "  };\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    console.log('Form submitted:', this.model);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Custom Validators for Template-Driven Forms:**\n" +
+      "```typescript\n" +
+      "import { Directive, Input } from '@angular/core';\n" +
+      "import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';\n" +
+      "\n" +
+      "@Directive({\n" +
+      "  selector: '[appPasswordMatch]',\n" +
+      "  providers: [{\n" +
+      "    provide: NG_VALIDATORS,\n" +
+      "    useExisting: PasswordMatchValidatorDirective,\n" +
+      "    multi: true\n" +
+      "  }]\n" +
+      "})\n" +
+      "export class PasswordMatchValidatorDirective implements Validator {\n" +
+      "  @Input('appPasswordMatch') passwordField: string;\n" +
+      "  \n" +
+      "  validate(control: AbstractControl): ValidationErrors | null {\n" +
+      "    const password = control.parent?.get(this.passwordField);\n" +
+      "    \n" +
+      "    if (password && control.value !== password.value) {\n" +
+      "      return { passwordMismatch: true };\n" +
+      "    }\n" +
+      "    \n" +
+      "    return null;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using Custom Validator:**\n" +
+      "```html\n" +
+      '<form #passwordForm="ngForm">\n' +
+      '  <div class="form-group">\n' +
+      '    <label for="password">Password</label>\n' +
+      '    <input type="password" id="password"\n' +
+      '           [(ngModel)]="model.password" name="password"\n' +
+      '           required minlength="6">\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <div class="form-group">\n' +
+      '    <label for="confirmPassword">Confirm Password</label>\n' +
+      '    <input type="password" id="confirmPassword"\n' +
+      '           [(ngModel)]="model.confirmPassword" name="confirmPassword"\n' +
+      '           appPasswordMatch="password"\n' +
+      '           #confirmPassword="ngModel">\n' +
+      "    <div *ngIf=\"confirmPassword.errors?.['passwordMismatch']\">\n" +
+      "      Passwords do not match\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Form State Properties:**\n" +
+      "```typescript\n" +
+      "export class FormStateComponent {\n" +
+      "  model = { name: '', email: '' };\n" +
+      "  \n" +
+      "  // Access form state\n" +
+      "  getFormState(form: NgForm) {\n" +
+      "    return {\n" +
+      "      valid: form.valid,\n" +
+      "      invalid: form.invalid,\n      " +
+      "      pristine: form.pristine,\n" +
+      "      dirty: form.dirty,\n" +
+      "      touched: form.touched,\n" +
+      "      untouched: form.untouched,\n" +
+      "      value: form.value,\n" +
+      "      errors: form.errors\n" +
+      "    };\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template with Form State:**\n" +
+      "```html\n" +
+      '<form #myForm="ngForm" (ngSubmit)="onSubmit()">\n' +
+      '  <div class="form-group">\n' +
+      '    <label for="name">Name</label>\n' +
+      '    <input type="text" id="name"\n' +
+      '           [(ngModel)]="model.name" name="name"\n' +
+      "           required\n" +
+      '           #name="ngModel">\n' +
+      "    \n" +
+      "    <!-- Form state display -->\n" +
+      '    <div class="form-state">\n' +
+      "      <p>Valid: {{ name.valid }}</p>\n" +
+      "      <p>Invalid: {{ name.invalid }}</p>\n" +
+      "      <p>Pristine: {{ name.pristine }}</p>\n" +
+      "      <p>Dirty: {{ name.dirty }}</p>\n" +
+      "      <p>Touched: {{ name.touched }}</p>\n" +
+      "      <p>Untouched: {{ name.untouched }}</p>\n" +
+      "      <p>Value: {{ name.value }}</p>\n" +
+      "      <p>Errors: {{ name.errors | json }}</p>\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="!myForm.valid">Submit</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- **Simple**: Easy to implement for basic forms\n" +
+      "- **Familiar**: Similar to traditional HTML forms\n" +
+      "- **Quick Setup**: Minimal code required\n" +
+      "- **Two-way Binding**: Automatic data synchronization\n" +
+      "- **Template-based**: Logic is visible in the template\n" +
+      "- **Good for Prototyping**: Fast development for simple forms\n\n" +
+      "**Limitations:**\n" +
+      "- **Less Testable**: Harder to unit test\n" +
+      "- **Asynchronous**: Form state changes are async\n" +
+      "- **Mutable**: Form state is mutable\n" +
+      "- **Less Scalable**: Not ideal for complex forms\n" +
+      "- **Template Bloat**: Can make templates complex\n" +
+      "- **Limited Control**: Less control over form behavior\n\n" +
+      "**Best Practices:**\n" +
+      "- Use for simple forms with basic validation\n" +
+      "- Keep validation logic simple\n" +
+      "- Use template reference variables for form state access\n" +
+      "- Implement custom validators as directives\n" +
+      "- Handle form submission properly\n" +
+      "- Use proper error messaging\n" +
+      "- Consider reactive forms for complex scenarios",
+    category: "Forms",
+    difficulty: "beginner",
+    tags: ["template-driven-forms", "ngModel", "FormsModule", "two-way-binding", "validation"],
+  },
+  {
+    id: 207,
+    question: "What are the differences between reactive forms and template driven forms?",
+    answer:
+      "Reactive forms and template-driven forms are two different approaches to handling forms in Angular. Each has its own strengths and use cases.\n\n" +
+      "**Key Differences:**\n\n" +
+      "| **Feature** | **Reactive Forms** | **Template-Driven Forms** |\n" +
+      "|--------------|-------------------|--------------------------|\n" +
+      "| **Form Model Setup** | Created (FormControl instance) in component explicitly | Created by directives |\n" +
+      "| **Data Updates** | Synchronous | Asynchronous |\n" +
+      "| **Form Custom Validation** | Defined as Functions | Defined as Directives |\n" +
+      "| **Testing** | No interaction with change detection cycle | Need knowledge of the change detection process |\n" +
+      "| **Mutability** | Immutable (by always returning new value for FormControl instance) | Mutable (Property always modified to new value) |\n" +
+      "| **Scalability** | More scalable using low-level APIs | Less scalable using due to abstraction on APIs |\n" +
+      "| **Complexity** | More complex setup, better for complex forms | Simpler setup, good for simple forms |\n" +
+      "| **Type Safety** | Full TypeScript support | Limited TypeScript support |\n" +
+      "| **Performance** | Better performance for complex forms | Good performance for simple forms |\n" +
+      "| **Form State** | Explicit and immutable | Implicit and mutable |\n" +
+      "| **Validation** | Synchronous and asynchronous validators | Primarily synchronous validators |\n" +
+      "| **Dynamic Forms** | Excellent support with FormArray | Limited support |\n" +
+      "| **Reactive Programming** | Built around observables | Not reactive |\n\n" +
+      "**Reactive Forms Example:**\n" +
+      "```typescript\n" +
+      "// Component\n" +
+      "export class ReactiveFormComponent {\n" +
+      "  userForm = new FormGroup({\n" +
+      "    firstName: new FormControl('', Validators.required),\n" +
+      "    email: new FormControl('', [Validators.required, Validators.email]),\n" +
+      "    address: new FormGroup({\n" +
+      "      street: new FormControl(''),\n" +
+      "      city: new FormControl('')\n" +
+      "    })\n" +
+      "  });\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "```html\n" +
+      "<!-- Template -->\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      '  <input formControlName="firstName" placeholder="First Name">\n' +
+      '  <input formControlName="email" placeholder="Email">\n' +
+      "  \n" +
+      '  <div formGroupName="address">\n' +
+      '    <input formControlName="street" placeholder="Street">\n' +
+      '    <input formControlName="city" placeholder="City">\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="userForm.invalid">Submit</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "**Template-Driven Forms Example:**\n" +
+      "```typescript\n" +
+      "// Component\n" +
+      "export class TemplateFormComponent {\n" +
+      "  model = {\n" +
+      "    firstName: '',\n" +
+      "    email: '',\n" +
+      "    address: {\n" +
+      "      street: '',\n" +
+      "      city: ''\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    console.log('Form submitted:', this.model);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "```html\n" +
+      "<!-- Template -->\n" +
+      '<form (ngSubmit)="onSubmit()" #userForm="ngForm">\n' +
+      '  <input [(ngModel)]="model.firstName" name="firstName" \n' +
+      '         required placeholder="First Name">\n' +
+      '  <input [(ngModel)]="model.email" name="email" \n' +
+      '         required email placeholder="Email">\n' +
+      "  \n" +
+      '  <div ngModelGroup="address">\n' +
+      '    <input [(ngModel)]="model.address.street" name="street" \n' +
+      '           placeholder="Street">\n' +
+      '    <input [(ngModel)]="model.address.city" name="city" \n' +
+      '           placeholder="City">\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="!userForm.form.valid">Submit</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "**Validation Comparison:**\n\n" +
+      "**Reactive Forms - Custom Validator:**\n" +
+      "```typescript\n" +
+      "export function passwordMatchValidator(): ValidatorFn {\n" +
+      "  return (control: AbstractControl): ValidationErrors | null => {\n" +
+      "    const password = control.get('password');\n" +
+      "    const confirmPassword = control.get('confirmPassword');\n" +
+      "    \n" +
+      "    if (password && confirmPassword && password.value !== confirmPassword.value) {\n" +
+      "      return { passwordMismatch: true };\n" +
+      "    }\n" +
+      "    return null;\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "// Usage\n" +
+      "passwordForm = new FormGroup({\n" +
+      "  password: new FormControl('', Validators.required),\n" +
+      "  confirmPassword: new FormControl('', Validators.required)\n" +
+      "}, { validators: passwordMatchValidator() });\n" +
+      "```\n\n" +
+      "**Template-Driven Forms - Custom Validator:**\n" +
+      "```typescript\n" +
+      "@Directive({\n" +
+      "  selector: '[appPasswordMatch]',\n" +
+      "  providers: [{\n" +
+      "    provide: NG_VALIDATORS,\n" +
+      "    useExisting: PasswordMatchValidatorDirective,\n" +
+      "    multi: true\n" +
+      "  }]\n" +
+      "})\n" +
+      "export class PasswordMatchValidatorDirective implements Validator {\n" +
+      "  @Input('appPasswordMatch') passwordField: string;\n" +
+      "  \n" +
+      "  validate(control: AbstractControl): ValidationErrors | null {\n" +
+      "    const password = control.parent?.get(this.passwordField);\n" +
+      "    \n" +
+      "    if (password && control.value !== password.value) {\n" +
+      "      return { passwordMismatch: true };\n" +
+      "    }\n" +
+      "    return null;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "```html\n" +
+      "<!-- Usage -->\n" +
+      '<input [(ngModel)]="model.password" name="password" required>\n' +
+      '<input [(ngModel)]="model.confirmPassword" name="confirmPassword" \n' +
+      '       appPasswordMatch="password" required>\n' +
+      "```\n\n" +
+      "**Testing Comparison:**\n\n" +
+      "**Reactive Forms Testing:**\n" +
+      "```typescript\n" +
+      "describe('ReactiveFormComponent', () => {\n" +
+      "  let component: ReactiveFormComponent;\n" +
+      "  \n" +
+      "  beforeEach(() => {\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      declarations: [ReactiveFormComponent],\n" +
+      "      imports: [ReactiveFormsModule]\n" +
+      "    });\n" +
+      "    \n" +
+      "    component = TestBed.createComponent(ReactiveFormComponent).componentInstance;\n" +
+      "  });\n" +
+      "  \n" +
+      "  it('should create form with validators', () => {\n" +
+      "    expect(component.userForm.get('firstName')?.hasError('required')).toBe(true);\n" +
+      "    expect(component.userForm.get('email')?.hasError('required')).toBe(true);\n" +
+      "  });\n" +
+      "  \n" +
+      "  it('should validate email format', () => {\n" +
+      "    const emailControl = component.userForm.get('email');\n" +
+      "    emailControl?.setValue('invalid-email');\n" +
+      "    expect(emailControl?.hasError('email')).toBe(true);\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Template-Driven Forms Testing:**\n" +
+      "```typescript\n" +
+      "describe('TemplateFormComponent', () => {\n" +
+      "  let component: TemplateFormComponent;\n" +
+      "  let fixture: ComponentFixture<TemplateFormComponent>;\n" +
+      "  \n" +
+      "  beforeEach(() => {\n" +
+      "    TestBed.configureTestingModule({\n" +
+      "      declarations: [TemplateFormComponent],\n" +
+      "      imports: [FormsModule]\n" +
+      "    });\n" +
+      "    \n" +
+      "    fixture = TestBed.createComponent(TemplateFormComponent);\n" +
+      "    component = fixture.componentInstance;\n" +
+      "    fixture.detectChanges();\n" +
+      "  });\n" +
+      "  \n" +
+      "  it('should validate required fields', () => {\n" +
+      "    const firstNameInput = fixture.debugElement.query(By.css('input[name=\"firstName\"]'));\n" +
+      "    firstNameInput.nativeElement.value = '';\n" +
+      "    firstNameInput.nativeElement.dispatchEvent(new Event('input'));\n" +
+      "    fixture.detectChanges();\n" +
+      "    \n" +
+      "    // Need to trigger change detection for template-driven forms\n" +
+      "    expect(component.model.firstName).toBe('');\n" +
+      "  });\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Dynamic Forms Comparison:**\n\n" +
+      "**Reactive Forms - Dynamic FormArray:**\n" +
+      "```typescript\n" +
+      "export class DynamicReactiveFormComponent {\n" +
+      "  dynamicForm = new FormGroup({\n" +
+      "    items: new FormArray([])\n" +
+      "  });\n" +
+      "  \n" +
+      "  get items() {\n" +
+      "    return this.dynamicForm.get('items') as FormArray;\n" +
+      "  }\n" +
+      "  \n" +
+      "  addItem() {\n" +
+      "    const itemGroup = new FormGroup({\n" +
+      "      name: new FormControl('', Validators.required),\n" +
+      "      value: new FormControl('', Validators.required)\n" +
+      "    });\n" +
+      "    this.items.push(itemGroup);\n" +
+      "  }\n" +
+      "  \n" +
+      "  removeItem(index: number) {\n" +
+      "    this.items.removeAt(index);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template-Driven Forms - Limited Dynamic Support:**\n" +
+      "```typescript\n" +
+      "export class DynamicTemplateFormComponent {\n" +
+      "  items: any[] = [];\n" +
+      "  \n" +
+      "  addItem() {\n" +
+      "    this.items.push({ name: '', value: '' });\n" +
+      "  }\n" +
+      "  \n" +
+      "  removeItem(index: number) {\n" +
+      "    this.items.splice(index, 1);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Each:**\n\n" +
+      "**Use Reactive Forms When:**\n" +
+      "- Building complex forms with dynamic behavior\n" +
+      "- Need fine-grained control over form validation\n" +
+      "- Working with large forms or forms with many fields\n" +
+      "- Need to implement complex validation logic\n" +
+      "- Want to test forms without DOM interaction\n" +
+      "- Need to integrate with reactive programming patterns\n" +
+      "- Building forms that change based on user input\n" +
+      "- Need to implement custom form controls\n\n" +
+      "**Use Template-Driven Forms When:**\n" +
+      "- Building simple forms with basic validation\n" +
+      "- Need quick prototyping\n" +
+      "- Working with small forms\n" +
+      "- Want familiar HTML form patterns\n" +
+      "- Need simple two-way data binding\n" +
+      "- Building forms that don't change dynamically\n" +
+      "- Working with teams new to Angular\n\n" +
+      "**Migration Considerations:**\n" +
+      "- Template-driven forms can be migrated to reactive forms\n" +
+      "- Reactive forms provide better long-term maintainability\n" +
+      "- Consider the complexity and future requirements\n" +
+      "- Evaluate team expertise and project timeline\n" +
+      "- Reactive forms are recommended for new projects\n" +
+      "- Template-driven forms are good for simple, static forms",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["reactive-forms", "template-driven-forms", "comparison", "validation", "testing"],
+  },
+  {
+    id: 208,
+    question: "How do you update specific properties of a form model?",
+    answer:
+      "You can update specific properties of a form model using the `patchValue()` method for partial updates or `setValue()` method for complete updates. These methods are available on FormGroup, FormControl, and FormArray instances.\n\n" +
+      "**1. Using patchValue() Method:**\n" +
+      "The `patchValue()` method allows you to update specific properties without affecting other form controls.\n" +
+      "```typescript\n" +
+      "export class UserProfileComponent {\n" +
+      "  userProfile = new FormGroup({\n" +
+      "    firstName: new FormControl(''),\n" +
+      "    lastName: new FormControl(''),\n      " +
+      "    email: new FormControl(''),\n" +
+      "    address: new FormGroup({\n" +
+      "      street: new FormControl(''),\n" +
+      "      city: new FormControl(''),\n" +
+      "      state: new FormControl(''),\n" +
+      "      zip: new FormControl('')\n" +
+      "    }),\n" +
+      "    preferences: new FormGroup({\n" +
+      "      newsletter: new FormControl(false),\n" +
+      "      notifications: new FormControl(true)\n" +
+      "    })\n" +
+      "  });\n" +
+      "  \n" +
+      "  updateProfile() {\n" +
+      "    // Update specific properties\n" +
+      "    this.userProfile.patchValue({\n" +
+      "      firstName: 'John',\n" +
+      "      address: {\n" +
+      "        street: '98 Crescent Street'\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateAddress() {\n" +
+      "    // Update nested form group\n" +
+      "    this.userProfile.patchValue({\n" +
+      "      address: {\n" +
+      "        street: '123 Main St',\n" +
+      "        city: 'New York',\n" +
+      "        state: 'NY',\n" +
+      "        zip: '10001'\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Using setValue() Method:**\n" +
+      "The `setValue()` method requires you to provide values for ALL form controls.\n" +
+      "```typescript\n" +
+      "export class CompleteFormComponent {\n" +
+      "  userForm = new FormGroup({\n" +
+      "    firstName: new FormControl(''),\n" +
+      "    lastName: new FormControl(''),\n" +
+      "    email: new FormControl('')\n" +
+      "  });\n" +
+      "  \n" +
+      "  setCompleteForm() {\n" +
+      "    // Must provide values for ALL controls\n" +
+      "    this.userForm.setValue({\n" +
+      "      firstName: 'John',\n" +
+      "      lastName: 'Doe',\n" +
+      "      email: 'john.doe@example.com'\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Updating Individual FormControl:**\n" +
+      "```typescript\n" +
+      "export class IndividualControlComponent {\n" +
+      "  firstName = new FormControl('');\n" +
+      "  lastName = new FormControl('');\n" +
+      "  email = new FormControl('');\n" +
+      "  \n" +
+      "  updateFirstName() {\n" +
+      "    this.firstName.setValue('John');\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateEmail() {\n" +
+      "    this.email.patchValue('john@example.com');\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. Updating FormArray:**\n" +
+      "```typescript\n" +
+      "export class DynamicFormComponent {\n" +
+      "  dynamicForm = new FormGroup({\n" +
+      "    items: new FormArray([])\n" +
+      "  });\n" +
+      "  \n" +
+      "  get items() {\n" +
+      "    return this.dynamicForm.get('items') as FormArray;\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateItems() {\n" +
+      "    // Update specific items in FormArray\n" +
+      "    this.items.patchValue([\n      " +
+      "      { name: 'Item 1', value: 'Value 1' },\n" +
+      "      { name: 'Item 2', value: 'Value 2' }\n" +
+      "    ]);\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateSpecificItem(index: number) {\n" +
+      "    // Update specific item at index\n" +
+      "    const itemGroup = this.items.at(index) as FormGroup;\n" +
+      "    itemGroup.patchValue({\n" +
+      "      name: 'Updated Item',\n" +
+      "      value: 'Updated Value'\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. Real-World Example - User Profile Update:**\n" +
+      "```typescript\n" +
+      "export class UserProfileService {\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "  \n" +
+      "  getUserProfile(userId: string): Observable<UserProfile> {\n" +
+      "    return this.http.get<UserProfile>(`/api/users/${userId}`);\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "export class UserProfileComponent implements OnInit {\n" +
+      "  userProfile = new FormGroup({\n" +
+      "    id: new FormControl(''),\n" +
+      "    firstName: new FormControl('', Validators.required),\n" +
+      "    lastName: new FormControl('', Validators.required),\n" +
+      "    email: new FormControl('', [Validators.required, Validators.email]),\n" +
+      "    phone: new FormControl(''),\n" +
+      "    address: new FormGroup({\n" +
+      "      street: new FormControl(''),\n" +
+      "      city: new FormControl(''),\n" +
+      "      state: new FormControl(''),\n" +
+      "      zip: new FormControl(''),\n" +
+      "      country: new FormControl('')\n" +
+      "    }),\n" +
+      "    preferences: new FormGroup({\n" +
+      "      newsletter: new FormControl(false),\n" +
+      "      notifications: new FormControl(true),\n" +
+      "      theme: new FormControl('light')\n" +
+      "    })\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(private userService: UserProfileService) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    this.loadUserProfile();\n" +
+      "  }\n" +
+      "  \n" +
+      "  loadUserProfile() {\n" +
+      "    this.userService.getUserProfile('123').subscribe(profile => {\n" +
+      "      // Load complete profile data\n" +
+      "      this.userProfile.patchValue(profile);\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateBasicInfo() {\n" +
+      "    // Update only basic information\n" +
+      "    this.userProfile.patchValue({\n" +
+      "      firstName: 'John',\n" +
+      "      lastName: 'Doe',\n" +
+      "      email: 'john.doe@example.com'\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateAddress() {\n" +
+      "    // Update only address information\n" +
+      "    this.userProfile.patchValue({\n" +
+      "      address: {\n" +
+      "        street: '123 Main Street',\n" +
+      "        city: 'New York',\n" +
+      "        state: 'NY',\n" +
+      "        zip: '10001',\n" +
+      "        country: 'USA'\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  updatePreferences() {\n" +
+      "    // Update only preferences\n" +
+      "    this.userProfile.patchValue({\n" +
+      "      preferences: {\n" +
+      "        newsletter: true,\n" +
+      "        notifications: false,\n" +
+      "        theme: 'dark'\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  updateSingleField(fieldName: string, value: any) {\n" +
+      "    // Update a single field\n" +
+      "    this.userProfile.patchValue({\n" +
+      "      [fieldName]: value\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**6. Conditional Updates Based on Form State:**\n" +
+      "```typescript\n" +
+      "export class ConditionalUpdateComponent {\n" +
+      "  userForm = new FormGroup({\n" +
+      "    firstName: new FormControl(''),\n" +
+      "    lastName: new FormControl(''),\n" +
+      "    email: new FormControl(''),\n" +
+      "    isVip: new FormControl(false)\n" +
+      "  });\n" +
+      "  \n" +
+      "  updateBasedOnCondition() {\n" +
+      "    const isVip = this.userForm.get('isVip')?.value;\n" +
+      "    \n" +
+      "    if (isVip) {\n" +
+      "      // Update VIP user with special privileges\n" +
+      "      this.userForm.patchValue({\n" +
+      "        firstName: 'VIP ' + this.userForm.get('firstName')?.value,\n" +
+      "        email: 'vip@example.com'\n" +
+      "      });\n" +
+      "    } else {\n" +
+      "      // Update regular user\n" +
+      "      this.userForm.patchValue({\n" +
+      "        firstName: this.userForm.get('firstName')?.value?.replace('VIP ', ''),\n" +
+      "        email: 'user@example.com'\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**7. Template Integration:**\n" +
+      "```html\n" +
+      '<form [formGroup]="userProfile">\n' +
+      '  <div formGroupName="address">\n' +
+      '    <input formControlName="street" placeholder="Street">\n' +
+      '    <input formControlName="city" placeholder="City">\n' +
+      '    <input formControlName="state" placeholder="State">\n' +
+      '    <input formControlName="zip" placeholder="ZIP">\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <div formGroupName="preferences">\n' +
+      "    <label>\n" +
+      '      <input type="checkbox" formControlName="newsletter">\n' +
+      "      Subscribe to Newsletter\n" +
+      "    </label>\n" +
+      "    <label>\n" +
+      '      <input type="checkbox" formControlName="notifications">\n' +
+      "      Enable Notifications\n" +
+      "    </label>\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="button" (click)="updateBasicInfo()">Update Basic Info</button>\n' +
+      '  <button type="button" (click)="updateAddress()">Update Address</button>\n' +
+      '  <button type="button" (click)="updatePreferences()">Update Preferences</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "**Key Differences:**\n" +
+      "- **patchValue()**: Updates only specified properties, leaves others unchanged\n" +
+      "- **setValue()**: Requires values for ALL form controls, throws error if any are missing\n" +
+      "- **patchValue()**: More flexible and commonly used\n" +
+      "- **setValue()**: Useful when you have complete data to populate the form\n\n" +
+      "**Best Practices:**\n" +
+      "- Use `patchValue()` for partial updates\n" +
+      "- Use `setValue()` when you have complete form data\n" +
+      "- Always check form validity after updates\n" +
+      "- Handle nested FormGroups and FormArrays properly\n" +
+      "- Use TypeScript interfaces for type safety\n" +
+      "- Consider form state when updating values\n" +
+      "- Test form updates thoroughly\n" +
+      "- Document which properties are being updated",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["patchValue", "setValue", "FormGroup", "FormControl", "FormArray", "update"],
+  },
+  {
+    id: 209,
+    question: "What is the purpose of FormBuilder?",
+    answer:
+      "FormBuilder is used as syntactic sugar for easily creating instances of a FormControl, FormGroup, or FormArray. This is helpful to reduce the amount of boilerplate needed to build complex reactive forms. It is available as an injectable helper class of the `@angular/forms` package.\n\n" +
+      "**Key Benefits:**\n" +
+      "- **Reduces Boilerplate**: Less code to create form controls\n" +
+      "- **Cleaner Syntax**: More readable form definitions\n" +
+      "- **Easier Maintenance**: Simpler to modify form structure\n" +
+      "- **Type Safety**: Better TypeScript support\n" +
+      "- **Consistency**: Standardized way to create forms\n\n" +
+      "**Basic Usage:**\n" +
+      "```typescript\n" +
+      "import { FormBuilder, FormGroup, Validators } from '@angular/forms';\n" +
+      "\n" +
+      "export class UserProfileComponent {\n" +
+      "  profileForm = this.formBuilder.group({\n" +
+      "    firstName: ['', Validators.required],\n" +
+      "    lastName: ['', Validators.required],\n" +
+      "    email: ['', [Validators.required, Validators.email]],\n" +
+      "    address: this.formBuilder.group({\n" +
+      "      street: [''],\n" +
+      "      city: [''],\n" +
+      "      state: [''],\n" +
+      "      zip: ['']\n" +
+      "    }),\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Comparison - Without FormBuilder:**\n" +
+      "```typescript\n" +
+      "// Without FormBuilder - More verbose\n" +
+      "export class WithoutFormBuilderComponent {\n" +
+      "  profileForm = new FormGroup({\n" +
+      "    firstName: new FormControl('', Validators.required),\n" +
+      "    lastName: new FormControl('', Validators.required),\n" +
+      "    email: new FormControl('', [Validators.required, Validators.email]),\n" +
+      "    address: new FormGroup({\n" +
+      "      street: new FormControl(''),\n" +
+      "      city: new FormControl(''),\n" +
+      "      state: new FormControl(''),\n" +
+      "      zip: new FormControl('')\n" +
+      "    }),\n" +
+      "  });\n" +
+      "}\n" +
+      "```\n\n" +
+      "**With FormBuilder - Cleaner:**\n" +
+      "```typescript\n" +
+      "// With FormBuilder - Cleaner syntax\n" +
+      "export class WithFormBuilderComponent {\n" +
+      "  profileForm = this.formBuilder.group({\n" +
+      "    firstName: ['', Validators.required],\n" +
+      "    lastName: ['', Validators.required],\n" +
+      "    email: ['', [Validators.required, Validators.email]],\n" +
+      "    address: this.formBuilder.group({\n" +
+      "      street: [''],\n" +
+      "      city: [''],\n" +
+      "      state: [''],\n" +
+      "      zip: ['']\n" +
+      "    }),\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**FormBuilder Methods:**\n\n" +
+      "**1. group() - Creates FormGroup:**\n" +
+      "```typescript\n" +
+      "export class FormGroupExample {\n" +
+      "  userForm = this.formBuilder.group({\n" +
+      "    firstName: ['John', Validators.required],\n" +
+      "    lastName: ['Doe', Validators.required],\n" +
+      "    email: ['john@example.com', [Validators.required, Validators.email]],\n" +
+      "    age: [25, [Validators.min(18), Validators.max(100)]]\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. control() - Creates FormControl:**\n" +
+      "```typescript\n" +
+      "export class FormControlExample {\n" +
+      "  firstName = this.formBuilder.control('John', Validators.required);\n" +
+      "  lastName = this.formBuilder.control('Doe', Validators.required);\n" +
+      "  email = this.formBuilder.control('john@example.com', [Validators.required, Validators.email]);\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. array() - Creates FormArray:**\n" +
+      "```typescript\n" +
+      "export class FormArrayExample {\n" +
+      "  dynamicForm = this.formBuilder.group({\n" +
+      "    items: this.formBuilder.array([\n" +
+      "      this.formBuilder.group({\n" +
+      "        name: ['', Validators.required],\n" +
+      "        value: ['', Validators.required]\n" +
+      "      })\n" +
+      "    ])\n" +
+      "  });\n" +
+      "  \n" +
+      "  get items() {\n" +
+      "    return this.dynamicForm.get('items') as FormArray;\n" +
+      "  }\n" +
+      "  \n" +
+      "  addItem() {\n" +
+      "    const itemGroup = this.formBuilder.group({\n" +
+      "      name: ['', Validators.required],\n" +
+      "      value: ['', Validators.required]\n" +
+      "    });\n" +
+      "    this.items.push(itemGroup);\n" +
+      "  }\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Complex Form Example:**\n" +
+      "```typescript\n" +
+      "export class ComplexFormComponent {\n" +
+      "  userForm = this.formBuilder.group({\n" +
+      "    personalInfo: this.formBuilder.group({\n" +
+      "      firstName: ['', Validators.required],\n" +
+      "      lastName: ['', Validators.required],\n" +
+      "      email: ['', [Validators.required, Validators.email]],\n" +
+      "      phone: ['', Validators.pattern(/^[0-9]{10}$/)]\n" +
+      "    }),\n" +
+      "    address: this.formBuilder.group({\n" +
+      "      street: ['', Validators.required],\n" +
+      "      city: ['', Validators.required],\n" +
+      "      state: ['', Validators.required],\n" +
+      "      zip: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]]\n" +
+      "    }),\n" +
+      "    preferences: this.formBuilder.group({\n" +
+      "      newsletter: [false],\n" +
+      "      notifications: [true],\n" +
+      "      theme: ['light', Validators.required]\n" +
+      "    }),\n" +
+      "    skills: this.formBuilder.array([\n" +
+      "      this.formBuilder.control('', Validators.required)\n" +
+      "    ])\n" +
+      "  });\n" +
+      "  \n" +
+      "  get skills() {\n" +
+      "    return this.userForm.get('skills') as FormArray;\n" +
+      "  }\n" +
+      "  \n" +
+      "  addSkill() {\n" +
+      "    this.skills.push(this.formBuilder.control('', Validators.required));\n" +
+      "  }\n" +
+      "  \n" +
+      "  removeSkill(index: number) {\n" +
+      "    this.skills.removeAt(index);\n" +
+      "  }\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Dynamic Form Creation:**\n" +
+      "```typescript\n" +
+      "export class DynamicFormBuilderComponent {\n" +
+      "  formConfig = {\n" +
+      "    firstName: { value: '', validators: [Validators.required] },\n" +
+      "    lastName: { value: '', validators: [Validators.required] },\n" +
+      "    email: { value: '', validators: [Validators.required, Validators.email] },\n" +
+      "    age: { value: 0, validators: [Validators.min(18)] }\n" +
+      "  };\n" +
+      "  \n" +
+      "  dynamicForm: FormGroup;\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) {\n" +
+      "    this.createDynamicForm();\n" +
+      "  }\n" +
+      "  \n" +
+      "  createDynamicForm() {\n" +
+      "    const formControls: { [key: string]: FormControl } = {};\n" +
+      "    \n" +
+      "    Object.keys(this.formConfig).forEach(key => {\n" +
+      "      const config = this.formConfig[key];\n" +
+      "      formControls[key] = this.formBuilder.control(\n" +
+      "        config.value,\n" +
+      "        config.validators\n" +
+      "      );\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.dynamicForm = this.formBuilder.group(formControls);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**FormBuilder with Custom Validators:**\n" +
+      "```typescript\n" +
+      "export class CustomValidatorFormComponent {\n" +
+      "  passwordForm = this.formBuilder.group({\n" +
+      "    password: ['', [Validators.required, Validators.minLength(8)]],\n" +
+      "    confirmPassword: ['', Validators.required]\n" +
+      "  }, { validators: this.passwordMatchValidator });\n" +
+      "  \n" +
+      "  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {\n" +
+      "    const password = control.get('password');\n" +
+      "    const confirmPassword = control.get('confirmPassword');\n" +
+      "    \n" +
+      "    if (password && confirmPassword && password.value !== confirmPassword.value) {\n" +
+      "      return { passwordMismatch: true };\n" +
+      "    }\n" +
+      "    \n" +
+      "    return null;\n" +
+      "  }\n" +
+      "  \n" +
+      "  constructor(private formBuilder: FormBuilder) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**FormBuilder with Async Validators:**\n" +
+      "```typescript\n" +
+      "export class AsyncValidatorFormComponent {\n" +
+      "  userForm = this.formBuilder.group({\n" +
+      "    username: ['', Validators.required, this.usernameExistsValidator.bind(this)],\n" +
+      "    email: ['', [Validators.required, Validators.email], this.emailExistsValidator.bind(this)]\n" +
+      "  });\n" +
+      "  \n" +
+      "  usernameExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "    \n" +
+      "    return this.userService.checkUsernameExists(control.value).pipe(\n" +
+      "      map(exists => exists ? { usernameExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  }\n" +
+      "  \n" +
+      "  emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "    \n" +
+      "    return this.userService.checkEmailExists(control.value).pipe(\n" +
+      "      map(exists => exists ? { emailExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  }\n" +
+      "  \n" +
+      "  constructor(\n" +
+      "    private formBuilder: FormBuilder,\n" +
+      "    private userService: UserService\n" +
+      "  ) { }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template Integration:**\n" +
+      "```html\n" +
+      '<form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      '  <div formGroupName="personalInfo">\n' +
+      '    <input formControlName="firstName" placeholder="First Name">\n' +
+      '    <input formControlName="lastName" placeholder="Last Name">\n' +
+      '    <input formControlName="email" placeholder="Email">\n' +
+      '    <input formControlName="phone" placeholder="Phone">\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <div formGroupName="address">\n' +
+      '    <input formControlName="street" placeholder="Street">\n' +
+      '    <input formControlName="city" placeholder="City">\n' +
+      '    <input formControlName="state" placeholder="State">\n' +
+      '    <input formControlName="zip" placeholder="ZIP">\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <div formGroupName="preferences">\n' +
+      "    <label>\n" +
+      '      <input type="checkbox" formControlName="newsletter">\n' +
+      "      Newsletter\n" +
+      "    </label>\n" +
+      "    <label>\n" +
+      '      <input type="checkbox" formControlName="notifications">\n' +
+      "      Notifications\n" +
+      "    </label>\n" +
+      '    <select formControlName="theme">\n' +
+      '      <option value="light">Light</option>\n' +
+      '      <option value="dark">Dark</option>\n' +
+      "    </select>\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <div formArrayName="skills">\n' +
+      '    <div *ngFor="let skill of skills.controls; let i = index">\n' +
+      '      <input [formControlName]="i" placeholder="Skill">\n' +
+      '      <button type="button" (click)="removeSkill(i)">Remove</button>\n' +
+      "    </div>\n" +
+      '    <button type="button" (click)="addSkill()">Add Skill</button>\n' +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="userForm.invalid">Submit</button>\n' +
+      "</form>\n" +
+      "```\n\n" +
+      "**Key Advantages:**\n" +
+      "- **Reduced Boilerplate**: Less code to write and maintain\n" +
+      "- **Better Readability**: Cleaner, more intuitive syntax\n" +
+      "- **Easier Refactoring**: Simple to modify form structure\n" +
+      "- **Consistent API**: Standardized way to create forms\n" +
+      "- **Type Safety**: Better TypeScript integration\n" +
+      "- **Flexibility**: Easy to create dynamic forms\n" +
+      "- **Maintainability**: Easier to understand and modify\n\n" +
+      "**Best Practices:**\n" +
+      "- Use FormBuilder for all reactive forms\n" +
+      "- Inject FormBuilder in constructor\n" +
+      "- Use descriptive form control names\n" +
+      "- Group related controls in FormGroups\n" +
+      "- Use FormArrays for dynamic content\n" +
+      "- Implement proper validation\n" +
+      "- Use TypeScript interfaces for form data\n" +
+      "- Test form creation and validation\n" +
+      "- Document complex form structures",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: [
+      "FormBuilder",
+      "reactive-forms",
+      "FormGroup",
+      "FormControl",
+      "FormArray",
+      "syntactic-sugar",
+    ],
+  },
+  {
+    id: 210,
+    question: "How do you optimize the performance of async validators?",
+    answer:
+      "Since all validators run after every form value change, it creates a major impact on performance with async validators by hitting the external API on each keystroke. This situation can be avoided by delaying the form validity by changing the `updateOn` property from `change` (default) to `submit` or `blur`.\n\n" +
+      "**Performance Issues with Async Validators:**\n" +
+      "- **API Calls on Every Keystroke**: Async validators trigger on every input change\n" +
+      "- **Network Overhead**: Multiple unnecessary API requests\n" +
+      "- **Poor User Experience**: Delayed feedback and potential errors\n" +
+      "- **Resource Waste**: Server resources consumed by redundant requests\n" +
+      "- **Race Conditions**: Multiple requests can complete out of order\n\n" +
+      "**1. Using updateOn Property:**\n" +
+      "```typescript\n" +
+      "// Template-driven forms: Set the property on ngModelOptions directive\n" +
+      "export class TemplateFormComponent {\n" +
+      "  model = {\n" +
+      "    email: '',\n" +
+      "    username: ''\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "```html\n" +
+      "<!-- Template-driven forms -->\n" +
+      '<input [(ngModel)]="model.email" \n' +
+      "       [ngModelOptions]=\"{updateOn: 'blur'}\"\n" +
+      '       name="email"\n' +
+      '       #email="ngModel">\n' +
+      "\n" +
+      '<input [(ngModel)]="model.username" \n' +
+      "       [ngModelOptions]=\"{updateOn: 'submit'}\"\n" +
+      '       name="username"\n' +
+      '       #username="ngModel">\n' +
+      "```\n\n" +
+      "```typescript\n" +
+      "// Reactive-forms: Set the property on FormControl instance\n" +
+      "export class ReactiveFormComponent {\n" +
+      "  email = new FormControl('', { updateOn: 'blur' });\n" +
+      "  username = new FormControl('', { updateOn: 'submit' });\n" +
+      "  \n" +
+      "  userForm = new FormGroup({\n" +
+      "    email: this.email,\n" +
+      "    username: this.username\n" +
+      "  });\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Debouncing Async Validators:**\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';\n" +
+      "import { Observable, of, timer } from 'rxjs';\n" +
+      "import { map, switchMap, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class UserService {\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "  \n" +
+      "  checkEmailExists(email: string): Observable<boolean> {\n" +
+      "    return this.http.get<boolean>(`/api/check-email?email=${email}`);\n" +
+      "  }\n" +
+      "  \n" +
+      "  checkUsernameExists(username: string): Observable<boolean> {\n" +
+      "    return this.http.get<boolean>(`/api/check-username?username=${username}`);\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "export function debouncedEmailValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "    \n" +
+      "    return timer(500).pipe(\n" +
+      "      debounceTime(500),\n" +
+      "      distinctUntilChanged(),\n" +
+      "      switchMap(() => userService.checkEmailExists(control.value)),\n" +
+      "      map(exists => exists ? { emailExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "\n" +
+      "export function debouncedUsernameValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "    \n" +
+      "    return timer(300).pipe(\n" +
+      "      debounceTime(300),\n" +
+      "      distinctUntilChanged(),\n" +
+      "      switchMap(() => userService.checkUsernameExists(control.value)),\n" +
+      "      map(exists => exists ? { usernameExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Using Debounced Validators:**\n" +
+      "```typescript\n" +
+      "export class OptimizedFormComponent {\n" +
+      "  userForm = new FormGroup({\n" +
+      "    email: new FormControl('', \n" +
+      "      [Validators.required, Validators.email], \n" +
+      "      debouncedEmailValidator(this.userService)\n" +
+      "    ),\n" +
+      "    username: new FormControl('', \n" +
+      "      [Validators.required, Validators.minLength(3)], \n" +
+      "      debouncedUsernameValidator(this.userService)\n" +
+      "    )\n" +
+      "  });\n" +
+      "  \n" +
+      "  constructor(private userService: UserService) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. Advanced Debouncing with FormBuilder:**\n" +
+      "```typescript\n" +
+      "export class AdvancedFormComponent {\n" +
+      "  userForm = this.formBuilder.group({\n" +
+      "    email: ['', \n" +
+      "      [Validators.required, Validators.email], \n" +
+      "      debouncedEmailValidator(this.userService)\n" +
+      "    ],\n" +
+      "    username: ['', \n" +
+      "      [Validators.required, Validators.minLength(3)], \n" +
+      "      debouncedUsernameValidator(this.userService)\n" +
+      "    ]\n" +
+      "  }, { updateOn: 'blur' });\n" +
+      "  \n" +
+      "  constructor(\n" +
+      "    private formBuilder: FormBuilder,\n" +
+      "    private userService: UserService\n" +
+      "  ) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. Caching Async Validator Results:**\n" +
+      "```typescript\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class CachedValidatorService {\n" +
+      "  private cache = new Map<string, boolean>();\n" +
+      "  private pendingRequests = new Map<string, Observable<boolean>>();\n" +
+      "  \n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "  \n" +
+      "  checkEmailExists(email: string): Observable<boolean> {\n" +
+      "    // Check cache first\n" +
+      "    if (this.cache.has(email)) {\n" +
+      "      return of(this.cache.get(email)!);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Check if request is already pending\n" +
+      "    if (this.pendingRequests.has(email)) {\n" +
+      "      return this.pendingRequests.get(email)!;\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Make new request\n" +
+      "    const request = this.http.get<boolean>(`/api/check-email?email=${email}`).pipe(\n" +
+      "      tap(result => {\n" +
+      "        this.cache.set(email, result);\n" +
+      "        this.pendingRequests.delete(email);\n" +
+      "      }),\n" +
+      "      catchError(() => {\n" +
+      "        this.pendingRequests.delete(email);\n" +
+      "        return of(false);\n" +
+      "      }),\n" +
+      "      shareReplay(1)\n" +
+      "    );\n" +
+      "    \n" +
+      "    this.pendingRequests.set(email, request);\n" +
+      "    return request;\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "export function cachedEmailValidator(validatorService: CachedValidatorService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    if (!control.value) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "    \n" +
+      "    return validatorService.checkEmailExists(control.value).pipe(\n" +
+      "      map(exists => exists ? { emailExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**6. Conditional Async Validation:**\n" +
+      "```typescript\n" +
+      "export function conditionalEmailValidator(userService: UserService): AsyncValidatorFn {\n" +
+      "  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n" +
+      "    const value = control.value;\n" +
+      "    \n" +
+      "    // Only validate if email is complete and valid format\n" +
+      "    if (!value || !value.includes('@') || value.length < 5) {\n" +
+      "      return of(null);\n" +
+      "    }\n" +
+      "    \n" +
+      "    // Only validate if user has stopped typing for 1 second\n" +
+      "    return timer(1000).pipe(\n" +
+      "      switchMap(() => userService.checkEmailExists(value)),\n" +
+      "      map(exists => exists ? { emailExists: true } : null),\n" +
+      "      catchError(() => of(null))\n" +
+      "    );\n" +
+      "  };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**7. Template with Loading States:**\n" +
+      "```html\n" +
+      '<form [formGroup]="userForm">\n' +
+      '  <div class="form-group">\n' +
+      '    <label for="email">Email</label>\n' +
+      '    <input id="email" \n' +
+      '           formControlName="email" \n' +
+      '           placeholder="Enter email">\n' +
+      "    \n" +
+      "    <!-- Loading indicator -->\n" +
+      '    <div *ngIf="userForm.get(\'email\')?.pending" class="loading">\n' +
+      "      Checking email availability...\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <!-- Error messages -->\n" +
+      "    <div *ngIf=\"userForm.get('email')?.errors?.['emailExists']\" class=\"error\">\n" +
+      "      Email already exists\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <div class="form-group">\n' +
+      '    <label for="username">Username</label>\n' +
+      '    <input id="username" \n' +
+      '           formControlName="username" \n' +
+      '           placeholder="Enter username">\n' +
+      "    \n" +
+      "    <!-- Loading indicator -->\n" +
+      '    <div *ngIf="userForm.get(\'username\')?.pending" class="loading">\n' +
+      "      Checking username availability...\n" +
+      "    </div>\n" +
+      "    \n" +
+      "    <!-- Error messages -->\n" +
+      "    <div *ngIf=\"userForm.get('username')?.errors?.['usernameExists']\" class=\"error\">\n" +
+      "      Username already exists\n" +
+      "    </div>\n" +
+      "  </div>\n" +
+      "  \n" +
+      '  <button type="submit" [disabled]="userForm.invalid || userForm.pending">\n' +
+      "    Submit\n" +
+      "  </button>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**8. Performance Monitoring:**\n" +
+      "```typescript\n" +
+      "export class PerformanceMonitoringComponent {\n" +
+      "  userForm = new FormGroup({\n" +
+      "    email: new FormControl('', \n" +
+      "      [Validators.required, Validators.email], \n" +
+      "      this.monitoredEmailValidator.bind(this)\n" +
+      "    )\n" +
+      "  });\n" +
+      "  \n" +
+      "  private validationCount = 0;\n" +
+      "  private startTime: number;\n" +
+      "  \n" +
+      "  monitoredEmailValidator(control: AbstractControl): Observable<ValidationErrors | null> {\n" +
+      "    this.validationCount++;\n" +
+      "    this.startTime = performance.now();\n" +
+      "    \n" +
+      "    console.log(`Validation #${this.validationCount} started for: ${control.value}`);\n" +
+      "    \n" +
+      "    return this.userService.checkEmailExists(control.value).pipe(\n" +
+      "      map(exists => {\n" +
+      "        const duration = performance.now() - this.startTime;\n" +
+      "        console.log(`Validation #${this.validationCount} completed in ${duration}ms`);\n" +
+      "        return exists ? { emailExists: true } : null;\n" +
+      "      }),\n" +
+      "      catchError(error => {\n" +
+      "        const duration = performance.now() - this.startTime;\n" +
+      "        console.error(`Validation #${this.validationCount} failed after ${duration}ms:`, error);\n" +
+      "        return of(null);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "  \n" +
+      "  constructor(private userService: UserService) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Optimization Strategies:**\n" +
+      "- **updateOn: 'blur'**: Validate only when user leaves the field\n" +
+      "- **updateOn: 'submit'**: Validate only when form is submitted\n" +
+      "- **Debouncing**: Delay validation until user stops typing\n" +
+      "- **Caching**: Store validation results to avoid duplicate requests\n" +
+      "- **Conditional Validation**: Only validate when conditions are met\n" +
+      "- **Request Deduplication**: Prevent multiple requests for the same value\n" +
+      "- **Loading States**: Provide user feedback during validation\n" +
+      "- **Error Handling**: Gracefully handle validation failures\n\n" +
+      "**Best Practices:**\n" +
+      "- Use `updateOn: 'blur'` for most async validators\n" +
+      "- Implement debouncing for real-time validation\n" +
+      "- Cache validation results when possible\n" +
+      "- Provide loading indicators for better UX\n" +
+      "- Handle errors gracefully\n" +
+      "- Monitor validation performance\n" +
+      "- Use conditional validation to reduce unnecessary calls\n" +
+      "- Implement request deduplication\n" +
+      "- Test with slow network conditions\n" +
+      "- Consider using Web Workers for heavy validation logic",
+    category: "Forms",
+    difficulty: "advanced",
+    tags: ["async-validators", "performance", "debouncing", "caching", "updateOn", "optimization"],
+  },
+  {
+    id: 211,
+    question: "How to set ngFor and ngIf on the same element?",
+    answer:
+      "Sometimes you may need to both `ngFor` and `ngIf` on the same element but unfortunately you are going to encounter the below template error:\n\n" +
+      "```\n" +
+      "Template parse errors: Can't have multiple template bindings on one element.\n" +
+      "```\n\n" +
+      "In this case, you need to use either `ng-container` or `ng-template`. Let's say if you try to loop over the items only when the items are available, the below code throws an error in the browser:\n\n" +
+      "**❌ Incorrect - This will throw an error:**\n" +
+      "```html\n" +
+      '<ul *ngIf="items" *ngFor="let item of items">\n' +
+      "  <li>{{ item.name }}</li>\n" +
+      "</ul>\n" +
+      "```\n\n" +
+      "**✅ Correct Solutions:**\n\n" +
+      "**1. Using ng-container:**\n" +
+      "```html\n" +
+      '<ng-container *ngIf="items">\n' +
+      '  <ul *ngFor="let item of items">\n' +
+      "    <li>{{ item.name }}</li>\n" +
+      "  </ul>\n" +
+      "</ng-container>\n" +
+      "```\n\n" +
+      "**2. Using ng-template:**\n" +
+      "```html\n" +
+      '<ng-template [ngIf]="items">\n' +
+      '  <ul *ngFor="let item of items">\n' +
+      "    <li>{{ item.name }}</li>\n" +
+      "  </ul>\n" +
+      "</ng-template>\n" +
+      "```\n\n" +
+      "**3. Using ng-container with template reference:**\n" +
+      "```html\n" +
+      '<ng-container *ngIf="items; else noItems">\n' +
+      '  <ul *ngFor="let item of items">\n' +
+      "    <li>{{ item.name }}</li>\n" +
+      "  </ul>\n" +
+      "</ng-container>\n" +
+      "\n" +
+      "<ng-template #noItems>\n" +
+      "  <p>No items available</p>\n" +
+      "</ng-template>\n" +
+      "```\n\n" +
+      "**Real-World Examples:**\n\n" +
+      "**Example 1: User List with Loading State**\n" +
+      "```html\n" +
+      '<div class="user-list">\n' +
+      '  <ng-container *ngIf="users && users.length > 0; else noUsers">\n' +
+      '    <div *ngFor="let user of users" class="user-card">\n' +
+      "      <h3>{{ user.name }}</h3>\n" +
+      "      <p>{{ user.email }}</p>\n" +
+      "    </div>\n" +
+      "  </ng-container>\n" +
+      "  \n" +
+      "  <ng-template #noUsers>\n" +
+      '    <div class="no-users">\n' +
+      "      <p>No users found</p>\n" +
+      "    </div>\n" +
+      "  </ng-template>\n" +
+      "</div>\n" +
+      "```\n\n" +
+      "**Example 2: Product Grid with Filter**\n" +
+      "```html\n" +
+      '<div class="product-grid">\n' +
+      '  <ng-container *ngIf="filteredProducts && filteredProducts.length > 0">\n' +
+      '    <div *ngFor="let product of filteredProducts" class="product-card">\n' +
+      '      <img [src]="product.image" [alt]="product.name">\n' +
+      "      <h4>{{ product.name }}</h4>\n" +
+      '      <p class="price">${{ product.price }}</p>\n' +
+      "    </div>\n" +
+      "  </ng-container>\n" +
+      "  \n" +
+      '  <div *ngIf="!filteredProducts || filteredProducts.length === 0" class="no-products">\n' +
+      "    <p>No products match your criteria</p>\n" +
+      "  </div>\n" +
+      "</div>\n" +
+      "```\n\n" +
+      "**Example 3: Dynamic Form Fields**\n" +
+      "```html\n" +
+      '<form [formGroup]="dynamicForm">\n' +
+      '  <ng-container *ngIf="formFields && formFields.length > 0">\n' +
+      '    <div *ngFor="let field of formFields" class="form-field">\n' +
+      '      <label [for]="field.id">{{ field.label }}</label>\n' +
+      "      <input \n" +
+      '        [id]="field.id"\n' +
+      '        [type]="field.type"\n' +
+      '        [formControlName]="field.name"\n' +
+      '        [placeholder]="field.placeholder">\n' +
+      "    </div>\n" +
+      "  </ng-container>\n" +
+      "  \n" +
+      '  <div *ngIf="!formFields || formFields.length === 0" class="no-fields">\n' +
+      "    <p>No form fields configured</p>\n" +
+      "  </div>\n" +
+      "</form>\n" +
+      "```\n\n" +
+      "**Example 4: Table with Conditional Rows**\n" +
+      "```html\n" +
+      '<table class="data-table">\n' +
+      "  <thead>\n" +
+      "    <tr>\n" +
+      "      <th>Name</th>\n" +
+      "      <th>Status</th>\n" +
+      "      <th>Actions</th>\n" +
+      "    </tr>\n" +
+      "  </thead>\n" +
+      "  <tbody>\n" +
+      '    <ng-container *ngIf="items && items.length > 0">\n' +
+      '      <tr *ngFor="let item of items" [class.active]="item.isActive">\n' +
+      "        <td>{{ item.name }}</td>\n" +
+      "        <td>\n" +
+      '          <span [class]="item.status">{{ item.status }}</span>\n' +
+      "        </td>\n" +
+      "        <td>\n" +
+      '          <button (click)="editItem(item)">Edit</button>\n' +
+      '          <button (click)="deleteItem(item)">Delete</button>\n' +
+      "        </td>\n" +
+      "      </tr>\n" +
+      "    </ng-container>\n" +
+      "  </tbody>\n" +
+      "</table>\n" +
+      "\n" +
+      '<div *ngIf="!items || items.length === 0" class="no-data">\n' +
+      "  <p>No data available</p>\n" +
+      "</div>\n" +
+      "```\n\n" +
+      "**Example 5: Nested Conditions with ng-container**\n" +
+      "```html\n" +
+      '<div class="content-section">\n' +
+      '  <ng-container *ngIf="user && user.isLoggedIn">\n' +
+      "    <h2>Welcome, {{ user.name }}!</h2>\n    " +
+      "    \n" +
+      '    <ng-container *ngIf="user.permissions && user.permissions.length > 0">\n' +
+      '      <div *ngFor="let permission of user.permissions" class="permission-item">\n' +
+      '        <span class="permission-name">{{ permission.name }}</span>\n' +
+      '        <span class="permission-level">{{ permission.level }}</span>\n' +
+      "      </div>\n" +
+      "    </ng-container>\n" +
+      "    \n" +
+      '    <div *ngIf="!user.permissions || user.permissions.length === 0" class="no-permissions">\n' +
+      "      <p>No permissions assigned</p>\n" +
+      "    </div>\n" +
+      "  </ng-container>\n" +
+      "  \n" +
+      '  <div *ngIf="!user || !user.isLoggedIn" class="login-prompt">\n' +
+      "    <p>Please log in to view content</p>\n" +
+      '    <button (click)="login()">Login</button>\n' +
+      "  </div>\n" +
+      "</div>\n" +
+      "```\n\n" +
+      "**Component Code Examples:**\n\n" +
+      "**TypeScript Component:**\n" +
+      "```typescript\n" +
+      "export class ListComponent {\n" +
+      "  users: User[] = [];\n" +
+      "  products: Product[] = [];\n" +
+      "  formFields: FormField[] = [];\n" +
+      "  \n" +
+      "  constructor(private dataService: DataService) {\n" +
+      "    this.loadData();\n" +
+      "  }\n" +
+      "  \n" +
+      "  loadData() {\n" +
+      "    this.dataService.getUsers().subscribe(users => {\n" +
+      "      this.users = users;\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.dataService.getProducts().subscribe(products => {\n" +
+      "      this.products = products;\n" +
+      "    });\n" +
+      "    \n" +
+      "    this.dataService.getFormFields().subscribe(fields => {\n" +
+      "      this.formFields = fields;\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "interface User {\n" +
+      "  id: number;\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "  isLoggedIn: boolean;\n" +
+      "  permissions: Permission[];\n" +
+      "}\n" +
+      "\n" +
+      "interface Permission {\n" +
+      "  name: string;\n" +
+      "  level: string;\n" +
+      "}\n" +
+      "\n" +
+      "interface Product {\n" +
+      "  id: number;\n" +
+      "  name: string;\n" +
+      "  price: number;\n" +
+      "  image: string;\n" +
+      "}\n" +
+      "\n" +
+      "interface FormField {\n" +
+      "  id: string;\n" +
+      "  name: string;\n" +
+      "  label: string;\n" +
+      "  type: string;\n" +
+      "  placeholder: string;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points:**\n" +
+      "- **ng-container**: A logical container that doesn't render any HTML element\n" +
+      "- **ng-template**: A template that can be referenced and reused\n" +
+      "- **Template Reference Variables**: Use `#` to create references to templates\n      " +
+      "- **Structural Directives**: `*ngIf`, `*ngFor`, `*ngSwitch` are structural directives\n" +
+      "- **Multiple Directives**: Only one structural directive per element\n" +
+      "- **Conditional Rendering**: Use `ng-container` for conditional rendering with loops\n" +
+      "- **Template Reusability**: Use `ng-template` for reusable template blocks\n\n" +
+      "**Best Practices:**\n" +
+      "- Use `ng-container` when you need a logical container without extra HTML\n" +
+      "- Use `ng-template` when you need to reuse template blocks\n" +
+      "- Always check for null/undefined before using `ngFor`\n" +
+      "- Use template reference variables for complex conditional logic\n" +
+      "- Keep template logic simple and readable\n" +
+      "- Use meaningful variable names for template references\n" +
+      "- Consider performance implications of nested conditions\n" +
+      "- Test with different data states (empty, null, undefined)\n" +
+      "- Use TypeScript interfaces for better type safety",
+    category: "Structural Directives",
+    difficulty: "intermediate",
+    tags: ["ngFor", "ngIf", "ng-container", "ng-template", "structural-directives", "template"],
+  },
+  {
+    id: 212,
+    question: "What is host property in CSS?",
+    answer:
+      "The `:host` pseudo-class selector is used to target styles in the element that hosts the component. Since the host element is in a parent component's template, you can't reach the host element from inside the component by other means.\n\n" +
+      "**Basic Usage:**\n" +
+      "```css\n" +
+      "/* app.component.css */\n" +
+      ":host {\n" +
+      "  display: block;\n" +
+      "  border: 1px solid black;\n" +
+      "  padding: 20px;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Points:**\n" +
+      "- **Host Element**: The element that hosts the component\n" +
+      "- **Scoped Styling**: Styles only apply to the component's host element\n" +
+      "- **Parent Template**: The host element exists in the parent component's template\n" +
+      "- **Component Isolation**: Cannot be styled from inside the component by other means\n\n" +
+      "**Advanced Usage:**\n" +
+      "```css\n" +
+      "/* Conditional styling based on component state */\n" +
+      ":host(.active) {\n" +
+      "  background-color: #f0f0f0;\n" +
+      "}\n" +
+      "\n" +
+      ":host(.disabled) {\n" +
+      "  opacity: 0.5;\n" +
+      "  pointer-events: none;\n" +
+      "}\n" +
+      "\n" +
+      "/* Responsive design */\n" +
+      ":host {\n" +
+      "  width: 100%;\n" +
+      "}\n" +
+      "\n" +
+      "@media (max-width: 768px) {\n" +
+      "  :host {\n" +
+      "    padding: 10px;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Component Integration:**\n" +
+      "```typescript\n" +
+      "// app.component.ts\n" +
+      "import { Component, HostBinding } from '@angular/core';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-root',\n" +
+      "  templateUrl: './app.component.html',\n" +
+      "  styleUrls: ['./app.component.css']\n" +
+      "})\n" +
+      "export class AppComponent {\n" +
+      "  @HostBinding('class.active') isActive = true;\n" +
+      "  @HostBinding('class.disabled') isDisabled = false;\n" +
+      "  \n" +
+      "  toggleActive() {\n" +
+      "    this.isActive = !this.isActive;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use `:host` for component-level styling\n" +
+      "- Combine with `@HostBinding` for dynamic classes\n" +
+      "- Consider responsive design in host styles\n" +
+      "- Use meaningful class names for conditional styling",
+    category: "Styling",
+    difficulty: "intermediate",
+    tags: ["CSS", "host", "styling", "component", "pseudo-class"],
+  },
+  {
+    id: 213,
+    question: "How do you get the current route?",
+    answer:
+      "In Angular, there is an `url` property of the router package to get the current route. You need to follow the below few steps:\n\n" +
+      "**Step 1: Import Router from @angular/router**\n" +
+      "```typescript\n" +
+      "import { Router } from '@angular/router';\n" +
+      "```\n\n" +
+      "**Step 2: Inject router inside constructor**\n" +
+      "```typescript\n" +
+      "constructor(private router: Router) {\n" +
+      "  \n" +
+      "}\n" +
+      "```\n\n" +
+      "**Step 3: Access url parameter**\n" +
+      "```typescript\n" +
+      "console.log(this.router.url); //  /routename\n" +
+      "```\n\n" +
+      "**Complete Example:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { Router } from '@angular/router';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-current-route',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>Current Route Information</h2>\n" +
+      "      <p>Current URL: {{ currentUrl }}</p>\n" +
+      "      <p>Route Path: {{ routePath }}</p>\n" +
+      '      <button (click)="logCurrentRoute()">Log Current Route</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class CurrentRouteComponent implements OnInit {\n" +
+      "  currentUrl: string = '';\n" +
+      "  routePath: string = '';\n" +
+      "  \n" +
+      "  constructor(private router: Router) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    this.currentUrl = this.router.url;\n" +
+      "    this.routePath = this.router.url.split('?')[0]; // Remove query parameters\n" +
+      "  }\n" +
+      "  \n" +
+      "  logCurrentRoute() {\n" +
+      "    console.log('Current URL:', this.router.url);\n" +
+      "    console.log('Route Path:', this.routePath);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Route Parameters:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { Router, ActivatedRoute } from '@angular/router';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-route-info',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>Route Information</h2>\n" +
+      "      <p>Current URL: {{ router.url }}</p>\n" +
+      "      <p>Route Path: {{ routePath }}</p>\n" +
+      "      <p>Route Parameters: {{ routeParams | json }}</p>\n" +
+      "      <p>Query Parameters: {{ queryParams | json }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class RouteInfoComponent implements OnInit {\n" +
+      "  routePath: string = '';\n" +
+      "  routeParams: any = {};\n" +
+      "  queryParams: any = {};\n" +
+      "  \n" +
+      "  constructor(\n" +
+      "    public router: Router,\n" +
+      "    private activatedRoute: ActivatedRoute\n" +
+      "  ) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    this.routePath = this.router.url.split('?')[0];\n    " +
+      "    \n" +
+      "    // Get route parameters\n" +
+      "    this.activatedRoute.params.subscribe(params => {\n" +
+      "      this.routeParams = params;\n" +
+      "    });\n" +
+      "    \n" +
+      "    // Get query parameters\n" +
+      "    this.activatedRoute.queryParams.subscribe(queryParams => {\n" +
+      "      this.queryParams = queryParams;\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Service for Route Monitoring:**\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { Router, NavigationEnd } from '@angular/router';\n" +
+      "import { filter } from 'rxjs/operators';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class RouteService {\n" +
+      "  private currentUrl: string = '';\n" +
+      "  \n" +
+      "  constructor(private router: Router) {\n" +
+      "    // Monitor route changes\n" +
+      "    this.router.events\n" +
+      "      .pipe(filter(event => event instanceof NavigationEnd))\n" +
+      "      .subscribe((event: NavigationEnd) => {\n" +
+      "        this.currentUrl = event.url;\n" +
+      "        console.log('Route changed to:', this.currentUrl);\n" +
+      "      });\n" +
+      "  }\n" +
+      "  \n" +
+      "  getCurrentUrl(): string {\n" +
+      "    return this.currentUrl;\n" +
+      "  }\n" +
+      "  \n" +
+      "  getCurrentRoute(): string {\n" +
+      "    return this.currentUrl.split('?')[0];\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Properties Available:**\n" +
+      "- **router.url**: Complete URL including query parameters\n" +
+      "- **router.url.split('?')[0]**: Route path without query parameters\n" +
+      "- **ActivatedRoute.params**: Route parameters (e.g., /users/:id)\n" +
+      "- **ActivatedRoute.queryParams**: Query parameters (e.g., ?page=1&size=10)\n" +
+      "- **ActivatedRoute.fragment**: URL fragment (e.g., #section1)\n\n" +
+      "**Best Practices:**\n" +
+      "- Use `ActivatedRoute` for accessing route parameters\n" +
+      "- Subscribe to route changes for dynamic updates\n" +
+      "- Use services for route monitoring across components\n" +
+      "- Handle route changes in `ngOnInit` lifecycle hook\n" +
+      "- Unsubscribe from observables to prevent memory leaks",
+    category: "Routing",
+    difficulty: "intermediate",
+    tags: ["router", "routing", "URL", "navigation", "ActivatedRoute"],
+  },
+  {
+    id: 214,
+    question: "What is standalone component?",
+    answer:
+      "A standalone component is a type of component which is not part of any Angular module. It provides a simplified way to build Angular applications without the need for NgModules.\n\n" +
+      "**Key Features:**\n" +
+      "- **No NgModule Required**: Standalone components can be used without declaring them in any module\n" +
+      "- **Self-Contained**: They can import their own dependencies directly\n" +
+      "- **Simplified Architecture**: Reduces the complexity of Angular applications\n" +
+      "- **Tree-Shakable**: Better optimization and smaller bundle sizes\n" +
+      "- **Modern Approach**: Recommended for new Angular applications\n\n" +
+      "**Basic Standalone Component:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-standalone',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule],\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>Standalone Component</h2>\n" +
+      "      <p>This component doesn't need a module!</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class StandaloneComponent {\n" +
+      "  title = 'Standalone Component Example';\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Standalone Component with Forms:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-user-form',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, ReactiveFormsModule],\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">\n' +
+      "      <div>\n" +
+      '        <label for="name">Name:</label>\n' +
+      '        <input id="name" formControlName="name" required>\n' +
+      "      </div>\n" +
+      "      <div>\n" +
+      '        <label for="email">Email:</label>\n' +
+      '        <input id="email" formControlName="email" type="email" required>\n' +
+      "      </div>\n" +
+      '      <button type="submit" [disabled]="!userForm.valid">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserFormComponent {\n" +
+      "  userForm = new FormGroup({\n" +
+      "    name: new FormControl(''),\n" +
+      "    email: new FormControl('')\n" +
+      "  });\n" +
+      "  \n" +
+      "  onSubmit() {\n" +
+      "    if (this.userForm.valid) {\n" +
+      "      console.log('Form submitted:', this.userForm.value);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Standalone Component with Routing:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { RouterModule, RouterOutlet } from '@angular/router';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-root',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, RouterOutlet],\n      " +
+      "  template: `\n" +
+      "    <nav>\n" +
+      '      <a routerLink="/home">Home</a>\n' +
+      '      <a routerLink="/about">About</a>\n' +
+      "    </nav>\n" +
+      "    <router-outlet></router-outlet>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class AppComponent {\n" +
+      "  title = 'Standalone App';\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Bootstrapping Standalone Components:**\n" +
+      "```typescript\n" +
+      "// main.ts\n" +
+      "import { bootstrapApplication } from '@angular/platform-browser';\n" +
+      "import { AppComponent } from './app/app.component';\n" +
+      "import { provideRouter } from '@angular/router';\n" +
+      "import { routes } from './app/app.routes';\n" +
+      "\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideRouter(routes)\n" +
+      "  ]\n" +
+      "})\n" +
+      "  .catch(err => console.error(err));\n" +
+      "```\n\n" +
+      "**Standalone Component with Services:**\n" +
+      "```typescript\n" +
+      "import { Component, inject } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "import { HttpClientModule } from '@angular/common/http';\n" +
+      "import { DataService } from './data.service';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-data-display',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, HttpClientModule],\n" +
+      "  providers: [DataService],\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>Data Display</h2>\n" +
+      '      <div *ngIf="data$ | async as data">\n' +
+      "        <p>{{ data.message }}</p>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class DataDisplayComponent {\n" +
+      "  private dataService = inject(DataService);\n" +
+      "  data$ = this.dataService.getData();\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advantages of Standalone Components:**\n" +
+      "- **Simplified Architecture**: No need to manage NgModules\n" +
+      "- **Better Tree Shaking**: Unused components can be eliminated\n" +
+      "- **Easier Testing**: Components can be tested in isolation\n" +
+      "- **Reduced Boilerplate**: Less code to write and maintain\n" +
+      "- **Modern Development**: Aligns with modern Angular practices\n" +
+      "- **Lazy Loading**: Easier to implement lazy loading\n\n" +
+      "**Migration from NgModules:**\n" +
+      "```typescript\n" +
+      "// Old way with NgModule\n" +
+      "@NgModule({\n" +
+      "  declarations: [MyComponent],\n" +
+      "  imports: [CommonModule, FormsModule],\n" +
+      "  exports: [MyComponent]\n" +
+      "})\n" +
+      "export class MyModule {}\n" +
+      "\n" +
+      "// New way with Standalone Component\n" +
+      "@Component({\n" +
+      "  selector: 'app-my',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule, FormsModule],\n" +
+      "  template: `...`\n" +
+      "})\n" +
+      "export class MyComponent {}\n" +
+      "```\n\n" +
+      "**Best Practices:**\n" +
+      "- Use standalone components for new applications\n" +
+      "- Import only necessary dependencies\n" +
+      "- Use `inject()` function for dependency injection\n" +
+      "- Consider using standalone components for better performance\n" +
+      "- Leverage tree-shaking benefits\n" +
+      "- Use with Angular CLI's standalone flag: `ng generate component --standalone`",
+    category: "Components",
+    difficulty: "intermediate",
+    tags: ["standalone", "components", "modules", "architecture", "modern"],
+  },
+  {
+    id: 215,
+    question: "What are Angular Signals?",
+    answer:
+      "A signal is a wrapper around a value that can notify interested consumers when that value changes. Signals can contain any value, from simple primitives to complex data structures.\n\n" +
+      "**Key Features:**\n" +
+      "- **Reactive Values**: Signals automatically track dependencies and notify consumers of changes\n" +
+      "- **Fine-Grained Reactivity**: Only components that depend on a signal update when it changes\n" +
+      "- **Type Safety**: Signals provide full TypeScript support\n" +
+      "- **Performance**: More efficient than traditional change detection\n" +
+      "- **Composability**: Signals can be combined and derived from other signals\n\n" +
+      "**Basic Signal Creation:**\n" +
+      "```typescript\n" +
+      "import { signal } from '@angular/core';\n" +
+      "\n" +
+      "// Create a signal with initial value\n" +
+      "const count = signal(0);\n" +
+      "const name = signal('John');\n" +
+      "const items = signal<string[]>([]);\n" +
+      "```\n\n" +
+      "**Signal Operations:**\n" +
+      "```typescript\n" +
+      "import { signal } from '@angular/core';\n" +
+      "\n" +
+      "const count = signal(0);\n" +
+      "\n" +
+      "// Read signal value\n" +
+      "console.log(count()); // 0\n" +
+      "\n" +
+      "// Update signal value\n" +
+      "count.set(10);\n" +
+      "console.log(count()); // 10\n" +
+      "\n" +
+      "// Update using previous value\n" +
+      "count.update(value => value + 1);\n" +
+      "console.log(count()); // 11\n" +
+      "```\n\n" +
+      "**Computed Signals:**\n" +
+      "```typescript\n" +
+      "import { signal, computed } from '@angular/core';\n" +
+      "\n" +
+      "const firstName = signal('John');\n" +
+      "const lastName = signal('Doe');\n" +
+      "\n" +
+      "// Computed signal that depends on other signals\n" +
+      "const fullName = computed(() => {\n" +
+      "  return `${firstName()} ${lastName()}`;\n" +
+      "});\n" +
+      "\n" +
+      'console.log(fullName()); // "John Doe"\n' +
+      "\n" +
+      "firstName.set('Jane');\n" +
+      'console.log(fullName()); // "Jane Doe"\n' +
+      "```\n\n" +
+      "**Signal in Component:**\n" +
+      "```typescript\n" +
+      "import { Component, signal, computed } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-signal-example',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule],\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>Signal Example</h2>\n" +
+      "      <p>Count: {{ count() }}</p>\n" +
+      "      <p>Double Count: {{ doubleCount() }}</p>\n" +
+      '      <button (click)="increment()">Increment</button>\n' +
+      '      <button (click)="decrement()">Decrement</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class SignalExampleComponent {\n" +
+      "  count = signal(0);\n" +
+      "  doubleCount = computed(() => this.count() * 2);\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.count.update(value => value + 1);\n" +
+      "  }\n" +
+      "  \n" +
+      "  decrement() {\n" +
+      "    this.count.update(value => Math.max(0, value - 1));\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Signal with Objects:**\n" +
+      "```typescript\n" +
+      "import { signal, computed } from '@angular/core';\n" +
+      "\n" +
+      "interface User {\n" +
+      "  id: number;\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "}\n" +
+      "\n" +
+      "const user = signal<User>({\n" +
+      "  id: 1,\n" +
+      "  name: 'John Doe',\n" +
+      "  email: 'john@example.com'\n" +
+      "});\n" +
+      "\n" +
+      "// Computed signal for user display name\n" +
+      "const displayName = computed(() => {\n" +
+      "  const u = user();\n" +
+      "  return `${u.name} (${u.email})`;\n" +
+      "});\n" +
+      "\n" +
+      "// Update user object\n" +
+      "user.update(currentUser => ({\n" +
+      "  ...currentUser,\n" +
+      "  name: 'Jane Doe'\n" +
+      "}));\n" +
+      "```\n\n" +
+      "**Signal with Arrays:**\n" +
+      "```typescript\n" +
+      "import { signal, computed } from '@angular/core';\n" +
+      "\n" +
+      "const items = signal<string[]>(['apple', 'banana', 'cherry']);\n" +
+      "\n" +
+      "// Computed signal for array length\n" +
+      "const itemCount = computed(() => items().length);\n" +
+      "\n" +
+      "// Computed signal for filtered items\n" +
+      "const filteredItems = computed(() => {\n" +
+      "  return items().filter(item => item.startsWith('a'));\n" +
+      "});\n" +
+      "\n" +
+      "// Add item to array\n" +
+      "items.update(currentItems => [...currentItems, 'date']);\n" +
+      "\n" +
+      "// Remove item from array\n" +
+      "items.update(currentItems => currentItems.filter(item => item !== 'banana'));\n" +
+      "```\n\n" +
+      "**Signal Effects:**\n" +
+      "```typescript\n" +
+      "import { signal, effect } from '@angular/core';\n" +
+      "\n" +
+      "const count = signal(0);\n" +
+      "\n" +
+      "// Effect that runs when signal changes\n" +
+      "effect(() => {\n" +
+      "  console.log('Count changed to:', count());\n" +
+      "  \n" +
+      "  // Side effects like API calls, DOM manipulation, etc.\n" +
+      "  if (count() > 10) {\n" +
+      "    console.log('Count is greater than 10!');\n" +
+      "  }\n" +
+      "});\n" +
+      "\n" +
+      'count.set(5);  // Logs: "Count changed to: 5"\n' +
+      'count.set(15); // Logs: "Count changed to: 15" and "Count is greater than 10!"\n' +
+      "```\n\n" +
+      "**Signal with Services:**\n" +
+      "```typescript\n" +
+      "import { Injectable, signal } from '@angular/core';\n" +
+      "\n" +
+      "@Injectable({\n" +
+      "  providedIn: 'root'\n" +
+      "})\n" +
+      "export class CounterService {\n" +
+      "  private count = signal(0);\n" +
+      "  \n" +
+      "  // Expose signal as read-only\n" +
+      "  readonly count$ = this.count.asReadonly();\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.count.update(value => value + 1);\n" +
+      "  }\n" +
+      "  \n" +
+      "  decrement() {\n" +
+      "    this.count.update(value => Math.max(0, value - 1));\n" +
+      "  }\n" +
+      "  \n" +
+      "  reset() {\n" +
+      "    this.count.set(0);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Signal vs Traditional Change Detection:**\n" +
+      "```typescript\n" +
+      "// Traditional approach with OnPush\n" +
+      "@Component({\n" +
+      "  changeDetection: ChangeDetectionStrategy.OnPush\n" +
+      "})\n" +
+      "export class TraditionalComponent {\n" +
+      "  count = 0;\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.count++;\n" +
+      "    // Need to manually trigger change detection\n" +
+      "    this.cdr.detectChanges();\n" +
+      "  }\n" +
+      "}\n" +
+      "\n" +
+      "// Signal approach\n" +
+      "@Component({})\n" +
+      "export class SignalComponent {\n" +
+      "  count = signal(0);\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    // Change detection happens automatically\n" +
+      "    this.count.update(value => value + 1);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advantages of Signals:**\n" +
+      "- **Automatic Change Detection**: No need to manually trigger change detection\n" +
+      "- **Fine-Grained Updates**: Only affected components update\n" +
+      "- **Better Performance**: More efficient than traditional change detection\n" +
+      "- **Type Safety**: Full TypeScript support\n" +
+      "- **Composability**: Easy to combine and derive values\n" +
+      "- **Debugging**: Better debugging experience with signal tracking\n\n" +
+      "**Best Practices:**\n" +
+      "- Use signals for reactive state management\n" +
+      "- Prefer computed signals for derived values\n" +
+      "- Use effects for side effects\n" +
+      "- Keep signals immutable\n" +
+      "- Use `asReadonly()` to prevent external modifications\n" +
+      "- Consider signals for complex state management scenarios",
+    category: "Signals",
+    difficulty: "intermediate",
+    tags: ["signals", "reactivity", "change-detection", "performance", "modern"],
+  },
+  {
+    id: 216,
+    question: "Explain Angular Signals with an example.",
+    answer:
+      "In this example, we create a signal named count and initialize it with a value of 0. We then connect to the signal, allowing us to be notified whenever its value changes. Finally, we add a button that increments the count when clicked.\n\n" +
+      "When the button is clicked, the incrementCount() method is called. This method sets the new value of the count signal to 1. Objects connected to the signal (subscribers) are then notified of the change, and the updated value is displayed in the UI.\n\n" +
+      "**Complete Example:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { signal, computed } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'my-app',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule],\n" +
+      "  templateUrl: './app.component.html',\n" +
+      "  styleUrls: ['./app.component.css']\n" +
+      "})\n" +
+      "export class AppComponent implements OnInit {\n" +
+      "  count = signal(0);\n" +
+      "  doubleCount = computed(() => this.count() * 2);\n" +
+      "  \n" +
+      "  constructor() {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    // Optional logging for debugging displayedCount changes\n" +
+      "    console.log('Initial count:', this.count());\n" +
+      "    console.log('Initial double count:', this.doubleCount());\n" +
+      "  }\n" +
+      "  \n" +
+      "  incrementCount() {\n" +
+      "    this.count.set(this.count() + 1);\n" +
+      "  }\n" +
+      "  \n" +
+      "  decrementCount() {\n" +
+      "    this.count.update((value) => Math.max(0, value - 1));\n" +
+      "  }\n" +
+      "  \n" +
+      "  resetCount() {\n" +
+      "    this.count.set(0);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**HTML Template:**\n" +
+      "```html\n" +
+      "<h1>Angular Signals Example</h1>\n" +
+      "\n" +
+      '<div class="counter-container">\n' +
+      "  <h2>Counter: {{ count() }}</h2>\n" +
+      "  <p>Double Count: {{ doubleCount() }}</p>\n" +
+      "  \n" +
+      '  <div class="button-group">\n' +
+      '    <button (click)="incrementCount()" class="btn btn-primary">\n' +
+      "      Increment Count\n" +
+      "    </button>\n" +
+      '    <button (click)="decrementCount()" class="btn btn-secondary">\n' +
+      "      Decrement Count\n" +
+      "    </button>\n" +
+      '    <button (click)="resetCount()" class="btn btn-danger">\n' +
+      "      Reset\n" +
+      "    </button>\n" +
+      "  </div>\n" +
+      "</div>\n" +
+      "```\n\n" +
+      "**CSS Styling:**\n" +
+      "```css\n" +
+      ".counter-container {\n" +
+      "  text-align: center;\n" +
+      "  padding: 20px;\n" +
+      "  max-width: 400px;\n" +
+      "  margin: 0 auto;\n" +
+      "}\n" +
+      "\n" +
+      ".button-group {\n" +
+      "  display: flex;\n" +
+      "  gap: 10px;\n" +
+      "  justify-content: center;\n" +
+      "  margin-top: 20px;\n" +
+      "}\n" +
+      "\n" +
+      ".btn {\n" +
+      "  padding: 10px 20px;\n" +
+      "  border: none;\n" +
+      "  border-radius: 4px;\n" +
+      "  cursor: pointer;\n" +
+      "  font-size: 14px;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-primary {\n" +
+      "  background-color: #007bff;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-secondary {\n" +
+      "  background-color: #6c757d;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "\n" +
+      ".btn-danger {\n" +
+      "  background-color: #dc3545;\n" +
+      "  color: white;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Example with Multiple Signals:**\n" +
+      "```typescript\n" +
+      "import { Component, signal, computed, effect } from '@angular/core';\n" +
+      "import { CommonModule } from '@angular/common';\n" +
+      "\n" +
+      "interface Todo {\n" +
+      "  id: number;\n" +
+      "  text: string;\n" +
+      "  completed: boolean;\n" +
+      "}\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-todo-signals',\n" +
+      "  standalone: true,\n" +
+      "  imports: [CommonModule],\n" +
+      "  template: `\n" +
+      '    <div class="todo-container">\n' +
+      "      <h2>Todo List with Signals</h2>\n" +
+      "      \n" +
+      '      <div class="stats">\n' +
+      "        <p>Total: {{ totalTodos() }}</p>\n" +
+      "        <p>Completed: {{ completedTodos() }}</p>\n" +
+      "        <p>Remaining: {{ remainingTodos() }}</p>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <div class="add-todo">\n' +
+      "        <input \n" +
+      "          #todoInput\n" +
+      '          type="text" \n' +
+      '          placeholder="Add a new todo"\n' +
+      "          (keyup.enter)=\"addTodo(todoInput.value); todoInput.value = ''\"\n" +
+      "        >\n" +
+      "        <button (click)=\"addTodo(todoInput.value); todoInput.value = ''\">Add</button>\n" +
+      "      </div>\n" +
+      "      \n" +
+      '      <ul class="todo-list">\n' +
+      '        <li *ngFor="let todo of todos()" class="todo-item">\n' +
+      "          <input \n" +
+      '            type="checkbox" \n' +
+      '            [checked]="todo.completed"\n' +
+      '            (change)="toggleTodo(todo.id)"\n' +
+      "          >\n" +
+      '          <span [class.completed]="todo.completed">{{ todo.text }}</span>\n' +
+      '          <button (click)="removeTodo(todo.id)" class="delete-btn">Delete</button>\n' +
+      "        </li>\n" +
+      "      </ul>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class TodoSignalsComponent {\n" +
+      "  todos = signal<Todo[]>([\n" +
+      "    { id: 1, text: 'Learn Angular Signals', completed: false },\n" +
+      "    { id: 2, text: 'Build a todo app', completed: true },\n" +
+      "    { id: 3, text: 'Master reactive programming', completed: false }\n" +
+      "  ]);\n" +
+      "  \n" +
+      "  // Computed signals for statistics\n" +
+      "  totalTodos = computed(() => this.todos().length);\n" +
+      "  completedTodos = computed(() => \n" +
+      "    this.todos().filter(todo => todo.completed).length\n" +
+      "  );\n" +
+      "  remainingTodos = computed(() => \n" +
+      "    this.todos().filter(todo => !todo.completed).length\n" +
+      "  );\n" +
+      "  \n" +
+      "  constructor() {\n" +
+      "    // Effect to log changes\n" +
+      "    effect(() => {\n" +
+      "      console.log('Todos updated:', this.todos());\n" +
+      "      console.log('Completed:', this.completedTodos());\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  addTodo(text: string) {\n" +
+      "    if (text.trim()) {\n" +
+      "      const newTodo: Todo = {\n" +
+      "        id: Date.now(),\n" +
+      "        text: text.trim(),\n" +
+      "        completed: false\n" +
+      "      };\n" +
+      "      \n" +
+      "      this.todos.update(currentTodos => [...currentTodos, newTodo]);\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "  toggleTodo(id: number) {\n" +
+      "    this.todos.update(currentTodos =>\n" +
+      "      currentTodos.map(todo =>\n" +
+      "        todo.id === id ? { ...todo, completed: !todo.completed } : todo\n" +
+      "      )\n" +
+      "    );\n" +
+      "  }\n" +
+      "  \n" +
+      "  removeTodo(id: number) {\n" +
+      "    this.todos.update(currentTodos =>\n" +
+      "      currentTodos.filter(todo => todo.id !== id)\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Concepts Demonstrated:**\n" +
+      "1. **Signal Creation**: `count = signal(0)` creates a reactive value\n" +
+      "2. **Computed Signals**: `doubleCount = computed(() => this.count() * 2)` creates derived values\n" +
+      "3. **Signal Updates**: `count.set()` and `count.update()` modify signal values\n" +
+      "4. **Automatic Reactivity**: UI updates automatically when signals change\n" +
+      "5. **Effects**: Side effects that run when signals change\n" +
+      "6. **Immutable Updates**: Using spread operator for array/object updates\n\n" +
+      "**Benefits of This Approach:**\n" +
+      "- **Automatic Change Detection**: No need to manually trigger change detection\n" +
+      "- **Fine-Grained Updates**: Only affected parts of the UI update\n" +
+      "- **Better Performance**: More efficient than traditional change detection\n" +
+      "- **Type Safety**: Full TypeScript support with proper typing\n" +
+      "- **Composability**: Easy to combine and derive values from signals\n" +
+      "- **Debugging**: Better debugging experience with signal tracking",
+    category: "Signals",
+    difficulty: "intermediate",
+    tags: ["signals", "example", "computed", "effects", "reactivity"],
+  },
+  {
+    id: 217,
+    question: "What are the Route Parameters? Could you explain each of them?",
+    answer:
+      'Route parameters are used to pass dynamic values in the URL of a route. They allow you to define variable segments in the route path, which can be accessed and used by components and services. Path parameters are represented by a colon (":") followed by the parameter name.\n\n' +
+      "There are three types of route parameters in Angular:\n\n" +
+      "**1. Path Parameters**\n" +
+      "Path parameters are used to define dynamic segments in the URL path. They are specified as part of the route's path and are extracted from the actual URL when navigating to that route.\n\n" +
+      "```typescript\n" +
+      "// Route configuration\n" +
+      "const routes: Routes = [\n" +
+      "  { path: 'users/:id', component: UserComponent },\n" +
+      "  { path: 'products/:category/:id', component: ProductComponent }\n" +
+      "];\n" +
+      "```\n\n" +
+      "**Accessing Path Parameters:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { ActivatedRoute } from '@angular/router';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-user',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>User Details</h2>\n" +
+      "      <p>User ID: {{ userId }}</p>\n" +
+      "      <p>User Name: {{ userName }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UserComponent implements OnInit {\n" +
+      "  userId: string | null = null;\n" +
+      "  userName: string = '';\n" +
+      "  \n" +
+      "  constructor(private route: ActivatedRoute) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    // Get path parameter\n" +
+      "    this.userId = this.route.snapshot.paramMap.get('id');\n" +
+      "    \n" +
+      "    // Subscribe to parameter changes\n" +
+      "    this.route.paramMap.subscribe(params => {\n" +
+      "      this.userId = params.get('id');\n" +
+      "      this.loadUser(this.userId);\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  loadUser(id: string | null) {\n" +
+      "    if (id) {\n" +
+      "      // Load user data based on ID\n" +
+      "      this.userName = `User ${id}`;\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Query Parameters**\n" +
+      'Query parameters are used to pass additional information in the URL as key-value pairs. They are appended to the URL after a question mark ("?") and can be accessed by components and services.\n\n' +
+      "```typescript\n" +
+      "// Route configuration\n" +
+      "const routes: Routes = [\n" +
+      "  { path: 'search', component: SearchComponent },\n" +
+      "  { path: 'products', component: ProductListComponent }\n" +
+      "];\n" +
+      "```\n\n" +
+      "**Accessing Query Parameters:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { ActivatedRoute } from '@angular/router';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-search',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>Search Results</h2>\n" +
+      "      <p>Query: {{ searchQuery }}</p>\n" +
+      "      <p>Page: {{ currentPage }}</p>\n" +
+      "      <p>Sort: {{ sortBy }}</p>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class SearchComponent implements OnInit {\n" +
+      "  searchQuery: string = '';\n" +
+      "  currentPage: number = 1;\n" +
+      "  sortBy: string = 'name';\n" +
+      "  \n" +
+      "  constructor(private route: ActivatedRoute) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    // Get query parameters\n" +
+      "    this.searchQuery = this.route.snapshot.queryParamMap.get('q') || '';\n" +
+      "    this.currentPage = parseInt(this.route.snapshot.queryParamMap.get('page') || '1');\n" +
+      "    this.sortBy = this.route.snapshot.queryParamMap.get('sort') || 'name';\n" +
+      "    \n" +
+      "    // Subscribe to query parameter changes\n" +
+      "    this.route.queryParamMap.subscribe(params => {\n" +
+      "      this.searchQuery = params.get('q') || '';\n" +
+      "      this.currentPage = parseInt(params.get('page') || '1');\n" +
+      "      this.sortBy = params.get('sort') || 'name';\n" +
+      "      this.performSearch();\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  performSearch() {\n" +
+      "    // Perform search based on query parameters\n" +
+      "    console.log('Searching for:', this.searchQuery);\n" +
+      "    console.log('Page:', this.currentPage);\n" +
+      "    console.log('Sort by:', this.sortBy);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**3. Optional Parameters**\n" +
+      'Optional parameters are used when you want to make a route parameter optional. They are represented by placing a question mark ("?") after the parameter name.\n\n' +
+      "```typescript\n" +
+      "// Route configuration with optional parameters\n" +
+      "const routes: Routes = [\n" +
+      "  { path: 'products/:id/:category?', component: ProductComponent },\n" +
+      "  { path: 'users/:id/:tab?', component: UserProfileComponent }\n" +
+      "];\n" +
+      "```\n\n" +
+      "**Accessing Optional Parameters:**\n" +
+      "```typescript\n" +
+      "import { Component, OnInit } from '@angular/core';\n" +
+      "import { ActivatedRoute } from '@angular/router';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-product',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      "      <h2>Product Details</h2>\n" +
+      "      <p>Product ID: {{ productId }}</p>\n" +
+      "      <p>Category: {{ category || 'No category specified' }}</p>\n" +
+      '      <div *ngIf="category">\n' +
+      "        <h3>Category: {{ category }}</h3>\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class ProductComponent implements OnInit {\n" +
+      "  productId: string | null = null;\n" +
+      "  category: string | null = null;\n" +
+      "  \n" +
+      "  constructor(private route: ActivatedRoute) {}\n" +
+      "  \n" +
+      "  ngOnInit() {\n" +
+      "    // Get required parameter\n" +
+      "    this.productId = this.route.snapshot.paramMap.get('id');\n" +
+      "    \n" +
+      "    // Get optional parameter\n" +
+      "    this.category = this.route.snapshot.paramMap.get('category');\n" +
+      "    \n" +
+      "    // Subscribe to parameter changes\n" +
+      "    this.route.paramMap.subscribe(params => {\n" +
+      "      this.productId = params.get('id');\n" +
+      "      this.category = params.get('category');\n" +
+      "      this.loadProduct();\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  loadProduct() {\n" +
+      "    if (this.productId) {\n" +
+      "      console.log('Loading product:', this.productId);\n" +
+      "      if (this.category) {\n" +
+      "        console.log('With category:', this.category);\n" +
+      "      }\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Navigation with Parameters:**\n" +
+      "```typescript\n" +
+      "import { Component } from '@angular/core';\n" +
+      "import { Router } from '@angular/router';\n" +
+      "\n" +
+      "@Component({\n" +
+      "  selector: 'app-navigation',\n" +
+      "  template: `\n" +
+      "    <div>\n" +
+      '      <button (click)="navigateToUser()">Go to User</button>\n' +
+      '      <button (click)="navigateToSearch()">Go to Search</button>\n' +
+      '      <button (click)="navigateToProduct()">Go to Product</button>\n' +
+      "    </div>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class NavigationComponent {\n" +
+      "  constructor(private router: Router) {}\n" +
+      "  \n" +
+      "  navigateToUser() {\n" +
+      "    // Navigate with path parameter\n" +
+      "    this.router.navigate(['/users', '123']);\n" +
+      "  }\n" +
+      "  \n" +
+      "  navigateToSearch() {\n" +
+      "    // Navigate with query parameters\n" +
+      "    this.router.navigate(['/search'], {\n" +
+      "      queryParams: {\n" +
+      "        q: 'angular',\n" +
+      "        page: 1,\n" +
+      "        sort: 'name'\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "  \n" +
+      "  navigateToProduct() {\n" +
+      "    // Navigate with path and optional parameters\n" +
+      "    this.router.navigate(['/products', '456', 'electronics']);\n" +
+      "    \n" +
+      "    // Or without optional parameter\n" +
+      "    // this.router.navigate(['/products', '456']);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**URL Examples:**\n" +
+      "- **Path Parameters**: `/users/123` → `id = '123'`\n" +
+      "- **Query Parameters**: `/search?q=angular&page=1&sort=name` → `q = 'angular'`, `page = '1'`, `sort = 'name'`\n" +
+      "- **Optional Parameters**: `/products/456/electronics` → `id = '456'`, `category = 'electronics'`\n" +
+      "- **Optional Parameters (missing)**: `/products/456` → `id = '456'`, `category = null`\n\n" +
+      "**Best Practices:**\n" +
+      "- Use path parameters for required, identifying data\n" +
+      "- Use query parameters for optional, filtering, or pagination data\n" +
+      "- Use optional parameters sparingly to avoid confusion\n" +
+      "- Always handle null/undefined values when accessing parameters\n" +
+      "- Use `paramMap` and `queryParamMap` for type-safe parameter access\n" +
+      "- Subscribe to parameter changes for dynamic updates\n" +
+      "- Consider using resolvers for complex parameter-based data loading",
+    category: "Routing",
+    difficulty: "intermediate",
+    tags: ["routing", "parameters", "path", "query", "optional"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;

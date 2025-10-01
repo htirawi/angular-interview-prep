@@ -35,7 +35,23 @@ export type {
   ToastType,
   ToastProps,
   ToastItem,
+  MarkdownRendererProps,
+  ComparisonRow,
+  ComparisonTableProps,
+  TableRow,
+  RegularTableProps,
+  FrameworkIconProps,
+  FrameworkSwitcherProps,
+  FrameworkSelectorProps,
+  QuestionNotesProps,
+  StudyTimerProps,
+  LoadingSpinnerProps,
+  ErrorBoundaryProps,
+  ErrorBoundaryState,
 } from "./ui";
+
+// Context types
+export type { Mode, SidebarContextValue, SidebarProviderProps } from "./context";
 
 // Analytics types
 export type { EventCategory, AnalyticsEvent } from "./analytics";

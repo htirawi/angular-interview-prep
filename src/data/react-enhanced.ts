@@ -3234,6 +3234,3904 @@ export const REACT_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "intermediate",
     tags: ["routing", "react-router", "navigation", "spa", "url", "programmatic"],
   },
+  {
+    id: 27,
+    question: "What are React Portals? How do you use them and when should you use them?",
+    answer:
+      "React Portals provide a way to render children into a DOM node that exists outside the DOM hierarchy of the parent component. This is useful for modals, tooltips, dropdowns, and other UI elements that need to break out of their parent's container.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { createPortal } from 'react-dom';\n" +
+      "\n" +
+      "function Modal({ children, isOpen }) {\n" +
+      "  if (!isOpen) return null;\n" +
+      "  \n" +
+      "  return createPortal(\n" +
+      "    <div className='modal-overlay'>\n" +
+      "      <div className='modal-content'>\n" +
+      "        {children}\n" +
+      "      </div>\n" +
+      "    </div>,\n" +
+      "    document.body // Render into body, not parent component\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Portal Implementation:**\n" +
+      "```javascript\n" +
+      "// Custom hook for portal management\n" +
+      "function usePortal(containerId = 'portal-root') {\n" +
+      "  const [container, setContainer] = useState(null);\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    let element = document.getElementById(containerId);\n" +
+      "    \n" +
+      "    if (!element) {\n" +
+      "      element = document.createElement('div');\n" +
+      "      element.id = containerId;\n" +
+      "      element.style.position = 'relative';\n" +
+      "      element.style.zIndex = '1000';\n" +
+      "      document.body.appendChild(element);\n" +
+      "    }\n" +
+      "    \n" +
+      "    setContainer(element);\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      if (element && element.parentNode) {\n" +
+      "        element.parentNode.removeChild(element);\n" +
+      "      }\n" +
+      "    };\n" +
+      "  }, [containerId]);\n" +
+      "  \n" +
+      "  return container;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Portals:**\n" +
+      "- **Modals and Dialogs**: Break out of parent container constraints\n" +
+      "- **Tooltips**: Position relative to viewport, not parent\n" +
+      "- **Dropdowns**: Avoid overflow issues with parent containers\n" +
+      "- **Loading Overlays**: Cover entire screen\n" +
+      "- **Notifications**: Global positioning\n\n" +
+      "**Benefits:**\n" +
+      "- Escape CSS containment (overflow: hidden, z-index stacking)\n" +
+      "- Maintain React component hierarchy and event bubbling\n" +
+      "- Clean separation of concerns\n" +
+      "- Better accessibility (focus management)",
+    category: "Advanced",
+    difficulty: "intermediate",
+    tags: ["portals", "dom", "modals", "advanced", "rendering"],
+  },
+  {
+    id: 28,
+    question:
+      "Explain React's reconciliation algorithm in detail. How does React decide which components to update?",
+    answer:
+      "React's reconciliation is the process of determining what changes need to be made to the DOM when the component tree changes. It's based on a heuristic algorithm that assumes two elements of different types will produce different trees.\n\n" +
+      "**The Diffing Algorithm:**\n\n" +
+      "1. **Different Root Elements**: If root elements have different types, React tears down the old tree and builds a new one.\n" +
+      "2. **Same Element Types**: React compares attributes and only updates changed attributes.\n" +
+      "3. **Component Elements**: React updates the component instance (same props = no re-render).\n\n" +
+      "**Key Reconciliation Strategies:**\n" +
+      "```javascript\n" +
+      "// Keys help React identify which items have changed\n" +
+      "function TodoList({ todos }) {\n" +
+      "  return (\n" +
+      "    <ul>\n" +
+      "      {todos.map(todo => (\n" +
+      "        <TodoItem \n" +
+      "          key={todo.id} // Key helps React track items\n" +
+      "          todo={todo} \n" +
+      "        />\n" +
+      "      ))}\n" +
+      "    </ul>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Optimizations:**\n" +
+      "- Use stable keys for list items\n" +
+      "- Avoid creating objects/functions in render\n" +
+      "- Use React.memo for expensive components\n" +
+      "- Use useMemo/useCallback for expensive calculations",
+    category: "Core Concepts",
+    difficulty: "advanced",
+    tags: ["reconciliation", "diffing", "performance", "virtual-dom", "optimization"],
+  },
+  {
+    id: 29,
+    question: "What is React Fiber? How does it improve React's performance and user experience?",
+    answer:
+      "React Fiber is React's reconciliation engine, introduced in React 16. It's a complete rewrite of React's core algorithm that enables incremental rendering, allowing React to split work into chunks and prioritize updates.\n\n" +
+      "**Key Features of Fiber:**\n\n" +
+      "1. **Incremental Rendering**: Work can be split into chunks and spread across multiple frames\n" +
+      "2. **Priority-based Updates**: High-priority updates (user input) interrupt low-priority updates\n" +
+      "3. **Pause and Resume**: Work can be paused, aborted, or reused as priorities change\n" +
+      "4. **Concurrent Features**: Enables features like Suspense and concurrent rendering\n\n" +
+      "**How Fiber Works:**\n" +
+      "```javascript\n" +
+      "// Fiber represents each component as a fiber node\n" +
+      "const fiberNode = {\n" +
+      "  type: 'div',\n" +
+      "  props: { className: 'container' },\n" +
+      "  child: childFiber,\n" +
+      "  sibling: siblingFiber,\n" +
+      "  return: parentFiber,\n" +
+      "  alternate: previousFiber, // For diffing\n" +
+      "  effectTag: 'UPDATE', // What needs to be done\n" +
+      "  expirationTime: 1000, // Priority\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Priority Levels:**\n" +
+      "- **Synchronous**: Immediate (dangerous operations)\n" +
+      "- **Task**: User interactions (clicks, input)\n" +
+      "- **Normal**: Default priority\n" +
+      "- **Low**: Data fetching, analytics\n" +
+      "- **Idle**: Background work\n\n" +
+      "**Benefits:**\n" +
+      "- Better perceived performance\n" +
+      "- Smoother animations\n" +
+      "- More responsive user interface\n" +
+      "- Enables concurrent features",
+    category: "Core Concepts",
+    difficulty: "advanced",
+    tags: ["fiber", "concurrent", "performance", "scheduling", "architecture"],
+  },
+  {
+    id: 30,
+    question: "What are React Server Components? How do they differ from regular React components?",
+    answer:
+      "React Server Components (RSC) are a new type of component that run on the server and can be rendered to HTML before being sent to the client. They enable better performance by reducing the JavaScript bundle size and allowing direct access to server-side resources.\n\n" +
+      "**Key Differences:**\n\n" +
+      "**Server Components:**\n" +
+      "- Run on the server during build time or request time\n" +
+      "- Can directly access databases, file systems, and server APIs\n" +
+      "- Don't include JavaScript in the client bundle\n" +
+      "- Can't use browser-only APIs or event handlers\n" +
+      "- Can't use state or effects\n\n" +
+      "**Client Components:**\n" +
+      "- Run in the browser\n" +
+      "- Can use state, effects, and event handlers\n" +
+      "- Include JavaScript in the client bundle\n" +
+      "- Can access browser APIs\n\n" +
+      "**Example Implementation:**\n" +
+      "```javascript\n" +
+      "// Server Component (no 'use client' directive)\n" +
+      "async function BlogPost({ id }) {\n" +
+      "  // Direct database access on server\n" +
+      "  const post = await db.posts.findById(id);\n" +
+      "  const comments = await db.comments.findByPostId(id);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <article>\n" +
+      "      <h1>{post.title}</h1>\n" +
+      "      <p>{post.content}</p>\n" +
+      "      <CommentsList comments={comments} />\n" +
+      "    </article>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "// Client Component (with 'use client' directive)\n" +
+      "'use client';\n" +
+      "function CommentsList({ comments }) {\n" +
+      "  const [newComment, setNewComment] = useState('');\n" +
+      "  \n" +
+      "  const handleSubmit = async (e) => {\n" +
+      "    e.preventDefault();\n" +
+      "    // Handle form submission\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      {comments.map(comment => (\n" +
+      "        <div key={comment.id}>{comment.text}</div>\n" +
+      "      ))}\n" +
+      "      <form onSubmit={handleSubmit}>\n" +
+      "        <input \n" +
+      "          value={newComment}\n" +
+      "          onChange={(e) => setNewComment(e.target.value)}\n" +
+      "        />\n" +
+      "        <button type='submit'>Add Comment</button>\n" +
+      "      </form>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Smaller JavaScript bundles\n" +
+      "- Better performance\n" +
+      "- Direct server resource access\n" +
+      "- Improved SEO\n" +
+      "- Reduced client-side complexity",
+    category: "Advanced",
+    difficulty: "advanced",
+    tags: ["server-components", "rsc", "nextjs", "performance", "architecture"],
+  },
+  {
+    id: 31,
+    question:
+      "Explain React's Concurrent Features: startTransition, useDeferredValue, and useTransition.",
+    answer:
+      "React's concurrent features allow you to mark updates as non-urgent, enabling React to interrupt them if more urgent updates come in. This improves user experience by keeping the UI responsive.\n\n" +
+      "**startTransition:**\n" +
+      "Marks state updates as transitions (non-urgent).\n" +
+      "```javascript\n" +
+      "import { startTransition, useState } from 'react';\n\n" +
+      "function SearchResults({ query }) {\n" +
+      "  const [isPending, startTransition] = useTransition();\n" +
+      "  const [results, setResults] = useState([]);\n" +
+      "  \n" +
+      "  const handleSearch = (newQuery) => {\n" +
+      "    // Urgent: Update input immediately\n" +
+      "    setQuery(newQuery);\n" +
+      "    \n" +
+      "    // Non-urgent: Mark search as transition\n" +
+      "    startTransition(() => {\n" +
+      "      setResults(searchResults(newQuery));\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input \n" +
+      "        value={query}\n" +
+      "        onChange={(e) => handleSearch(e.target.value)}\n" +
+      "      />\n" +
+      "      {isPending && <div>Searching...</div>}\n" +
+      "      <ResultsList results={results} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useDeferredValue:**\n" +
+      "Defers updating a value until more urgent updates are complete.\n" +
+      "```javascript\n" +
+      "import { useDeferredValue, useMemo } from 'react';\n\n" +
+      "function ProductList({ products, filter }) {\n" +
+      "  const deferredFilter = useDeferredValue(filter);\n" +
+      "  \n" +
+      "  const filteredProducts = useMemo(() => {\n" +
+      "    return products.filter(product => \n" +
+      "      product.name.includes(deferredFilter)\n" +
+      "    );\n" +
+      "  }, [products, deferredFilter]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      {filteredProducts.map(product => (\n" +
+      "        <ProductCard key={product.id} product={product} />\n" +
+      "      ))}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useTransition:**\n" +
+      "Returns a boolean indicating if a transition is pending.\n" +
+      "```javascript\n" +
+      "function App() {\n" +
+      "  const [isPending, startTransition] = useTransition();\n" +
+      "  const [tab, setTab] = useState('home');\n" +
+      "  \n" +
+      "  const handleTabChange = (newTab) => {\n" +
+      "    startTransition(() => {\n" +
+      "      setTab(newTab);\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <nav>\n" +
+      "        <button onClick={() => handleTabChange('home')}>Home</button>\n" +
+      "        <button onClick={() => handleTabChange('about')}>About</button>\n" +
+      "      </nav>\n" +
+      "      {isPending && <div>Loading...</div>}\n" +
+      "      <TabContent tab={tab} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Large list filtering/sorting\n" +
+      "- Search results\n" +
+      "- Tab switching\n" +
+      "- Any non-critical UI updates\n\n" +
+      "**Benefits:**\n" +
+      "- Keeps UI responsive\n" +
+      "- Prevents blocking user interactions\n" +
+      "- Better perceived performance",
+    category: "Concurrent Features",
+    difficulty: "advanced",
+    tags: ["concurrent", "startTransition", "useDeferredValue", "useTransition", "performance"],
+  },
+  {
+    id: 32,
+    question: "What is React's useId hook? How and when should you use it?",
+    answer:
+      "useId is a React hook that generates unique IDs that are stable across server and client rendering. It's primarily used for accessibility attributes like htmlFor and id, ensuring they match correctly.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useId } from 'react';\n\n" +
+      "function FormField({ label, type = 'text' }) {\n" +
+      "  const id = useId();\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <label htmlFor={id}>{label}</label>\n" +
+      "      <input id={id} type={type} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage:**\n" +
+      "```javascript\n" +
+      "function Accordion({ items }) {\n" +
+      "  const baseId = useId();\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      {items.map((item, index) => {\n" +
+      "        const headerId = `${baseId}-header-${index}`;\n" +
+      "        const panelId = `${baseId}-panel-${index}`;\n" +
+      "        \n" +
+      "        return (\n" +
+      "          <div key={index}>\n" +
+      "            <button \n" +
+      "              id={headerId}\n" +
+      "              aria-expanded={item.isOpen}\n" +
+      "              aria-controls={panelId}\n" +
+      "            >\n" +
+      "              {item.title}\n" +
+      "            </button>\n" +
+      "            <div \n" +
+      "              id={panelId}\n" +
+      "              role='region'\n" +
+      "              aria-labelledby={headerId}\n" +
+      "            >\n" +
+      "              {item.content}\n" +
+      "            </div>\n" +
+      "          </div>\n" +
+      "        );\n" +
+      "      })}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Benefits:**\n" +
+      "- Stable across server/client rendering\n" +
+      "- No hydration mismatches\n" +
+      "- Unique within component tree\n" +
+      "- Perfect for accessibility attributes\n\n" +
+      "**When to Use:**\n" +
+      "- Form labels and inputs\n" +
+      "- ARIA attributes\n" +
+      "- Any element that needs a unique ID\n" +
+      "- Server-side rendering scenarios",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useId", "accessibility", "ssr", "hydration", "forms"],
+  },
+  {
+    id: 33,
+    question: "Explain React's useImperativeHandle hook. When and how should you use it?",
+    answer:
+      "useImperativeHandle allows you to customize the instance value that is exposed to parent components when using ref. It's used to expose specific methods or properties from a child component to its parent.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { forwardRef, useImperativeHandle, useRef } from 'react';\n\n" +
+      "const FancyInput = forwardRef((props, ref) => {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  useImperativeHandle(ref, () => ({\n" +
+      "    focus: () => {\n" +
+      "      inputRef.current.focus();\n" +
+      "    },\n" +
+      "    clear: () => {\n" +
+      "      inputRef.current.value = '';\n" +
+      "    },\n" +
+      "    getValue: () => {\n" +
+      "      return inputRef.current.value;\n" +
+      "    }\n" +
+      "  }));\n" +
+      "  \n" +
+      "  return <input ref={inputRef} {...props} />;\n" +
+      "});\n\n" +
+      "// Usage in parent component\n" +
+      "function App() {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  const handleFocus = () => {\n" +
+      "    inputRef.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleClear = () => {\n" +
+      "    inputRef.current.clear();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <FancyInput ref={inputRef} />\n" +
+      "      <button onClick={handleFocus}>Focus</button>\n" +
+      "      <button onClick={handleClear}>Clear</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Dependencies:**\n" +
+      "```javascript\n" +
+      "const VideoPlayer = forwardRef(({ src, autoplay }, ref) => {\n" +
+      "  const videoRef = useRef();\n" +
+      "  const [isPlaying, setIsPlaying] = useState(false);\n" +
+      "  \n" +
+      "  useImperativeHandle(ref, () => ({\n" +
+      "    play: () => {\n" +
+      "      videoRef.current.play();\n" +
+      "      setIsPlaying(true);\n" +
+      "    },\n" +
+      "    pause: () => {\n" +
+      "      videoRef.current.pause();\n" +
+      "      setIsPlaying(false);\n" +
+      "    },\n" +
+      "    getCurrentTime: () => videoRef.current.currentTime,\n" +
+      "    setCurrentTime: (time) => {\n" +
+      "      videoRef.current.currentTime = time;\n" +
+      "    },\n" +
+      "    isPlaying: () => isPlaying\n" +
+      "  }), [isPlaying]); // Re-create when isPlaying changes\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <video \n" +
+      "      ref={videoRef} \n" +
+      "      src={src} \n" +
+      "      autoPlay={autoplay}\n" +
+      "      onPlay={() => setIsPlaying(true)}\n" +
+      "      onPause={() => setIsPlaying(false)}\n" +
+      "    />\n" +
+      "  );\n" +
+      "});\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Exposing imperative APIs (focus, scroll, play/pause)\n" +
+      "- Third-party library integration\n" +
+      "- Complex component interactions\n" +
+      "- When declarative props aren't sufficient\n\n" +
+      "**Best Practices:**\n" +
+      "- Use sparingly (prefer declarative patterns)\n" +
+      "- Keep the exposed API minimal\n" +
+      "- Document the imperative API\n" +
+      "- Consider if the functionality could be achieved declaratively",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useImperativeHandle", "refs", "forwardRef", "imperative", "api"],
+  },
+  {
+    id: 34,
+    question: "What is React's useLayoutEffect hook? How does it differ from useEffect?",
+    answer:
+      "useLayoutEffect is identical to useEffect, but it fires synchronously after all DOM mutations but before the browser paints. This makes it perfect for DOM measurements and synchronous updates.\n\n" +
+      "**Key Differences:**\n\n" +
+      "**useEffect:**\n" +
+      "- Runs asynchronously after render\n" +
+      "- Doesn't block browser painting\n" +
+      "- Good for side effects, data fetching, subscriptions\n\n" +
+      "**useLayoutEffect:**\n" +
+      "- Runs synchronously after DOM mutations\n" +
+      "- Blocks browser painting until it completes\n" +
+      "- Good for DOM measurements and synchronous updates\n\n" +
+      "**Example: DOM Measurements:**\n" +
+      "```javascript\n" +
+      "function Tooltip({ children, content }) {\n" +
+      "  const [position, setPosition] = useState({ top: 0, left: 0 });\n" +
+      "  const tooltipRef = useRef();\n" +
+      "  const triggerRef = useRef();\n" +
+      "  \n" +
+      "  useLayoutEffect(() => {\n" +
+      "    if (tooltipRef.current && triggerRef.current) {\n" +
+      "      const triggerRect = triggerRef.current.getBoundingClientRect();\n" +
+      "      const tooltipRect = tooltipRef.current.getBoundingClientRect();\n" +
+      "      \n" +
+      "      setPosition({\n" +
+      "        top: triggerRect.bottom + 8,\n" +
+      "        left: triggerRect.left + (triggerRect.width - tooltipRect.width) / 2\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }, [content]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <div ref={triggerRef}>{children}</div>\n" +
+      "      <div \n" +
+      "        ref={tooltipRef}\n" +
+      "        style={{\n" +
+      "          position: 'absolute',\n" +
+      "          top: position.top,\n" +
+      "          left: position.left,\n" +
+      "          backgroundColor: 'black',\n" +
+      "          color: 'white',\n" +
+      "          padding: '4px 8px',\n" +
+      "          borderRadius: '4px'\n" +
+      "        }}\n" +
+      "      >\n" +
+      "        {content}\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Example: Synchronous Updates:**\n" +
+      "```javascript\n" +
+      "function ScrollToTop({ shouldScroll }) {\n" +
+      "  useLayoutEffect(() => {\n" +
+      "    if (shouldScroll) {\n" +
+      "      window.scrollTo(0, 0);\n" +
+      "    }\n" +
+      "  }, [shouldScroll]);\n" +
+      "  \n" +
+      "  return null;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useLayoutEffect:**\n" +
+      "- DOM measurements (getBoundingClientRect, offsetWidth, etc.)\n" +
+      "- Synchronous DOM updates\n" +
+      "- Preventing visual flicker\n" +
+      "- Scrolling or focusing elements\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Can cause performance issues if overused\n" +
+      "- Blocks browser painting\n" +
+      "- Use sparingly\n" +
+      "- Prefer useEffect when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useLayoutEffect", "dom", "measurements", "synchronous", "performance"],
+  },
+  {
+    id: 35,
+    question: "Explain React's useDebugValue hook. How is it used for custom hook debugging?",
+    answer:
+      "useDebugValue is a hook that allows you to display a label for custom hooks in React DevTools. It helps with debugging by showing meaningful information about the hook's state.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useState, useDebugValue } from 'react';\n\n" +
+      "function useCounter(initialValue = 0) {\n" +
+      "  const [count, setCount] = useState(initialValue);\n" +
+      "  \n" +
+      "  useDebugValue(count); // Shows count value in DevTools\n" +
+      "  \n" +
+      "  const increment = () => setCount(c => c + 1);\n" +
+      "  const decrement = () => setCount(c => c - 1);\n" +
+      "  \n" +
+      "  return { count, increment, decrement };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Formatter:**\n" +
+      "```javascript\n" +
+      "function useLocalStorage(key, initialValue) {\n" +
+      "  const [storedValue, setStoredValue] = useState(() => {\n" +
+      "    try {\n" +
+      "      const item = window.localStorage.getItem(key);\n" +
+      "      return item ? JSON.parse(item) : initialValue;\n" +
+      "    } catch (error) {\n" +
+      "      return initialValue;\n" +
+      "    }\n" +
+      "  });\n" +
+      "  \n" +
+      "  const setValue = (value) => {\n" +
+      "    try {\n" +
+      "      setStoredValue(value);\n" +
+      "      window.localStorage.setItem(key, JSON.stringify(value));\n" +
+      "    } catch (error) {\n" +
+      "      console.error(error);\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  useDebugValue(storedValue, (value) => {\n" +
+      "    return `localStorage[${key}]: ${JSON.stringify(value)}`;\n" +
+      "  });\n" +
+      "  \n" +
+      "  return [storedValue, setValue];\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Complex Debug Information:**\n" +
+      "```javascript\n" +
+      "function useApi(url) {\n" +
+      "  const [data, setData] = useState(null);\n" +
+      "  const [loading, setLoading] = useState(true);\n" +
+      "  const [error, setError] = useState(null);\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    fetch(url)\n" +
+      "      .then(response => response.json())\n" +
+      "      .then(data => {\n" +
+      "        setData(data);\n" +
+      "        setLoading(false);\n" +
+      "      })\n" +
+      "      .catch(error => {\n" +
+      "        setError(error);\n" +
+      "        setLoading(false);\n" +
+      "      });\n" +
+      "  }, [url]);\n" +
+      "  \n" +
+      "  useDebugValue(\n" +
+      "    { data, loading, error },\n" +
+      "    (state) => {\n" +
+      "      if (state.loading) return 'Loading...';\n" +
+      "      if (state.error) return `Error: ${state.error.message}`;\n" +
+      "      return `Data: ${state.data ? 'Loaded' : 'No data'}`;\n" +
+      "    }\n" +
+      "  );\n" +
+      "  \n" +
+      "  return { data, loading, error };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Better debugging experience\n" +
+      "- Clear hook state visualization\n" +
+      "- Custom formatting for complex data\n" +
+      "- Helps identify hook issues\n\n" +
+      "**Best Practices:**\n" +
+      "- Only use in custom hooks\n" +
+      "- Provide meaningful labels\n" +
+      "- Use formatter functions for complex data\n" +
+      "- Don't use in production builds (automatically removed)",
+    category: "Development",
+    difficulty: "intermediate",
+    tags: ["useDebugValue", "debugging", "devtools", "custom-hooks", "development"],
+  },
+  {
+    id: 36,
+    question:
+      "What is React's useSyncExternalStore hook? How is it used for external state management?",
+    answer:
+      "useSyncExternalStore is a hook that allows you to subscribe to external data sources and keep your component in sync with them. It's designed to work with external stores like Redux, Zustand, or any custom state management solution.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useSyncExternalStore } from 'react';\n\n" +
+      "// External store\n" +
+      "class ExternalStore {\n" +
+      "  constructor() {\n" +
+      "    this.state = { count: 0 };\n" +
+      "    this.listeners = new Set();\n" +
+      "  }\n" +
+      "  \n" +
+      "  getSnapshot() {\n" +
+      "    return this.state;\n" +
+      "  }\n" +
+      "  \n" +
+      "  subscribe(listener) {\n" +
+      "    this.listeners.add(listener);\n" +
+      "    return () => this.listeners.delete(listener);\n" +
+      "  }\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.state = { ...this.state, count: this.state.count + 1 };\n" +
+      "    this.listeners.forEach(listener => listener());\n" +
+      "  }\n" +
+      "}\n\n" +
+      "const store = new ExternalStore();\n\n" +
+      "// Component using the store\n" +
+      "function Counter() {\n" +
+      "  const state = useSyncExternalStore(\n" +
+      "    store.subscribe.bind(store),\n" +
+      "    store.getSnapshot.bind(store)\n" +
+      "  );\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => store.increment()}>Increment</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Server Snapshot:**\n" +
+      "```javascript\n" +
+      "function useLocalStorage(key, initialValue) {\n" +
+      "  const getSnapshot = () => {\n" +
+      "    try {\n" +
+      "      const item = localStorage.getItem(key);\n" +
+      "      return item ? JSON.parse(item) : initialValue;\n" +
+      "    } catch {\n" +
+      "      return initialValue;\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  const getServerSnapshot = () => initialValue;\n" +
+      "  \n" +
+      "  const subscribe = (listener) => {\n" +
+      "    const handleStorageChange = (e) => {\n" +
+      "      if (e.key === key) {\n" +
+      "        listener();\n" +
+      "      }\n" +
+      "    };\n" +
+      "    \n" +
+      "    window.addEventListener('storage', handleStorageChange);\n" +
+      "    return () => window.removeEventListener('storage', handleStorageChange);\n" +
+      "  };\n" +
+      "  \n" +
+      "  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Works with any external store\n" +
+      "- Handles server-side rendering\n" +
+      "- Prevents hydration mismatches\n" +
+      "- Optimized for performance\n\n" +
+      "**When to Use:**\n" +
+      "- Integrating with external state libraries\n" +
+      "- Custom state management solutions\n" +
+      "- Browser APIs (localStorage, sessionStorage)\n" +
+      "- WebSocket connections",
+    category: "State Management",
+    difficulty: "advanced",
+    tags: ["useSyncExternalStore", "external-state", "stores", "ssr", "hydration"],
+  },
+  {
+    id: 37,
+    question: "Explain React's useInsertionEffect hook. When and how should you use it?",
+    answer:
+      "useInsertionEffect is a hook that fires before any DOM mutations. It's primarily used for injecting styles into the DOM, ensuring they're available before the browser paints.\n\n" +
+      "**Key Characteristics:**\n" +
+      "- Fires before DOM mutations\n" +
+      "- Runs synchronously\n" +
+      "- Perfect for style injection\n" +
+      "- Similar to useLayoutEffect but earlier\n\n" +
+      "**Basic Usage for Style Injection:**\n" +
+      "```javascript\n" +
+      "import { useInsertionEffect } from 'react';\n\n" +
+      "function useCSS(css) {\n" +
+      "  useInsertionEffect(() => {\n" +
+      "    const style = document.createElement('style');\n" +
+      "    style.textContent = css;\n" +
+      "    document.head.appendChild(style);\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      document.head.removeChild(style);\n" +
+      "    };\n" +
+      "  }, [css]);\n" +
+      "}\n\n" +
+      "function StyledComponent({ children }) {\n" +
+      "  useCSS(`\n" +
+      "    .my-component {\n" +
+      "      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);\n" +
+      "      padding: 20px;\n" +
+      "      border-radius: 8px;\n" +
+      "    }\n" +
+      "  `);\n" +
+      "  \n" +
+      "  return <div className='my-component'>{children}</div>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with CSS-in-JS:**\n" +
+      "```javascript\n" +
+      "function useStyledComponent(componentName, styles) {\n" +
+      "  useInsertionEffect(() => {\n" +
+      "    const styleId = `styled-${componentName}`;\n" +
+      "    let styleElement = document.getElementById(styleId);\n" +
+      "    \n" +
+      "    if (!styleElement) {\n" +
+      "      styleElement = document.createElement('style');\n" +
+      "      styleElement.id = styleId;\n" +
+      "      document.head.appendChild(styleElement);\n" +
+      "    }\n" +
+      "    \n" +
+      "    styleElement.textContent = styles;\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      if (styleElement && styleElement.parentNode) {\n" +
+      "        styleElement.parentNode.removeChild(styleElement);\n" +
+      "      }\n" +
+      "    };\n" +
+      "  }, [componentName, styles]);\n" +
+      "}\n\n" +
+      "function Button({ children, variant = 'primary' }) {\n" +
+      "  const styles = `\n" +
+      "    .btn {\n" +
+      "      padding: 12px 24px;\n" +
+      "      border: none;\n" +
+      "      border-radius: 4px;\n" +
+      "      cursor: pointer;\n" +
+      "      font-weight: 500;\n" +
+      "    }\n" +
+      "    .btn-primary {\n" +
+      "      background-color: #007bff;\n" +
+      "      color: white;\n" +
+      "    }\n" +
+      "    .btn-secondary {\n" +
+      "      background-color: #6c757d;\n" +
+      "      color: white;\n" +
+      "    }\n" +
+      "  `;\n" +
+      "  \n" +
+      "  useStyledComponent('Button', styles);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <button className={`btn btn-${variant}`}>\n" +
+      "      {children}\n" +
+      "    </button>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- CSS-in-JS libraries\n" +
+      "- Dynamic style injection\n" +
+      "- Theme switching\n" +
+      "- Critical CSS loading\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Runs synchronously\n" +
+      "- Can block rendering if overused\n" +
+      "- Use sparingly\n" +
+      "- Prefer CSS modules or styled-components for most cases",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useInsertionEffect", "styles", "css-in-js", "dom", "performance"],
+  },
+  {
+    id: 38,
+    question:
+      "What is React's useReducer hook? How does it compare to useState and when should you use it?",
+    answer:
+      "useReducer is a hook that manages complex state logic using a reducer function. It's similar to useState but more powerful for managing state that involves multiple sub-values or when the next state depends on the previous one.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useReducer } from 'react';\n\n" +
+      "const initialState = { count: 0 };\n\n" +
+      "function reducer(state, action) {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'increment':\n" +
+      "      return { count: state.count + 1 };\n" +
+      "    case 'decrement':\n" +
+      "      return { count: state.count - 1 };\n" +
+      "    case 'reset':\n" +
+      "      return { count: 0 };\n" +
+      "    default:\n" +
+      "      throw new Error(`Unhandled action type: ${action.type}`);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "function Counter() {\n" +
+      "  const [state, dispatch] = useReducer(reducer, initialState);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => dispatch({ type: 'increment' })}>+</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Complex State:**\n" +
+      "```javascript\n" +
+      "const initialState = {\n" +
+      "  todos: [],\n" +
+      "  filter: 'all',\n" +
+      "  loading: false,\n" +
+      "  error: null\n" +
+      "};\n\n" +
+      "function todosReducer(state, action) {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'ADD_TODO':\n" +
+      "      return {\n" +
+      "        ...state,\n" +
+      "        todos: [...state.todos, {\n" +
+      "          id: Date.now(),\n" +
+      "          text: action.text,\n" +
+      "          completed: false\n" +
+      "        }]\n" +
+      "      };\n" +
+      "    case 'TOGGLE_TODO':\n" +
+      "      return {\n" +
+      "        ...state,\n" +
+      "        todos: state.todos.map(todo =>\n" +
+      "          todo.id === action.id\n" +
+      "            ? { ...todo, completed: !todo.completed }\n" +
+      "            : todo\n" +
+      "        )\n" +
+      "      };\n" +
+      "    case 'SET_FILTER':\n" +
+      "      return { ...state, filter: action.filter };\n" +
+      "    case 'SET_LOADING':\n" +
+      "      return { ...state, loading: action.loading };\n" +
+      "    case 'SET_ERROR':\n" +
+      "      return { ...state, error: action.error };\n" +
+      "    default:\n" +
+      "      return state;\n" +
+      "  }\n" +
+      "}\n\n" +
+      "function TodoApp() {\n" +
+      "  const [state, dispatch] = useReducer(todosReducer, initialState);\n" +
+      "  \n" +
+      "  const addTodo = (text) => {\n" +
+      "    dispatch({ type: 'ADD_TODO', text });\n" +
+      "  };\n" +
+      "  \n" +
+      "  const toggleTodo = (id) => {\n" +
+      "    dispatch({ type: 'TOGGLE_TODO', id });\n" +
+      "  };\n" +
+      "  \n" +
+      "  const setFilter = (filter) => {\n" +
+      "    dispatch({ type: 'SET_FILTER', filter });\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <TodoInput onAdd={addTodo} />\n" +
+      "      <TodoFilter filter={state.filter} onFilterChange={setFilter} />\n" +
+      "      <TodoList \n" +
+      "        todos={state.todos}\n" +
+      "        filter={state.filter}\n" +
+      "        onToggle={toggleTodo}\n" +
+      "      />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Lazy Initialization:**\n" +
+      "```javascript\n" +
+      "function init(initialCount) {\n" +
+      "  return { count: initialCount };\n" +
+      "}\n\n" +
+      "function reducer(state, action) {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'increment':\n" +
+      "      return { count: state.count + 1 };\n" +
+      "    case 'decrement':\n" +
+      "      return { count: state.count - 1 };\n" +
+      "    case 'reset':\n" +
+      "      return init(action.payload);\n" +
+      "    default:\n" +
+      "      throw new Error();\n" +
+      "  }\n" +
+      "}\n\n" +
+      "function Counter({ initialCount }) {\n" +
+      "  const [state, dispatch] = useReducer(reducer, initialCount, init);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => dispatch({ type: 'increment' })}>+</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'reset', payload: initialCount })}>\n" +
+      "        Reset\n" +
+      "      </button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useReducer:**\n" +
+      "- Complex state logic\n" +
+      "- Multiple sub-values\n" +
+      "- Next state depends on previous state\n" +
+      "- Predictable state updates\n" +
+      "- Better testing (pure functions)\n\n" +
+      "**Benefits over useState:**\n" +
+      "- More predictable state updates\n" +
+      "- Better for complex state logic\n" +
+      "- Easier to test\n" +
+      "- Can be used with useContext for global state",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useReducer", "state", "reducer", "complex-state", "predictable"],
+  },
+  {
+    id: 39,
+    question:
+      "Explain React's useMemo and useCallback hooks in detail. How do they optimize performance?",
+    answer:
+      "useMemo and useCallback are React hooks that help optimize performance by memoizing values and functions respectively. They prevent unnecessary recalculations and re-renders.\n\n" +
+      "**useMemo - Memoizing Values:**\n" +
+      "```javascript\n" +
+      "import { useMemo, useState } from 'react';\n\n" +
+      "function ExpensiveComponent({ items, filter }) {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when items or filter change\n" +
+      "  const filteredItems = useMemo(() => {\n" +
+      "    console.log('Filtering items...');\n" +
+      "    return items.filter(item => \n" +
+      "      item.name.toLowerCase().includes(filter.toLowerCase())\n" +
+      "    );\n" +
+      "  }, [items, filter]);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when filteredItems change\n" +
+      "  const totalPrice = useMemo(() => {\n" +
+      "    console.log('Calculating total...');\n" +
+      "    return filteredItems.reduce((sum, item) => sum + item.price, 0);\n" +
+      "  }, [filteredItems]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n" +
+      "      <p>Total Price: ${totalPrice}</p>\n" +
+      "      <ul>\n" +
+      "        {filteredItems.map(item => (\n" +
+      "          <li key={item.id}>{item.name} - ${item.price}</li>\n" +
+      "        ))}\n" +
+      "      </ul>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useCallback - Memoizing Functions:**\n" +
+      "```javascript\n" +
+      "import { useCallback, useState, memo } from 'react';\n\n" +
+      "const ExpensiveChild = memo(({ onClick, label }) => {\n" +
+      "  console.log(`Rendering ${label}`);\n" +
+      "  return <button onClick={onClick}>{label}</button>;\n" +
+      "});\n\n" +
+      "function Parent() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [name, setName] = useState('');\n" +
+      "  \n" +
+      "  // Memoized function that only changes when count changes\n" +
+      "  const handleIncrement = useCallback(() => {\n" +
+      "    setCount(c => c + 1);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  // Memoized function that only changes when name changes\n" +
+      "  const handleNameChange = useCallback((e) => {\n" +
+      "    setName(e.target.value);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input value={name} onChange={handleNameChange} />\n" +
+      "      <ExpensiveChild onClick={handleIncrement} label='Increment' />\n" +
+      "      <ExpensiveChild onClick={handleNameChange} label='Change Name' />\n" +
+      "      <p>Count: {count}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Dependencies:**\n" +
+      "```javascript\n" +
+      "function SearchResults({ query, filters }) {\n" +
+      "  const [results, setResults] = useState([]);\n" +
+      "  \n" +
+      "  // Memoized search function\n" +
+      "  const search = useCallback(async (searchQuery, searchFilters) => {\n" +
+      "    const response = await fetch(`/api/search?q=${searchQuery}&filters=${JSON.stringify(searchFilters)}`);\n" +
+      "    const data = await response.json();\n" +
+      "    setResults(data.results);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  // Memoized search parameters\n" +
+      "  const searchParams = useMemo(() => ({\n" +
+      "    query,\n" +
+      "    filters,\n" +
+      "    timestamp: Date.now()\n" +
+      "  }), [query, filters]);\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    search(searchParams.query, searchParams.filters);\n" +
+      "  }, [search, searchParams]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      {results.map(result => (\n" +
+      "        <div key={result.id}>{result.title}</div>\n" +
+      "      ))}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Only use when you have performance issues\n" +
+      "- Don't overuse (can hurt performance)\n" +
+      "- Measure before and after optimization\n" +
+      "- Consider the cost of memoization\n\n" +
+      "**When to Use:**\n" +
+      "- Expensive calculations\n" +
+      "- Preventing unnecessary re-renders\n" +
+      "- Optimizing child components\n" +
+      "- Complex dependency arrays",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["useMemo", "useCallback", "performance", "memoization", "optimization"],
+  },
+  {
+    id: 40,
+    question:
+      "What is React's useRef hook? How does it differ from useState and when should you use it?",
+    answer:
+      "useRef is a hook that returns a mutable ref object whose .current property is initialized to the passed argument. The returned object will persist for the full lifetime of the component and doesn't cause re-renders when its value changes.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useRef, useEffect } from 'react';\n\n" +
+      "function TextInputWithFocusButton() {\n" +
+      "  const inputEl = useRef(null);\n" +
+      "  \n" +
+      "  const onButtonClick = () => {\n" +
+      "    inputEl.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input ref={inputEl} type='text' />\n" +
+      "      <button onClick={onButtonClick}>Focus the input</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Storing Mutable Values:**\n" +
+      "```javascript\n" +
+      "function Timer() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const intervalRef = useRef();\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    intervalRef.current = setInterval(() => {\n" +
+      "      setCount(c => c + 1);\n" +
+      "    }, 1000);\n" +
+      "    \n" +
+      "    return () => clearInterval(intervalRef.current);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  const stopTimer = () => {\n" +
+      "    clearInterval(intervalRef.current);\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={stopTimer}>Stop Timer</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Accessing Previous Values:**\n" +
+      "```javascript\n" +
+      "function usePrevious(value) {\n" +
+      "  const ref = useRef();\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    ref.current = value;\n" +
+      "  });\n" +
+      "  \n" +
+      "  return ref.current;\n" +
+      "}\n\n" +
+      "function Counter() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const prevCount = usePrevious(count);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Current: {count}</p>\n" +
+      "      <p>Previous: {prevCount}</p>\n" +
+      "      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Differences from useState:**\n" +
+      "- **useRef**: Doesn't trigger re-renders, mutable .current property\n" +
+      "- **useState**: Triggers re-renders, immutable state value\n\n" +
+      "**When to Use useRef:**\n" +
+      "- Accessing DOM elements\n" +
+      "- Storing mutable values that don't need to trigger re-renders\n" +
+      "- Storing previous values\n" +
+      "- Storing timers, intervals, or other side effects\n\n" +
+      "**Best Practices:**\n" +
+      "- Don't use refs for values that should trigger re-renders\n" +
+      "- Use refs sparingly\n" +
+      "- Prefer declarative approaches when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useRef", "refs", "mutable", "dom", "side-effects"],
+  },
+  {
+    id: 41,
+    question: "Explain React's useImperativeHandle hook. When and how should you use it?",
+    answer:
+      "useImperativeHandle allows you to customize the instance value that is exposed to parent components when using ref. It's used to expose specific methods or properties from a child component to its parent.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { forwardRef, useImperativeHandle, useRef } from 'react';\n\n" +
+      "const FancyInput = forwardRef((props, ref) => {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  useImperativeHandle(ref, () => ({\n" +
+      "    focus: () => {\n" +
+      "      inputRef.current.focus();\n" +
+      "    },\n" +
+      "    clear: () => {\n" +
+      "      inputRef.current.value = '';\n" +
+      "    },\n" +
+      "    getValue: () => {\n" +
+      "      return inputRef.current.value;\n" +
+      "    }\n" +
+      "  }));\n" +
+      "  \n" +
+      "  return <input ref={inputRef} {...props} />;\n" +
+      "});\n\n" +
+      "// Usage in parent component\n" +
+      "function App() {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  const handleFocus = () => {\n" +
+      "    inputRef.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleClear = () => {\n" +
+      "    inputRef.current.clear();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <FancyInput ref={inputRef} />\n" +
+      "      <button onClick={handleFocus}>Focus</button>\n" +
+      "      <button onClick={handleClear}>Clear</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Exposing imperative APIs (focus, scroll, play/pause)\n" +
+      "- Third-party library integration\n" +
+      "- Complex component interactions\n" +
+      "- When declarative props aren't sufficient\n\n" +
+      "**Best Practices:**\n" +
+      "- Use sparingly (prefer declarative patterns)\n" +
+      "- Keep the exposed API minimal\n" +
+      "- Document the imperative API\n" +
+      "- Consider if the functionality could be achieved declaratively",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useImperativeHandle", "refs", "forwardRef", "imperative", "api"],
+  },
+  {
+    id: 42,
+    question: "What is React's useLayoutEffect hook? How does it differ from useEffect?",
+    answer:
+      "useLayoutEffect is identical to useEffect, but it fires synchronously after all DOM mutations but before the browser paints. This makes it perfect for DOM measurements and synchronous updates.\n\n" +
+      "**Key Differences:**\n\n" +
+      "**useEffect:**\n" +
+      "- Runs asynchronously after render\n" +
+      "- Doesn't block browser painting\n" +
+      "- Good for side effects, data fetching, subscriptions\n\n" +
+      "**useLayoutEffect:**\n" +
+      "- Runs synchronously after DOM mutations\n" +
+      "- Blocks browser painting until it completes\n" +
+      "- Good for DOM measurements and synchronous updates\n\n" +
+      "**Example: DOM Measurements:**\n" +
+      "```javascript\n" +
+      "function Tooltip({ children, content }) {\n" +
+      "  const [position, setPosition] = useState({ top: 0, left: 0 });\n" +
+      "  const tooltipRef = useRef();\n" +
+      "  const triggerRef = useRef();\n" +
+      "  \n" +
+      "  useLayoutEffect(() => {\n" +
+      "    if (tooltipRef.current && triggerRef.current) {\n" +
+      "      const triggerRect = triggerRef.current.getBoundingClientRect();\n" +
+      "      const tooltipRect = tooltipRef.current.getBoundingClientRect();\n" +
+      "      \n" +
+      "      setPosition({\n" +
+      "        top: triggerRect.bottom + 8,\n" +
+      "        left: triggerRect.left + (triggerRect.width - tooltipRect.width) / 2\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }, [content]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <div ref={triggerRef}>{children}</div>\n" +
+      "      <div \n" +
+      "        ref={tooltipRef}\n" +
+      "        style={{\n" +
+      "          position: 'absolute',\n" +
+      "          top: position.top,\n" +
+      "          left: position.left,\n" +
+      "          backgroundColor: 'black',\n" +
+      "          color: 'white',\n" +
+      "          padding: '4px 8px',\n" +
+      "          borderRadius: '4px'\n" +
+      "        }}\n" +
+      "      >\n" +
+      "        {content}\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useLayoutEffect:**\n" +
+      "- DOM measurements (getBoundingClientRect, offsetWidth, etc.)\n" +
+      "- Synchronous DOM updates\n" +
+      "- Preventing visual flicker\n" +
+      "- Scrolling or focusing elements\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Can cause performance issues if overused\n" +
+      "- Blocks browser painting\n" +
+      "- Use sparingly\n" +
+      "- Prefer useEffect when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useLayoutEffect", "dom", "measurements", "synchronous", "performance"],
+  },
+  {
+    id: 43,
+    question: "Explain React's useDebugValue hook. How is it used for custom hook debugging?",
+    answer:
+      "useDebugValue is a hook that allows you to display a label for custom hooks in React DevTools. It helps with debugging by showing meaningful information about the hook's state.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useState, useDebugValue } from 'react';\n\n" +
+      "function useCounter(initialValue = 0) {\n" +
+      "  const [count, setCount] = useState(initialValue);\n" +
+      "  \n" +
+      "  useDebugValue(count); // Shows count value in DevTools\n" +
+      "  \n" +
+      "  const increment = () => setCount(c => c + 1);\n" +
+      "  const decrement = () => setCount(c => c - 1);\n" +
+      "  \n" +
+      "  return { count, increment, decrement };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Formatter:**\n" +
+      "```javascript\n" +
+      "function useLocalStorage(key, initialValue) {\n" +
+      "  const [storedValue, setStoredValue] = useState(() => {\n" +
+      "    try {\n" +
+      "      const item = window.localStorage.getItem(key);\n" +
+      "      return item ? JSON.parse(item) : initialValue;\n" +
+      "    } catch (error) {\n" +
+      "      return initialValue;\n" +
+      "    }\n" +
+      "  });\n" +
+      "  \n" +
+      "  const setValue = (value) => {\n" +
+      "    try {\n" +
+      "      setStoredValue(value);\n" +
+      "      window.localStorage.setItem(key, JSON.stringify(value));\n" +
+      "    } catch (error) {\n" +
+      "      console.error(error);\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  useDebugValue(storedValue, (value) => {\n" +
+      "    return `localStorage[${key}]: ${JSON.stringify(value)}`;\n" +
+      "  });\n" +
+      "  \n" +
+      "  return [storedValue, setValue];\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Better debugging experience\n" +
+      "- Clear hook state visualization\n" +
+      "- Custom formatting for complex data\n" +
+      "- Helps identify hook issues\n\n" +
+      "**Best Practices:**\n" +
+      "- Only use in custom hooks\n" +
+      "- Provide meaningful labels\n" +
+      "- Use formatter functions for complex data\n" +
+      "- Don't use in production builds (automatically removed)",
+    category: "Development",
+    difficulty: "intermediate",
+    tags: ["useDebugValue", "debugging", "devtools", "custom-hooks", "development"],
+  },
+  {
+    id: 44,
+    question:
+      "What is React's useSyncExternalStore hook? How is it used for external state management?",
+    answer:
+      "useSyncExternalStore is a hook that allows you to subscribe to external data sources and keep your component in sync with them. It's designed to work with external stores like Redux, Zustand, or any custom state management solution.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useSyncExternalStore } from 'react';\n\n" +
+      "// External store\n" +
+      "class ExternalStore {\n" +
+      "  constructor() {\n" +
+      "    this.state = { count: 0 };\n" +
+      "    this.listeners = new Set();\n" +
+      "  }\n" +
+      "  \n" +
+      "  getSnapshot() {\n" +
+      "    return this.state;\n" +
+      "  }\n" +
+      "  \n" +
+      "  subscribe(listener) {\n" +
+      "    this.listeners.add(listener);\n" +
+      "    return () => this.listeners.delete(listener);\n" +
+      "  }\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.state = { ...this.state, count: this.state.count + 1 };\n" +
+      "    this.listeners.forEach(listener => listener());\n" +
+      "  }\n" +
+      "}\n\n" +
+      "const store = new ExternalStore();\n\n" +
+      "// Component using the store\n" +
+      "function Counter() {\n" +
+      "  const state = useSyncExternalStore(\n" +
+      "    store.subscribe.bind(store),\n" +
+      "    store.getSnapshot.bind(store)\n" +
+      "  );\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => store.increment()}>Increment</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Works with any external store\n" +
+      "- Handles server-side rendering\n" +
+      "- Prevents hydration mismatches\n" +
+      "- Optimized for performance\n\n" +
+      "**When to Use:**\n" +
+      "- Integrating with external state libraries\n" +
+      "- Custom state management solutions\n" +
+      "- Browser APIs (localStorage, sessionStorage)\n" +
+      "- WebSocket connections",
+    category: "State Management",
+    difficulty: "advanced",
+    tags: ["useSyncExternalStore", "external-state", "stores", "ssr", "hydration"],
+  },
+  {
+    id: 45,
+    question: "Explain React's useInsertionEffect hook. When and how should you use it?",
+    answer:
+      "useInsertionEffect is a hook that fires before any DOM mutations. It's primarily used for injecting styles into the DOM, ensuring they're available before the browser paints.\n\n" +
+      "**Key Characteristics:**\n" +
+      "- Fires before DOM mutations\n" +
+      "- Runs synchronously\n" +
+      "- Perfect for style injection\n" +
+      "- Similar to useLayoutEffect but earlier\n\n" +
+      "**Basic Usage for Style Injection:**\n" +
+      "```javascript\n" +
+      "import { useInsertionEffect } from 'react';\n\n" +
+      "function useCSS(css) {\n" +
+      "  useInsertionEffect(() => {\n" +
+      "    const style = document.createElement('style');\n" +
+      "    style.textContent = css;\n" +
+      "    document.head.appendChild(style);\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      document.head.removeChild(style);\n" +
+      "    };\n" +
+      "  }, [css]);\n" +
+      "}\n\n" +
+      "function StyledComponent({ children }) {\n" +
+      "  useCSS(`\n" +
+      "    .my-component {\n" +
+      "      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);\n" +
+      "      padding: 20px;\n" +
+      "      border-radius: 8px;\n" +
+      "    }\n" +
+      "  `);\n" +
+      "  \n" +
+      "  return <div className='my-component'>{children}</div>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- CSS-in-JS libraries\n" +
+      "- Dynamic style injection\n" +
+      "- Theme switching\n" +
+      "- Critical CSS loading\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Runs synchronously\n" +
+      "- Can block rendering if overused\n" +
+      "- Use sparingly\n" +
+      "- Prefer CSS modules or styled-components for most cases",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useInsertionEffect", "styles", "css-in-js", "dom", "performance"],
+  },
+  {
+    id: 46,
+    question:
+      "What is React's useReducer hook? How does it compare to useState and when should you use it?",
+    answer:
+      "useReducer is a hook that manages complex state logic using a reducer function. It's similar to useState but more powerful for managing state that involves multiple sub-values or when the next state depends on the previous one.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useReducer } from 'react';\n\n" +
+      "const initialState = { count: 0 };\n\n" +
+      "function reducer(state, action) {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'increment':\n" +
+      "      return { count: state.count + 1 };\n" +
+      "    case 'decrement':\n" +
+      "      return { count: state.count - 1 };\n" +
+      "    case 'reset':\n" +
+      "      return { count: 0 };\n" +
+      "    default:\n" +
+      "      throw new Error(`Unhandled action type: ${action.type}`);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "function Counter() {\n" +
+      "  const [state, dispatch] = useReducer(reducer, initialState);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => dispatch({ type: 'increment' })}>+</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useReducer:**\n" +
+      "- Complex state logic\n" +
+      "- Multiple sub-values\n" +
+      "- Next state depends on previous state\n" +
+      "- Predictable state updates\n" +
+      "- Better testing (pure functions)\n\n" +
+      "**Benefits over useState:**\n" +
+      "- More predictable state updates\n" +
+      "- Better for complex state logic\n" +
+      "- Easier to test\n" +
+      "- Can be used with useContext for global state",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useReducer", "state", "reducer", "complex-state", "predictable"],
+  },
+  {
+    id: 47,
+    question: "What is React's useImperativeHandle hook? When and how should you use it?",
+    answer:
+      "useImperativeHandle allows you to customize the instance value that is exposed to parent components when using ref. It's used to expose specific methods or properties from a child component to its parent.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { forwardRef, useImperativeHandle, useRef } from 'react';\n\n" +
+      "const FancyInput = forwardRef((props, ref) => {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  useImperativeHandle(ref, () => ({\n" +
+      "    focus: () => {\n" +
+      "      inputRef.current.focus();\n" +
+      "    },\n" +
+      "    clear: () => {\n" +
+      "      inputRef.current.value = '';\n" +
+      "    },\n" +
+      "    getValue: () => {\n" +
+      "      return inputRef.current.value;\n" +
+      "    }\n" +
+      "  }));\n" +
+      "  \n" +
+      "  return <input ref={inputRef} {...props} />;\n" +
+      "});\n\n" +
+      "// Usage in parent component\n" +
+      "function App() {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  const handleFocus = () => {\n" +
+      "    inputRef.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleClear = () => {\n" +
+      "    inputRef.current.clear();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <FancyInput ref={inputRef} />\n" +
+      "      <button onClick={handleFocus}>Focus</button>\n" +
+      "      <button onClick={handleClear}>Clear</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Exposing imperative APIs (focus, scroll, play/pause)\n" +
+      "- Third-party library integration\n" +
+      "- Complex component interactions\n" +
+      "- When declarative props aren't sufficient\n\n" +
+      "**Best Practices:**\n" +
+      "- Use sparingly (prefer declarative patterns)\n" +
+      "- Keep the exposed API minimal\n" +
+      "- Document the imperative API\n" +
+      "- Consider if the functionality could be achieved declaratively",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useImperativeHandle", "refs", "forwardRef", "imperative", "api"],
+  },
+  {
+    id: 48,
+    question: "Explain React's useLayoutEffect hook. How does it differ from useEffect?",
+    answer:
+      "useLayoutEffect is identical to useEffect, but it fires synchronously after all DOM mutations but before the browser paints. This makes it perfect for DOM measurements and synchronous updates.\n\n" +
+      "**Key Differences:**\n\n" +
+      "**useEffect:**\n" +
+      "- Runs asynchronously after render\n" +
+      "- Doesn't block browser painting\n" +
+      "- Good for side effects, data fetching, subscriptions\n\n" +
+      "**useLayoutEffect:**\n" +
+      "- Runs synchronously after DOM mutations\n" +
+      "- Blocks browser painting until it completes\n" +
+      "- Good for DOM measurements and synchronous updates\n\n" +
+      "**Example: DOM Measurements:**\n" +
+      "```javascript\n" +
+      "function Tooltip({ children, content }) {\n" +
+      "  const [position, setPosition] = useState({ top: 0, left: 0 });\n" +
+      "  const tooltipRef = useRef();\n" +
+      "  const triggerRef = useRef();\n" +
+      "  \n" +
+      "  useLayoutEffect(() => {\n" +
+      "    if (tooltipRef.current && triggerRef.current) {\n" +
+      "      const triggerRect = triggerRef.current.getBoundingClientRect();\n" +
+      "      const tooltipRect = tooltipRef.current.getBoundingClientRect();\n" +
+      "      \n" +
+      "      setPosition({\n" +
+      "        top: triggerRect.bottom + 8,\n" +
+      "        left: triggerRect.left + (triggerRect.width - tooltipRect.width) / 2\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }, [content]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <div ref={triggerRef}>{children}</div>\n" +
+      "      <div \n" +
+      "        ref={tooltipRef}\n" +
+      "        style={{\n" +
+      "          position: 'absolute',\n" +
+      "          top: position.top,\n" +
+      "          left: position.left,\n" +
+      "          backgroundColor: 'black',\n" +
+      "          color: 'white',\n" +
+      "          padding: '4px 8px',\n" +
+      "          borderRadius: '4px'\n" +
+      "        }}\n" +
+      "      >\n" +
+      "        {content}\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useLayoutEffect:**\n" +
+      "- DOM measurements (getBoundingClientRect, offsetWidth, etc.)\n" +
+      "- Synchronous DOM updates\n" +
+      "- Preventing visual flicker\n" +
+      "- Scrolling or focusing elements\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Can cause performance issues if overused\n" +
+      "- Blocks browser painting\n" +
+      "- Use sparingly\n" +
+      "- Prefer useEffect when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useLayoutEffect", "dom", "measurements", "synchronous", "performance"],
+  },
+  {
+    id: 49,
+    question: "What is React's useDebugValue hook? How is it used for custom hook debugging?",
+    answer:
+      "useDebugValue is a hook that allows you to display a label for custom hooks in React DevTools. It helps with debugging by showing meaningful information about the hook's state.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useState, useDebugValue } from 'react';\n\n" +
+      "function useCounter(initialValue = 0) {\n" +
+      "  const [count, setCount] = useState(initialValue);\n" +
+      "  \n" +
+      "  useDebugValue(count); // Shows count value in DevTools\n" +
+      "  \n" +
+      "  const increment = () => setCount(c => c + 1);\n" +
+      "  const decrement = () => setCount(c => c - 1);\n" +
+      "  \n" +
+      "  return { count, increment, decrement };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Formatter:**\n" +
+      "```javascript\n" +
+      "function useLocalStorage(key, initialValue) {\n" +
+      "  const [storedValue, setStoredValue] = useState(() => {\n" +
+      "    try {\n" +
+      "      const item = window.localStorage.getItem(key);\n" +
+      "      return item ? JSON.parse(item) : initialValue;\n" +
+      "    } catch (error) {\n" +
+      "      return initialValue;\n" +
+      "    }\n" +
+      "  });\n" +
+      "  \n" +
+      "  const setValue = (value) => {\n" +
+      "    try {\n" +
+      "      setStoredValue(value);\n" +
+      "      window.localStorage.setItem(key, JSON.stringify(value));\n" +
+      "    } catch (error) {\n" +
+      "      console.error(error);\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  useDebugValue(storedValue, (value) => {\n" +
+      "    return `localStorage[${key}]: ${JSON.stringify(value)}`;\n" +
+      "  });\n" +
+      "  \n" +
+      "  return [storedValue, setValue];\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Better debugging experience\n" +
+      "- Clear hook state visualization\n" +
+      "- Custom formatting for complex data\n" +
+      "- Helps identify hook issues\n\n" +
+      "**Best Practices:**\n" +
+      "- Only use in custom hooks\n" +
+      "- Provide meaningful labels\n" +
+      "- Use formatter functions for complex data\n" +
+      "- Don't use in production builds (automatically removed)",
+    category: "Development",
+    difficulty: "intermediate",
+    tags: ["useDebugValue", "debugging", "devtools", "custom-hooks", "development"],
+  },
+  {
+    id: 50,
+    question:
+      "What is React's useSyncExternalStore hook? How is it used for external state management?",
+    answer:
+      "useSyncExternalStore is a hook that allows you to subscribe to external data sources and keep your component in sync with them. It's designed to work with external stores like Redux, Zustand, or any custom state management solution.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useSyncExternalStore } from 'react';\n\n" +
+      "// External store\n" +
+      "class ExternalStore {\n" +
+      "  constructor() {\n" +
+      "    this.state = { count: 0 };\n" +
+      "    this.listeners = new Set();\n" +
+      "  }\n" +
+      "  \n" +
+      "  getSnapshot() {\n" +
+      "    return this.state;\n" +
+      "  }\n" +
+      "  \n" +
+      "  subscribe(listener) {\n" +
+      "    this.listeners.add(listener);\n" +
+      "    return () => this.listeners.delete(listener);\n" +
+      "  }\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.state = { ...this.state, count: this.state.count + 1 };\n" +
+      "    this.listeners.forEach(listener => listener());\n" +
+      "  }\n" +
+      "}\n\n" +
+      "const store = new ExternalStore();\n\n" +
+      "// Component using the store\n" +
+      "function Counter() {\n" +
+      "  const state = useSyncExternalStore(\n" +
+      "    store.subscribe.bind(store),\n" +
+      "    store.getSnapshot.bind(store)\n" +
+      "  );\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => store.increment()}>Increment</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Works with any external store\n" +
+      "- Handles server-side rendering\n" +
+      "- Prevents hydration mismatches\n" +
+      "- Optimized for performance\n\n" +
+      "**When to Use:**\n" +
+      "- Integrating with external state libraries\n" +
+      "- Custom state management solutions\n" +
+      "- Browser APIs (localStorage, sessionStorage)\n" +
+      "- WebSocket connections",
+    category: "State Management",
+    difficulty: "advanced",
+    tags: ["useSyncExternalStore", "external-state", "stores", "ssr", "hydration"],
+  },
+  {
+    id: 51,
+    question: "What is React's useInsertionEffect hook? When and how should you use it?",
+    answer:
+      "useInsertionEffect is a hook that fires before any DOM mutations. It's primarily used for injecting styles into the DOM, ensuring they're available before the browser paints.\n\n" +
+      "**Key Characteristics:**\n" +
+      "- Fires before DOM mutations\n" +
+      "- Runs synchronously\n" +
+      "- Perfect for style injection\n" +
+      "- Similar to useLayoutEffect but earlier\n\n" +
+      "**Basic Usage for Style Injection:**\n" +
+      "```javascript\n" +
+      "import { useInsertionEffect } from 'react';\n\n" +
+      "function useCSS(css) {\n" +
+      "  useInsertionEffect(() => {\n" +
+      "    const style = document.createElement('style');\n" +
+      "    style.textContent = css;\n" +
+      "    document.head.appendChild(style);\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      document.head.removeChild(style);\n" +
+      "    };\n" +
+      "  }, [css]);\n" +
+      "}\n\n" +
+      "function StyledComponent({ children }) {\n" +
+      "  useCSS(`\n" +
+      "    .my-component {\n" +
+      "      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);\n" +
+      "      padding: 20px;\n" +
+      "      border-radius: 8px;\n" +
+      "    }\n" +
+      "  `);\n" +
+      "  \n" +
+      "  return <div className='my-component'>{children}</div>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- CSS-in-JS libraries\n" +
+      "- Dynamic style injection\n" +
+      "- Theme switching\n" +
+      "- Critical CSS loading\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Runs synchronously\n" +
+      "- Can block rendering if overused\n" +
+      "- Use sparingly\n" +
+      "- Prefer CSS modules or styled-components for most cases",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useInsertionEffect", "styles", "css-in-js", "dom", "performance"],
+  },
+  {
+    id: 52,
+    question:
+      "What is React's useReducer hook? How does it compare to useState and when should you use it?",
+    answer:
+      "useReducer is a hook that manages complex state logic using a reducer function. It's similar to useState but more powerful for managing state that involves multiple sub-values or when the next state depends on the previous one.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useReducer } from 'react';\n\n" +
+      "const initialState = { count: 0 };\n\n" +
+      "function reducer(state, action) {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'increment':\n" +
+      "      return { count: state.count + 1 };\n" +
+      "    case 'decrement':\n" +
+      "      return { count: state.count - 1 };\n" +
+      "    case 'reset':\n" +
+      "      return { count: 0 };\n" +
+      "    default:\n" +
+      "      throw new Error(`Unhandled action type: ${action.type}`);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "function Counter() {\n" +
+      "  const [state, dispatch] = useReducer(reducer, initialState);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => dispatch({ type: 'increment' })}>+</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useReducer:**\n" +
+      "- Complex state logic\n" +
+      "- Multiple sub-values\n" +
+      "- Next state depends on previous state\n" +
+      "- Predictable state updates\n" +
+      "- Better testing (pure functions)\n\n" +
+      "**Benefits over useState:**\n" +
+      "- More predictable state updates\n" +
+      "- Better for complex state logic\n" +
+      "- Easier to test\n" +
+      "- Can be used with useContext for global state",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useReducer", "state", "reducer", "complex-state", "predictable"],
+  },
+  {
+    id: 53,
+    question:
+      "Explain React's useMemo and useCallback hooks in detail. How do they optimize performance?",
+    answer:
+      "useMemo and useCallback are React hooks that help optimize performance by memoizing values and functions respectively. They prevent unnecessary recalculations and re-renders.\n\n" +
+      "**useMemo - Memoizing Values:**\n" +
+      "```javascript\n" +
+      "import { useMemo, useState } from 'react';\n\n" +
+      "function ExpensiveComponent({ items, filter }) {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when items or filter change\n" +
+      "  const filteredItems = useMemo(() => {\n" +
+      "    console.log('Filtering items...');\n" +
+      "    return items.filter(item => \n" +
+      "      item.name.toLowerCase().includes(filter.toLowerCase())\n" +
+      "    );\n" +
+      "  }, [items, filter]);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when filteredItems change\n" +
+      "  const totalPrice = useMemo(() => {\n" +
+      "    console.log('Calculating total...');\n" +
+      "    return filteredItems.reduce((sum, item) => sum + item.price, 0);\n" +
+      "  }, [filteredItems]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n" +
+      "      <p>Total Price: ${totalPrice}</p>\n" +
+      "      <ul>\n" +
+      "        {filteredItems.map(item => (\n" +
+      "          <li key={item.id}>{item.name} - ${item.price}</li>\n" +
+      "        ))}\n" +
+      "      </ul>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useCallback - Memoizing Functions:**\n" +
+      "```javascript\n" +
+      "import { useCallback, useState, memo } from 'react';\n\n" +
+      "const ExpensiveChild = memo(({ onClick, label }) => {\n" +
+      "  console.log(`Rendering ${label}`);\n" +
+      "  return <button onClick={onClick}>{label}</button>;\n" +
+      "});\n\n" +
+      "function Parent() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [name, setName] = useState('');\n" +
+      "  \n" +
+      "  // Memoized function that only changes when count changes\n" +
+      "  const handleIncrement = useCallback(() => {\n" +
+      "    setCount(c => c + 1);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  // Memoized function that only changes when name changes\n" +
+      "  const handleNameChange = useCallback((e) => {\n" +
+      "    setName(e.target.value);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input value={name} onChange={handleNameChange} />\n" +
+      "      <ExpensiveChild onClick={handleIncrement} label='Increment' />\n" +
+      "      <ExpensiveChild onClick={handleNameChange} label='Change Name' />\n" +
+      "      <p>Count: {count}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Only use when you have performance issues\n" +
+      "- Don't overuse (can hurt performance)\n" +
+      "- Measure before and after optimization\n" +
+      "- Consider the cost of memoization\n\n" +
+      "**When to Use:**\n" +
+      "- Expensive calculations\n" +
+      "- Preventing unnecessary re-renders\n" +
+      "- Optimizing child components\n" +
+      "- Complex dependency arrays",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["useMemo", "useCallback", "performance", "memoization", "optimization"],
+  },
+  {
+    id: 54,
+    question:
+      "What is React's useRef hook? How does it differ from useState and when should you use it?",
+    answer:
+      "useRef is a hook that returns a mutable ref object whose .current property is initialized to the passed argument. The returned object will persist for the full lifetime of the component and doesn't cause re-renders when its value changes.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useRef, useEffect } from 'react';\n\n" +
+      "function TextInputWithFocusButton() {\n" +
+      "  const inputEl = useRef(null);\n" +
+      "  \n" +
+      "  const onButtonClick = () => {\n" +
+      "    inputEl.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input ref={inputEl} type='text' />\n" +
+      "      <button onClick={onButtonClick}>Focus the input</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Storing Mutable Values:**\n" +
+      "```javascript\n" +
+      "function Timer() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const intervalRef = useRef();\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    intervalRef.current = setInterval(() => {\n" +
+      "      setCount(c => c + 1);\n" +
+      "    }, 1000);\n" +
+      "    \n" +
+      "    return () => clearInterval(intervalRef.current);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  const stopTimer = () => {\n" +
+      "    clearInterval(intervalRef.current);\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={stopTimer}>Stop Timer</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Differences from useState:**\n" +
+      "- **useRef**: Doesn't trigger re-renders, mutable .current property\n" +
+      "- **useState**: Triggers re-renders, immutable state value\n\n" +
+      "**When to Use useRef:**\n" +
+      "- Accessing DOM elements\n" +
+      "- Storing mutable values that don't need to trigger re-renders\n" +
+      "- Storing previous values\n" +
+      "- Storing timers, intervals, or other side effects\n\n" +
+      "**Best Practices:**\n" +
+      "- Don't use refs for values that should trigger re-renders\n" +
+      "- Use refs sparingly\n" +
+      "- Prefer declarative approaches when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useRef", "refs", "mutable", "dom", "side-effects"],
+  },
+  {
+    id: 55,
+    question: "What is React's useImperativeHandle hook? When and how should you use it?",
+    answer:
+      "useImperativeHandle allows you to customize the instance value that is exposed to parent components when using ref. It's used to expose specific methods or properties from a child component to its parent.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { forwardRef, useImperativeHandle, useRef } from 'react';\n\n" +
+      "const FancyInput = forwardRef((props, ref) => {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  useImperativeHandle(ref, () => ({\n" +
+      "    focus: () => {\n" +
+      "      inputRef.current.focus();\n" +
+      "    },\n" +
+      "    clear: () => {\n" +
+      "      inputRef.current.value = '';\n" +
+      "    },\n" +
+      "    getValue: () => {\n" +
+      "      return inputRef.current.value;\n" +
+      "    }\n" +
+      "  }));\n" +
+      "  \n" +
+      "  return <input ref={inputRef} {...props} />;\n" +
+      "});\n\n" +
+      "// Usage in parent component\n" +
+      "function App() {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  const handleFocus = () => {\n" +
+      "    inputRef.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleClear = () => {\n" +
+      "    inputRef.current.clear();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <FancyInput ref={inputRef} />\n" +
+      "      <button onClick={handleFocus}>Focus</button>\n" +
+      "      <button onClick={handleClear}>Clear</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Exposing imperative APIs (focus, scroll, play/pause)\n" +
+      "- Third-party library integration\n" +
+      "- Complex component interactions\n" +
+      "- When declarative props aren't sufficient\n\n" +
+      "**Best Practices:**\n" +
+      "- Use sparingly (prefer declarative patterns)\n" +
+      "- Keep the exposed API minimal\n" +
+      "- Document the imperative API\n" +
+      "- Consider if the functionality could be achieved declaratively",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useImperativeHandle", "refs", "forwardRef", "imperative", "api"],
+  },
+  {
+    id: 56,
+    question: "Explain React's useLayoutEffect hook. How does it differ from useEffect?",
+    answer:
+      "useLayoutEffect is identical to useEffect, but it fires synchronously after all DOM mutations but before the browser paints. This makes it perfect for DOM measurements and synchronous updates.\n\n" +
+      "**Key Differences:**\n\n" +
+      "**useEffect:**\n" +
+      "- Runs asynchronously after render\n" +
+      "- Doesn't block browser painting\n" +
+      "- Good for side effects, data fetching, subscriptions\n\n" +
+      "**useLayoutEffect:**\n" +
+      "- Runs synchronously after DOM mutations\n" +
+      "- Blocks browser painting until it completes\n" +
+      "- Good for DOM measurements and synchronous updates\n\n" +
+      "**Example: DOM Measurements:**\n" +
+      "```javascript\n" +
+      "function Tooltip({ children, content }) {\n" +
+      "  const [position, setPosition] = useState({ top: 0, left: 0 });\n" +
+      "  const tooltipRef = useRef();\n" +
+      "  const triggerRef = useRef();\n" +
+      "  \n" +
+      "  useLayoutEffect(() => {\n" +
+      "    if (tooltipRef.current && triggerRef.current) {\n" +
+      "      const triggerRect = triggerRef.current.getBoundingClientRect();\n" +
+      "      const tooltipRect = tooltipRef.current.getBoundingClientRect();\n" +
+      "      \n" +
+      "      setPosition({\n" +
+      "        top: triggerRect.bottom + 8,\n" +
+      "        left: triggerRect.left + (triggerRect.width - tooltipRect.width) / 2\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }, [content]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <div ref={triggerRef}>{children}</div>\n" +
+      "      <div \n" +
+      "        ref={tooltipRef}\n" +
+      "        style={{\n" +
+      "          position: 'absolute',\n" +
+      "          top: position.top,\n" +
+      "          left: position.left,\n" +
+      "          backgroundColor: 'black',\n" +
+      "          color: 'white',\n" +
+      "          padding: '4px 8px',\n" +
+      "          borderRadius: '4px'\n" +
+      "        }}\n" +
+      "      >\n" +
+      "        {content}\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useLayoutEffect:**\n" +
+      "- DOM measurements (getBoundingClientRect, offsetWidth, etc.)\n" +
+      "- Synchronous DOM updates\n" +
+      "- Preventing visual flicker\n" +
+      "- Scrolling or focusing elements\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Can cause performance issues if overused\n" +
+      "- Blocks browser painting\n" +
+      "- Use sparingly\n" +
+      "- Prefer useEffect when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useLayoutEffect", "dom", "measurements", "synchronous", "performance"],
+  },
+  {
+    id: 57,
+    question: "What is React's useDebugValue hook? How is it used for custom hook debugging?",
+    answer:
+      "useDebugValue is a hook that allows you to display a label for custom hooks in React DevTools. It helps with debugging by showing meaningful information about the hook's state.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useState, useDebugValue } from 'react';\n\n" +
+      "function useCounter(initialValue = 0) {\n" +
+      "  const [count, setCount] = useState(initialValue);\n" +
+      "  \n" +
+      "  useDebugValue(count); // Shows count value in DevTools\n" +
+      "  \n" +
+      "  const increment = () => setCount(c => c + 1);\n" +
+      "  const decrement = () => setCount(c => c - 1);\n" +
+      "  \n" +
+      "  return { count, increment, decrement };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Formatter:**\n" +
+      "```javascript\n" +
+      "function useLocalStorage(key, initialValue) {\n" +
+      "  const [storedValue, setStoredValue] = useState(() => {\n" +
+      "    try {\n" +
+      "      const item = window.localStorage.getItem(key);\n" +
+      "      return item ? JSON.parse(item) : initialValue;\n" +
+      "    } catch (error) {\n" +
+      "      return initialValue;\n" +
+      "    }\n" +
+      "  });\n" +
+      "  \n" +
+      "  const setValue = (value) => {\n" +
+      "    try {\n" +
+      "      setStoredValue(value);\n" +
+      "      window.localStorage.setItem(key, JSON.stringify(value));\n" +
+      "    } catch (error) {\n" +
+      "      console.error(error);\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  useDebugValue(storedValue, (value) => {\n" +
+      "    return `localStorage[${key}]: ${JSON.stringify(value)}`;\n" +
+      "  });\n" +
+      "  \n" +
+      "  return [storedValue, setValue];\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Better debugging experience\n" +
+      "- Clear hook state visualization\n" +
+      "- Custom formatting for complex data\n" +
+      "- Helps identify hook issues\n\n" +
+      "**Best Practices:**\n" +
+      "- Only use in custom hooks\n" +
+      "- Provide meaningful labels\n" +
+      "- Use formatter functions for complex data\n" +
+      "- Don't use in production builds (automatically removed)",
+    category: "Development",
+    difficulty: "intermediate",
+    tags: ["useDebugValue", "debugging", "devtools", "custom-hooks", "development"],
+  },
+  {
+    id: 58,
+    question:
+      "What is React's useSyncExternalStore hook? How is it used for external state management?",
+    answer:
+      "useSyncExternalStore is a hook that allows you to subscribe to external data sources and keep your component in sync with them. It's designed to work with external stores like Redux, Zustand, or any custom state management solution.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useSyncExternalStore } from 'react';\n\n" +
+      "// External store\n" +
+      "class ExternalStore {\n" +
+      "  constructor() {\n" +
+      "    this.state = { count: 0 };\n" +
+      "    this.listeners = new Set();\n" +
+      "  }\n" +
+      "  \n" +
+      "  getSnapshot() {\n" +
+      "    return this.state;\n" +
+      "  }\n" +
+      "  \n" +
+      "  subscribe(listener) {\n" +
+      "    this.listeners.add(listener);\n" +
+      "    return () => this.listeners.delete(listener);\n" +
+      "  }\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.state = { ...this.state, count: this.state.count + 1 };\n" +
+      "    this.listeners.forEach(listener => listener());\n" +
+      "  }\n" +
+      "}\n\n" +
+      "const store = new ExternalStore();\n\n" +
+      "// Component using the store\n" +
+      "function Counter() {\n" +
+      "  const state = useSyncExternalStore(\n" +
+      "    store.subscribe.bind(store),\n" +
+      "    store.getSnapshot.bind(store)\n" +
+      "  );\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => store.increment()}>Increment</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Works with any external store\n" +
+      "- Handles server-side rendering\n" +
+      "- Prevents hydration mismatches\n" +
+      "- Optimized for performance\n\n" +
+      "**When to Use:**\n" +
+      "- Integrating with external state libraries\n" +
+      "- Custom state management solutions\n" +
+      "- Browser APIs (localStorage, sessionStorage)\n" +
+      "- WebSocket connections",
+    category: "State Management",
+    difficulty: "advanced",
+    tags: ["useSyncExternalStore", "external-state", "stores", "ssr", "hydration"],
+  },
+  {
+    id: 59,
+    question: "What is React's useInsertionEffect hook? When and how should you use it?",
+    answer:
+      "useInsertionEffect is a hook that fires before any DOM mutations. It's primarily used for injecting styles into the DOM, ensuring they're available before the browser paints.\n\n" +
+      "**Key Characteristics:**\n" +
+      "- Fires before DOM mutations\n" +
+      "- Runs synchronously\n" +
+      "- Perfect for style injection\n" +
+      "- Similar to useLayoutEffect but earlier\n\n" +
+      "**Basic Usage for Style Injection:**\n" +
+      "```javascript\n" +
+      "import { useInsertionEffect } from 'react';\n\n" +
+      "function useCSS(css) {\n" +
+      "  useInsertionEffect(() => {\n" +
+      "    const style = document.createElement('style');\n" +
+      "    style.textContent = css;\n" +
+      "    document.head.appendChild(style);\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      document.head.removeChild(style);\n" +
+      "    };\n" +
+      "  }, [css]);\n" +
+      "}\n\n" +
+      "function StyledComponent({ children }) {\n" +
+      "  useCSS(`\n" +
+      "    .my-component {\n" +
+      "      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);\n" +
+      "      padding: 20px;\n" +
+      "      border-radius: 8px;\n" +
+      "    }\n" +
+      "  `);\n" +
+      "  \n" +
+      "  return <div className='my-component'>{children}</div>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- CSS-in-JS libraries\n" +
+      "- Dynamic style injection\n" +
+      "- Theme switching\n" +
+      "- Critical CSS loading\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Runs synchronously\n" +
+      "- Can block rendering if overused\n" +
+      "- Use sparingly\n" +
+      "- Prefer CSS modules or styled-components for most cases",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useInsertionEffect", "styles", "css-in-js", "dom", "performance"],
+  },
+  {
+    id: 60,
+    question:
+      "What is React's useReducer hook? How does it compare to useState and when should you use it?",
+    answer:
+      "useReducer is a hook that manages complex state logic using a reducer function. It's similar to useState but more powerful for managing state that involves multiple sub-values or when the next state depends on the previous one.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useReducer } from 'react';\n\n" +
+      "const initialState = { count: 0 };\n\n" +
+      "function reducer(state, action) {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'increment':\n" +
+      "      return { count: state.count + 1 };\n" +
+      "    case 'decrement':\n" +
+      "      return { count: state.count - 1 };\n" +
+      "    case 'reset':\n" +
+      "      return { count: 0 };\n" +
+      "    default:\n" +
+      "      throw new Error(`Unhandled action type: ${action.type}`);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "function Counter() {\n" +
+      "  const [state, dispatch] = useReducer(reducer, initialState);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => dispatch({ type: 'increment' })}>+</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useReducer:**\n" +
+      "- Complex state logic\n" +
+      "- Multiple sub-values\n" +
+      "- Next state depends on previous state\n" +
+      "- Predictable state updates\n" +
+      "- Better testing (pure functions)\n\n" +
+      "**Benefits over useState:**\n" +
+      "- More predictable state updates\n" +
+      "- Better for complex state logic\n" +
+      "- Easier to test\n" +
+      "- Can be used with useContext for global state",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useReducer", "state", "reducer", "complex-state", "predictable"],
+  },
+  {
+    id: 61,
+    question:
+      "Explain React's useMemo and useCallback hooks in detail. How do they optimize performance?",
+    answer:
+      "useMemo and useCallback are React hooks that help optimize performance by memoizing values and functions respectively. They prevent unnecessary recalculations and re-renders.\n\n" +
+      "**useMemo - Memoizing Values:**\n" +
+      "```javascript\n" +
+      "import { useMemo, useState } from 'react';\n\n" +
+      "function ExpensiveComponent({ items, filter }) {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when items or filter change\n" +
+      "  const filteredItems = useMemo(() => {\n" +
+      "    console.log('Filtering items...');\n" +
+      "    return items.filter(item => \n" +
+      "      item.name.toLowerCase().includes(filter.toLowerCase())\n" +
+      "    );\n" +
+      "  }, [items, filter]);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when filteredItems change\n" +
+      "  const totalPrice = useMemo(() => {\n" +
+      "    console.log('Calculating total...');\n" +
+      "    return filteredItems.reduce((sum, item) => sum + item.price, 0);\n" +
+      "  }, [filteredItems]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n" +
+      "      <p>Total Price: ${totalPrice}</p>\n" +
+      "      <ul>\n" +
+      "        {filteredItems.map(item => (\n" +
+      "          <li key={item.id}>{item.name} - ${item.price}</li>\n" +
+      "        ))}\n" +
+      "      </ul>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useCallback - Memoizing Functions:**\n" +
+      "```javascript\n" +
+      "import { useCallback, useState, memo } from 'react';\n\n" +
+      "const ExpensiveChild = memo(({ onClick, label }) => {\n" +
+      "  console.log(`Rendering ${label}`);\n" +
+      "  return <button onClick={onClick}>{label}</button>;\n" +
+      "});\n\n" +
+      "function Parent() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [name, setName] = useState('');\n" +
+      "  \n" +
+      "  // Memoized function that only changes when count changes\n" +
+      "  const handleIncrement = useCallback(() => {\n" +
+      "    setCount(c => c + 1);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  // Memoized function that only changes when name changes\n" +
+      "  const handleNameChange = useCallback((e) => {\n" +
+      "    setName(e.target.value);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input value={name} onChange={handleNameChange} />\n" +
+      "      <ExpensiveChild onClick={handleIncrement} label='Increment' />\n" +
+      "      <ExpensiveChild onClick={handleNameChange} label='Change Name' />\n" +
+      "      <p>Count: {count}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Only use when you have performance issues\n" +
+      "- Don't overuse (can hurt performance)\n" +
+      "- Measure before and after optimization\n" +
+      "- Consider the cost of memoization\n\n" +
+      "**When to Use:**\n" +
+      "- Expensive calculations\n" +
+      "- Preventing unnecessary re-renders\n" +
+      "- Optimizing child components\n" +
+      "- Complex dependency arrays",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["useMemo", "useCallback", "performance", "memoization", "optimization"],
+  },
+  {
+    id: 62,
+    question:
+      "What is React's useRef hook? How does it differ from useState and when should you use it?",
+    answer:
+      "useRef is a hook that returns a mutable ref object whose .current property is initialized to the passed argument. The returned object will persist for the full lifetime of the component and doesn't cause re-renders when its value changes.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useRef, useEffect } from 'react';\n\n" +
+      "function TextInputWithFocusButton() {\n" +
+      "  const inputEl = useRef(null);\n" +
+      "  \n" +
+      "  const onButtonClick = () => {\n" +
+      "    inputEl.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input ref={inputEl} type='text' />\n" +
+      "      <button onClick={onButtonClick}>Focus the input</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Storing Mutable Values:**\n" +
+      "```javascript\n" +
+      "function Timer() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const intervalRef = useRef();\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    intervalRef.current = setInterval(() => {\n" +
+      "      setCount(c => c + 1);\n" +
+      "    }, 1000);\n" +
+      "    \n" +
+      "    return () => clearInterval(intervalRef.current);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  const stopTimer = () => {\n" +
+      "    clearInterval(intervalRef.current);\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={stopTimer}>Stop Timer</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Differences from useState:**\n" +
+      "- **useRef**: Doesn't trigger re-renders, mutable .current property\n" +
+      "- **useState**: Triggers re-renders, immutable state value\n\n" +
+      "**When to Use useRef:**\n" +
+      "- Accessing DOM elements\n" +
+      "- Storing mutable values that don't need to trigger re-renders\n" +
+      "- Storing previous values\n" +
+      "- Storing timers, intervals, or other side effects\n\n" +
+      "**Best Practices:**\n" +
+      "- Don't use refs for values that should trigger re-renders\n" +
+      "- Use refs sparingly\n" +
+      "- Prefer declarative approaches when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useRef", "refs", "mutable", "dom", "side-effects"],
+  },
+  {
+    id: 63,
+    question: "What is React's useImperativeHandle hook? When and how should you use it?",
+    answer:
+      "useImperativeHandle allows you to customize the instance value that is exposed to parent components when using ref. It's used to expose specific methods or properties from a child component to its parent.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { forwardRef, useImperativeHandle, useRef } from 'react';\n\n" +
+      "const FancyInput = forwardRef((props, ref) => {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  useImperativeHandle(ref, () => ({\n" +
+      "    focus: () => {\n" +
+      "      inputRef.current.focus();\n" +
+      "    },\n" +
+      "    clear: () => {\n" +
+      "      inputRef.current.value = '';\n" +
+      "    },\n" +
+      "    getValue: () => {\n" +
+      "      return inputRef.current.value;\n" +
+      "    }\n" +
+      "  }));\n" +
+      "  \n" +
+      "  return <input ref={inputRef} {...props} />;\n" +
+      "});\n\n" +
+      "// Usage in parent component\n" +
+      "function App() {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  const handleFocus = () => {\n" +
+      "    inputRef.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleClear = () => {\n" +
+      "    inputRef.current.clear();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <FancyInput ref={inputRef} />\n" +
+      "      <button onClick={handleFocus}>Focus</button>\n" +
+      "      <button onClick={handleClear}>Clear</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Exposing imperative APIs (focus, scroll, play/pause)\n" +
+      "- Third-party library integration\n" +
+      "- Complex component interactions\n" +
+      "- When declarative props aren't sufficient\n\n" +
+      "**Best Practices:**\n" +
+      "- Use sparingly (prefer declarative patterns)\n" +
+      "- Keep the exposed API minimal\n" +
+      "- Document the imperative API\n" +
+      "- Consider if the functionality could be achieved declaratively",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useImperativeHandle", "refs", "forwardRef", "imperative", "api"],
+  },
+  {
+    id: 64,
+    question: "Explain React's useLayoutEffect hook. How does it differ from useEffect?",
+    answer:
+      "useLayoutEffect is identical to useEffect, but it fires synchronously after all DOM mutations but before the browser paints. This makes it perfect for DOM measurements and synchronous updates.\n\n" +
+      "**Key Differences:**\n\n" +
+      "**useEffect:**\n" +
+      "- Runs asynchronously after render\n" +
+      "- Doesn't block browser painting\n" +
+      "- Good for side effects, data fetching, subscriptions\n\n" +
+      "**useLayoutEffect:**\n" +
+      "- Runs synchronously after DOM mutations\n" +
+      "- Blocks browser painting until it completes\n" +
+      "- Good for DOM measurements and synchronous updates\n\n" +
+      "**Example: DOM Measurements:**\n" +
+      "```javascript\n" +
+      "function Tooltip({ children, content }) {\n" +
+      "  const [position, setPosition] = useState({ top: 0, left: 0 });\n" +
+      "  const tooltipRef = useRef();\n" +
+      "  const triggerRef = useRef();\n" +
+      "  \n" +
+      "  useLayoutEffect(() => {\n" +
+      "    if (tooltipRef.current && triggerRef.current) {\n" +
+      "      const triggerRect = triggerRef.current.getBoundingClientRect();\n" +
+      "      const tooltipRect = tooltipRef.current.getBoundingClientRect();\n" +
+      "      \n" +
+      "      setPosition({\n" +
+      "        top: triggerRect.bottom + 8,\n" +
+      "        left: triggerRect.left + (triggerRect.width - tooltipRect.width) / 2\n" +
+      "      });\n" +
+      "    }\n" +
+      "  }, [content]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <>\n" +
+      "      <div ref={triggerRef}>{children}</div>\n" +
+      "      <div \n" +
+      "        ref={tooltipRef}\n" +
+      "        style={{\n" +
+      "          position: 'absolute',\n" +
+      "          top: position.top,\n" +
+      "          left: position.left,\n" +
+      "          backgroundColor: 'black',\n" +
+      "          color: 'white',\n" +
+      "          padding: '4px 8px',\n" +
+      "          borderRadius: '4px'\n" +
+      "        }}\n" +
+      "      >\n" +
+      "        {content}\n" +
+      "      </div>\n" +
+      "    </>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useLayoutEffect:**\n" +
+      "- DOM measurements (getBoundingClientRect, offsetWidth, etc.)\n" +
+      "- Synchronous DOM updates\n" +
+      "- Preventing visual flicker\n" +
+      "- Scrolling or focusing elements\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Can cause performance issues if overused\n" +
+      "- Blocks browser painting\n" +
+      "- Use sparingly\n" +
+      "- Prefer useEffect when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useLayoutEffect", "dom", "measurements", "synchronous", "performance"],
+  },
+  {
+    id: 65,
+    question: "What is React's useDebugValue hook? How is it used for custom hook debugging?",
+    answer:
+      "useDebugValue is a hook that allows you to display a label for custom hooks in React DevTools. It helps with debugging by showing meaningful information about the hook's state.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useState, useDebugValue } from 'react';\n\n" +
+      "function useCounter(initialValue = 0) {\n" +
+      "  const [count, setCount] = useState(initialValue);\n" +
+      "  \n" +
+      "  useDebugValue(count); // Shows count value in DevTools\n" +
+      "  \n" +
+      "  const increment = () => setCount(c => c + 1);\n" +
+      "  const decrement = () => setCount(c => c - 1);\n" +
+      "  \n" +
+      "  return { count, increment, decrement };\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Formatter:**\n" +
+      "```javascript\n" +
+      "function useLocalStorage(key, initialValue) {\n" +
+      "  const [storedValue, setStoredValue] = useState(() => {\n" +
+      "    try {\n" +
+      "      const item = window.localStorage.getItem(key);\n" +
+      "      return item ? JSON.parse(item) : initialValue;\n" +
+      "    } catch (error) {\n" +
+      "      return initialValue;\n" +
+      "    }\n" +
+      "  });\n" +
+      "  \n" +
+      "  const setValue = (value) => {\n" +
+      "    try {\n" +
+      "      setStoredValue(value);\n" +
+      "      window.localStorage.setItem(key, JSON.stringify(value));\n" +
+      "    } catch (error) {\n" +
+      "      console.error(error);\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  useDebugValue(storedValue, (value) => {\n" +
+      "    return `localStorage[${key}]: ${JSON.stringify(value)}`;\n" +
+      "  });\n" +
+      "  \n" +
+      "  return [storedValue, setValue];\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Better debugging experience\n" +
+      "- Clear hook state visualization\n" +
+      "- Custom formatting for complex data\n" +
+      "- Helps identify hook issues\n\n" +
+      "**Best Practices:**\n" +
+      "- Only use in custom hooks\n" +
+      "- Provide meaningful labels\n" +
+      "- Use formatter functions for complex data\n" +
+      "- Don't use in production builds (automatically removed)",
+    category: "Development",
+    difficulty: "intermediate",
+    tags: ["useDebugValue", "debugging", "devtools", "custom-hooks", "development"],
+  },
+  {
+    id: 66,
+    question:
+      "What is React's useSyncExternalStore hook? How is it used for external state management?",
+    answer:
+      "useSyncExternalStore is a hook that allows you to subscribe to external data sources and keep your component in sync with them. It's designed to work with external stores like Redux, Zustand, or any custom state management solution.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useSyncExternalStore } from 'react';\n\n" +
+      "// External store\n" +
+      "class ExternalStore {\n" +
+      "  constructor() {\n" +
+      "    this.state = { count: 0 };\n" +
+      "    this.listeners = new Set();\n" +
+      "  }\n" +
+      "  \n" +
+      "  getSnapshot() {\n" +
+      "    return this.state;\n" +
+      "  }\n" +
+      "  \n" +
+      "  subscribe(listener) {\n" +
+      "    this.listeners.add(listener);\n" +
+      "    return () => this.listeners.delete(listener);\n" +
+      "  }\n" +
+      "  \n" +
+      "  increment() {\n" +
+      "    this.state = { ...this.state, count: this.state.count + 1 };\n" +
+      "    this.listeners.forEach(listener => listener());\n" +
+      "  }\n" +
+      "}\n\n" +
+      "const store = new ExternalStore();\n\n" +
+      "// Component using the store\n" +
+      "function Counter() {\n" +
+      "  const state = useSyncExternalStore(\n" +
+      "    store.subscribe.bind(store),\n" +
+      "    store.getSnapshot.bind(store)\n" +
+      "  );\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => store.increment()}>Increment</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Works with any external store\n" +
+      "- Handles server-side rendering\n" +
+      "- Prevents hydration mismatches\n" +
+      "- Optimized for performance\n\n" +
+      "**When to Use:**\n" +
+      "- Integrating with external state libraries\n" +
+      "- Custom state management solutions\n" +
+      "- Browser APIs (localStorage, sessionStorage)\n" +
+      "- WebSocket connections",
+    category: "State Management",
+    difficulty: "advanced",
+    tags: ["useSyncExternalStore", "external-state", "stores", "ssr", "hydration"],
+  },
+  {
+    id: 67,
+    question: "What is React's useInsertionEffect hook? When and how should you use it?",
+    answer:
+      "useInsertionEffect is a hook that fires before any DOM mutations. It's primarily used for injecting styles into the DOM, ensuring they're available before the browser paints.\n\n" +
+      "**Key Characteristics:**\n" +
+      "- Fires before DOM mutations\n" +
+      "- Runs synchronously\n" +
+      "- Perfect for style injection\n" +
+      "- Similar to useLayoutEffect but earlier\n\n" +
+      "**Basic Usage for Style Injection:**\n" +
+      "```javascript\n" +
+      "import { useInsertionEffect } from 'react';\n\n" +
+      "function useCSS(css) {\n" +
+      "  useInsertionEffect(() => {\n" +
+      "    const style = document.createElement('style');\n" +
+      "    style.textContent = css;\n" +
+      "    document.head.appendChild(style);\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      document.head.removeChild(style);\n" +
+      "    };\n" +
+      "  }, [css]);\n" +
+      "}\n\n" +
+      "function StyledComponent({ children }) {\n" +
+      "  useCSS(`\n" +
+      "    .my-component {\n" +
+      "      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);\n" +
+      "      padding: 20px;\n" +
+      "      border-radius: 8px;\n" +
+      "    }\n" +
+      "  `);\n" +
+      "  \n" +
+      "  return <div className='my-component'>{children}</div>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- CSS-in-JS libraries\n" +
+      "- Dynamic style injection\n" +
+      "- Theme switching\n" +
+      "- Critical CSS loading\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Runs synchronously\n" +
+      "- Can block rendering if overused\n" +
+      "- Use sparingly\n" +
+      "- Prefer CSS modules or styled-components for most cases",
+    category: "Hooks",
+    difficulty: "advanced",
+    tags: ["useInsertionEffect", "styles", "css-in-js", "dom", "performance"],
+  },
+  {
+    id: 68,
+    question:
+      "What is React's useReducer hook? How does it compare to useState and when should you use it?",
+    answer:
+      "useReducer is a hook that manages complex state logic using a reducer function. It's similar to useState but more powerful for managing state that involves multiple sub-values or when the next state depends on the previous one.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useReducer } from 'react';\n\n" +
+      "const initialState = { count: 0 };\n\n" +
+      "function reducer(state, action) {\n" +
+      "  switch (action.type) {\n" +
+      "    case 'increment':\n" +
+      "      return { count: state.count + 1 };\n" +
+      "    case 'decrement':\n" +
+      "      return { count: state.count - 1 };\n" +
+      "    case 'reset':\n" +
+      "      return { count: 0 };\n" +
+      "    default:\n" +
+      "      throw new Error(`Unhandled action type: ${action.type}`);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "function Counter() {\n" +
+      "  const [state, dispatch] = useReducer(reducer, initialState);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {state.count}</p>\n" +
+      "      <button onClick={() => dispatch({ type: 'increment' })}>+</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>\n" +
+      "      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use useReducer:**\n" +
+      "- Complex state logic\n" +
+      "- Multiple sub-values\n" +
+      "- Next state depends on previous state\n" +
+      "- Predictable state updates\n" +
+      "- Better testing (pure functions)\n\n" +
+      "**Benefits over useState:**\n" +
+      "- More predictable state updates\n" +
+      "- Better for complex state logic\n" +
+      "- Easier to test\n" +
+      "- Can be used with useContext for global state",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useReducer", "state", "reducer", "complex-state", "predictable"],
+  },
+  {
+    id: 69,
+    question:
+      "Explain React's useMemo and useCallback hooks in detail. How do they optimize performance?",
+    answer:
+      "useMemo and useCallback are React hooks that help optimize performance by memoizing values and functions respectively. They prevent unnecessary recalculations and re-renders.\n\n" +
+      "**useMemo - Memoizing Values:**\n" +
+      "```javascript\n" +
+      "import { useMemo, useState } from 'react';\n\n" +
+      "function ExpensiveComponent({ items, filter }) {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when items or filter change\n" +
+      "  const filteredItems = useMemo(() => {\n" +
+      "    console.log('Filtering items...');\n" +
+      "    return items.filter(item => \n" +
+      "      item.name.toLowerCase().includes(filter.toLowerCase())\n" +
+      "    );\n" +
+      "  }, [items, filter]);\n" +
+      "  \n" +
+      "  // Expensive calculation that only runs when filteredItems change\n" +
+      "  const totalPrice = useMemo(() => {\n" +
+      "    console.log('Calculating total...');\n" +
+      "    return filteredItems.reduce((sum, item) => sum + item.price, 0);\n" +
+      "  }, [filteredItems]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n" +
+      "      <p>Total Price: ${totalPrice}</p>\n" +
+      "      <ul>\n" +
+      "        {filteredItems.map(item => (\n" +
+      "          <li key={item.id}>{item.name} - ${item.price}</li>\n" +
+      "        ))}\n" +
+      "      </ul>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**useCallback - Memoizing Functions:**\n" +
+      "```javascript\n" +
+      "import { useCallback, useState, memo } from 'react';\n\n" +
+      "const ExpensiveChild = memo(({ onClick, label }) => {\n" +
+      "  console.log(`Rendering ${label}`);\n" +
+      "  return <button onClick={onClick}>{label}</button>;\n" +
+      "});\n\n" +
+      "function Parent() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [name, setName] = useState('');\n" +
+      "  \n" +
+      "  // Memoized function that only changes when count changes\n" +
+      "  const handleIncrement = useCallback(() => {\n" +
+      "    setCount(c => c + 1);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  // Memoized function that only changes when name changes\n" +
+      "  const handleNameChange = useCallback((e) => {\n" +
+      "    setName(e.target.value);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input value={name} onChange={handleNameChange} />\n" +
+      "      <ExpensiveChild onClick={handleIncrement} label='Increment' />\n" +
+      "      <ExpensiveChild onClick={handleNameChange} label='Change Name' />\n" +
+      "      <p>Count: {count}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Only use when you have performance issues\n" +
+      "- Don't overuse (can hurt performance)\n" +
+      "- Measure before and after optimization\n" +
+      "- Consider the cost of memoization\n\n" +
+      "**When to Use:**\n" +
+      "- Expensive calculations\n" +
+      "- Preventing unnecessary re-renders\n" +
+      "- Optimizing child components\n" +
+      "- Complex dependency arrays",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["useMemo", "useCallback", "performance", "memoization", "optimization"],
+  },
+  {
+    id: 70,
+    question:
+      "What is React's useRef hook? How does it differ from useState and when should you use it?",
+    answer:
+      "useRef is a hook that returns a mutable ref object whose .current property is initialized to the passed argument. The returned object will persist for the full lifetime of the component and doesn't cause re-renders when its value changes.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useRef, useEffect } from 'react';\n\n" +
+      "function TextInputWithFocusButton() {\n" +
+      "  const inputEl = useRef(null);\n" +
+      "  \n" +
+      "  const onButtonClick = () => {\n" +
+      "    inputEl.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input ref={inputEl} type='text' />\n" +
+      "      <button onClick={onButtonClick}>Focus the input</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Storing Mutable Values:**\n" +
+      "```javascript\n" +
+      "function Timer() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const intervalRef = useRef();\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    intervalRef.current = setInterval(() => {\n" +
+      "      setCount(c => c + 1);\n" +
+      "    }, 1000);\n" +
+      "    \n" +
+      "    return () => clearInterval(intervalRef.current);\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  const stopTimer = () => {\n" +
+      "    clearInterval(intervalRef.current);\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={stopTimer}>Stop Timer</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Key Differences from useState:**\n" +
+      "- **useRef**: Doesn't trigger re-renders, mutable .current property\n" +
+      "- **useState**: Triggers re-renders, immutable state value\n\n" +
+      "**When to Use useRef:**\n" +
+      "- Accessing DOM elements\n" +
+      "- Storing mutable values that don't need to trigger re-renders\n" +
+      "- Storing previous values\n" +
+      "- Storing timers, intervals, or other side effects\n\n" +
+      "**Best Practices:**\n" +
+      "- Don't use refs for values that should trigger re-renders\n" +
+      "- Use refs sparingly\n" +
+      "- Prefer declarative approaches when possible",
+    category: "Hooks",
+    difficulty: "intermediate",
+    tags: ["useRef", "refs", "mutable", "dom", "side-effects"],
+  },
+  {
+    id: 71,
+    question:
+      "What is React's StrictMode? How does it help with development and what warnings does it provide?",
+    answer:
+      "React.StrictMode is a tool for highlighting potential problems in an application. It activates additional checks and warnings for its descendants and helps identify unsafe lifecycles, legacy API usage, and other problems.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import React from 'react';\n" +
+      "import ReactDOM from 'react-dom/client';\n" +
+      "import App from './App';\n\n" +
+      "const root = ReactDOM.createRoot(document.getElementById('root'));\n" +
+      "root.render(\n" +
+      "  <React.StrictMode>\n" +
+      "    <App />\n" +
+      "  </React.StrictMode>\n" +
+      ");\n" +
+      "```\n\n" +
+      "**What StrictMode Does:**\n" +
+      "- Identifies components with unsafe lifecycles\n" +
+      "- Warns about legacy string ref API usage\n" +
+      "- Warns about deprecated findDOMNode usage\n" +
+      "- Detects unexpected side effects\n" +
+      "- Detects legacy context API\n" +
+      "- Ensures reusable state\n\n" +
+      "**Double Invocation:**\n" +
+      "```javascript\n" +
+      "function MyComponent() {\n" +
+      "  console.log('Component rendered'); // This will log twice in StrictMode\n" +
+      "  \n" +
+      "  useEffect(() => {\n" +
+      "    console.log('Effect ran'); // This will also run twice\n" +
+      "    \n" +
+      "    return () => {\n" +
+      "      console.log('Cleanup ran'); // This will run twice too\n" +
+      "    };\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  return <div>Hello World</div>;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Helps identify side effects\n" +
+      "- Prepares for future React versions\n" +
+      "- Encourages best practices\n" +
+      "- Only runs in development mode\n\n" +
+      "**When to Use:**\n" +
+      "- Always wrap your app in StrictMode during development\n" +
+      "- Helps catch bugs early\n" +
+      "- Prepares for concurrent features",
+    category: "Development",
+    difficulty: "intermediate",
+    tags: ["StrictMode", "development", "warnings", "side-effects", "best-practices"],
+  },
+  {
+    id: 72,
+    question: "What is React's Error Boundary? How do you implement and use error boundaries?",
+    answer:
+      "Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed.\n\n" +
+      "**Basic Implementation:**\n" +
+      "```javascript\n" +
+      "import React from 'react';\n\n" +
+      "class ErrorBoundary extends React.Component {\n" +
+      "  constructor(props) {\n" +
+      "    super(props);\n" +
+      "    this.state = { hasError: false, error: null };\n" +
+      "  }\n\n" +
+      "  static getDerivedStateFromError(error) {\n" +
+      "    return { hasError: true, error };\n" +
+      "  }\n\n" +
+      "  componentDidCatch(error, errorInfo) {\n" +
+      "    console.error('Error caught by boundary:', error, errorInfo);\n" +
+      "    // Log error to service\n" +
+      "    this.logErrorToService(error, errorInfo);\n" +
+      "  }\n\n" +
+      "  logErrorToService = (error, errorInfo) => {\n" +
+      "    // Send to error reporting service\n" +
+      "    console.log('Logging error:', { error, errorInfo });\n" +
+      "  };\n\n" +
+      "  render() {\n" +
+      "    if (this.state.hasError) {\n" +
+      "      return (\n" +
+      "        <div className='error-boundary'>\n" +
+      "          <h2>Something went wrong.</h2>\n" +
+      "          <details>\n" +
+      "            <summary>Error details</summary>\n" +
+      "            <pre>{this.state.error && this.state.error.toString()}</pre>\n" +
+      "          </details>\n" +
+      "          <button onClick={() => this.setState({ hasError: false, error: null })}>\n" +
+      "            Try again\n" +
+      "          </button>\n" +
+      "        </div>\n" +
+      "      );\n" +
+      "    }\n\n" +
+      "    return this.props.children;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Usage:**\n" +
+      "```javascript\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <ErrorBoundary>\n" +
+      "      <Header />\n" +
+      "      <MainContent />\n" +
+      "      <Footer />\n" +
+      "    </ErrorBoundary>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**What Error Boundaries Catch:**\n" +
+      "- Render errors\n" +
+      "- Lifecycle method errors\n" +
+      "- Constructor errors\n\n" +
+      "**What They Don't Catch:**\n" +
+      "- Event handlers\n" +
+      "- Asynchronous code\n" +
+      "- Errors during server-side rendering\n" +
+      "- Errors in the error boundary itself\n\n" +
+      "**Best Practices:**\n" +
+      "- Place error boundaries strategically\n" +
+      "- Log errors to monitoring services\n" +
+      "- Provide meaningful fallback UIs\n" +
+      "- Allow users to recover from errors",
+    category: "Error Handling",
+    difficulty: "intermediate",
+    tags: ["ErrorBoundary", "error-handling", "fallback-ui", "component-lifecycle", "recovery"],
+  },
+  {
+    id: 73,
+    question:
+      "What is React's Context API? How do you create and use context for state management?",
+    answer:
+      "React Context provides a way to pass data through the component tree without having to pass props down manually at every level. It's designed to share data that can be considered 'global' for a tree of React components.\n\n" +
+      "**Creating Context:**\n" +
+      "```javascript\n" +
+      "import React, { createContext, useContext, useState } from 'react';\n\n" +
+      "// Create context\n" +
+      "const ThemeContext = createContext();\n\n" +
+      "// Provider component\n" +
+      "function ThemeProvider({ children }) {\n" +
+      "  const [theme, setTheme] = useState('light');\n" +
+      "  \n" +
+      "  const toggleTheme = () => {\n" +
+      "    setTheme(prev => prev === 'light' ? 'dark' : 'light');\n" +
+      "  };\n" +
+      "  \n" +
+      "  const value = {\n" +
+      "    theme,\n" +
+      "    toggleTheme,\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <ThemeContext.Provider value={value}>\n" +
+      "      {children}\n" +
+      "    </ThemeContext.Provider>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "// Custom hook to use context\n" +
+      "function useTheme() {\n" +
+      "  const context = useContext(ThemeContext);\n" +
+      "  if (!context) {\n" +
+      "    throw new Error('useTheme must be used within a ThemeProvider');\n" +
+      "  }\n" +
+      "  return context;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Using Context:**\n" +
+      "```javascript\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <ThemeProvider>\n" +
+      "      <Header />\n" +
+      "      <MainContent />\n" +
+      "      <Footer />\n" +
+      "    </ThemeProvider>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "function Header() {\n" +
+      "  const { theme, toggleTheme } = useTheme();\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <header className={`header ${theme}`}>\n" +
+      "      <h1>My App</h1>\n" +
+      "      <button onClick={toggleTheme}>\n" +
+      "        Switch to {theme === 'light' ? 'dark' : 'light'} theme\n" +
+      "      </button>\n" +
+      "    </header>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "function MainContent() {\n" +
+      "  const { theme } = useTheme();\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <main className={`main ${theme}`}>\n" +
+      "      <p>Current theme: {theme}</p>\n" +
+      "    </main>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Context:**\n" +
+      "- Global state (theme, user authentication, language)\n" +
+      "- Avoiding prop drilling\n" +
+      "- Sharing data across many components\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Context causes re-renders when value changes\n" +
+      "- Split contexts by concern\n" +
+      "- Use multiple contexts instead of one large context\n" +
+      "- Memoize context values when possible\n\n" +
+      "**Best Practices:**\n" +
+      "- Create custom hooks for context consumption\n" +
+      "- Provide default values\n" +
+      "- Validate context usage\n" +
+      "- Consider using state management libraries for complex state",
+    category: "State Management",
+    difficulty: "intermediate",
+    tags: ["Context", "state-management", "prop-drilling", "global-state", "provider"],
+  },
+  {
+    id: 74,
+    question: "What is React's forwardRef? How do you use it to pass refs to child components?",
+    answer:
+      "forwardRef is a React function that allows you to pass a ref through a component to one of its children. It's useful when you need to access DOM elements or component instances from parent components.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import React, { forwardRef } from 'react';\n\n" +
+      "const FancyButton = forwardRef((props, ref) => (\n" +
+      "  <button ref={ref} className='fancy-button' {...props}>\n" +
+      "    {props.children}\n" +
+      "  </button>\n" +
+      "));\n\n" +
+      "function App() {\n" +
+      "  const buttonRef = useRef();\n" +
+      "  \n" +
+      "  const focusButton = () => {\n" +
+      "    buttonRef.current.focus();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <FancyButton ref={buttonRef}>\n" +
+      "        Click me!\n" +
+      "      </FancyButton>\n" +
+      "      <button onClick={focusButton}>Focus Fancy Button</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with useImperativeHandle:**\n" +
+      "```javascript\n" +
+      "import React, { forwardRef, useImperativeHandle, useRef } from 'react';\n\n" +
+      "const CustomInput = forwardRef((props, ref) => {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  useImperativeHandle(ref, () => ({\n" +
+      "    focus: () => {\n" +
+      "      inputRef.current.focus();\n" +
+      "    },\n" +
+      "    clear: () => {\n" +
+      "      inputRef.current.value = '';\n" +
+      "    },\n" +
+      "    getValue: () => {\n" +
+      "      return inputRef.current.value;\n" +
+      "    },\n" +
+      "    setValue: (value) => {\n" +
+      "      inputRef.current.value = value;\n" +
+      "    }\n" +
+      "  }));\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <input\n" +
+      "      ref={inputRef}\n" +
+      "      {...props}\n" +
+      "    />\n" +
+      "  );\n" +
+      "});\n\n" +
+      "function Form() {\n" +
+      "  const inputRef = useRef();\n" +
+      "  \n" +
+      "  const handleSubmit = () => {\n" +
+      "    const value = inputRef.current.getValue();\n" +
+      "    console.log('Form value:', value);\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleClear = () => {\n" +
+      "    inputRef.current.clear();\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <CustomInput ref={inputRef} placeholder='Enter text...' />\n" +
+      "      <button onClick={handleSubmit}>Submit</button>\n" +
+      "      <button onClick={handleClear}>Clear</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use forwardRef:**\n" +
+      "- Building reusable component libraries\n" +
+      "- Wrapping third-party components\n" +
+      "- Creating components that need DOM access\n" +
+      "- Implementing imperative APIs\n\n" +
+      "**Best Practices:**\n" +
+      "- Use sparingly (prefer declarative patterns)\n" +
+      "- Combine with useImperativeHandle for custom APIs\n" +
+      "- Document the exposed methods\n" +
+      "- Consider if the functionality could be achieved declaratively",
+    category: "Advanced Patterns",
+    difficulty: "intermediate",
+    tags: ["forwardRef", "refs", "imperative", "component-libraries", "dom-access"],
+  },
+  {
+    id: 75,
+    question: "What is React's memo? How does it optimize component re-rendering?",
+    answer:
+      "React.memo is a higher-order component that memoizes the result of a component. It only re-renders if its props have changed, similar to React.PureComponent but for function components.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import React, { memo, useState } from 'react';\n\n" +
+      "const ExpensiveComponent = memo(({ name, age }) => {\n" +
+      "  console.log('ExpensiveComponent rendered');\n" +
+      "  \n" +
+      "  // Simulate expensive calculation\n" +
+      "  const expensiveValue = useMemo(() => {\n" +
+      "    let result = 0;\n" +
+      "    for (let i = 0; i < 1000000; i++) {\n" +
+      "      result += i;\n" +
+      "    }\n" +
+      "    return result;\n" +
+      "  }, []);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h3>{name}</h3>\n" +
+      "      <p>Age: {age}</p>\n" +
+      "      <p>Expensive value: {expensiveValue}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "});\n\n" +
+      "function Parent() {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  const [name, setName] = useState('John');\n" +
+      "  const [age, setAge] = useState(25);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <p>Count: {count}</p>\n" +
+      "      <button onClick={() => setCount(c => c + 1)}>Increment</button>\n" +
+      "      \n" +
+      "      <ExpensiveComponent name={name} age={age} />\n" +
+      "      \n" +
+      "      <button onClick={() => setName('Jane')}>Change Name</button>\n" +
+      "      <button onClick={() => setAge(30)}>Change Age</button>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Custom Comparison Function:**\n" +
+      "```javascript\n" +
+      "const MyComponent = memo(({ user, settings }) => {\n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h3>{user.name}</h3>\n" +
+      "      <p>Theme: {settings.theme}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}, (prevProps, nextProps) => {\n" +
+      "  // Custom comparison logic\n" +
+      "  return (\n" +
+      "    prevProps.user.id === nextProps.user.id &&\n" +
+      "    prevProps.settings.theme === nextProps.settings.theme\n" +
+      "  );\n" +
+      "});\n" +
+      "```\n\n" +
+      "**When to Use memo:**\n" +
+      "- Components that render frequently\n" +
+      "- Components with expensive render logic\n" +
+      "- Components that receive the same props often\n" +
+      "- Leaf components in large component trees\n\n" +
+      "**Performance Considerations:**\n" +
+      "- Only use when you have performance issues\n" +
+      "- Measure before and after optimization\n" +
+      "- Don't overuse (can hurt performance)\n" +
+      "- Consider the cost of comparison\n\n" +
+      "**Best Practices:**\n" +
+      "- Use with useMemo and useCallback\n" +
+      "- Profile performance before optimizing\n" +
+      "- Consider if props are stable\n" +
+      "- Use custom comparison functions sparingly",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["memo", "performance", "optimization", "re-rendering", "pure-component"],
+  },
+  {
+    id: 76,
+    question:
+      "What is React's lazy loading? How do you implement code splitting with React.lazy and Suspense?",
+    answer:
+      "React.lazy allows you to load components lazily (on-demand) as they're needed. Combined with Suspense, it enables code splitting to reduce bundle size and improve initial load performance.\n\n" +
+      "**Basic Implementation:**\n" +
+      "```javascript\n" +
+      "import React, { Suspense, lazy } from 'react';\n\n" +
+      "// Lazy load components\n" +
+      "const LazyComponent = lazy(() => import('./LazyComponent'));\n" +
+      "const LazyDashboard = lazy(() => import('./Dashboard'));\n" +
+      "const LazyProfile = lazy(() => import('./Profile'));\n\n" +
+      "function App() {\n" +
+      "  const [currentView, setCurrentView] = useState('home');\n" +
+      "  \n" +
+      "  const renderView = () => {\n" +
+      "    switch (currentView) {\n" +
+      "      case 'dashboard':\n" +
+      "        return <LazyDashboard />;\n" +
+      "      case 'profile':\n" +
+      "        return <LazyProfile />;\n" +
+      "      default:\n" +
+      "        return <LazyComponent />;\n" +
+      "    }\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <nav>\n" +
+      "        <button onClick={() => setCurrentView('home')}>Home</button>\n" +
+      "        <button onClick={() => setCurrentView('dashboard')}>Dashboard</button>\n" +
+      "        <button onClick={() => setCurrentView('profile')}>Profile</button>\n" +
+      "      </nav>\n" +
+      "      \n" +
+      "      <Suspense fallback={<div>Loading...</div>}>\n" +
+      "        {renderView()}\n" +
+      "      </Suspense>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Route-based Code Splitting:**\n" +
+      "```javascript\n" +
+      "import React, { Suspense, lazy } from 'react';\n" +
+      "import { BrowserRouter, Routes, Route } from 'react-router-dom';\n\n" +
+      "const Home = lazy(() => import('./pages/Home'));\n" +
+      "const About = lazy(() => import('./pages/About'));\n" +
+      "const Contact = lazy(() => import('./pages/Contact'));\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <BrowserRouter>\n" +
+      "      <Suspense fallback={<div>Loading page...</div>}>\n" +
+      "        <Routes>\n" +
+      "          <Route path='/' element={<Home />} />\n" +
+      "          <Route path='/about' element={<About />} />\n" +
+      "          <Route path='/contact' element={<Contact />} />\n" +
+      "        </Routes>\n" +
+      "      </Suspense>\n" +
+      "    </BrowserRouter>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Loading States:**\n" +
+      "```javascript\n" +
+      "function LoadingSpinner() {\n" +
+      "  return (\n" +
+      "    <div className='loading-spinner'>\n" +
+      "      <div className='spinner'></div>\n" +
+      "      <p>Loading component...</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <Suspense fallback={<LoadingSpinner />}>\n" +
+      "      <LazyComponent />\n" +
+      "    </Suspense>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Reduced initial bundle size\n" +
+      "- Faster initial page load\n" +
+      "- Better user experience\n" +
+      "- Improved performance\n\n" +
+      "**Best Practices:**\n" +
+      "- Use for large components\n" +
+      "- Implement proper loading states\n" +
+      "- Consider preloading critical components\n" +
+      "- Monitor bundle sizes",
+    category: "Performance",
+    difficulty: "intermediate",
+    tags: ["lazy", "code-splitting", "suspense", "performance", "bundle-size"],
+  },
+  {
+    id: 77,
+    question:
+      "What is React's Concurrent Mode? How does it improve user experience and performance?",
+    answer:
+      "React Concurrent Mode is a set of new features that help React apps stay responsive and gracefully adjust to the user's device capabilities and network speed. It enables React to interrupt rendering work to handle higher priority updates.\n\n" +
+      "**Key Features:**\n" +
+      "- **Interruptible Rendering**: React can pause, abort, or restart work\n" +
+      "- **Priority-based Updates**: Urgent updates can interrupt less urgent ones\n" +
+      "- **Suspense for Data Fetching**: Better loading states\n" +
+      "- **Automatic Batching**: Multiple state updates are batched automatically\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import React, { startTransition, useState } from 'react';\n\n" +
+      "function SearchResults({ query }) {\n" +
+      "  const [results, setResults] = useState([]);\n" +
+      "  const [isPending, startTransition] = useTransition();\n" +
+      "  \n" +
+      "  const handleSearch = (newQuery) => {\n" +
+      "    // Urgent: Update input immediately\n" +
+      "    setQuery(newQuery);\n" +
+      "    \n" +
+      "    // Non-urgent: Update results\n" +
+      "    startTransition(() => {\n" +
+      "      setResults(expensiveSearch(newQuery));\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input \n" +
+      "        value={query} \n" +
+      "        onChange={(e) => handleSearch(e.target.value)}\n" +
+      "      />\n" +
+      "      {isPending && <div>Searching...</div>}\n" +
+      "      <ResultsList results={results} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Suspense for Data Fetching:**\n" +
+      "```javascript\n" +
+      "import { Suspense } from 'react';\n" +
+      "import { useQuery } from '@tanstack/react-query';\n\n" +
+      "function UserProfile({ userId }) {\n" +
+      "  const { data: user } = useQuery({\n" +
+      "    queryKey: ['user', userId],\n" +
+      "    queryFn: () => fetchUser(userId),\n" +
+      "    suspense: true\n" +
+      "  });\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h2>{user.name}</h2>\n" +
+      "      <p>{user.email}</p>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "function App() {\n" +
+      "  return (\n" +
+      "    <Suspense fallback={<div>Loading user...</div>}>\n" +
+      "      <UserProfile userId={123} />\n" +
+      "    </Suspense>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Better user experience\n" +
+      "- More responsive interfaces\n" +
+      "- Graceful handling of slow networks\n" +
+      "- Improved performance\n\n" +
+      "**When to Use:**\n" +
+      "- Large applications\n" +
+      "- Complex user interactions\n" +
+      "- Data-heavy components\n" +
+      "- Performance-critical features",
+    category: "Advanced Features",
+    difficulty: "advanced",
+    tags: ["concurrent-mode", "suspense", "transitions", "performance", "user-experience"],
+  },
+  {
+    id: 78,
+    question: "What is React's Server Components? How do they differ from Client Components?",
+    answer:
+      "React Server Components are a new way to build React applications that run on the server and can be rendered to HTML before being sent to the client. They enable better performance and reduced bundle size by keeping server-only code on the server.\n\n" +
+      "**Key Differences:**\n" +
+      "- **Server Components**: Run on server, no JavaScript sent to client\n" +
+      "- **Client Components**: Run in browser, JavaScript sent to client\n\n" +
+      "**Server Component Example:**\n" +
+      "```javascript\n" +
+      "// Server Component (runs on server)\n" +
+      "async function UserProfile({ userId }) {\n" +
+      "  // Direct database access (server-only)\n" +
+      "  const user = await db.users.findById(userId);\n" +
+      "  const posts = await db.posts.findByUserId(userId);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <h1>{user.name}</h1>\n" +
+      "      <p>{user.email}</p>\n" +
+      "      <PostsList posts={posts} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Client Component Example:**\n" +
+      "```javascript\n" +
+      "'use client';\n\n" +
+      "// Client Component (runs in browser)\n" +
+      "function InteractiveButton({ onClick }) {\n" +
+      "  const [count, setCount] = useState(0);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <button onClick={() => setCount(c => c + 1)}>\n" +
+      "      Clicked {count} times\n" +
+      "    </button>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Mixed Usage:**\n" +
+      "```javascript\n" +
+      "// Server Component\n" +
+      "async function BlogPost({ postId }) {\n" +
+      "  const post = await db.posts.findById(postId);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <article>\n" +
+      "      <h1>{post.title}</h1>\n" +
+      "      <p>{post.content}</p>\n" +
+      "      <LikeButton postId={postId} />\n" +
+      "    </article>\n" +
+      "  );\n" +
+      "}\n\n" +
+      "'use client';\n" +
+      "// Client Component\n" +
+      "function LikeButton({ postId }) {\n" +
+      "  const [likes, setLikes] = useState(0);\n" +
+      "  \n" +
+      "  const handleLike = async () => {\n" +
+      "    await fetch(`/api/posts/${postId}/like`, { method: 'POST' });\n" +
+      "    setLikes(l => l + 1);\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <button onClick={handleLike}>\n" +
+      "      👍 {likes}\n" +
+      "    </button>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Smaller JavaScript bundles\n" +
+      "- Better performance\n" +
+      "- Direct server access\n" +
+      "- Reduced client-side complexity\n\n" +
+      "**Limitations:**\n" +
+      "- No browser APIs\n" +
+      "- No event handlers\n" +
+      "- No state or effects\n" +
+      "- No client-side interactivity",
+    category: "Advanced Features",
+    difficulty: "advanced",
+    tags: ["server-components", "client-components", "server-side", "performance", "bundle-size"],
+  },
+  {
+    id: 79,
+    question:
+      "What is React's useDeferredValue hook? How does it help with performance optimization?",
+    answer:
+      "useDeferredValue is a React hook that lets you defer updating a part of the UI. It's useful for keeping the interface responsive during expensive updates by showing stale content while new content is being prepared.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useDeferredValue, useState, useMemo } from 'react';\n\n" +
+      "function SearchResults({ query }) {\n" +
+      "  const [query, setQuery] = useState('');\n" +
+      "  const deferredQuery = useDeferredValue(query);\n" +
+      "  \n" +
+      "  // Expensive search that only runs when deferredQuery changes\n" +
+      "  const results = useMemo(() => {\n" +
+      "    if (!deferredQuery) return [];\n" +
+      "    \n" +
+      "    console.log('Searching for:', deferredQuery);\n" +
+      "    return expensiveSearch(deferredQuery);\n" +
+      "  }, [deferredQuery]);\n" +
+      "  \n" +
+      "  const isStale = query !== deferredQuery;\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input \n" +
+      "        value={query} \n" +
+      "        onChange={(e) => setQuery(e.target.value)}\n" +
+      "        placeholder='Search...'\n" +
+      "      />\n" +
+      "      \n" +
+      "      <div style={{ opacity: isStale ? 0.5 : 1 }}>\n" +
+      "        {results.map(result => (\n" +
+      "          <div key={result.id}>{result.title}</div>\n" +
+      "        ))}\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      {isStale && <div>Updating results...</div>}\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Transitions:**\n" +
+      "```javascript\n" +
+      "import { useDeferredValue, useTransition, useState } from 'react';\n\n" +
+      "function DataVisualization({ data }) {\n" +
+      "  const [filter, setFilter] = useState('all');\n" +
+      "  const [isPending, startTransition] = useTransition();\n" +
+      "  const deferredFilter = useDeferredValue(filter);\n" +
+      "  \n" +
+      "  const handleFilterChange = (newFilter) => {\n" +
+      "    startTransition(() => {\n" +
+      "      setFilter(newFilter);\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  const filteredData = useMemo(() => {\n" +
+      "    return data.filter(item => \n" +
+      "      deferredFilter === 'all' || item.category === deferredFilter\n" +
+      "    );\n" +
+      "  }, [data, deferredFilter]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <div>\n" +
+      "        <button onClick={() => handleFilterChange('all')}>All</button>\n" +
+      "        <button onClick={() => handleFilterChange('tech')}>Tech</button>\n" +
+      "        <button onClick={() => handleFilterChange('business')}>Business</button>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      {isPending && <div>Filtering...</div>}\n" +
+      "      \n" +
+      "      <Chart data={filteredData} />\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Expensive computations\n" +
+      "- Large lists or tables\n" +
+      "- Complex data transformations\n" +
+      "- Search and filtering\n\n" +
+      "**Benefits:**\n" +
+      "- Keeps UI responsive\n" +
+      "- Prevents blocking updates\n" +
+      "- Better user experience\n" +
+      "- Automatic optimization\n\n" +
+      "**Best Practices:**\n" +
+      "- Use with useMemo for expensive calculations\n" +
+      "- Combine with useTransition for better control\n" +
+      "- Show loading states when appropriate\n" +
+      "- Consider the trade-off between freshness and performance",
+    category: "Performance",
+    difficulty: "advanced",
+    tags: ["useDeferredValue", "performance", "optimization", "responsive", "expensive-updates"],
+  },
+  {
+    id: 80,
+    question:
+      "What is React's useTransition hook? How does it help with managing non-urgent updates?",
+    answer:
+      "useTransition is a React hook that lets you mark state updates as transitions, which are non-urgent updates that can be interrupted by more urgent updates. It helps keep the UI responsive during expensive operations.\n\n" +
+      "**Basic Usage:**\n" +
+      "```javascript\n" +
+      "import { useTransition, useState } from 'react';\n\n" +
+      "function SearchResults({ query }) {\n" +
+      "  const [results, setResults] = useState([]);\n" +
+      "  const [isPending, startTransition] = useTransition();\n" +
+      "  \n" +
+      "  const handleSearch = (newQuery) => {\n" +
+      "    // Urgent: Update input immediately\n" +
+      "    setQuery(newQuery);\n" +
+      "    \n" +
+      "    // Non-urgent: Update results\n" +
+      "    startTransition(() => {\n" +
+      "      setResults(expensiveSearch(newQuery));\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <input \n" +
+      "        value={query} \n" +
+      "        onChange={(e) => handleSearch(e.target.value)}\n" +
+      "        placeholder='Search...'\n" +
+      "      />\n" +
+      "      \n" +
+      "      {isPending && <div>Searching...</div>}\n" +
+      "      \n" +
+      "      <div style={{ opacity: isPending ? 0.5 : 1 }}>\n" +
+      "        {results.map(result => (\n" +
+      "          <div key={result.id}>{result.title}</div>\n" +
+      "        ))}\n" +
+      "      </div>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Advanced Usage with Multiple Transitions:**\n" +
+      "```javascript\n" +
+      "function DataTable({ data }) {\n" +
+      "  const [sortBy, setSortBy] = useState('name');\n" +
+      "  const [filter, setFilter] = useState('');\n" +
+      "  const [isPending, startTransition] = useTransition();\n" +
+      "  \n" +
+      "  const handleSort = (newSortBy) => {\n" +
+      "    startTransition(() => {\n" +
+      "      setSortBy(newSortBy);\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  const handleFilter = (newFilter) => {\n" +
+      "    startTransition(() => {\n" +
+      "      setFilter(newFilter);\n" +
+      "    });\n" +
+      "  };\n" +
+      "  \n" +
+      "  const processedData = useMemo(() => {\n" +
+      "    let filtered = data.filter(item => \n" +
+      "      item.name.toLowerCase().includes(filter.toLowerCase())\n" +
+      "    );\n" +
+      "    \n" +
+      "    return filtered.sort((a, b) => {\n" +
+      "      if (sortBy === 'name') return a.name.localeCompare(b.name);\n" +
+      "      if (sortBy === 'date') return new Date(a.date) - new Date(b.date);\n" +
+      "      return 0;\n" +
+      "    });\n" +
+      "  }, [data, filter, sortBy]);\n" +
+      "  \n" +
+      "  return (\n" +
+      "    <div>\n" +
+      "      <div>\n" +
+      "        <input \n" +
+      "          value={filter} \n" +
+      "          onChange={(e) => handleFilter(e.target.value)}\n" +
+      "          placeholder='Filter...'\n" +
+      "        />\n" +
+      "        <button onClick={() => handleSort('name')}>Sort by Name</button>\n" +
+      "        <button onClick={() => handleSort('date')}>Sort by Date</button>\n" +
+      "      </div>\n" +
+      "      \n" +
+      "      {isPending && <div>Processing...</div>}\n" +
+      "      \n" +
+      "      <table>\n" +
+      "        <tbody>\n" +
+      "          {processedData.map(item => (\n" +
+      "            <tr key={item.id}>\n" +
+      "              <td>{item.name}</td>\n" +
+      "              <td>{item.date}</td>\n" +
+      "            </tr>\n" +
+      "          ))}\n" +
+      "        </tbody>\n" +
+      "      </table>\n" +
+      "    </div>\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use:**\n" +
+      "- Expensive state updates\n" +
+      "- Large data processing\n" +
+      "- Complex filtering or sorting\n" +
+      "- Non-critical UI updates\n\n" +
+      "**Benefits:**\n" +
+      "- Keeps UI responsive\n" +
+      "- Prevents blocking updates\n" +
+      "- Better user experience\n" +
+      "- Automatic priority management\n\n" +
+      "**Best Practices:**\n" +
+      "- Use for non-urgent updates\n" +
+      "- Show loading states\n" +
+      "- Combine with useDeferredValue\n" +
+      "- Consider the user experience impact",
+    category: "Performance",
+    difficulty: "advanced",
+    tags: ["useTransition", "performance", "non-urgent", "responsive", "priority"],
+  },
 ];
 
 export default REACT_ENHANCED_QUESTIONS;

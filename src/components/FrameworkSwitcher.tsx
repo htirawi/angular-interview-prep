@@ -1,12 +1,7 @@
 import { QUESTION_SETS } from "../data";
 import type { FrameworkId } from "../types";
 import { FrameworkIcon } from "./icons/FrameworkIcon";
-
-interface FrameworkSwitcherProps {
-  currentFramework: FrameworkId;
-  onSwitch: (framework: FrameworkId) => void;
-  onOpenModal: () => void;
-}
+import type { FrameworkSwitcherProps } from "../types";
 
 export default function FrameworkSwitcher({
   currentFramework,

@@ -2,7 +2,7 @@
  * Framework-related types
  */
 
-export type FrameworkId = "angular" | "nextjs" | "react" | "redux";
+export type FrameworkId = "angular" | "nextjs" | "react" | "redux" | "random";
 
 // Alias for backward compatibility
 export type QuestionSetId = FrameworkId;

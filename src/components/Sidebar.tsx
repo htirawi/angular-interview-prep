@@ -2,78 +2,40 @@ import type { ReactNode } from "react";
 import SearchBar from "./SearchBar";
 import FilterPanel from "./FilterPanel";
 import StatsPanel from "./StatsPanel";
-import type { QA } from "../data/questions";
-import type { FrameworkId } from "../types/framework";
+import { useSidebarContext } from "../contexts/SidebarContext";
+import { FrameworkService } from "../services/FrameworkService";
 
-type Mode = "sequential" | "random" | "bookmarked";
-
-type Props = {
+interface SidebarProps {
   isOpen: boolean;
   onToggle: () => void;
-  // Framework
-  currentFramework: FrameworkId;
-  // Stats
-  totalQuestions: number;
-  completed: number;
-  bookmarked: number;
-  // Mode
-  mode: Mode;
-  onModeChange: (mode: Mode) => void;
-  // Search & Filters
-  searchQuery?: string;
-  onSearchChange: (query: string) => void;
-  questions: QA[];
-  selectedCategory: string;
-  selectedDifficulty: string;
-  onCategoryChange: (category: string) => void;
-  onDifficultyChange: (difficulty: string) => void;
-  // Actions
-  onResetProgress: () => void;
-  currentIndex: number;
-  totalFiltered: number;
-  onJumpToQuestion: (index: number) => void;
-  questionList: QA[];
   children?: ReactNode;
-};
+}
 
-export default function Sidebar({
-  isOpen,
-  onToggle,
-  currentFramework,
-  totalQuestions,
-  completed,
-  bookmarked,
-  mode,
-  onModeChange,
-  searchQuery: _searchQuery, // Passed from parent but managed internally by SearchBar
-  onSearchChange,
-  questions,
-  selectedCategory,
-  selectedDifficulty,
-  onCategoryChange,
-  onDifficultyChange,
-  onResetProgress,
-  currentIndex,
-  totalFiltered,
-  onJumpToQuestion,
-  questionList,
-  children,
-}: Props) {
-  // Get framework display name
-  const getFrameworkDisplayName = (framework: FrameworkId): string => {
-    switch (framework) {
-      case "angular":
-        return "Angular Interview Prep";
-      case "react":
-        return "React Interview Prep";
-      case "nextjs":
-        return "Next.js Interview Prep";
-      case "redux":
-        return "Redux Interview Prep";
-      default:
-        return "Interview Prep";
-    }
-  };
+/**
+ * Simplified Sidebar component using context to reduce props drilling
+ * Focuses on UI rendering while business logic is handled by context
+ */
+export default function Sidebar({ isOpen, onToggle, children }: SidebarProps) {
+  const {
+    currentFramework,
+    totalQuestions,
+    completed,
+    bookmarked,
+    mode,
+    onModeChange,
+    searchQuery,
+    onSearchChange,
+    questions,
+    selectedCategory,
+    selectedDifficulty,
+    onCategoryChange,
+    onDifficultyChange,
+    onResetProgress,
+    currentIndex,
+    totalFiltered,
+    onJumpToQuestion,
+    questionList,
+  } = useSidebarContext();
 
   return (
     <>
@@ -112,9 +74,11 @@ export default function Sidebar({
           {/* Header */}
           <div className="mb-6">
             <h1 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
-              {getFrameworkDisplayName(currentFramework)}
+              {FrameworkService.getDisplayName(currentFramework)}
             </h1>
-            <p className="text-xs text-gray-600 dark:text-gray-400">100 Senior-Level Questions</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400">
+              {totalQuestions} Senior-Level Questions
+            </p>
           </div>
 
           {/* Stats */}

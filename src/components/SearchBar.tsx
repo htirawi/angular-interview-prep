@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
+import type { SearchBarProps } from "../types";
 
-type Props = {
-  onSearch: (query: string) => void;
-  onClear: () => void;
-};
-
-export default function SearchBar({ onSearch, onClear }: Props) {
+export default function SearchBar({ onSearch, onClear }: SearchBarProps) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -64,4 +60,3 @@ export default function SearchBar({ onSearch, onClear }: Props) {
     </div>
   );
 }
-
