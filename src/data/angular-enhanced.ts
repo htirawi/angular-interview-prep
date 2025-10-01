@@ -1755,8 +1755,8 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "import { webSocket, WebSocketSubject } from 'rxjs/webSocket';\n\n" +
       "@Injectable({ providedIn: 'root' })\n" +
       "export class WebSocketService {\n" +
-      "  private socket$: WebSocketSubject<any>;\n\n" +
-      "  connect(url: string): WebSocketSubject<any> {\n" +
+      "  private socket$: WebSocketSubject<unknown>;\n\n" +
+      "  connect(url: string): WebSocketSubject<unknown> {\n" +
       "    if (!this.socket$ || this.socket$.closed) {\n" +
       "      this.socket$ = webSocket({\n" +
       "        url,\n" +
@@ -2102,7 +2102,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "})\n" +
       "export class UnlessDirective {\n" +
       "  constructor(\n" +
-      "    private templateRef: TemplateRef<any>,\n" +
+      "    private templateRef: TemplateRef<unknown>,\n" +
       "    private viewContainer: ViewContainerRef\n" +
       "  ) {}\n\n" +
       "  @Input() set appUnless(condition: boolean) {\n" +
@@ -2782,7 +2782,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "export class ContainerComponent {\n" +
       "  @ViewChild('dynamicContainer', { read: ViewContainerRef }) \n" +
       "  container: ViewContainerRef;\n\n" +
-      "  private componentRef: ComponentRef<any>;\n\n" +
+      "  private componentRef: ComponentRef<unknown>;\n\n" +
       "  loadComponent() {\n" +
       "    // Clear existing\n" +
       "    this.container.clear();\n\n" +
@@ -2818,7 +2818,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "    private appRef: ApplicationRef,\n" +
       "    private injector: Injector\n" +
       "  ) {}\n\n" +
-      "  open(component: Type<any>, data?: any): ComponentRef<any> {\n" +
+      "  open(component: Type<unknown>, data?: unknown): ComponentRef<unknown> {\n" +
       "    // Create component\n" +
       "    const componentRef = createComponent(component, {\n" +
       "      environmentInjector: this.appRef.injector\n" +
@@ -2833,7 +2833,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "    document.body.appendChild(domElem);\n\n" +
       "    return componentRef;\n" +
       "  }\n\n" +
-      "  close(componentRef: ComponentRef<any>) {\n" +
+      "  close(componentRef: ComponentRef<unknown>) {\n" +
       "    this.appRef.detachView(componentRef.hostView);\n" +
       "    componentRef.destroy();\n" +
       "  }\n" +
@@ -3439,7 +3439,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "export class DialogService {\n" +
       "  private overlayRef: OverlayRef;\n\n" +
       "  constructor(private overlay: Overlay) {}\n\n" +
-      "  open(component: Type<any>) {\n" +
+      "  open(component: Type<unknown>) {\n" +
       "    const positionStrategy = this.overlay\n" +
       "      .position()\n" +
       "      .global()\n" +
@@ -5240,7 +5240,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "export class IfDirective {\n" +
       "  private hasView = false;\n\n" +
       "  constructor(\n" +
-      "    private templateRef: TemplateRef<any>,\n" +
+      "    private templateRef: TemplateRef<unknown>,\n" +
       "    private viewContainer: ViewContainerRef\n" +
       "  ) {}\n\n" +
       "  @Input() set appIf(condition: boolean) {\n" +
@@ -5263,7 +5263,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "})\n" +
       "export class RepeatDirective {\n" +
       "  constructor(\n" +
-      "    private templateRef: TemplateRef<any>,\n" +
+      "    private templateRef: TemplateRef<unknown>,\n" +
       "    private viewContainer: ViewContainerRef\n" +
       "  ) {}\n\n" +
       "  @Input() set appRepeat(times: number) {\n" +
@@ -5290,7 +5290,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "})\n" +
       "export class HasPermissionDirective {\n" +
       "  constructor(\n" +
-      "    private templateRef: TemplateRef<any>,\n" +
+      "    private templateRef: TemplateRef<unknown>,\n" +
       "    private viewContainer: ViewContainerRef,\n" +
       "    private authService: AuthService\n" +
       "  ) {}\n\n" +
@@ -6109,7 +6109,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "import { webSocket, WebSocketSubject } from 'rxjs/webSocket';\n\n" +
       "@Injectable({ providedIn: 'root' })\n" +
       "export class WebSocketService {\n" +
-      "  private socket$: WebSocketSubject<any>;\n\n" +
+      "  private socket$: WebSocketSubject<unknown>;\n\n" +
       "  connect(): Observable<any> {\n" +
       "    if (!this.socket$ || this.socket$.closed) {\n" +
       "      this.socket$ = webSocket({\n" +
@@ -6568,7 +6568,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "export class FeatureFlagDirective implements OnInit {\n" +
       "  @Input() featureFlag: string;\n\n" +
       "  constructor(\n" +
-      "    private templateRef: TemplateRef<any>,\n" +
+      "    private templateRef: TemplateRef<unknown>,\n" +
       "    private viewContainer: ViewContainerRef,\n" +
       "    private featureService: FeatureFlagService\n" +
       "  ) {}\n\n" +
