@@ -61,6 +61,15 @@ Version history and updates:
 - **[Upgrade Guide](./changelog/UPGRADE-GUIDE.md)** - Migration instructions
 - **[Summary](./changelog/SUMMARY.md)** - Project summary
 
+### 🔧 Scripts
+
+Complete documentation for all project scripts:
+
+- **[Scripts Overview](./scripts/README.md)** - Complete scripts documentation
+- **[Tools Scripts](./scripts/tools.md)** - Development and deployment tools
+- **[Internal Scripts](./scripts/internal.md)** - Question management scripts
+- **[Quick Reference](./scripts/quick-reference.md)** - Quick script lookup guide
+
 ## 🎯 Quick Navigation
 
 ### For New Users
@@ -87,6 +96,13 @@ Version history and updates:
 2. Use [Deploy Now](./deployment/DEPLOY-NOW.md) for quick setup
 3. Complete [Final Checklist](./deployment/FINAL-CHECKLIST.md)
 
+### For Scripts
+
+1. Start with [Scripts Overview](./scripts/README.md)
+2. Use [Quick Reference](./scripts/quick-reference.md) for quick lookups
+3. Check [Tools Scripts](./scripts/tools.md) for development tools
+4. Review [Internal Scripts](./scripts/internal.md) for question management
+
 ## 📚 Documentation Standards
 
 - **Markdown Format**: All documentation uses Markdown for consistency
@@ -107,6 +123,7 @@ Version history and updates:
 - **General Questions**: Check [Getting Started](./getting-started/)
 - **Technical Issues**: Review [Development](./development/) docs
 - **Deployment Problems**: See [Deployment](./deployment/) guides
+- **Script Usage**: Look in [Scripts](./scripts/) documentation
 - **Project Questions**: Look in [Project Management](./project-management/)
 
 ---
