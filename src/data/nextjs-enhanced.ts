@@ -2359,7 +2359,7 @@ export const NEXTJS_ENHANCED_QUESTIONS: QA[] = [
       "  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false\n" +
       "});\n" +
       "\n" +
-      "export async function query(text: string, params?: any[]) {\n" +
+      "export async function query(text: string, params?: unknown[]) {\n" +
       "  const client = await pool.connect();\n" +
       "  try {\n" +
       "    const result = await client.query(text, params);\n" +
@@ -3102,7 +3102,7 @@ export const NEXTJS_ENHANCED_QUESTIONS: QA[] = [
       "import { useState, useEffect } from 'react';\n" +
       "\n" +
       "export default function InstallPrompt() {\n" +
-      "  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);\n" +
+      "  const [deferredPrompt, setDeferredPrompt] = useState<unknown>(null);\n" +
       "  const [showInstallPrompt, setShowInstallPrompt] = useState(false);\n" +
       "\n" +
       "  useEffect(() => {\n" +
