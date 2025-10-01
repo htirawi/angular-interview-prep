@@ -9334,7 +9334,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     tags: ["signals", "toast", "notifications", "ux"],
   },
   {
-    id: 105,
+    id: 106,
     question: "How do you implement Reactive Search with Signals?",
     answer:
       "**Signal-based Search with Debounce:**\n\n" +
@@ -9421,7 +9421,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     tags: ["signals", "search", "debounce", "reactive"],
   },
   {
-    id: 106,
+    id: 107,
     question: "How do you implement Pagination with Signals?",
     answer:
       "**Complete Pagination System:**\n\n" +
@@ -9518,7 +9518,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     tags: ["signals", "pagination", "data-tables", "ux"],
   },
   {
-    id: 107,
+    id: 116,
     question: "How do you convert between Signals and RxJS? Explain toSignal() and toObservable().",
     answer:
       "**toSignal() - Observable to Signal:**\n\n" +
