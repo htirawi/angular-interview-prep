@@ -13,511 +13,542 @@ export interface QA {
 export const NEXTJS_QUESTIONS: QA[] = [
   {
     id: 1,
-    question: `App Router vs. Pages Router—why the shift and when to use which?`,
-    answer: `App Router embraces React Server Components (RSC), nested layouts, streaming, and colocation.
-Prefer App Router for new apps; Pages only for legacy support/migration.`,
+    question: "App Router vs Pages Router: what changed and why?",
+    answer:
+      "App Router adopts React Server Components, nested layouts, streaming, and co-located route logic to cut client JS and improve data fetching.",
   },
   {
     id: 2,
-    question: `What are React Server Components (RSC) in Next.js and why do they matter?`,
-    answer: `RSC run on the server and don't ship JS to the client, reducing bundle size.
-They fetch data without waterfalls and compose with Client Components for interactivity.`,
+    question: "When should a component use 'use client'?",
+    answer:
+      "Only if it needs state, effects, or event handlers. Keep client islands small and leaf-like.",
   },
   {
     id: 3,
-    question: `Server vs. Client Components—how do you decide?`,
-    answer: `Default to Server for data-fetching and heavy logic; mark 'use client' only where needed.
-Keep client boundaries narrow and leaf-like.`,
+    question: "RSC advantages for data fetching?",
+    answer:
+      "No client JS shipped, direct server data access, fewer waterfalls, and streaming with Suspense.",
   },
   {
     id: 4,
-    question: `How does Next.js caching work with \`fetch\` in App Router?`,
-    answer: `\`fetch\` is request-cached by default on the server; control with \`{ cache: 'no-store' }\` or \`next: { revalidate }\`.
-Tag-based revalidation enables granular invalidation.`,
+    question: "Control caching of server `fetch` calls.",
+    answer:
+      "Use `{ cache: 'no-store' }` or `next: { revalidate: N }`, and pair mutations with tag/path revalidation.",
   },
   {
     id: 5,
-    question: `Explain Incremental Static Regeneration (ISR) with examples.`,
-    answer: `Build static pages and revalidate on a timer or on-demand via tags.
-Great for content that updates periodically (docs, blogs, catalogs).`,
+    question: "ISR vs SSR vs SSG selection criteria.",
+    answer:
+      "SSG for static; ISR for periodic updates; SSR for per-request personalization or highly dynamic content.",
   },
   {
     id: 6,
-    question: `Streaming and Suspense in Next.js—what’s the benefit?`,
-    answer: `Server streams HTML while awaiting slow boundaries; improves TTFB and perceived performance.`,
+    question: "What does `revalidateTag` do?",
+    answer:
+      "Invalidates all cached fetches labeled with the tag, prompting fresh reads on next request.",
   },
   {
     id: 7,
-    question: `What are Route Handlers and when to use them?`,
-    answer: `\`app/api/.../route.ts\` defines HTTP verbs per file; co-locate logic; supports edge runtime and better typing.`,
+    question: "What does `revalidatePath` do?",
+    answer:
+      "Rebuilds the specific path/segment cache, ideal for page-level updates after mutations.",
   },
   {
     id: 8,
-    question: `Edge Runtime vs. Node.js Runtime in Next.js?`,
-    answer: `Edge has low-latency, limited APIs; ideal for auth, AB tests, rewrites.
-Node runtime for heavy libs or FS access.`,
+    question: "Route Handlers: when to use them?",
+    answer:
+      "For small APIs, webhooks, file uploads, server actions helpers; keep logic near routes.",
   },
   {
     id: 9,
-    question: `Middleware vs. Route Handlers—choose which?`,
-    answer: `Middleware runs before routing for redirects/auth; keep it tiny.
-Route Handlers implement endpoints at specific paths.`,
+    question: "Edge runtime use cases.",
+    answer: "Low-latency auth, AB tests, geo routing, lightweight checks; avoid heavy Node APIs.",
   },
   {
     id: 10,
-    question: `How do you implement authenticated layouts with App Router?`,
-    answer: `Read cookies/session in a server layout; render or \`redirect('/login')\`.
-Client checks only for UX; server stays authoritative.`,
+    question: "Node runtime use cases.",
+    answer:
+      "Access to fs, crypto, heavy libs, or long-lived connections; larger cold starts are acceptable.",
   },
   {
     id: 11,
-    question: `\`generateMetadata\` and \`generateStaticParams\`—when to use?`,
-    answer: `\`generateMetadata\` composes SEO per route; \`generateStaticParams\` enumerates static paths for dynamic routes.`,
+    question: "Parallel Routes purpose.",
+    answer:
+      "Render independent subtrees concurrently (e.g., inbox + preview), improving perceived speed.",
   },
   {
     id: 12,
-    question: `SEO best practices in App Router?`,
-    answer: `Use route \`metadata\`, canonical URLs, Open Graph; prefer server-rendered content and semantic HTML.`,
+    question: "Intercepting Routes purpose.",
+    answer:
+      "Display another route (e.g., modal details) on top of current context without losing state.",
   },
   {
     id: 13,
-    question: `Image optimization with \`next/image\`?`,
-    answer: `Responsive sizing, lazy load, and modern formats; use \`sizes\`/\`fill\` and configure domain allowlist.`,
+    question: "Authenticated layouts in App Router.",
+    answer: "Read cookies/session in server layout and redirect unauthorized users before render.",
   },
   {
     id: 14,
-    question: `Data fetching patterns with DB access in RSC?`,
-    answer: `Query DB directly in server components/handlers; avoid extra HTTP layers where unnecessary.`,
+    question: "Draft/Preview Mode behavior.",
+    answer: "Temporarily disables static cache for a user to preview unpublished content.",
   },
   {
     id: 15,
-    question: `Avoiding request waterfalls?`,
-    answer: `Parallelize with \`Promise.all\`, minimize client boundaries, and stream Suspense boundaries.`,
+    question: "Environment variables safety.",
+    answer:
+      "Use server env for secrets; only expose NEXT_PUBLIC_* to client; avoid leaking secrets.",
   },
   {
     id: 16,
-    question: `When to disable caching?`,
-    answer: `Highly dynamic per-user dashboards; use \`no-store\`/\`revalidate: 0\`; include session keys where relevant.`,
+    question: "Optimizing images with `next/image`.",
+    answer:
+      "Use `sizes`/`fill`, proper domains, priority on hero, and avoid CLS with fixed aspect boxes.",
   },
   {
     id: 17,
-    question: `On-demand revalidation strategies?`,
-    answer: `Use \`revalidateTag\`/\`revalidatePath\` post-mutation; ensure writers and readers share tags.`,
+    question: "Using `next/font` effectively.",
+    answer: "Automatic subsetting, preloading, no FOIT/FOUT; simpler than manual font CSS.",
   },
   {
     id: 18,
-    question: `Internationalization with App Router?`,
-    answer: `Locale segments + middleware, or libraries like \`next-intl\`; per-locale metadata and sitemaps.`,
+    question: "Dynamic Open Graph images generation.",
+    answer:
+      "Use `ImageResponse` in a route handler; cache short TTL or tag; personalize via params.",
   },
   {
     id: 19,
-    question: `Server Actions—benefits and caveats?`,
-    answer: `Co-locate mutations, avoid client fetch code; validate on server; beware long-running CPU tasks on lambda.`,
+    question: "`generateMetadata` usage.",
+    answer: "Compose titles, canonical, OG, and JSON-LD from params/data on the server.",
   },
   {
     id: 20,
-    question: `File uploads in App Router?`,
-    answer: `Route Handlers with \`formData()\` + signed URLs; stream to object storage; mind edge runtime limitations.`,
+    question: "Segment-level `loading.tsx`, `error.tsx`, `not-found.tsx`.",
+    answer: "Provide skeletons, error boundaries, and 404 UIs per route segment.",
   },
   {
     id: 21,
-    question: `State management alongside RSC?`,
-    answer: `Keep server as truth; client state for UI-only concerns (modals, toasts).`,
+    question: "Avoiding request waterfalls.",
+    answer: "Parallelize server fetches, reduce client boundaries, and stream Suspense shells.",
   },
   {
     id: 22,
-    question: `Auth—cookies vs. JWT?`,
-    answer: `Prefer HttpOnly cookies for web; JWT for APIs/mobile; short TTL; rotate tokens; CSRF protection on mutations.`,
+    question: "Per-user caching strategy.",
+    answer: "Use `no-store` or short `revalidate`; include session in keys; never cache secrets.",
   },
   {
     id: 23,
-    question: `Protecting routes—server-first?`,
-    answer: `Gate at middleware/layout; redirect before render; client guards only enhance UX.`,
+    question: "File uploads in App Router.",
+    answer: "Handle in route handlers with `formData()` and signed URLs; stream to object storage.",
   },
   {
     id: 24,
-    question: `Dynamic OG images?`,
-    answer: `Use \`ImageResponse\` in a Route Handler; cache with tags or short TTLs.`,
+    question: "Cookies/session hardening.",
+    answer: "HttpOnly, Secure, SameSite, rotation, short TTL; CSRF tokens for mutating routes.",
   },
   {
     id: 25,
-    question: `Error handling in App Router?`,
-    answer: `\`error.tsx\` and \`not-found.tsx\` per segment; log server errors to APM; return safe messages.`,
+    question: "Server Actions: benefits and cautions.",
+    answer:
+      "Co-locate mutations and validation; beware long CPU tasks on serverless; revalidate on success.",
   },
   {
     id: 26,
-    question: `Bundling pitfalls with Client Components?`,
-    answer: `Avoid giant UI libs in client boundaries; prefer dynamic imports; measure bundle with analyzer.`,
+    question: "Middleware best practices.",
+    answer:
+      "Keep tiny dependency graph; perform redirects/rewrites; defer heavy logic to handlers.",
   },
   {
     id: 27,
-    question: `Runtime config without rebuilds?`,
-    answer: `Read env on server; expose a sanitized \`/config\` via server component; avoid leaking secrets.`,
+    question: "Prefetching and perceived speed.",
+    answer:
+      "Link prefetching and RSC streaming deliver fast transitions; preload likely next routes.",
   },
   {
     id: 28,
-    question: `Analytics in RSC world?`,
-    answer: `Render measurement scripts in client layout only; consider server-side logging for robustness.`,
+    question: "Client navigation hooks limitations.",
+    answer:
+      "Use `useRouter`/`usePathname` only in client components; avoid expensive work in navigation effects.",
   },
   {
     id: 29,
-    question: `Middleware cost control?`,
-    answer: `Keep small dependency graph; cheap checks; push heavy logic into Route Handlers.`,
+    question: "Persisting filters in the URL.",
+    answer: "Use `searchParams`; validate on the server and produce canonical links.",
   },
   {
     id: 30,
-    question: `Monorepo patterns with Next.js?`,
-    answer: `Turborepo/Nx; shared packages; edge-safe subsets; TS path aliases; remote caching.`,
+    question: "Handling slow external APIs.",
+    answer:
+      "Stream shell, show skeletons, log slowness; consider background jobs + webhooks + revalidation.",
   },
   {
     id: 31,
-    question: `Testing strategies for App Router?`,
-    answer: `RTL for components; mock \`next/navigation\`; Playwright for e2e; test \`generateMetadata\`/\`sitemap\` outputs.`,
+    question: "i18n options in App Router.",
+    answer: "Locale segments + middleware or libraries; per-locale metadata and sitemaps.",
   },
   {
     id: 32,
-    question: `ISR + personalization?`,
-    answer: `Static shell + client fetch for personalized widgets; avoid caching per-user content on server.`,
+    question: "SEO with RSC content.",
+    answer:
+      "Ensure critical content is server-rendered; set canonical and structured data in metadata.",
   },
   {
     id: 33,
-    question: `Security headers and CSP?`,
-    answer: `Set in \`next.config.js\`; nonces/hashes; HSTS; frame-ancestors to prevent clickjacking.`,
+    question: "Security headers and CSP.",
+    answer:
+      "Set via `headers()` in next.config; use nonces/hashes, HSTS, and frame-ancestors restrictions.",
   },
   {
     id: 34,
-    question: `Robots and Sitemaps as code?`,
-    answer: `\`app/robots.ts\` & \`app/sitemap.ts\` dynamic generation; localize; add \`lastmod\` and alternates.`,
+    question: "Web Vitals in Next.js.",
+    answer: "Implement `reportWebVitals` to send LCP/INP/CLS to an endpoint for monitoring.",
   },
   {
     id: 35,
-    question: `Migration plan Pages→App?`,
-    answer: `Migrate leaf routes first; add layouts; move APIs; remove \`_app\`/\`_document\` last.`,
+    question: "Profiling client vs server costs.",
+    answer: "Bundle analyze client; trace slow server fetches/DB; watch TTFB and INP in RUM.",
   },
   {
     id: 36,
-    question: `Advanced Next.js scenario #36: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Hydration mismatch: causes/fixes.",
+    answer:
+      "Non-deterministic HTML or time-based output; move logic server-side or gate with effects.",
   },
   {
     id: 37,
-    question: `Advanced Next.js scenario #37: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Client-only heavy widgets.",
+    answer: "Dynamically import with `{ ssr: false }` to cut initial JS; load on interaction.",
   },
   {
     id: 38,
-    question: `Advanced Next.js scenario #38: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Monorepo workflow.",
+    answer: "Share UI/server packages, mark edge-safe modules, remote cache with Turborepo/Nx.",
   },
   {
     id: 39,
-    question: `Advanced Next.js scenario #39: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Testing App Router.",
+    answer:
+      "Mock `next/navigation`, test route handlers separately, e2e streaming with Playwright.",
   },
   {
     id: 40,
-    question: `Advanced Next.js scenario #40: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Sitemaps and robots via code.",
+    answer: "Use `app/sitemap.ts` and `app/robots.ts` to reflect dynamic routes and locales.",
   },
   {
     id: 41,
-    question: `Advanced Next.js scenario #41: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Route segment config fields.",
+    answer: "Export `runtime`, `revalidate`, `preferredRegion` to tune per-segment behavior.",
   },
   {
     id: 42,
-    question: `Advanced Next.js scenario #42: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Graceful degradation under outages.",
+    answer: "Serve cached shells, disable mutations, and show incident banners; retry later.",
   },
   {
     id: 43,
-    question: `Advanced Next.js scenario #43: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Implementing rate limits.",
+    answer: "Token bucket in a route handler or Edge; return 429 with Retry-After and log offense.",
   },
   {
     id: 44,
-    question: `Advanced Next.js scenario #44: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Webhook handling patterns.",
+    answer: "Verify signature, idempotency key, store event, revalidate tags, respond fast.",
   },
   {
     id: 45,
-    question: `Advanced Next.js scenario #45: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Search implementation in RSC.",
+    answer: "Query DB in server component, paginate with cursor, stream partial results.",
   },
   {
     id: 46,
-    question: `Advanced Next.js scenario #46: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Cursor-based pagination.",
+    answer: "Use cursors in searchParams; cache pages; prefetch next; avoid page-number pitfalls.",
   },
   {
     id: 47,
-    question: `Advanced Next.js scenario #47: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Validation on the server.",
+    answer: "Use Zod/Yup in server actions/handlers; return typed errors through props.",
   },
   {
     id: 48,
-    question: `Advanced Next.js scenario #48: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Avoid double-fetch after hydration.",
+    answer: "Fetch in RSC only; don’t re-fetch in client effects; pass data via props.",
   },
   {
     id: 49,
-    question: `Advanced Next.js scenario #49: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Serving large/binary assets.",
+    answer:
+      "Use object storage/CDN; avoid bundling; stream downloads via handlers with range support.",
   },
   {
     id: 50,
-    question: `Advanced Next.js scenario #50: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Server error logging.",
+    answer: "Log to APM in server code; map to user-safe messages; avoid leaking stack traces.",
   },
   {
     id: 51,
-    question: `Advanced Next.js scenario #51: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "AB tests safely.",
+    answer: "Assign variants in Edge middleware, persist in cookie, render both variants in RSC.",
   },
   {
     id: 52,
-    question: `Advanced Next.js scenario #52: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Geo personalization.",
+    answer:
+      "Read geo headers in middleware, set cookie, read in server layout for content decisions.",
   },
   {
     id: 53,
-    question: `Advanced Next.js scenario #53: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Feature flags strategy.",
+    answer:
+      "Evaluate flags on server; expose minimal booleans; avoid shipping the flag system client-side.",
   },
   {
     id: 54,
-    question: `Advanced Next.js scenario #54: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "CDN vs app caching.",
+    answer: "CDN caches HTML/assets; app layer uses fetch caches with tags for data freshness.",
   },
   {
     id: 55,
-    question: `Advanced Next.js scenario #55: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Safe `searchParams` handling.",
+    answer: "Validate/normalize params; avoid huge objects; build canonical URLs consistently.",
   },
   {
     id: 56,
-    question: `Advanced Next.js scenario #56: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Avoid n+1 DB queries.",
+    answer: "Batch with `IN` queries, loaders, or pre-joins; cache per request; parallelize.",
   },
   {
     id: 57,
-    question: `Advanced Next.js scenario #57: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Real-time updates patterns.",
+    answer: "Client websockets for live UI; revalidate or mutate cache on significant changes.",
   },
   {
     id: 58,
-    question: `Advanced Next.js scenario #58: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Transactions in Server Actions.",
+    answer: "Wrap DB writes in transactions; revalidate on commit; return canonical payloads.",
   },
   {
     id: 59,
-    question: `Advanced Next.js scenario #59: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Queues for heavy work.",
+    answer:
+      "Offload to job queue; notify client via polling/SSE; revalidate affected tags on completion.",
   },
   {
     id: 60,
-    question: `Advanced Next.js scenario #60: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Static export constraints.",
+    answer: "Use `output: 'export'` for fully static sites; no runtime server code; limited APIs.",
   },
   {
     id: 61,
-    question: `Advanced Next.js scenario #61: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Abuse prevention in handlers.",
+    answer: "Validate input, authenticate, throttle, and cap payload sizes/timeouts.",
   },
   {
     id: 62,
-    question: `Advanced Next.js scenario #62: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Canonical URLs across locales.",
+    answer: "Use `alternates` metadata and set canonical per locale to prevent duplicate content.",
   },
   {
     id: 63,
-    question: `Advanced Next.js scenario #63: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Cookies in Edge runtime.",
+    answer:
+      "Use `cookies()`; keep payload small; sign/verify server-side; avoid secrets client-side.",
   },
   {
     id: 64,
-    question: `Advanced Next.js scenario #64: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Sessions vs JWTs on the web.",
+    answer: "Prefer HttpOnly session cookies; JWTs for APIs/mobile; rotate refresh tokens.",
   },
   {
     id: 65,
-    question: `Advanced Next.js scenario #65: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Optimizing LCP with `next/image`.",
+    answer: "Mark hero as priority, proper sizes, and preconnect to image CDN; avoid layout shift.",
   },
   {
     id: 66,
-    question: `Advanced Next.js scenario #66: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Refactoring client fetch to RSC.",
+    answer:
+      "Move fetch server-side, delete client effect, rely on Suspense fallbacks and streaming.",
   },
   {
     id: 67,
-    question: `Advanced Next.js scenario #67: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Prevent layout shift in streaming.",
+    answer:
+      "Reserve space with skeletons and stable containers; align fallback markup to final layout.",
   },
   {
     id: 68,
-    question: `Advanced Next.js scenario #68: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Handling HEAD/OPTIONS methods.",
+    answer: "Export handlers for preflight and health checks; keep responses short and cacheable.",
   },
   {
     id: 69,
-    question: `Advanced Next.js scenario #69: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Securing Server Actions.",
+    answer:
+      "Enforce auth/CSRF in the action; validate inputs; never trust client-sent identifiers.",
   },
   {
     id: 70,
-    question: `Advanced Next.js scenario #70: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Fetch deduplication behavior.",
+    answer:
+      "Identical server fetches within a render are deduped; share results across components.",
   },
   {
     id: 71,
-    question: `Advanced Next.js scenario #71: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Programmatic redirects in RSC.",
+    answer: "Call `redirect()` in a server segment to enforce auth or canonical routes early.",
   },
   {
     id: 72,
-    question: `Advanced Next.js scenario #72: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "`notFound()` semantics.",
+    answer: "Throw in server code to render the nearest not-found boundary; stops child rendering.",
   },
   {
     id: 73,
-    question: `Advanced Next.js scenario #73: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Font loading to reduce CLS.",
+    answer: "Use `next/font` to inline and preload; avoid late-adding font CSS.",
   },
   {
     id: 74,
-    question: `Advanced Next.js scenario #74: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Measuring cold starts.",
+    answer: "Instrument handler start; Edge cold starts are tiny; Node lambdas bigger—trim deps.",
   },
   {
     id: 75,
-    question: `Advanced Next.js scenario #75: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Runtime vs build-time secrets.",
+    answer: "Keep secrets runtime via env/secret store; avoid embedding secrets at build time.",
   },
   {
     id: 76,
-    question: `Advanced Next.js scenario #76: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Opting out of RSC locally.",
+    answer: "Wrap subtree with a client component boundary when library needs browser APIs.",
   },
   {
     id: 77,
-    question: `Advanced Next.js scenario #77: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Third‑party scripts strategy.",
+    answer: "Use `next/script` with appropriate `strategy`; minimize blocking work.",
   },
   {
     id: 78,
-    question: `Advanced Next.js scenario #78: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "No-JS form handling.",
+    answer:
+      "Use traditional form POST to route handlers/server actions; progressively enhance with client JS.",
   },
   {
     id: 79,
-    question: `Advanced Next.js scenario #79: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Large table strategy.",
+    answer: "Render rows server-side; hydrate only interactive cells as small client islands.",
   },
   {
     id: 80,
-    question: `Advanced Next.js scenario #80: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Offline considerations.",
+    answer:
+      "Cache shell/assets; read-only pages can work offline; disable mutations or queue them.",
   },
   {
     id: 81,
-    question: `Advanced Next.js scenario #81: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Mapping Pages→App Router.",
+    answer:
+      "getServerSideProps → server fetch; API routes → handlers; getStaticProps → SSG + revalidate.",
   },
   {
     id: 82,
-    question: `Advanced Next.js scenario #82: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Testing `generateMetadata`.",
+    answer: "Mock params/data, assert canonical/OG; ensure locale alternates if i18n enabled.",
   },
   {
     id: 83,
-    question: `Advanced Next.js scenario #83: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Route groups `(group)` usage.",
+    answer: "Share layouts/config across segments without affecting URL structure.",
   },
   {
     id: 84,
-    question: `Advanced Next.js scenario #84: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Dynamic segments and catch-all.",
+    answer: "Use `[slug]` / `[...all]`; validate and generate params for SSG cases.",
   },
   {
     id: 85,
-    question: `Advanced Next.js scenario #85: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Small client islands pattern.",
+    answer:
+      "Isolate interactive widgets; memoize props; avoid crossing boundaries with huge props.",
   },
   {
     id: 86,
-    question: `Advanced Next.js scenario #86: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Dev vs prod differences.",
+    answer: "Verify streaming/caching in prod build; dev has extra checks and slower perf.",
   },
   {
     id: 87,
-    question: `Advanced Next.js scenario #87: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "CI/CD for Next.js.",
+    answer:
+      "Cache .next, run typecheck/lint/test, build, and deploy previews per PR; smoke test routes.",
   },
   {
     id: 88,
-    question: `Advanced Next.js scenario #88: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Structured logging and tracing.",
+    answer: "Attach correlation IDs; log start/end of handlers; redact PII; export to APM.",
   },
   {
     id: 89,
-    question: `Advanced Next.js scenario #89: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Robust 404/410 handling.",
+    answer: "Return not-found for missing, 410 for gone; update sitemaps and internal links.",
   },
   {
     id: 90,
-    question: `Advanced Next.js scenario #90: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "A11y in streaming pages.",
+    answer: "Use landmarks, announce fallbacks, manage focus on navigation; avoid content jumps.",
   },
   {
     id: 91,
-    question: `Advanced Next.js scenario #91: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Progressive enhancement mindset.",
+    answer: "Render server-first content; add client interactivity only where it aids UX.",
   },
   {
     id: 92,
-    question: `Advanced Next.js scenario #92: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Keep client boundaries leaf-sized rationale.",
+    answer: "Limits hydration cost and re-render blast radius; improves TTI.",
   },
   {
     id: 93,
-    question: `Advanced Next.js scenario #93: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Handler reuse vs duplication.",
+    answer:
+      "Factor common auth/validation into utilities; keep route handlers focused per resource.",
   },
   {
     id: 94,
-    question: `Advanced Next.js scenario #94: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Static params updates after new content.",
+    answer:
+      "Revalidate lists and details; regenerate params during incremental builds or via webhooks.",
   },
   {
     id: 95,
-    question: `Advanced Next.js scenario #95: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "SEO-friendly pagination.",
+    answer: "Use rel=prev/next, canonical URLs, and meaningful titles/meta per page.",
   },
   {
     id: 96,
-    question: `Advanced Next.js scenario #96: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Avoid duplicate fetch across layouts.",
+    answer: "Fetch once at the highest server segment; pass results down as props.",
   },
   {
     id: 97,
-    question: `Advanced Next.js scenario #97: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Image CDN configuration gotchas.",
+    answer: "Whitelist domains, enable AVIF/WebP, and size images correctly to avoid upscaling.",
   },
   {
     id: 98,
-    question: `Advanced Next.js scenario #98: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Regional deployment considerations.",
+    answer: "Set `preferredRegion` or ISR strategy per segment to minimize latency.",
   },
   {
     id: 99,
-    question: `Advanced Next.js scenario #99: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "SaaS multitenancy in Next.js.",
+    answer: "Namespace routes, scope caches/tags by tenant, and isolate secrets/env per tenant.",
   },
   {
     id: 100,
-    question: `Advanced Next.js scenario #100: performance, security, or data consistency trade-offs.`,
-    answer: `Explain constraints; pick RSC vs client; choose cache & revalidation; justify edge vs node runtime; test and observe.`,
+    question: "Streaming product page skeleton design.",
+    answer: "Split gallery/details into Suspense boundaries; stream gallery first, details after.",
   },
 ];
 
