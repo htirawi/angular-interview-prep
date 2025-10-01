@@ -6727,6 +6727,1225 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "intermediate",
     tags: ["clean-code", "best-practices", "naming", "organization"],
   },
+  {
+    id: 81,
+    question:
+      "What is NgRx Store Architecture? Explain the complete data flow from component to store and back.",
+    answer:
+      "NgRx implements Redux pattern with RxJS for Angular.\n\n" +
+      "**Store Architecture Diagram:**\n\n" +
+      "```typescript\n" +
+      "Component → dispatch(Action) → Reducer → New State → Store → Selector → Component\n" +
+      "                    ↓\n" +
+      "                 Effect (side effects like HTTP)\n" +
+      "                    ↓\n" +
+      "             New Action → Reducer\n" +
+      "```\n\n" +
+      "**Complete Flow Example:**\n\n" +
+      "```typescript\n" +
+      "// 1. Component dispatches action\n" +
+      "@Component({...})\n" +
+      "export class UsersComponent {\n" +
+      "  users$ = this.store.select(selectAllUsers);\n\n" +
+      "  constructor(private store: Store) {}\n\n" +
+      "  ngOnInit() {\n" +
+      "    // Dispatch: Component → Store\n" +
+      "    this.store.dispatch(loadUsers());\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// 2. Effect catches action, performs side effect\n" +
+      "@Injectable()\n" +
+      "export class UsersEffects {\n" +
+      "  loadUsers$ = createEffect(() =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(loadUsers),\n" +
+      "      switchMap(() =>\n" +
+      "        this.http.get<User[]>('/api/users').pipe(\n" +
+      "          // Success: dispatch new action\n" +
+      "          map(users => loadUsersSuccess({ users })),\n" +
+      "          // Error: dispatch error action\n" +
+      "          catchError(error => of(loadUsersFailure({ error })))\n" +
+      "        )\n" +
+      "      )\n" +
+      "    )\n" +
+      "  );\n\n" +
+      "  constructor(private actions$: Actions, private http: HttpClient) {}\n" +
+      "}\n\n" +
+      "// 3. Reducer updates state\n" +
+      "export const usersReducer = createReducer(\n" +
+      "  initialState,\n" +
+      "  on(loadUsers, state => ({ ...state, loading: true })),\n" +
+      "  on(loadUsersSuccess, (state, { users }) => ({\n" +
+      "    ...state,\n" +
+      "    users,\n" +
+      "    loading: false,\n" +
+      "    error: null\n" +
+      "  }))\n" +
+      ");\n\n" +
+      "// 4. Selector retrieves data\n" +
+      "export const selectAllUsers = createSelector(\n" +
+      "  selectUsersState,\n" +
+      "  state => state.users\n" +
+      ");\n\n" +
+      "// 5. Component receives update via observable\n" +
+      "// users$ automatically updates when store changes\n" +
+      "```\n\n" +
+      "**Key Principles:**\n" +
+      "1. Single source of truth (Store)\n" +
+      "2. State is read-only (immutable)\n" +
+      "3. Changes via pure functions (Reducers)\n" +
+      "4. Side effects isolated (Effects)\n" +
+      "5. Predictable state updates",
+    category: "NgRx Architecture",
+    difficulty: "hard",
+    tags: ["ngrx", "store", "architecture", "redux", "state-management"],
+  },
+  {
+    id: 82,
+    question:
+      "What are NgRx Actions and Action Creators? Explain props, createAction, and action groups.",
+    answer:
+      "Actions are events that trigger state changes.\n\n" +
+      "**Basic Actions:**\n\n" +
+      "```typescript\n" +
+      "import { createAction, props } from '@ngrx/store';\n\n" +
+      "// Simple action (no payload)\n" +
+      "export const increment = createAction('[Counter] Increment');\n" +
+      "export const decrement = createAction('[Counter] Decrement');\n" +
+      "export const reset = createAction('[Counter] Reset');\n\n" +
+      "// Action with payload\n" +
+      "export const setCount = createAction(\n" +
+      "  '[Counter] Set Count',\n" +
+      "  props<{ count: number }>()\n" +
+      ");\n\n" +
+      "// Dispatch\n" +
+      "this.store.dispatch(increment());\n" +
+      "this.store.dispatch(setCount({ count: 10 }));\n" +
+      "```\n\n" +
+      "**Action Groups (Organized):**\n\n" +
+      "```typescript\n" +
+      "import { createActionGroup, props, emptyProps } from '@ngrx/store';\n\n" +
+      "// Group related actions\n" +
+      "export const UsersActions = createActionGroup({\n" +
+      "  source: 'Users',\n" +
+      "  events: {\n" +
+      "    // Auto-generates: [Users] Load Users\n" +
+      "    'Load Users': emptyProps(),\n" +
+      "    \n" +
+      "    // Auto-generates: [Users] Load Users Success\n" +
+      "    'Load Users Success': props<{ users: User[] }>(),\n" +
+      "    \n" +
+      "    'Load Users Failure': props<{ error: string }>(),\n" +
+      "    'Add User': props<{ user: User }>(),\n" +
+      "    'Update User': props<{ id: number; changes: Partial<User> }>(),\n" +
+      "    'Delete User': props<{ id: number }>()\n" +
+      "  }\n" +
+      "});\n\n" +
+      "// Usage\n" +
+      "this.store.dispatch(UsersActions.loadUsers());\n" +
+      "this.store.dispatch(UsersActions.addUser({ user: newUser }));\n" +
+      "```\n\n" +
+      "**Action Naming Convention:**\n\n" +
+      "```typescript\n" +
+      "// Pattern: [Source] Event\n" +
+      "[Users Page] Load Users\n" +
+      "[Users API] Load Users Success\n" +
+      "[Users API] Load Users Failure\n" +
+      "[Login Page] Login\n" +
+      "[Auth API] Login Success\n" +
+      "[Auth Guard] Logout\n\n" +
+      "// Good naming:\n" +
+      "export const loginSuccess = createAction(\n" +
+      "  '[Auth API] Login Success',\n" +
+      "  props<{ user: User; token: string }>()\n" +
+      ");\n\n" +
+      "// Bad naming:\n" +
+      "export const login = createAction('login'); // No source!\n" +
+      "```\n\n" +
+      "**Multiple Props:**\n\n" +
+      "```typescript\n" +
+      "export const updateUser = createAction(\n" +
+      "  '[Users] Update User',\n" +
+      "  props<{ id: number; name: string; email: string }>()\n" +
+      ");\n\n" +
+      "// Or use interface\n" +
+      "export interface UpdateUserProps {\n" +
+      "  id: number;\n" +
+      "  changes: Partial<User>;\n" +
+      "}\n\n" +
+      "export const updateUser = createAction(\n" +
+      "  '[Users] Update User',\n" +
+      "  props<UpdateUserProps>()\n" +
+      ");\n" +
+      "```",
+    category: "NgRx Actions",
+    difficulty: "hard",
+    tags: ["ngrx", "actions", "action-creators", "action-groups"],
+  },
+  {
+    id: 83,
+    question: "What are NgRx Reducers? Explain pure functions, immutability, and on() handlers.",
+    answer:
+      "Reducers are pure functions that transform state based on actions.\n\n" +
+      "**Basic Reducer:**\n\n" +
+      "```typescript\n" +
+      "import { createReducer, on } from '@ngrx/store';\n\n" +
+      "export interface CounterState {\n" +
+      "  count: number;\n" +
+      "  lastUpdated: Date | null;\n" +
+      "}\n\n" +
+      "const initialState: CounterState = {\n" +
+      "  count: 0,\n" +
+      "  lastUpdated: null\n" +
+      "};\n\n" +
+      "export const counterReducer = createReducer(\n" +
+      "  initialState,\n" +
+      "  // Handle increment\n" +
+      "  on(increment, state => ({\n" +
+      "    ...state,\n" +
+      "    count: state.count + 1,\n" +
+      "    lastUpdated: new Date()\n" +
+      "  })),\n" +
+      "  // Handle decrement\n" +
+      "  on(decrement, state => ({\n" +
+      "    ...state,\n" +
+      "    count: state.count - 1,\n" +
+      "    lastUpdated: new Date()\n" +
+      "  })),\n" +
+      "  // Handle set with payload\n" +
+      "  on(setCount, (state, { count }) => ({\n" +
+      "    ...state,\n" +
+      "    count,\n" +
+      "    lastUpdated: new Date()\n" +
+      "  })),\n" +
+      "  // Handle reset\n" +
+      "  on(reset, state => initialState)\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Multiple Actions, Same Handler:**\n\n" +
+      "```typescript\n" +
+      "// Handle multiple actions with same logic\n" +
+      "on(\n" +
+      "  loadUsers,\n" +
+      "  refreshUsers,\n" +
+      "  state => ({ ...state, loading: true })\n" +
+      ")\n" +
+      "```\n\n" +
+      "**Complex State Update:**\n\n" +
+      "```typescript\n" +
+      "export interface UsersState {\n" +
+      "  entities: { [id: number]: User };\n" +
+      "  ids: number[];\n" +
+      "  selectedUserId: number | null;\n" +
+      "  loading: boolean;\n" +
+      "  error: string | null;\n" +
+      "}\n\n" +
+      "export const usersReducer = createReducer(\n" +
+      "  initialState,\n" +
+      "  // Load users success\n" +
+      "  on(loadUsersSuccess, (state, { users }) => {\n" +
+      "    const entities = users.reduce((acc, user) => ({\n" +
+      "      ...acc,\n" +
+      "      [user.id]: user\n" +
+      "    }), {});\n" +
+      "    const ids = users.map(u => u.id);\n\n" +
+      "    return {\n" +
+      "      ...state,\n" +
+      "      entities,\n" +
+      "      ids,\n" +
+      "      loading: false,\n" +
+      "      error: null\n" +
+      "    };\n" +
+      "  }),\n" +
+      "  // Update user\n" +
+      "  on(updateUserSuccess, (state, { user }) => ({\n" +
+      "    ...state,\n" +
+      "    entities: {\n" +
+      "      ...state.entities,\n" +
+      "      [user.id]: user\n" +
+      "    }\n" +
+      "  })),\n" +
+      "  // Delete user\n" +
+      "  on(deleteUserSuccess, (state, { id }) => {\n" +
+      "    const { [id]: removed, ...entities } = state.entities;\n" +
+      "    return {\n" +
+      "      ...state,\n" +
+      "      entities,\n" +
+      "      ids: state.ids.filter(i => i !== id)\n" +
+      "    };\n" +
+      "  })\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Reducer Rules:**\n" +
+      "1. Pure functions (no side effects)\n" +
+      "2. Immutable updates (spread operator)\n" +
+      "3. Return new state object\n" +
+      "4. No API calls, no mutations\n" +
+      "5. Synchronous only",
+    category: "NgRx Reducers",
+    difficulty: "hard",
+    tags: ["ngrx", "reducers", "pure-functions", "immutability"],
+  },
+  {
+    id: 84,
+    question:
+      "What are NgRx Effects? Explain how to handle HTTP calls, errors, and chained effects.",
+    answer:
+      "Effects handle side effects (HTTP, localStorage, etc.) outside reducers.\n\n" +
+      "**Basic Effect:**\n\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { Actions, createEffect, ofType } from '@ngrx/effects';\n" +
+      "import { of } from 'rxjs';\n" +
+      "import { map, catchError, switchMap, tap } from 'rxjs/operators';\n\n" +
+      "@Injectable()\n" +
+      "export class UsersEffects {\n" +
+      "  // Load users effect\n" +
+      "  loadUsers$ = createEffect(() =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(UsersActions.loadUsers),\n" +
+      "      switchMap(() =>\n" +
+      "        this.http.get<User[]>('/api/users').pipe(\n" +
+      "          map(users => UsersActions.loadUsersSuccess({ users })),\n" +
+      "          catchError(error =>\n" +
+      "            of(UsersActions.loadUsersFailure({ error: error.message }))\n" +
+      "          )\n" +
+      "        )\n" +
+      "      )\n" +
+      "    )\n" +
+      "  );\n\n" +
+      "  constructor(\n" +
+      "    private actions$: Actions,\n" +
+      "    private http: HttpClient\n" +
+      "  ) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Create/Update/Delete Effects:**\n\n" +
+      "```typescript\n" +
+      "@Injectable()\n" +
+      "export class UsersEffects {\n" +
+      "  // Create\n" +
+      "  createUser$ = createEffect(() =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(UsersActions.addUser),\n" +
+      "      switchMap(({ user }) =>\n" +
+      "        this.http.post<User>('/api/users', user).pipe(\n" +
+      "          map(newUser => UsersActions.addUserSuccess({ user: newUser })),\n" +
+      "          catchError(error => of(UsersActions.addUserFailure({ error })))\n" +
+      "        )\n" +
+      "      )\n" +
+      "    )\n" +
+      "  );\n\n" +
+      "  // Update\n" +
+      "  updateUser$ = createEffect(() =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(UsersActions.updateUser),\n" +
+      "      switchMap(({ id, changes }) =>\n" +
+      "        this.http.put<User>(`/api/users/${id}`, changes).pipe(\n" +
+      "          map(user => UsersActions.updateUserSuccess({ user })),\n" +
+      "          catchError(error => of(UsersActions.updateUserFailure({ error })))\n" +
+      "        )\n" +
+      "      )\n" +
+      "    )\n" +
+      "  );\n\n" +
+      "  // Delete\n" +
+      "  deleteUser$ = createEffect(() =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(UsersActions.deleteUser),\n" +
+      "      switchMap(({ id }) =>\n" +
+      "        this.http.delete(`/api/users/${id}`).pipe(\n" +
+      "          map(() => UsersActions.deleteUserSuccess({ id })),\n" +
+      "          catchError(error => of(UsersActions.deleteUserFailure({ error })))\n" +
+      "        )\n" +
+      "      )\n" +
+      "    )\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Non-Dispatching Effect (Side Effects Only):**\n\n" +
+      "```typescript\n" +
+      "// Show toast on success\n" +
+      "showSuccessToast$ = createEffect(\n" +
+      "  () =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(UsersActions.addUserSuccess),\n" +
+      "      tap(() => this.toastService.success('User added!'))\n" +
+      "    ),\n" +
+      "  { dispatch: false } // Don't dispatch new action\n" +
+      ");\n\n" +
+      "// Save to localStorage\n" +
+      "saveToLocalStorage$ = createEffect(\n" +
+      "  () =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(UsersActions.loadUsersSuccess),\n" +
+      "      tap(({ users }) => localStorage.setItem('users', JSON.stringify(users)))\n" +
+      "    ),\n" +
+      "  { dispatch: false }\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Chained Effects:**\n\n" +
+      "```typescript\n" +
+      "// After login success, load user profile\n" +
+      "loadProfileAfterLogin$ = createEffect(() =>\n" +
+      "  this.actions$.pipe(\n" +
+      "    ofType(AuthActions.loginSuccess),\n" +
+      "    map(({ userId }) => ProfileActions.loadProfile({ userId }))\n" +
+      "  )\n" +
+      ");\n" +
+      "```",
+    category: "NgRx Effects",
+    difficulty: "hard",
+    tags: ["ngrx", "effects", "side-effects", "http", "rxjs"],
+  },
+  {
+    id: 85,
+    question:
+      "What are NgRx Selectors? Explain createSelector, memoization, and selector composition.",
+    answer:
+      "Selectors efficiently retrieve and derive data from the store.\n\n" +
+      "**Basic Selectors:**\n\n" +
+      "```typescript\n" +
+      "import { createFeatureSelector, createSelector } from '@ngrx/store';\n\n" +
+      "// Feature selector\n" +
+      "export const selectUsersState = createFeatureSelector<UsersState>('users');\n\n" +
+      "// Property selectors\n" +
+      "export const selectAllUsers = createSelector(\n" +
+      "  selectUsersState,\n" +
+      "  state => state.users\n" +
+      ");\n\n" +
+      "export const selectLoading = createSelector(\n" +
+      "  selectUsersState,\n" +
+      "  state => state.loading\n" +
+      ");\n\n" +
+      "export const selectError = createSelector(\n" +
+      "  selectUsersState,\n" +
+      "  state => state.error\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Composed Selectors (Memoized):**\n\n" +
+      "```typescript\n" +
+      "// Derive data from other selectors\n" +
+      "export const selectActiveUsers = createSelector(\n" +
+      "  selectAllUsers,\n" +
+      "  users => users.filter(u => u.active)\n" +
+      ");\n\n" +
+      "export const selectUserCount = createSelector(\n" +
+      "  selectAllUsers,\n" +
+      "  users => users.length\n" +
+      ");\n\n" +
+      "export const selectActiveUserCount = createSelector(\n" +
+      "  selectActiveUsers,\n" +
+      "  activeUsers => activeUsers.length\n" +
+      ");\n\n" +
+      "// Multi-selector composition\n" +
+      "export const selectUserStats = createSelector(\n" +
+      "  selectUserCount,\n" +
+      "  selectActiveUserCount,\n" +
+      "  (total, active) => ({\n" +
+      "    total,\n" +
+      "    active,\n" +
+      "    inactive: total - active\n" +
+      "  })\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Selectors with Parameters:**\n\n" +
+      "```typescript\n" +
+      "// Select user by ID\n" +
+      "export const selectUserById = (id: number) => createSelector(\n" +
+      "  selectAllUsers,\n" +
+      "  users => users.find(u => u.id === id)\n" +
+      ");\n\n" +
+      "// Usage in component\n" +
+      "user$ = this.store.select(selectUserById(5));\n\n" +
+      "// Or dynamically\n" +
+      "this.route.params.pipe(\n" +
+      "  switchMap(params => this.store.select(selectUserById(+params.id)))\n" +
+      ").subscribe(user => this.user = user);\n" +
+      "```\n\n" +
+      "**Memoization (Performance):**\n\n" +
+      "```typescript\n" +
+      "// Selector only recalculates if input changes\n" +
+      "export const selectExpensiveComputation = createSelector(\n" +
+      "  selectAllUsers,\n" +
+      "  users => {\n" +
+      "    console.log('Computing...'); // Only runs when users change\n" +
+      "    return users.map(u => expensiveTransform(u));\n" +
+      "  }\n" +
+      ");\n\n" +
+      "// Multiple subscriptions share same computation\n" +
+      "this.data1$ = this.store.select(selectExpensiveComputation);\n" +
+      "this.data2$ = this.store.select(selectExpensiveComputation);\n" +
+      "// Computation runs ONCE, both get same result\n" +
+      "```",
+    category: "NgRx Selectors",
+    difficulty: "hard",
+    tags: ["ngrx", "selectors", "memoization", "performance"],
+  },
+  {
+    id: 86,
+    question:
+      "How do you implement Authentication with NgRx? Show complete auth flow with JWT, guards, and interceptors.",
+    answer:
+      "**Complete NgRx Auth Implementation:**\n\n" +
+      "**1. Auth State:**\n\n" +
+      "```typescript\n" +
+      "// auth.state.ts\n" +
+      "export interface AuthState {\n" +
+      "  user: User | null;\n" +
+      "  token: string | null;\n" +
+      "  loading: boolean;\n" +
+      "  error: string | null;\n" +
+      "}\n" +
+      "```\n\n" +
+      "**2. Auth Actions:**\n\n" +
+      "```typescript\n" +
+      "// auth.actions.ts\n" +
+      "export const AuthActions = createActionGroup({\n" +
+      "  source: 'Auth',\n" +
+      "  events: {\n" +
+      "    Login: props<{ email: string; password: string }>(),\n" +
+      "    'Login Success': props<{ user: User; token: string }>(),\n" +
+      "    'Login Failure': props<{ error: string }>(),\n" +
+      "    Logout: emptyProps(),\n" +
+      "    'Check Auth': emptyProps()\n" +
+      "  }\n" +
+      "});\n" +
+      "```\n\n" +
+      "**3. Auth Reducer:**\n\n" +
+      "```typescript\n" +
+      "// auth.reducer.ts\n" +
+      "export const authReducer = createReducer(\n" +
+      "  initialState,\n" +
+      "  on(AuthActions.login, state => ({\n" +
+      "    ...state,\n" +
+      "    loading: true,\n" +
+      "    error: null\n" +
+      "  })),\n" +
+      "  on(AuthActions.loginSuccess, (state, { user, token }) => ({\n" +
+      "    ...state,\n" +
+      "    user,\n" +
+      "    token,\n" +
+      "    loading: false,\n" +
+      "    error: null\n" +
+      "  })),\n" +
+      "  on(AuthActions.logout, () => initialState)\n" +
+      ");\n" +
+      "```\n\n" +
+      "**4. Auth Effects:**\n\n" +
+      "```typescript\n" +
+      "// auth.effects.ts\n" +
+      "@Injectable()\n" +
+      "export class AuthEffects {\n" +
+      "  login$ = createEffect(() =>\n" +
+      "    this.actions$.pipe(\n" +
+      "      ofType(AuthActions.login),\n" +
+      "      switchMap(({ email, password }) =>\n" +
+      "        this.http.post<{ user: User; token: string }>('/api/login', { email, password }).pipe(\n" +
+      "          map(response => AuthActions.loginSuccess(response)),\n" +
+      "          catchError(error => of(AuthActions.loginFailure({ error: error.message })))\n" +
+      "        )\n" +
+      "      )\n" +
+      "    )\n" +
+      "  );\n\n" +
+      "  // Save token to localStorage\n" +
+      "  saveToken$ = createEffect(\n" +
+      "    () =>\n" +
+      "      this.actions$.pipe(\n" +
+      "        ofType(AuthActions.loginSuccess),\n" +
+      "        tap(({ token }) => localStorage.setItem('token', token))\n" +
+      "      ),\n" +
+      "    { dispatch: false }\n" +
+      "  );\n\n" +
+      "  // Navigate after login\n" +
+      "  navigateAfterLogin$ = createEffect(\n" +
+      "    () =>\n" +
+      "      this.actions$.pipe(\n" +
+      "        ofType(AuthActions.loginSuccess),\n" +
+      "        tap(() => this.router.navigate(['/dashboard']))\n" +
+      "      ),\n" +
+      "    { dispatch: false }\n" +
+      "  );\n\n" +
+      "  // Clear token on logout\n" +
+      "  logout$ = createEffect(\n" +
+      "    () =>\n" +
+      "      this.actions$.pipe(\n" +
+      "        ofType(AuthActions.logout),\n" +
+      "        tap(() => {\n" +
+      "          localStorage.removeItem('token');\n" +
+      "          this.router.navigate(['/login']);\n" +
+      "        })\n" +
+      "      ),\n" +
+      "    { dispatch: false }\n" +
+      "  );\n\n" +
+      "  constructor(\n" +
+      "    private actions$: Actions,\n" +
+      "    private http: HttpClient,\n" +
+      "    private router: Router\n" +
+      "  ) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**5. Auth Selectors:**\n\n" +
+      "```typescript\n" +
+      "// auth.selectors.ts\n" +
+      "export const selectAuthState = createFeatureSelector<AuthState>('auth');\n\n" +
+      "export const selectUser = createSelector(\n" +
+      "  selectAuthState,\n" +
+      "  state => state.user\n" +
+      ");\n\n" +
+      "export const selectToken = createSelector(\n" +
+      "  selectAuthState,\n" +
+      "  state => state.token\n" +
+      ");\n\n" +
+      "export const selectIsAuthenticated = createSelector(\n" +
+      "  selectUser,\n" +
+      "  user => !!user\n" +
+      ");\n\n" +
+      "export const selectIsAdmin = createSelector(\n" +
+      "  selectUser,\n" +
+      "  user => user?.role === 'admin'\n" +
+      ");\n" +
+      "```\n\n" +
+      "**6. Auth Guard:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class AuthGuard implements CanActivate {\n" +
+      "  constructor(private store: Store, private router: Router) {}\n\n" +
+      "  canActivate(): Observable<boolean> {\n" +
+      "    return this.store.select(selectIsAuthenticated).pipe(\n" +
+      "      take(1),\n" +
+      "      map(isAuth => {\n" +
+      "        if (!isAuth) {\n" +
+      "          this.router.navigate(['/login']);\n" +
+      "          return false;\n" +
+      "        }\n" +
+      "        return true;\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**7. Auth Interceptor:**\n\n" +
+      "```typescript\n" +
+      "export const authInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  const store = inject(Store);\n" +
+      "  let token: string | null = null;\n\n" +
+      "  store.select(selectToken).pipe(take(1)).subscribe(t => token = t);\n\n" +
+      "  if (token) {\n" +
+      "    req = req.clone({\n" +
+      "      setHeaders: { Authorization: `Bearer ${token}` }\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  return next(req);\n" +
+      "};\n" +
+      "```",
+    category: "NgRx Authentication",
+    difficulty: "hard",
+    tags: ["ngrx", "authentication", "jwt", "guards", "interceptors"],
+  },
+  {
+    id: 87,
+    question: "What is NgRx Entity? Explain EntityAdapter and how it simplifies entity management.",
+    answer:
+      "NgRx Entity provides utilities for managing entity collections.\n\n" +
+      "**Setup with Entity:**\n\n" +
+      "```typescript\n" +
+      "import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';\n\n" +
+      "export interface User {\n" +
+      "  id: number;\n" +
+      "  name: string;\n" +
+      "  email: string;\n" +
+      "}\n\n" +
+      "// Entity state includes: ids[], entities{}\n" +
+      "export interface UsersState extends EntityState<User> {\n" +
+      "  selectedUserId: number | null;\n" +
+      "  loading: boolean;\n" +
+      "  error: string | null;\n" +
+      "}\n\n" +
+      "// Create adapter\n" +
+      "export const usersAdapter: EntityAdapter<User> = createEntityAdapter<User>({\n" +
+      "  selectId: (user: User) => user.id, // Default: entity.id\n" +
+      "  sortComparer: (a, b) => a.name.localeCompare(b.name) // Optional sorting\n" +
+      "});\n\n" +
+      "// Initial state\n" +
+      "export const initialState: UsersState = usersAdapter.getInitialState({\n" +
+      "  selectedUserId: null,\n" +
+      "  loading: false,\n" +
+      "  error: null\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Reducer with Entity Methods:**\n\n" +
+      "```typescript\n" +
+      "export const usersReducer = createReducer(\n" +
+      "  initialState,\n" +
+      "  // Load all users\n" +
+      "  on(UsersActions.loadUsersSuccess, (state, { users }) =>\n" +
+      "    usersAdapter.setAll(users, { ...state, loading: false })\n" +
+      "  ),\n" +
+      "  // Add one\n" +
+      "  on(UsersActions.addUserSuccess, (state, { user }) =>\n" +
+      "    usersAdapter.addOne(user, state)\n" +
+      "  ),\n" +
+      "  // Add many\n" +
+      "  on(UsersActions.addUsersSuccess, (state, { users }) =>\n" +
+      "    usersAdapter.addMany(users, state)\n" +
+      "  ),\n" +
+      "  // Update one\n" +
+      "  on(UsersActions.updateUserSuccess, (state, { user }) =>\n" +
+      "    usersAdapter.updateOne({ id: user.id, changes: user }, state)\n" +
+      "  ),\n" +
+      "  // Update many\n" +
+      "  on(UsersActions.updateUsersSuccess, (state, { users }) =>\n" +
+      "    usersAdapter.updateMany(\n" +
+      "      users.map(u => ({ id: u.id, changes: u })),\n" +
+      "      state\n" +
+      "    )\n" +
+      "  ),\n" +
+      "  // Upsert (update if exists, add if not)\n" +
+      "  on(UsersActions.upsertUser, (state, { user }) =>\n" +
+      "    usersAdapter.upsertOne(user, state)\n" +
+      "  ),\n" +
+      "  // Delete one\n" +
+      "  on(UsersActions.deleteUserSuccess, (state, { id }) =>\n" +
+      "    usersAdapter.removeOne(id, state)\n" +
+      "  ),\n" +
+      "  // Delete many\n" +
+      "  on(UsersActions.deleteUsersSuccess, (state, { ids }) =>\n" +
+      "    usersAdapter.removeMany(ids, state)\n" +
+      "  ),\n" +
+      "  // Clear all\n" +
+      "  on(UsersActions.clearUsers, state =>\n" +
+      "    usersAdapter.removeAll({ ...state, selectedUserId: null })\n" +
+      "  )\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Entity Selectors:**\n\n" +
+      "```typescript\n" +
+      "// Get entity selectors from adapter\n" +
+      "const { selectIds, selectEntities, selectAll, selectTotal } = usersAdapter.getSelectors();\n\n" +
+      "export const selectUsersState = createFeatureSelector<UsersState>('users');\n\n" +
+      "// Apply selectors to feature state\n" +
+      "export const selectAllUsers = createSelector(selectUsersState, selectAll);\n" +
+      "export const selectUserEntities = createSelector(selectUsersState, selectEntities);\n" +
+      "export const selectUserIds = createSelector(selectUsersState, selectIds);\n" +
+      "export const selectUserTotal = createSelector(selectUsersState, selectTotal);\n\n" +
+      "// Custom selector\n" +
+      "export const selectUserById = (id: number) => createSelector(\n" +
+      "  selectUserEntities,\n" +
+      "  entities => entities[id]\n" +
+      ");\n" +
+      "```\n\n" +
+      "**Benefits:**\n" +
+      "- Less boilerplate\n" +
+      "- Built-in CRUD operations\n" +
+      "- Optimized performance\n" +
+      "- Normalized state structure",
+    category: "NgRx Entity",
+    difficulty: "hard",
+    tags: ["ngrx", "entity", "entity-adapter", "crud", "normalization"],
+  },
+  {
+    id: 88,
+    question: "What are NgRx DevTools? Explain Time-Travelling Debugger and how to use it.",
+    answer:
+      "NgRx DevTools provide powerful debugging capabilities.\n\n" +
+      "**Setup:**\n\n" +
+      "```bash\n" +
+      "npm install @ngrx/store-devtools\n" +
+      "```\n\n" +
+      "**Configuration:**\n\n" +
+      "```typescript\n" +
+      "import { provideStoreDevtools } from '@ngrx/store-devtools';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideStore({ users: usersReducer }),\n" +
+      "    provideStoreDevtools({\n" +
+      "      maxAge: 25, // Retain last 25 states\n" +
+      "      logOnly: environment.production, // Restrict in prod\n" +
+      "      autoPause: true, // Pause when window loses focus\n" +
+      "      trace: true, // Include stack trace\n" +
+      "      traceLimit: 75 // Max stack trace frames\n" +
+      "    })\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Time-Travelling Debugger Features:**\n\n" +
+      "```typescript\n" +
+      "// Chrome DevTools → Redux tab\n\n" +
+      "1. **Action History**\n" +
+      "   - See all dispatched actions\n" +
+      "   - View action payloads\n" +
+      "   - Jump to any action\n\n" +
+      "2. **State Inspection**\n" +
+      "   - View current state\n" +
+      "   - See state at any point in time\n" +
+      "   - Diff between states\n\n" +
+      "3. **Time Travel**\n" +
+      "   - Jump to previous state\n" +
+      "   - Skip actions\n" +
+      "   - Replay actions\n\n" +
+      "4. **Export/Import**\n" +
+      "   - Export state snapshot\n" +
+      "   - Import saved state\n" +
+      "   - Share debugging scenarios\n\n" +
+      "5. **Action Filtering**\n" +
+      "   - Filter by action type\n" +
+      "   - Search actions\n" +
+      "   - Ignore specific actions\n" +
+      "```\n\n" +
+      "**Custom Action Sanitization:**\n\n" +
+      "```typescript\n" +
+      "provideStoreDevtools({\n" +
+      "  actionSanitizer: (action, id) => {\n" +
+      "    // Hide sensitive data\n" +
+      "    if (action.type === '[Auth] Login') {\n" +
+      "      return {\n" +
+      "        ...action,\n" +
+      "        password: '***HIDDEN***'\n" +
+      "      };\n" +
+      "    }\n" +
+      "    return action;\n" +
+      "  },\n" +
+      "  stateSanitizer: (state, index) => {\n" +
+      "    // Hide sensitive state\n" +
+      "    return {\n" +
+      "      ...state,\n" +
+      "      auth: {\n" +
+      "        ...state.auth,\n" +
+      "        token: state.auth.token ? '***TOKEN***' : null\n" +
+      "      }\n" +
+      "    };\n" +
+      "  }\n" +
+      "})\n" +
+      "```\n\n" +
+      "**Debugging Workflow:**\n\n" +
+      "```typescript\n" +
+      "1. Open Redux DevTools in Chrome\n" +
+      "2. Dispatch actions in your app\n" +
+      "3. See actions appear in timeline\n" +
+      "4. Click action to see:\n" +
+      "   - Action payload\n" +
+      "   - State before\n" +
+      "   - State after\n" +
+      "   - Diff\n" +
+      "5. Use slider to time-travel through states\n" +
+      "6. Export state to reproduce bugs\n" +
+      "```",
+    category: "NgRx DevTools",
+    difficulty: "intermediate",
+    tags: ["ngrx", "devtools", "debugging", "time-travel"],
+  },
+  {
+    id: 89,
+    question:
+      "What are NgRx Runtime Checks? Explain store immutability, action serializability, and strict action checks.",
+    answer:
+      "Runtime checks enforce NgRx best practices during development.\n\n" +
+      "**Enable Runtime Checks:**\n\n" +
+      "```typescript\n" +
+      "import { provideStore } from '@ngrx/store';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideStore(\n" +
+      "      { users: usersReducer },\n" +
+      "      {\n" +
+      "        runtimeChecks: {\n" +
+      "          strictStateImmutability: true,\n" +
+      "          strictActionImmutability: true,\n" +
+      "          strictStateSerializability: true,\n" +
+      "          strictActionSerializability: true,\n" +
+      "          strictActionWithinNgZone: true,\n" +
+      "          strictActionTypeUniqueness: true\n" +
+      "        }\n" +
+      "      }\n" +
+      "    )\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**1. State Immutability Check:**\n\n" +
+      "```typescript\n" +
+      "// ❌ BAD - Mutation detected!\n" +
+      "on(updateUser, (state, { user }) => {\n" +
+      "  state.users.push(user); // ERROR: Mutating state!\n" +
+      "  return state;\n" +
+      "})\n\n" +
+      "// ✅ GOOD - Immutable update\n" +
+      "on(updateUser, (state, { user }) => ({\n" +
+      "  ...state,\n" +
+      "  users: [...state.users, user]\n" +
+      "}))\n" +
+      "```\n\n" +
+      "**2. Action Immutability Check:**\n\n" +
+      "```typescript\n" +
+      "// ❌ BAD - Modifying action\n" +
+      "myEffect$ = createEffect(() =>\n" +
+      "  this.actions$.pipe(\n" +
+      "    ofType(someAction),\n" +
+      "    tap(action => {\n" +
+      "      action.timestamp = Date.now(); // ERROR: Mutating action!\n" +
+      "    })\n" +
+      "  )\n" +
+      ");\n\n" +
+      "// ✅ GOOD - Create new action\n" +
+      "myEffect$ = createEffect(() =>\n" +
+      "  this.actions$.pipe(\n" +
+      "    ofType(someAction),\n" +
+      "    map(action => newAction({ ...action.payload, timestamp: Date.now() }))\n" +
+      "  )\n" +
+      ");\n" +
+      "```\n\n" +
+      "**3. Serializability Check:**\n\n" +
+      "```typescript\n" +
+      "// ❌ BAD - Non-serializable in state\n" +
+      "export interface AppState {\n" +
+      "  date: Date; // ERROR: Dates not serializable\n" +
+      "  callback: Function; // ERROR: Functions not serializable\n" +
+      "  component: ComponentRef; // ERROR: Complex objects\n" +
+      "}\n\n" +
+      "// ✅ GOOD - Serializable types only\n" +
+      "export interface AppState {\n" +
+      "  dateString: string; // Use ISO string\n" +
+      "  userId: number; // Primitive types\n" +
+      "  settings: { theme: string }; // Plain objects\n" +
+      "}\n" +
+      "```\n\n" +
+      "**4. Action Type Uniqueness:**\n\n" +
+      "```typescript\n" +
+      "// ❌ BAD - Duplicate action types\n" +
+      "export const load = createAction('[Users] Load');\n" +
+      "export const load2 = createAction('[Users] Load'); // ERROR: Duplicate!\n\n" +
+      "// ✅ GOOD - Unique types\n" +
+      "export const loadUsers = createAction('[Users Page] Load');\n" +
+      "export const loadUsersFromCache = createAction('[Users Cache] Load');\n" +
+      "```\n\n" +
+      "**Disable Checks in Production:**\n\n" +
+      "```typescript\n" +
+      "provideStore(\n" +
+      "  reducers,\n" +
+      "  {\n" +
+      "    runtimeChecks: {\n" +
+      "      strictStateImmutability: !environment.production,\n" +
+      "      strictActionImmutability: !environment.production\n" +
+      "    }\n" +
+      "  }\n" +
+      ")\n" +
+      "```",
+    category: "NgRx Runtime Checks",
+    difficulty: "hard",
+    tags: ["ngrx", "runtime-checks", "immutability", "serializability"],
+  },
+  {
+    id: 90,
+    question: "What is NgRx Router Store? How do you connect routing to NgRx state?",
+    answer:
+      "Router Store syncs Angular Router state with NgRx Store.\n\n" +
+      "**Setup:**\n\n" +
+      "```bash\n" +
+      "npm install @ngrx/router-store\n" +
+      "```\n\n" +
+      "**Configuration:**\n\n" +
+      "```typescript\n" +
+      "import { provideRouterStore, routerReducer } from '@ngrx/router-store';\n\n" +
+      "bootstrapApplication(AppComponent, {\n" +
+      "  providers: [\n" +
+      "    provideStore({\n" +
+      "      router: routerReducer // Add router reducer\n" +
+      "    }),\n" +
+      "    provideRouterStore() // Connect router to store\n" +
+      "  ]\n" +
+      "});\n" +
+      "```\n\n" +
+      "**Custom Router State Serializer:**\n\n" +
+      "```typescript\n" +
+      "import { RouterStateSerializer } from '@ngrx/router-store';\n" +
+      "import { RouterStateSnapshot } from '@angular/router';\n\n" +
+      "export interface RouterStateUrl {\n" +
+      "  url: string;\n" +
+      "  params: any;\n" +
+      "  queryParams: any;\n" +
+      "}\n\n" +
+      "export class CustomRouterStateSerializer\n" +
+      "  implements RouterStateSerializer<RouterStateUrl> {\n" +
+      "  \n" +
+      "  serialize(routerState: RouterStateSnapshot): RouterStateUrl {\n" +
+      "    let route = routerState.root;\n\n" +
+      "    while (route.firstChild) {\n" +
+      "      route = route.firstChild;\n" +
+      "    }\n\n" +
+      "    const { url } = routerState;\n" +
+      "    const { queryParams } = routerState.root;\n" +
+      "    const { params } = route;\n\n" +
+      "    return { url, params, queryParams };\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Register\n" +
+      "providers: [\n" +
+      "  provideRouterStore({\n" +
+      "    serializer: CustomRouterStateSerializer\n" +
+      "  })\n" +
+      "]\n" +
+      "```\n\n" +
+      "**Router Selectors:**\n\n" +
+      "```typescript\n" +
+      "import { getRouterSelectors } from '@ngrx/router-store';\n\n" +
+      "export const {\n" +
+      "  selectCurrentRoute,\n" +
+      "  selectQueryParams,\n" +
+      "  selectQueryParam,\n" +
+      "  selectRouteParams,\n" +
+      "  selectRouteParam,\n" +
+      "  selectRouteData,\n" +
+      "  selectUrl\n" +
+      "} = getRouterSelectors();\n\n" +
+      "// Usage in component\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  url$ = this.store.select(selectUrl);\n" +
+      "  userId$ = this.store.select(selectRouteParam('id'));\n" +
+      "  searchQuery$ = this.store.select(selectQueryParam('q'));\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Navigate from Effect:**\n\n" +
+      "```typescript\n" +
+      "import { ROUTER_NAVIGATION } from '@ngrx/router-store';\n\n" +
+      "@Injectable()\n" +
+      "export class RouterEffects {\n" +
+      "  // Listen to navigation\n" +
+      "  logNavigation$ = createEffect(\n" +
+      "    () =>\n" +
+      "      this.actions$.pipe(\n" +
+      "        ofType(ROUTER_NAVIGATION),\n" +
+      "        tap(action => console.log('Navigated to:', action.payload.routerState.url))\n" +
+      "      ),\n" +
+      "    { dispatch: false }\n" +
+      "  );\n\n" +
+      "  // Navigate on action\n" +
+      "  navigateToUser$ = createEffect(\n" +
+      "    () =>\n" +
+      "      this.actions$.pipe(\n" +
+      "        ofType(UsersActions.selectUser),\n" +
+      "        tap(({ userId }) => this.router.navigate(['/users', userId]))\n" +
+      "      ),\n" +
+      "    { dispatch: false }\n" +
+      "  );\n\n" +
+      "  constructor(private actions$: Actions, private router: Router) {}\n" +
+      "}\n" +
+      "```",
+    category: "NgRx Router Store",
+    difficulty: "hard",
+    tags: ["ngrx", "router-store", "routing", "navigation"],
+  },
+  {
+    id: 91,
+    question: "What is NgRx ComponentStore? How does it differ from global Store?",
+    answer:
+      "ComponentStore manages local component state with NgRx patterns.\n\n" +
+      "**When to Use:**\n" +
+      "- Local component state (not global)\n" +
+      "- Temporary UI state\n" +
+      "- Form state\n" +
+      "- Component-specific data\n\n" +
+      "**Setup:**\n\n" +
+      "```bash\n" +
+      "npm install @ngrx/component-store\n" +
+      "```\n\n" +
+      "**Create Component Store:**\n\n" +
+      "```typescript\n" +
+      "import { Injectable } from '@angular/core';\n" +
+      "import { ComponentStore } from '@ngrx/component-store';\n\n" +
+      "interface UsersState {\n" +
+      "  users: User[];\n" +
+      "  loading: boolean;\n" +
+      "  filter: string;\n" +
+      "}\n\n" +
+      "@Injectable()\n" +
+      "export class UsersComponentStore extends ComponentStore<UsersState> {\n" +
+      "  constructor(private http: HttpClient) {\n" +
+      "    super({ users: [], loading: false, filter: '' });\n" +
+      "  }\n\n" +
+      "  // Selectors\n" +
+      "  readonly users$ = this.select(state => state.users);\n" +
+      "  readonly loading$ = this.select(state => state.loading);\n" +
+      "  readonly filter$ = this.select(state => state.filter);\n\n" +
+      "  // Composed selector\n" +
+      "  readonly filteredUsers$ = this.select(\n" +
+      "    this.users$,\n" +
+      "    this.filter$,\n" +
+      "    (users, filter) => users.filter(u => u.name.includes(filter))\n" +
+      "  );\n\n" +
+      "  // Updaters (sync state updates)\n" +
+      "  readonly setLoading = this.updater((state, loading: boolean) => ({\n" +
+      "    ...state,\n" +
+      "    loading\n" +
+      "  }));\n\n" +
+      "  readonly setFilter = this.updater((state, filter: string) => ({\n" +
+      "    ...state,\n" +
+      "    filter\n" +
+      "  }));\n\n" +
+      "  readonly addUser = this.updater((state, user: User) => ({\n" +
+      "    ...state,\n" +
+      "    users: [...state.users, user]\n" +
+      "  }));\n\n" +
+      "  // Effects (async operations)\n" +
+      "  readonly loadUsers = this.effect((trigger$: Observable<void>) =>\n" +
+      "    trigger$.pipe(\n" +
+      "      tap(() => this.setLoading(true)),\n" +
+      "      switchMap(() =>\n" +
+      "        this.http.get<User[]>('/api/users').pipe(\n" +
+      "          tapResponse(\n" +
+      "            users => this.patchState({ users, loading: false }),\n" +
+      "            error => this.patchState({ loading: false })\n" +
+      "          )\n" +
+      "        )\n" +
+      "      )\n" +
+      "    )\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Use in Component:**\n\n" +
+      "```typescript\n" +
+      "@Component({\n" +
+      "  providers: [UsersComponentStore], // Scoped to component\n" +
+      "  template: `\n" +
+      '    <input (input)="store.setFilter($event.target.value)" />\n\n' +
+      "    @if (store.loading$ | async) {\n" +
+      "      <p>Loading...</p>\n" +
+      "    }\n\n" +
+      "    @for (user of store.filteredUsers$ | async; track user.id) {\n" +
+      "      <div>{{ user.name }}</div>\n" +
+      "    }\n" +
+      "  `\n" +
+      "})\n" +
+      "export class UsersComponent implements OnInit {\n" +
+      "  constructor(public store: UsersComponentStore) {}\n\n" +
+      "  ngOnInit() {\n" +
+      "    this.store.loadUsers(); // Trigger effect\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**ComponentStore vs Global Store:**\n\n" +
+      "| Feature | ComponentStore | Global Store |\n" +
+      "|---------|----------------|-------------|\n" +
+      "| Scope | Component | Application |\n" +
+      "| Lifecycle | Component lifetime | App lifetime |\n" +
+      "| Boilerplate | Less | More (actions, reducers) |\n" +
+      "| DevTools | Limited | Full support |\n" +
+      "| Use Case | Local UI state | Shared state |",
+    category: "NgRx ComponentStore",
+    difficulty: "hard",
+    tags: ["ngrx", "component-store", "local-state", "scoped-state"],
+  },
+  {
+    id: 92,
+    question:
+      "What are NgRx Best Practices? Explain folder structure, naming conventions, and patterns.",
+    answer:
+      "**Folder Structure:**\n\n" +
+      "```typescript\n" +
+      "src/app/\n" +
+      "├── state/\n" +
+      "│   ├── index.ts              // Root state, reducers\n" +
+      "│   ├── users/\n" +
+      "│   │   ├── users.actions.ts\n" +
+      "│   │   ├── users.reducer.ts\n" +
+      "│   │   ├── users.effects.ts\n" +
+      "│   │   ├── users.selectors.ts\n" +
+      "│   │   ├── users.models.ts\n" +
+      "│   │   └── index.ts          // Public API\n" +
+      "│   ├── auth/\n" +
+      "│   └── products/\n" +
+      "```\n\n" +
+      "**Naming Conventions:**\n\n" +
+      "```typescript\n" +
+      "// Actions: [Source] Event\n" +
+      "[Users Page] Load Users\n" +
+      "[Users API] Load Users Success\n" +
+      "[Users API] Load Users Failure\n" +
+      "[Users Page] Search Users\n" +
+      "[Users Page] Select User\n\n" +
+      "// Selectors: select + Feature + Property\n" +
+      "selectUsersState\n" +
+      "selectAllUsers\n" +
+      "selectUsersLoading\n" +
+      "selectUserById\n\n" +
+      "// Effects: action + $\n" +
+      "loadUsers$\n" +
+      "createUser$\n" +
+      "deleteUser$\n\n" +
+      "// Reducers: feature + Reducer\n" +
+      "usersReducer\n" +
+      "authReducer\n" +
+      "```\n\n" +
+      "**Best Practices:**\n\n" +
+      "```typescript\n" +
+      "1. **One Feature, One Folder**\n" +
+      "   - Keep related code together\n" +
+      "   - Clear boundaries\n\n" +
+      "2. **Use Action Groups**\n" +
+      "   export const UsersActions = createActionGroup({ ... });\n\n" +
+      "3. **Use Entity Adapter**\n" +
+      "   - For collections (users, products)\n" +
+      "   - Less boilerplate\n\n" +
+      "4. **Compose Selectors**\n" +
+      "   - Memoization benefits\n" +
+      "   - Reusable logic\n\n" +
+      "5. **Handle Errors in Effects**\n" +
+      "   loadUsers$ = createEffect(() =>\n" +
+      "     this.actions$.pipe(\n" +
+      "       ofType(load),\n" +
+      "       switchMap(() =>\n" +
+      "         this.http.get('/api').pipe(\n" +
+      "           map(success),\n" +
+      "           catchError(err => of(failure({ err }))) // Always catch!\n" +
+      "         )\n" +
+      "       )\n" +
+      "     )\n" +
+      "   );\n\n" +
+      "6. **Avoid Nested State**\n" +
+      "   // ❌ Bad\n" +
+      "   { users: { data: { items: [] } } }\n" +
+      "   \n" +
+      "   // ✅ Good (flat)\n" +
+      "   { users: [] }\n\n" +
+      "7. **Use Strongly-Typed Actions**\n" +
+      "   props<{ userId: number }>()\n\n" +
+      "8. **Loading/Error Pattern**\n" +
+      "   interface FeatureState {\n" +
+      "     data: Data[];\n" +
+      "     loading: boolean;\n" +
+      "     error: string | null;\n" +
+      "   }\n\n" +
+      "9. **Don't Put Everything in Store**\n" +
+      "   - Only shared state\n" +
+      "   - Not form state (unless shared)\n" +
+      "   - Not transient UI state\n\n" +
+      "10. **Use Effects for Side Effects**\n" +
+      "    - HTTP calls\n" +
+      "    - localStorage\n" +
+      "    - Navigation\n" +
+      "    - Logging\n" +
+      "```\n\n" +
+      "**Anti-Patterns to Avoid:**\n\n" +
+      "```typescript\n" +
+      "// ❌ Dispatching in Reducer\n" +
+      "on(someAction, state => {\n" +
+      "  this.store.dispatch(anotherAction()); // NO!\n" +
+      "  return state;\n" +
+      "})\n\n" +
+      "// ❌ Side Effects in Reducer\n" +
+      "on(saveUser, state => {\n" +
+      "  localStorage.setItem('user', state.user); // NO!\n" +
+      "  return state;\n" +
+      "})\n\n" +
+      "// ❌ Async in Reducer\n" +
+      "on(loadUser, state => {\n" +
+      "  this.http.get('/api/user').subscribe(); // NO!\n" +
+      "  return state;\n" +
+      "})\n" +
+      "```",
+    category: "NgRx Best Practices",
+    difficulty: "hard",
+    tags: ["ngrx", "best-practices", "patterns", "architecture"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;
