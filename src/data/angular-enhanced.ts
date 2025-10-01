@@ -1386,6 +1386,590 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "intermediate",
     tags: ["pipes", "rxjs", "operators", "async-pipe", "custom-pipes", "transforms"],
   },
+  {
+    id: 8,
+    question:
+      "Explain Angular component lifecycle hooks. What is ngOnDestroy used for and why is it critical?",
+    answer:
+      "Angular components go through a lifecycle managed by Angular, with hooks that let you tap into key moments.\n\n" +
+      "**Complete Lifecycle Order:**\n\n" +
+      "1. **constructor()** - Class instantiation\n" +
+      "2. **ngOnChanges()** - When @Input properties change (before ngOnInit and on every change)\n" +
+      "3. **ngOnInit()** - After first ngOnChanges, one-time initialization\n" +
+      "4. **ngDoCheck()** - Custom change detection (every CD cycle)\n" +
+      "5. **ngAfterContentInit()** - After content (ng-content) projection initialized\n" +
+      "6. **ngAfterContentChecked()** - After content checked (every CD)\n" +
+      "7. **ngAfterViewInit()** - After component view and child views initialized\n" +
+      "8. **ngAfterViewChecked()** - After view checked (every CD)\n" +
+      "9. **ngOnDestroy()** - Just before component destruction\n\n" +
+      "**ngOnDestroy - Critical for Cleanup:**\n\n" +
+      "```typescript\n" +
+      "import { OnDestroy } from '@angular/core';\n" +
+      "import { Subscription, Subject } from 'rxjs';\n" +
+      "import { takeUntil } from 'rxjs/operators';\n\n" +
+      "export class Component implements OnInit, OnDestroy {\n" +
+      "  // Pattern 1: Subscription collection\n" +
+      "  private subscriptions = new Subscription();\n\n" +
+      "  // Pattern 2: takeUntil with Subject\n" +
+      "  private destroy$ = new Subject<void>();\n\n" +
+      "  private intervalId: any;\n" +
+      "  private webSocket: WebSocket;\n\n" +
+      "  ngOnInit() {\n" +
+      "    // ❌ Memory leak without cleanup\n" +
+      "    this.userService.getUsers().subscribe(users => this.users = users);\n\n" +
+      "    // ✅ Add to subscriptions\n" +
+      "    this.subscriptions.add(\n" +
+      "      this.userService.getUsers().subscribe(users => this.users = users)\n" +
+      "    );\n\n" +
+      "    // ✅ Or use takeUntil\n" +
+      "    this.route.params\n" +
+      "      .pipe(takeUntil(this.destroy$))\n" +
+      "      .subscribe(params => this.loadData(params));\n\n" +
+      "    this.intervalId = setInterval(() => this.poll(), 5000);\n" +
+      "    this.webSocket = new WebSocket('ws://...');\n" +
+      "  }\n\n" +
+      "  ngOnDestroy() {\n" +
+      "    // ✅ Unsubscribe from observables\n" +
+      "    this.subscriptions.unsubscribe();\n\n" +
+      "    // ✅ Complete takeUntil subject\n" +
+      "    this.destroy$.next();\n" +
+      "    this.destroy$.complete();\n\n" +
+      "    // ✅ Clear timers\n" +
+      "    if (this.intervalId) {\n" +
+      "      clearInterval(this.intervalId);\n" +
+      "    }\n\n" +
+      "    // ✅ Close WebSocket\n" +
+      "    this.webSocket?.close();\n\n" +
+      "    // ✅ Remove event listeners\n" +
+      "    document.removeEventListener('click', this.handleClick);\n\n" +
+      "    // ✅ Complete custom subjects\n" +
+      "    this.dataSubject.complete();\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**What Happens Without Cleanup:**\n" +
+      "- Memory leaks (subscriptions never released)\n" +
+      "- Multiple subscriptions accumulate\n" +
+      "- Timers keep running\n" +
+      "- Event listeners stay attached\n" +
+      "- WebSockets stay open\n\n" +
+      "**Best Practices:**\n" +
+      "1. Always implement ngOnDestroy if subscribing\n" +
+      "2. Use async pipe when possible (auto-cleanup)\n" +
+      "3. Use takeUntil pattern for multiple subscriptions\n" +
+      "4. Complete custom Subjects\n" +
+      "5. Clear timers and intervals\n" +
+      "6. Remove event listeners",
+    category: "Lifecycle",
+    difficulty: "intermediate",
+    tags: ["lifecycle", "ngOnDestroy", "cleanup", "memory-leaks", "subscriptions"],
+  },
+  {
+    id: 9,
+    question:
+      "Compare localStorage, sessionStorage, and Cookies. When should you use each for storing JWT tokens?",
+    answer:
+      "**Comparison:**\n\n" +
+      "| Feature | localStorage | sessionStorage | Cookies |\n" +
+      "|---------|-------------|----------------|--------|\n" +
+      "| Size | ~10MB | ~10MB | ~4KB |\n" +
+      "| Lifetime | Forever | Tab session | Set expiration |\n" +
+      "| Scope | All tabs | Single tab | All tabs |\n" +
+      "| Sent to server | No | No | Yes (auto) |\n" +
+      "| Access | JS only | JS only | JS (unless HttpOnly) |\n" +
+      "| XSS vulnerable | Yes | Yes | Can be protected |\n\n" +
+      "**JWT Token Storage (Security Critical):**\n\n" +
+      "```typescript\n" +
+      "// ❌ INSECURE - XSS can steal token\n" +
+      "localStorage.setItem('token', jwt);\n\n" +
+      "// ✅ SECURE - HttpOnly cookie (server-side only)\n" +
+      "// Server sets:\n" +
+      "Set-Cookie: token=xyz; HttpOnly; Secure; SameSite=Strict\n\n" +
+      "// HttpOnly = JavaScript cannot access (XSS protection)\n" +
+      "// Secure = HTTPS only\n" +
+      "// SameSite = CSRF protection\n" +
+      "```\n\n" +
+      "**Best Practice - Hybrid Approach:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class TokenService {\n" +
+      "  // Access token in memory (most secure)\n" +
+      "  private accessToken: string | null = null;\n\n" +
+      "  // Refresh token in HttpOnly cookie (server manages)\n" +
+      "  // User data in localStorage (non-sensitive)\n\n" +
+      "  setAccessToken(token: string) {\n" +
+      "    this.accessToken = token; // Memory only\n" +
+      "  }\n\n" +
+      "  getAccessToken(): string | null {\n" +
+      "    return this.accessToken;\n" +
+      "  }\n\n" +
+      "  setUserData(user: User) {\n" +
+      "    localStorage.setItem('user', JSON.stringify({\n" +
+      "      id: user.id,\n" +
+      "      name: user.name // Non-sensitive data only\n" +
+      "    }));\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Security",
+    difficulty: "intermediate",
+    tags: ["storage", "security", "jwt", "cookies", "xss"],
+  },
+  {
+    id: 10,
+    question:
+      "What is the difference between Reactive Forms and Template-Driven Forms? Provide examples.",
+    answer:
+      "**Reactive Forms (Recommended):**\n\n" +
+      "```typescript\n" +
+      "import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';\n\n" +
+      "@Component({\n" +
+      "  imports: [ReactiveFormsModule],\n" +
+      "  template: `\n" +
+      '    <form [formGroup]="form" (ngSubmit)="onSubmit()">\n' +
+      '      <input formControlName="email" />\n' +
+      '      <input formControlName="password" type="password" />\n' +
+      '      <button [disabled]="form.invalid">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class LoginComponent {\n" +
+      "  form = this.fb.group({\n" +
+      "    email: ['', [Validators.required, Validators.email]],\n" +
+      "    password: ['', [Validators.required, Validators.minLength(8)]]\n" +
+      "  });\n\n" +
+      "  constructor(private fb: FormBuilder) {}\n\n" +
+      "  onSubmit() {\n" +
+      "    if (this.form.valid) {\n" +
+      "      console.log(this.form.value);\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Template-Driven Forms:**\n\n" +
+      "```typescript\n" +
+      "import { FormsModule } from '@angular/forms';\n\n" +
+      "@Component({\n" +
+      "  imports: [FormsModule],\n" +
+      "  template: `\n" +
+      '    <form #f="ngForm" (ngSubmit)="onSubmit(f)">\n' +
+      '      <input name="email" [(ngModel)]="user.email" required email />\n' +
+      '      <input name="password" [(ngModel)]="user.password" required minlength="8" />\n' +
+      '      <button [disabled]="f.invalid">Submit</button>\n' +
+      "    </form>\n" +
+      "  `\n" +
+      "})\n" +
+      "export class LoginComponent {\n" +
+      "  user = { email: '', password: '' };\n\n" +
+      "  onSubmit(form: NgForm) {\n" +
+      "    if (form.valid) console.log(form.value);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**When to Use Reactive:**\n" +
+      "- Complex validation\n" +
+      "- Dynamic forms\n" +
+      "- Unit testing\n" +
+      "- Programmatic control\n\n" +
+      "**When to Use Template-Driven:**\n" +
+      "- Simple forms\n" +
+      "- Rapid prototyping",
+    category: "Forms",
+    difficulty: "intermediate",
+    tags: ["forms", "reactive-forms", "template-driven", "validation"],
+  },
+  {
+    id: 11,
+    question: "Explain CanActivate, CanLoad, CanDeactivate routing guards. Provide use cases.",
+    answer:
+      "**CanActivate - Protect Routes:**\n\n" +
+      "```typescript\n" +
+      "export const authGuard: CanActivateFn = (route, state) => {\n" +
+      "  const authService = inject(AuthService);\n" +
+      "  const router = inject(Router);\n\n" +
+      "  if (authService.isAuthenticated()) {\n" +
+      "    return true;\n" +
+      "  }\n\n" +
+      "  return router.createUrlTree(['/login'], {\n" +
+      "    queryParams: { returnUrl: state.url }\n" +
+      "  });\n" +
+      "};\n\n" +
+      "// Route\n" +
+      "{ path: 'dashboard', canActivate: [authGuard], component: DashboardComponent }\n" +
+      "```\n\n" +
+      "**CanLoad - Lazy Loading Protection:**\n\n" +
+      "```typescript\n" +
+      "export const adminCanLoad: CanLoadFn = () => {\n" +
+      "  const auth = inject(AuthService);\n" +
+      "  return auth.hasRole('admin'); // Module won't load if false\n" +
+      "};\n\n" +
+      "// Route\n" +
+      "{\n" +
+      "  path: 'admin',\n" +
+      "  loadChildren: () => import('./admin/admin.routes'),\n" +
+      "  canLoad: [adminCanLoad]\n" +
+      "}\n" +
+      "```\n\n" +
+      "**CanDeactivate - Unsaved Changes:**\n\n" +
+      "```typescript\n" +
+      "export const unsavedChangesGuard: CanDeactivateFn<FormComponent> = (component) => {\n" +
+      "  if (component.form.dirty && !component.saved) {\n" +
+      "    return confirm('Unsaved changes. Leave anyway?');\n" +
+      "  }\n" +
+      "  return true;\n" +
+      "};\n\n" +
+      "// Route\n" +
+      "{ path: 'edit/:id', canDeactivate: [unsavedChangesGuard], component: FormComponent }\n" +
+      "```\n\n" +
+      "**Execution Order:**\n" +
+      "1. CanDeactivate (current route)\n" +
+      "2. CanLoad (if lazy)\n" +
+      "3. CanActivate (target route)\n" +
+      "4. Resolve (if guards pass)",
+    category: "Routing",
+    difficulty: "hard",
+    tags: ["routing", "guards", "canactivate", "canload", "candeactivate", "auth"],
+  },
+  {
+    id: 12,
+    question: "What are Route Resolvers? How do they differ from guards?",
+    answer:
+      "Resolvers pre-fetch data before activating a route, ensuring data is available when component loads.\n\n" +
+      "**Resolver Implementation:**\n\n" +
+      "```typescript\n" +
+      "import { ResolveFn } from '@angular/router';\n\n" +
+      "export const userResolver: ResolveFn<User> = (route, state) => {\n" +
+      "  const userService = inject(UserService);\n" +
+      "  const userId = route.paramMap.get('id')!;\n" +
+      "  \n" +
+      "  return userService.getUser(userId).pipe(\n" +
+      "    catchError(() => {\n" +
+      "      const router = inject(Router);\n" +
+      "      router.navigate(['/not-found']);\n" +
+      "      return EMPTY;\n" +
+      "    })\n" +
+      "  );\n" +
+      "};\n\n" +
+      "// Route\n" +
+      "{\n" +
+      "  path: 'user/:id',\n" +
+      "  component: UserDetailComponent,\n" +
+      "  resolve: { user: userResolver }\n" +
+      "}\n\n" +
+      "// Component\n" +
+      "@Component({...})\n" +
+      "export class UserDetailComponent implements OnInit {\n" +
+      "  user: User;\n\n" +
+      "  constructor(private route: ActivatedRoute) {}\n\n" +
+      "  ngOnInit() {\n" +
+      "    // Data already loaded!\n" +
+      "    this.user = this.route.snapshot.data['user'];\n" +
+      "    \n" +
+      "    // Or observe changes\n" +
+      "    this.route.data.subscribe(data => {\n" +
+      "      this.user = data['user'];\n" +
+      "    });\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Resolver vs Guard:**\n" +
+      "- **Guard:** Decides if route can activate (true/false)\n" +
+      "- **Resolver:** Fetches data before activation (returns data)\n\n" +
+      "**Resolver vs Component Fetch:**\n" +
+      "- **Resolver:** Data ready immediately, no loading state\n" +
+      "- **Component:** Shows loading spinner, data arrives async",
+    category: "Routing",
+    difficulty: "intermediate",
+    tags: ["routing", "resolver", "data-fetching", "guards"],
+  },
+  {
+    id: 13,
+    question:
+      "Explain @Input/@Output decorators. How do Signal inputs/outputs (Angular 17+) improve upon them?",
+    answer:
+      "**Traditional @Input/@Output:**\n\n" +
+      "```typescript\n" +
+      "@Component({...})\n" +
+      "export class UserCardComponent {\n" +
+      "  @Input() user: User; // Can be undefined!\n" +
+      "  @Input() size: 'sm' | 'lg' = 'sm';\n" +
+      "  @Output() userClick = new EventEmitter<User>();\n\n" +
+      "  onClick() {\n" +
+      "    this.userClick.emit(this.user);\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Signal Inputs/Outputs (Angular 17.1+):**\n\n" +
+      "```typescript\n" +
+      "import { input, output, computed } from '@angular/core';\n\n" +
+      "@Component({...})\n" +
+      "export class UserCardComponent {\n" +
+      "  // Signal input - always has value, type-safe\n" +
+      "  user = input.required<User>(); // Required\n" +
+      "  size = input<'sm' | 'lg'>('sm'); // Optional with default\n\n" +
+      "  // Signal output - type-safe\n" +
+      "  userClick = output<User>();\n\n" +
+      "  // Computed from input\n" +
+      "  displayName = computed(() => \n" +
+      "    `${this.user().firstName} ${this.user().lastName}`\n" +
+      "  );\n\n" +
+      "  onClick() {\n" +
+      "    this.userClick.emit(this.user());\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Usage identical\n" +
+      '<app-user-card [user]="currentUser" (userClick)="handleClick($event)" />\n' +
+      "```\n\n" +
+      "**Benefits of Signal Inputs:**\n" +
+      "1. Type-safe (required vs optional)\n" +
+      "2. Can use in computed signals\n" +
+      "3. Better change detection\n" +
+      "4. No undefined checks needed\n" +
+      "5. Automatic reactivity\n\n" +
+      "**Key Difference:**\n" +
+      "```typescript\n" +
+      "// Traditional - might be undefined\n" +
+      "@Input() user: User;\n" +
+      "ngOnInit() {\n" +
+      "  if (this.user) { // Must check!\n" +
+      "    this.loadData(this.user.id);\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Signal - always has value\n" +
+      "user = input.required<User>();\n" +
+      "ngOnInit() {\n" +
+      "  this.loadData(this.user().id); // No check needed\n" +
+      "}\n" +
+      "```",
+    category: "Component Communication",
+    difficulty: "intermediate",
+    tags: ["input", "output", "signals", "component-communication", "angular17+"],
+  },
+  {
+    id: 14,
+    question:
+      "How do you implement WebSocket communication in Angular? What is SignalR and how to integrate it?",
+    answer:
+      "**WebSocket with RxJS:**\n\n" +
+      "```typescript\n" +
+      "import { webSocket, WebSocketSubject } from 'rxjs/webSocket';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class WebSocketService {\n" +
+      "  private socket$: WebSocketSubject<any>;\n\n" +
+      "  connect(url: string): WebSocketSubject<any> {\n" +
+      "    if (!this.socket$ || this.socket$.closed) {\n" +
+      "      this.socket$ = webSocket({\n" +
+      "        url,\n" +
+      "        openObserver: {\n" +
+      "          next: () => console.log('WebSocket connected')\n" +
+      "        },\n" +
+      "        closeObserver: {\n" +
+      "          next: () => console.log('WebSocket disconnected')\n" +
+      "        }\n" +
+      "      });\n" +
+      "    }\n" +
+      "    return this.socket$;\n" +
+      "  }\n\n" +
+      "  send(message: any) {\n" +
+      "    this.socket$.next(message);\n" +
+      "  }\n\n" +
+      "  close() {\n" +
+      "    this.socket$.complete();\n" +
+      "  }\n" +
+      "}\n\n" +
+      "// Component\n" +
+      "ngOnInit() {\n" +
+      "  this.ws.connect('wss://api.example.com').subscribe(\n" +
+      "    message => console.log('Received:', message),\n" +
+      "    error => console.error('Error:', error)\n" +
+      "  );\n" +
+      "}\n" +
+      "```\n\n" +
+      "**SignalR Integration:**\n\n" +
+      "```typescript\n" +
+      "import * as signalR from '@microsoft/signalr';\n\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class SignalRService {\n" +
+      "  private hubConnection: signalR.HubConnection;\n" +
+      "  private messageSubject = new Subject<Message>();\n" +
+      "  messages$ = this.messageSubject.asObservable();\n\n" +
+      "  async connect() {\n" +
+      "    this.hubConnection = new signalR.HubConnectionBuilder()\n" +
+      "      .withUrl('https://api.example.com/chatHub', {\n" +
+      "        accessTokenFactory: () => this.authService.getToken()\n" +
+      "      })\n" +
+      "      .withAutomaticReconnect() // Auto-reconnect\n" +
+      "      .build();\n\n" +
+      "    // Register handlers\n" +
+      "    this.hubConnection.on('ReceiveMessage', (message) => {\n" +
+      "      this.messageSubject.next(message);\n" +
+      "    });\n\n" +
+      "    // Connect\n" +
+      "    await this.hubConnection.start();\n" +
+      "    console.log('SignalR connected');\n" +
+      "  }\n\n" +
+      "  async sendMessage(message: string) {\n" +
+      "    await this.hubConnection.invoke('SendMessage', message);\n" +
+      "  }\n\n" +
+      "  async disconnect() {\n" +
+      "    await this.hubConnection.stop();\n" +
+      "  }\n" +
+      "}\n" +
+      "```",
+    category: "Real-time",
+    difficulty: "hard",
+    tags: ["websocket", "signalr", "real-time", "rxjs"],
+  },
+  {
+    id: 15,
+    question:
+      "Explain JWT authentication in Angular. How do you implement token refresh and secure storage?",
+    answer:
+      "**Authentication Flow:**\n\n" +
+      "```typescript\n" +
+      "@Injectable({ providedIn: 'root' })\n" +
+      "export class AuthService {\n" +
+      "  private accessToken: string | null = null;\n" +
+      "  private currentUserSubject = new BehaviorSubject<User | null>(null);\n" +
+      "  currentUser$ = this.currentUserSubject.asObservable();\n\n" +
+      "  constructor(private http: HttpClient) {\n" +
+      "    // Initialize from storage\n" +
+      "    const user = localStorage.getItem('user');\n" +
+      "    if (user) {\n" +
+      "      this.currentUserSubject.next(JSON.parse(user));\n" +
+      "    }\n" +
+      "  }\n\n" +
+      "  login(credentials: Credentials): Observable<LoginResponse> {\n" +
+      "    return this.http.post<LoginResponse>('/api/auth/login', credentials).pipe(\n" +
+      "      tap(response => {\n" +
+      "        this.accessToken = response.accessToken;\n" +
+      "        localStorage.setItem('user', JSON.stringify(response.user));\n" +
+      "        this.currentUserSubject.next(response.user);\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n\n" +
+      "  refreshToken(): Observable<TokenResponse> {\n" +
+      "    return this.http.post<TokenResponse>('/api/auth/refresh', {}, \n" +
+      "      { withCredentials: true } // Send refresh token cookie\n" +
+      "    ).pipe(\n" +
+      "      tap(response => {\n" +
+      "        this.accessToken = response.accessToken;\n" +
+      "      })\n" +
+      "    );\n" +
+      "  }\n\n" +
+      "  logout() {\n" +
+      "    this.accessToken = null;\n" +
+      "    localStorage.removeItem('user');\n" +
+      "    this.currentUserSubject.next(null);\n" +
+      "    this.http.post('/api/auth/logout', {}, { withCredentials: true }).subscribe();\n" +
+      "  }\n\n" +
+      "  getToken(): string | null {\n" +
+      "    return this.accessToken;\n" +
+      "  }\n\n" +
+      "  isAuthenticated(): boolean {\n" +
+      "    return !!this.accessToken;\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Token Interceptor:**\n\n" +
+      "```typescript\n" +
+      "export const authInterceptor: HttpInterceptorFn = (req, next) => {\n" +
+      "  const authService = inject(AuthService);\n" +
+      "  const token = authService.getToken();\n\n" +
+      "  if (token && !req.url.includes('/auth/')) {\n" +
+      "    req = req.clone({\n" +
+      "      setHeaders: { Authorization: `Bearer ${token}` }\n" +
+      "    });\n" +
+      "  }\n\n" +
+      "  return next(req).pipe(\n" +
+      "    catchError((error: HttpErrorResponse) => {\n" +
+      "      if (error.status === 401) {\n" +
+      "        // Token expired - try refresh\n" +
+      "        return authService.refreshToken().pipe(\n" +
+      "          switchMap(response => {\n" +
+      "            // Retry original request with new token\n" +
+      "            const retryReq = req.clone({\n" +
+      "              setHeaders: { Authorization: `Bearer ${response.accessToken}` }\n" +
+      "            });\n" +
+      "            return next(retryReq);\n" +
+      "          }),\n" +
+      "          catchError(refreshError => {\n" +
+      "            // Refresh failed - logout\n" +
+      "            authService.logout();\n" +
+      "            inject(Router).navigate(['/login']);\n" +
+      "            return throwError(() => refreshError);\n" +
+      "          })\n" +
+      "        );\n" +
+      "      }\n" +
+      "      return throwError(() => error);\n" +
+      "    })\n" +
+      "  );\n" +
+      "};\n" +
+      "```\n\n" +
+      "**Security Best Practices:**\n" +
+      "1. Store access token in memory\n" +
+      "2. Store refresh token in HttpOnly cookie\n" +
+      "3. Use HTTPS only (Secure flag)\n" +
+      "4. Set SameSite=Strict (CSRF protection)\n" +
+      "5. Short access token lifetime (15 min)\n" +
+      "6. Rotate refresh tokens\n" +
+      "7. Clear all on logout",
+    category: "Security",
+    difficulty: "hard",
+    tags: ["auth", "jwt", "security", "interceptors", "tokens"],
+  },
+  {
+    id: 16,
+    question:
+      "Explain Dependency Injection in Angular. What are providers, injection tokens, and hierarchical injectors?",
+    answer:
+      "Dependency Injection (DI) is Angular's core design pattern for providing dependencies to classes.\n\n" +
+      "**Basic DI:**\n\n" +
+      "```typescript\n" +
+      "// Service\n" +
+      "@Injectable({ providedIn: 'root' }) // Singleton\n" +
+      "export class UserService {\n" +
+      "  constructor(private http: HttpClient) {}\n" +
+      "}\n\n" +
+      "// Component injects service\n" +
+      "@Component({...})\n" +
+      "export class Component {\n" +
+      "  constructor(private userService: UserService) {}\n" +
+      "}\n" +
+      "```\n\n" +
+      "**Injection Tokens:**\n\n" +
+      "```typescript\n" +
+      "import { InjectionToken } from '@angular/core';\n\n" +
+      "// Create token\n" +
+      "export const API_URL = new InjectionToken<string>('API_URL');\n\n" +
+      "// Provide value\n" +
+      "providers: [\n" +
+      "  { provide: API_URL, useValue: 'https://api.example.com' }\n" +
+      "]\n\n" +
+      "// Inject\n" +
+      "constructor(@Inject(API_URL) private apiUrl: string) {}\n" +
+      "```\n\n" +
+      "**Provider Types:**\n\n" +
+      "```typescript\n" +
+      "// useClass\n" +
+      "{ provide: Logger, useClass: ConsoleLogger }\n\n" +
+      "// useValue\n" +
+      "{ provide: 'API_URL', useValue: 'https://api.example.com' }\n\n" +
+      "// useFactory\n" +
+      "{\n" +
+      "  provide: Logger,\n" +
+      "  useFactory: (config: Config) => {\n" +
+      "    return config.debug ? new DebugLogger() : new ProductionLogger();\n" +
+      "  },\n" +
+      "  deps: [Config]\n" +
+      "}\n\n" +
+      "// useExisting (alias)\n" +
+      "{ provide: NewLogger, useExisting: Logger }\n" +
+      "```",
+    category: "Dependency Injection",
+    difficulty: "hard",
+    tags: ["di", "providers", "injection-tokens", "services"],
+  },
 ];
 
 export default ANGULAR_ENHANCED_QUESTIONS;
