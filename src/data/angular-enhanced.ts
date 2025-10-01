@@ -8051,7 +8051,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "**Logging Meta-Reducer:**\n\n" +
       "```typescript\n" +
       "import { ActionReducer, MetaReducer } from '@ngrx/store';\n\n" +
-      "export function logger(reducer: ActionReducer<any>): ActionReducer<any> {\n" +
+      "export function logger(reducer: ActionReducer<unknown>): ActionReducer<unknown> {\n" +
       "  return (state, action) => {\n" +
       "    console.log('State before:', state);\n" +
       "    console.log('Action:', action);\n\n" +
