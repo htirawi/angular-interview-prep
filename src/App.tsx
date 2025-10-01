@@ -1,7 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import QuestionCardPro from "./components/QuestionCard-pro";
 import Sidebar from "./components/Sidebar";
-import { QUESTIONS, type QA } from "./data/questions";
+import FrameworkSelector from "./components/FrameworkSelector";
+import FrameworkSwitcher from "./components/FrameworkSwitcher";
+import {
+  QUESTIONS,
+  NEXTJS_QUESTIONS,
+  REACT_QUESTIONS,
+  REDUX_QUESTIONS,
+  type QA,
+  type QuestionSetId,
+} from "./data";
 import { enrichQuestions } from "./utils/questionMetadata";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { ErrorBoundary } from "./core/components/ErrorBoundary";
@@ -11,13 +20,65 @@ import { STORAGE_KEYS } from "./shared/constants/app";
 
 type Mode = "sequential" | "random" | "bookmarked";
 
+// Framework-specific storage keys
+const getFrameworkKey = (framework: QuestionSetId, key: string) => `${framework}_${key}`;
+
 export default function App() {
-  const enrichedQuestions = useMemo(() => enrichQuestions(QUESTIONS), []);
-  const [index, setIndex] = useLocalStorage<number>(STORAGE_KEYS.INDEX, 0);
-  const [completed, setCompleted] = useLocalStorage<Set<number>>(STORAGE_KEYS.COMPLETED, new Set());
-  const [bookmarks, setBookmarks] = useLocalStorage<Set<number>>(STORAGE_KEYS.BOOKMARKS, new Set());
-  const [mode, setMode] = useLocalStorage<Mode>(STORAGE_KEYS.MODE, "sequential");
-  const [notes, setNotes] = useLocalStorage<Record<number, string>>(STORAGE_KEYS.NOTES, {});
+  // Framework selection
+  const [selectedFramework, setSelectedFramework] = useLocalStorage<QuestionSetId>(
+    STORAGE_KEYS.SELECTED_FRAMEWORK,
+    "angular"
+  );
+  const [showFrameworkModal, setShowFrameworkModal] = useState(false);
+
+  // Check if first visit
+  useEffect(() => {
+    const hasVisited = localStorage.getItem(STORAGE_KEYS.SELECTED_FRAMEWORK);
+    if (!hasVisited) {
+      setShowFrameworkModal(true);
+    }
+  }, []);
+
+  // Get questions for selected framework
+  const allFrameworkQuestions = useMemo(() => {
+    switch (selectedFramework) {
+      case "nextjs":
+        return NEXTJS_QUESTIONS;
+      case "react":
+        return REACT_QUESTIONS;
+      case "redux":
+        return REDUX_QUESTIONS;
+      default:
+        return QUESTIONS;
+    }
+  }, [selectedFramework]);
+
+  const enrichedQuestions = useMemo(
+    () => enrichQuestions(allFrameworkQuestions),
+    [allFrameworkQuestions]
+  );
+
+  // Framework-specific state
+  const [index, setIndex] = useLocalStorage<number>(
+    getFrameworkKey(selectedFramework, STORAGE_KEYS.INDEX),
+    0
+  );
+  const [completed, setCompleted] = useLocalStorage<Set<number>>(
+    getFrameworkKey(selectedFramework, STORAGE_KEYS.COMPLETED),
+    new Set()
+  );
+  const [bookmarks, setBookmarks] = useLocalStorage<Set<number>>(
+    getFrameworkKey(selectedFramework, STORAGE_KEYS.BOOKMARKS),
+    new Set()
+  );
+  const [mode, setMode] = useLocalStorage<Mode>(
+    getFrameworkKey(selectedFramework, STORAGE_KEYS.MODE),
+    "sequential"
+  );
+  const [notes, setNotes] = useLocalStorage<Record<number, string>>(
+    getFrameworkKey(selectedFramework, STORAGE_KEYS.NOTES),
+    {}
+  );
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -34,6 +95,16 @@ export default function App() {
       setRandomOrder(indices.sort(() => Math.random() - 0.5));
     }
   }, [enrichedQuestions.length, randomOrder.length]);
+
+  // Handle framework change
+  const handleFrameworkChange = useCallback(
+    (framework: QuestionSetId) => {
+      setSelectedFramework(framework);
+      setIndex(0); // Reset to first question
+      success(`Switched to ${framework}! 🎉`);
+    },
+    [setSelectedFramework, setIndex, success]
+  );
 
   // Filter questions
   const filteredQuestions = useMemo(() => {
@@ -103,7 +174,7 @@ export default function App() {
           warning("Bookmark removed");
         } else {
           next.add(id);
-          success("Question bookmarked!");
+          success("Bookmarked! ⭐");
         }
         return next;
       });
@@ -111,70 +182,44 @@ export default function App() {
     [setBookmarks, success, warning]
   );
 
-  const shuffleQuestions = useCallback(() => {
-    const indices = Array.from({ length: enrichedQuestions.length }, (_, i) => i);
-    setRandomOrder(indices.sort(() => Math.random() - 0.5));
-    setIndex(0);
-    success("Questions shuffled!");
-  }, [enrichedQuestions.length, setIndex, success]);
+  const saveNote = useCallback(
+    (note: string) => {
+      if (item) {
+        setNotes((prev) => ({ ...prev, [item.id]: note }));
+        success("Note saved!");
+      }
+    },
+    [item, setNotes, success]
+  );
 
-  const resetProgress = useCallback(() => {
-    if (confirm("Reset all progress? This cannot be undone.")) {
+  const handleReset = useCallback(() => {
+    if (window.confirm(`Reset all progress for ${selectedFramework}? This cannot be undone.`)) {
       setCompleted(new Set());
+      setBookmarks(new Set());
+      setNotes({});
       setIndex(0);
       success("Progress reset!");
     }
-  }, [setCompleted, setIndex, success]);
+  }, [selectedFramework, setCompleted, setBookmarks, setNotes, setIndex, success]);
 
-  const saveNote = useCallback(
-    (questionId: number, note: string) => {
-      setNotes((prev) => ({ ...prev, [questionId]: note }));
-      success("Note saved!");
+  const handleJump = useCallback(
+    (targetIndex: number) => {
+      setIndex(targetIndex);
     },
-    [setNotes, success]
+    [setIndex]
   );
-
-  if (!item) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center">
-          <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-            No questions match your filters
-          </h2>
-          <button
-            onClick={() => {
-              setSearchQuery("");
-              setSelectedCategory("");
-              setSelectedDifficulty("");
-              setMode("sequential");
-            }}
-            className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
-          >
-            Reset Filters
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <ErrorBoundary>
       <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-        {/* Sidebar */}
         <Sidebar
           isOpen={sidebarOpen}
           onToggle={() => setSidebarOpen(!sidebarOpen)}
-          // Stats
           totalQuestions={enrichedQuestions.length}
           completed={completed.size}
           bookmarked={bookmarks.size}
-          // Mode
           mode={mode}
-          onModeChange={(newMode) => {
-            setMode(newMode);
-            if (newMode === "random") shuffleQuestions();
-          }}
-          // Search & Filters
+          onModeChange={setMode}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           questions={enrichedQuestions}
@@ -182,45 +227,57 @@ export default function App() {
           selectedDifficulty={selectedDifficulty}
           onCategoryChange={setSelectedCategory}
           onDifficultyChange={setSelectedDifficulty}
-          // Actions
-          onResetProgress={resetProgress}
+          onResetProgress={handleReset}
           currentIndex={safeIndex}
           totalFiltered={total}
-          onJumpToQuestion={setIndex}
+          onJumpToQuestion={handleJump}
           questionList={currentQuestionList}
-        />
+        >
+          {/* Framework Switcher in Sidebar */}
+          <FrameworkSwitcher
+            currentFramework={selectedFramework}
+            onSwitch={handleFrameworkChange}
+            onOpenModal={() => setShowFrameworkModal(true)}
+          />
+        </Sidebar>
 
-        {/* Main Content - Focused on Questions */}
-        <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"}`}>
-          <div className="container mx-auto max-w-4xl px-4 py-8 md:px-8 md:py-12">
-            <QuestionCardPro
-              item={item}
-              index={safeIndex}
-              total={total}
-              onPrev={goPrev}
-              onNext={goNext}
-              canPrev={safeIndex > 0}
-              canNext={safeIndex < total - 1}
-              isBookmarked={bookmarks.has(item.id)}
-              isCompleted={completed.has(item.id)}
-              onToggleBookmark={() => toggleBookmark(item.id)}
-              note={notes[item.id]}
-              onSaveNote={(note) => saveNote(item.id, note)}
-            />
+        <main className="min-h-screen flex-1 lg:ml-80">
+          <div className="mx-auto max-w-4xl px-4 py-8">
+            {item ? (
+              <QuestionCardPro
+                item={item}
+                index={safeIndex}
+                total={total}
+                onPrev={goPrev}
+                onNext={goNext}
+                canPrev={safeIndex > 0}
+                canNext={safeIndex < total - 1}
+                isBookmarked={bookmarks.has(item.id)}
+                isCompleted={completed.has(item.id)}
+                onToggleBookmark={() => toggleBookmark(item.id)}
+                note={notes[item.id] || ""}
+                onSaveNote={saveNote}
+              />
+            ) : (
+              <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <p className="text-gray-600 dark:text-gray-400">
+                  No questions match your filters. Try adjusting your search or filters.
+                </p>
+              </div>
+            )}
           </div>
         </main>
 
+        {/* Framework Selector Modal */}
+        <FrameworkSelector
+          isOpen={showFrameworkModal}
+          onClose={() => setShowFrameworkModal(false)}
+          onSelect={handleFrameworkChange}
+          currentFramework={selectedFramework}
+        />
+
         {/* Toast Notifications */}
-        <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
-          {toasts.map((toast) => (
-            <Toast
-              key={toast.id}
-              message={toast.message}
-              type={toast.type}
-              onClose={() => removeToast(toast.id)}
-            />
-          ))}
-        </div>
+        <Toast toasts={toasts} onClose={removeToast} />
       </div>
     </ErrorBoundary>
   );

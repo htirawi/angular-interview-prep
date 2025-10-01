@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import SearchBar from "./SearchBar";
 import FilterPanel from "./FilterPanel";
 import StatsPanel from "./StatsPanel";
@@ -29,6 +30,7 @@ type Props = {
   totalFiltered: number;
   onJumpToQuestion: (index: number) => void;
   questionList: QA[];
+  children?: ReactNode;
 };
 
 export default function Sidebar({
@@ -51,6 +53,7 @@ export default function Sidebar({
   totalFiltered,
   onJumpToQuestion,
   questionList,
+  children,
 }: Props) {
   return (
     <>
@@ -141,6 +144,9 @@ export default function Sidebar({
               </button>
             </div>
           </div>
+
+          {/* Children (e.g., Framework Switcher) */}
+          {children}
 
           {/* Search */}
           <div className="mb-6">

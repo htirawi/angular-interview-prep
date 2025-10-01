@@ -16,6 +16,7 @@ export const STORAGE_KEYS = {
   NOTES: "mockInterview.notes",
   STUDY_TIME: "mockInterview.studyTime",
   THEME: "theme",
+  SELECTED_FRAMEWORK: "mockInterview.selectedFramework",
 } as const;
 
 export const PRACTICE_MODES = {
@@ -69,4 +70,3 @@ export const UI_CONFIG = {
   maxSearchResults: 50,
   questionsPerPage: 1,
 } as const;
-
