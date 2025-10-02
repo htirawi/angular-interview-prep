@@ -112,17 +112,20 @@ export class AuthManager {
   }
 
   hasPermission(permission: string): boolean {
-    if (!this.state.user) return false;
-    return this.state.user.permissions.includes(permission) || this.state.user.role === "admin";
+    const { user } = this.state;
+    if (!user) return false;
+    return user.permissions.includes(permission) || user.role === "admin";
   }
 
   hasRole(role: string): boolean {
-    return this.state.user?.role === role;
+    const { user } = this.state;
+    return user?.role === role;
   }
 
   isTokenExpired(): boolean {
-    if (!this.state.token) return true;
-    return new Date() >= this.state.token.expiresAt;
+    const { token } = this.state;
+    if (!token) return true;
+    return new Date() >= token.expiresAt;
   }
 
   async checkAuthStatus(): Promise<void> {

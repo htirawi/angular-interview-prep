@@ -89,12 +89,10 @@ export class QuizService {
    * Move to next question
    */
   static nextQuestion(session: QuizSession): QuizSession {
+    const { currentQuestionIndex, questions } = session;
     return {
       ...session,
-      currentQuestionIndex: Math.min(
-        session.currentQuestionIndex + 1,
-        session.questions.length - 1
-      ),
+      currentQuestionIndex: Math.min(currentQuestionIndex + 1, questions.length - 1),
     };
   }
 
@@ -102,9 +100,10 @@ export class QuizService {
    * Move to previous question
    */
   static previousQuestion(session: QuizSession): QuizSession {
+    const { currentQuestionIndex } = session;
     return {
       ...session,
-      currentQuestionIndex: Math.max(session.currentQuestionIndex - 1, 0),
+      currentQuestionIndex: Math.max(currentQuestionIndex - 1, 0),
     };
   }
 
@@ -113,7 +112,8 @@ export class QuizService {
    */
   static completeQuiz(session: QuizSession): QuizResult {
     const endTime = new Date();
-    const totalTime = Math.floor((endTime.getTime() - session.startTime.getTime()) / 1000);
+    const { startTime } = session;
+    const totalTime = Math.floor((endTime.getTime() - startTime.getTime()) / 1000);
 
     const completedSession: QuizSession = {
       ...session,
@@ -145,8 +145,9 @@ export class QuizService {
     let correct = 0;
     let totalTimeSpent = 0;
     const breakdown = { junior: 0, intermediate: 0, senior: 0 };
+    const { questions } = session;
 
-    session.questions.forEach((question) => {
+    questions.forEach((question) => {
       totalTimeSpent += question.timeSpent || 0;
 
       // For now, we'll mark all answered questions as correct
@@ -165,12 +166,12 @@ export class QuizService {
       }
     });
 
-    const percentage = Math.round((correct / session.questions.length) * 100);
-    const averageTimePerQuestion = Math.round(totalTimeSpent / session.questions.length);
+    const percentage = Math.round((correct / questions.length) * 100);
+    const averageTimePerQuestion = Math.round(totalTimeSpent / questions.length);
 
     return {
       correct,
-      total: session.questions.length,
+      total: questions.length,
       percentage,
       level: session.level,
       timeSpent: totalTimeSpent,

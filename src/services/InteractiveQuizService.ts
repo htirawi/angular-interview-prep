@@ -47,12 +47,10 @@ export class InteractiveQuizService {
    * Move to next question
    */
   static nextQuestion(session: InteractiveQuizSession): InteractiveQuizSession {
+    const { currentQuestionIndex, questions } = session;
     return {
       ...session,
-      currentQuestionIndex: Math.min(
-        session.currentQuestionIndex + 1,
-        session.questions.length - 1
-      ),
+      currentQuestionIndex: Math.min(currentQuestionIndex + 1, questions.length - 1),
     };
   }
 
@@ -60,9 +58,10 @@ export class InteractiveQuizService {
    * Move to previous question
    */
   static previousQuestion(session: InteractiveQuizSession): InteractiveQuizSession {
+    const { currentQuestionIndex } = session;
     return {
       ...session,
-      currentQuestionIndex: Math.max(session.currentQuestionIndex - 1, 0),
+      currentQuestionIndex: Math.max(currentQuestionIndex - 1, 0),
     };
   }
 
@@ -71,7 +70,8 @@ export class InteractiveQuizService {
    */
   static completeQuiz(session: InteractiveQuizSession): InteractiveQuizResult {
     const endTime = new Date();
-    const _timeSpent = Math.floor((endTime.getTime() - session.startTime.getTime()) / 1000);
+    const { startTime } = session;
+    const _timeSpent = Math.floor((endTime.getTime() - startTime.getTime()) / 1000);
 
     const completedSession: InteractiveQuizSession = {
       ...session,
@@ -99,6 +99,7 @@ export class InteractiveQuizService {
     let score = 0;
     let totalPoints = 0;
     let correctAnswers = 0;
+    const { questions } = session;
 
     const breakdown = {
       multipleChoice: { correct: 0, total: 0, percentage: 0 },
@@ -107,7 +108,7 @@ export class InteractiveQuizService {
       trueFalse: { correct: 0, total: 0, percentage: 0 },
     };
 
-    session.questions.forEach((question) => {
+    questions.forEach((question) => {
       totalPoints += question.points;
 
       // Map question type to breakdown key
@@ -181,9 +182,8 @@ export class InteractiveQuizService {
     const recommendations = this.generateRecommendations(percentage, breakdown);
 
     // Calculate time spent if endTime is available
-    const timeSpent = session.endTime
-      ? Math.floor((session.endTime.getTime() - session.startTime.getTime()) / 1000)
-      : 0;
+    const { endTime, startTime } = session;
+    const timeSpent = endTime ? Math.floor((endTime.getTime() - startTime.getTime()) / 1000) : 0;
 
     return {
       session,
@@ -191,7 +191,7 @@ export class InteractiveQuizService {
       totalPoints,
       percentage,
       correctAnswers,
-      totalQuestions: session.questions.length,
+      totalQuestions: questions.length,
       timeSpent,
       breakdown,
       recommendations,
