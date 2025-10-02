@@ -11,7 +11,7 @@ export interface Command {
 }
 
 export interface CommandHistory {
-  execute(command: Command): Promise<void>;
+  execute(_command: Command): Promise<void>;
   undo(): Promise<void>;
   redo(): Promise<void>;
   canUndo(): boolean;
@@ -90,7 +90,7 @@ export class BookmarkQuestionCommand implements Command {
   constructor(
     private questionId: number,
     private framework: string,
-    private bookmarkService: { toggleBookmark: (id: number, framework: string) => Promise<void> },
+    private bookmarkService: { toggleBookmark: (_id: number, _framework: string) => Promise<void> },
     private wasBookmarked: boolean
   ) {}
 
@@ -119,7 +119,7 @@ export class CompleteQuestionCommand implements Command {
   constructor(
     private questionId: number,
     private framework: string,
-    private progressService: { markCompleted: (id: number, framework: string) => Promise<void> },
+    private progressService: { markCompleted: (_id: number, _framework: string) => Promise<void> },
     private wasCompleted: boolean
   ) {}
 

@@ -3,6 +3,7 @@
  */
 
 import { useState } from "react";
+
 import type { QuizQuestion, QuizMode } from "../../types";
 
 interface QuizQuestionCardProps {
@@ -10,7 +11,7 @@ interface QuizQuestionCardProps {
   questionNumber: number;
   totalQuestions: number;
   mode: QuizMode;
-  onAnswerSubmit: (answer: string) => void;
+  onAnswerSubmit: (_answer: string) => void;
   onNext: () => void;
   onPrevious: () => void;
   canGoNext: boolean;

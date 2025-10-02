@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./useLocalStorage";
+
 import { STORAGE_KEYS } from "../shared/constants/app";
 import type { FrameworkId, PracticeMode, Question } from "../types";
 
@@ -9,8 +10,8 @@ import type { FrameworkId, PracticeMode, Question } from "../types";
  */
 export function useProgressManager(
   selectedFramework: FrameworkId,
-  success: (message: string) => void,
-  warning: (message: string) => void
+  success: (_message: string) => void,
+  warning: (_message: string) => void
 ) {
   // Framework-specific state
   const [index, setIndex] = useLocalStorage<number>(
