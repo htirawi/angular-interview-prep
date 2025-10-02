@@ -26,6 +26,7 @@ export function LazyLoader({ fallback, children }: LazyLoaderProps) {
 /**
  * Create a lazy-loaded component with loading fallback
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function createLazyComponent<T extends ComponentType<Record<string, unknown>>>(
   importFunc: () => Promise<{ default: T }>,
   fallback?: ReactNode

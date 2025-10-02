@@ -222,6 +222,7 @@ export function AccessibilityEnhancements({ children }: AccessibilityEnhancement
 /**
  * Hook for screen reader announcements
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useScreenReaderAnnouncement() {
   const announce = (message: string) => {
     const announcement = document.createElement("div");
