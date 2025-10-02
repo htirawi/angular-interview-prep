@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import path from "path";
 
 export default defineConfig({
   plugins: [
@@ -45,6 +46,21 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@components": path.resolve(__dirname, "./src/components"),
+      "@services": path.resolve(__dirname, "./src/services"),
+      "@types": path.resolve(__dirname, "./src/types"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+      "@data": path.resolve(__dirname, "./src/data"),
+      "@contexts": path.resolve(__dirname, "./src/contexts"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
+      "@shared": path.resolve(__dirname, "./src/shared"),
+      "@core": path.resolve(__dirname, "./src/core"),
+    },
+  },
   server: {
     port: 5173,
     host: true,

@@ -1,5 +1,30 @@
-import { useState } from "react";
-import type { ComparisonTableProps } from "../../types";
+import React, { useState } from "react";
+import type { ComparisonTableProps } from "@/types/ui";
+
+/**
+ * Helper function to render text with bold formatting
+ */
+function renderBoldText(text: string): React.JSX.Element {
+  if (!text.includes("**")) {
+    return <span>{text}</span>;
+  }
+
+  const parts = text.split("**");
+  return (
+    <span>
+      {parts.map((part, i) => {
+        if (i % 2 === 1) {
+          return (
+            <strong key={i} className="font-bold text-gray-900 dark:text-white">
+              {part}
+            </strong>
+          );
+        }
+        return part;
+      })}
+    </span>
+  );
+}
 
 /**
  * Enhanced comparison table component with brilliant UI/UX
@@ -63,7 +88,7 @@ export function ComparisonTable({ rows }: ComparisonTableProps) {
                   }`}
                 ></div>
                 <div className="text-sm font-semibold text-gray-900 dark:text-white">
-                  {row.feature}
+                  {renderBoldText(row.feature)}
                 </div>
               </div>
             </div>
@@ -77,7 +102,7 @@ export function ComparisonTable({ rows }: ComparisonTableProps) {
                   }`}
                 ></div>
                 <div className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-                  {row.reactive}
+                  {renderBoldText(row.reactive)}
                 </div>
               </div>
             </div>
@@ -91,7 +116,7 @@ export function ComparisonTable({ rows }: ComparisonTableProps) {
                   }`}
                 ></div>
                 <div className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-                  {row.template}
+                  {renderBoldText(row.template)}
                 </div>
               </div>
             </div>

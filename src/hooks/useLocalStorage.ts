@@ -4,7 +4,16 @@ export function useLocalStorage<T>(key: string, initial: T) {
   const read = useCallback((): T => {
     try {
       const raw = localStorage.getItem(key);
-      return raw ? (JSON.parse(raw) as T) : initial;
+      if (!raw) return initial;
+
+      const parsed = JSON.parse(raw);
+
+      // Handle Set objects - convert arrays back to Sets
+      if (initial instanceof Set && Array.isArray(parsed)) {
+        return new Set(parsed) as T;
+      }
+
+      return parsed as T;
     } catch {
       return initial;
     }
@@ -14,7 +23,9 @@ export function useLocalStorage<T>(key: string, initial: T) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      // Handle Set objects - convert Sets to arrays for storage
+      const valueToStore = value instanceof Set ? Array.from(value) : value;
+      localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch {
       // ignore
     }

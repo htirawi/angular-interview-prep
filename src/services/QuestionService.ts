@@ -1,6 +1,7 @@
 import type { Question, PracticeMode } from "../types";
 import { questionRepository } from "../repositories/QuestionRepository";
 import type { FrameworkId } from "../types/framework";
+import { loadFrameworkData, loadBasicQuestions } from "../data/lazyLoaders";
 
 /**
  * Enhanced Question Service with Repository Pattern
@@ -112,7 +113,7 @@ export class QuestionService {
    * Get unique categories from questions
    */
   static getCategories(questions: Question[]): string[] {
-    const categories = new Set(questions.map((q) => q.category).filter(Boolean));
+    const categories = new Set(questions.map((q) => q.category).filter(Boolean) as string[]);
     return Array.from(categories).sort();
   }
 
@@ -120,7 +121,7 @@ export class QuestionService {
    * Get unique difficulties from questions
    */
   static getDifficulties(questions: Question[]): string[] {
-    const difficulties = new Set(questions.map((q) => q.difficulty).filter(Boolean));
+    const difficulties = new Set(questions.map((q) => q.difficulty).filter(Boolean) as string[]);
     return Array.from(difficulties).sort();
   }
 
@@ -166,5 +167,36 @@ export class QuestionService {
     return {
       size: questionRepository.getCacheSize(),
     };
+  }
+
+  /**
+   * Lazy load framework-specific questions
+   * This reduces initial bundle size by loading data only when needed
+   */
+  static async loadFrameworkQuestions(framework: FrameworkId): Promise<Question[]> {
+    try {
+      console.warn(`Loading questions for framework: ${framework}`);
+      const questions = await loadFrameworkData(framework);
+      console.warn(`Loaded ${questions.length} questions for ${framework}`);
+      return questions as Question[];
+    } catch (error) {
+      console.error(`Failed to load questions for ${framework}:`, error);
+      // Fallback to basic questions if framework-specific loading fails
+      const basicQuestions = await loadBasicQuestions();
+      return basicQuestions.filter(
+        (q) => (q as unknown as Record<string, unknown>).framework === framework
+      ) as Question[];
+    }
+  }
+
+  /**
+   * Preload framework questions for better UX
+   */
+  static async preloadFrameworkQuestions(framework: FrameworkId): Promise<void> {
+    try {
+      await this.loadFrameworkQuestions(framework);
+    } catch (error) {
+      console.warn(`Failed to preload questions for ${framework}:`, error);
+    }
   }
 }

@@ -35,9 +35,9 @@ export function parseComparisonTable(tableRows: string[]): ComparisonRow[] {
         .map((cell) => cell.trim())
         .filter((cell) => cell);
       return {
-        feature: cells[0].replace(/\*\*(.*?)\*\*/g, "$1"),
-        reactive: cells[1].replace(/\*\*(.*?)\*\*/g, "$1"),
-        template: cells[2].replace(/\*\*(.*?)\*\*/g, "$1"),
+        feature: cells[0], // Keep bold formatting for rendering
+        reactive: cells[1], // Keep bold formatting for rendering
+        template: cells[2], // Keep bold formatting for rendering
       };
     });
 }
@@ -63,7 +63,7 @@ export function parseRegularTable(tableRows: string[]): TableRow[] {
         cells.some((cell) => cell.includes("**")) || cells.every((cell) => cell.match(/^-+$/));
 
       return {
-        cells: cells.map((cell) => cell.replace(/\*\*(.*?)\*\*/g, "$1")),
+        cells, // Keep bold formatting for rendering
         isHeader: isHeaderRow,
       };
     });

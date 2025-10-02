@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
-import QuestionCard from "../components/QuestionCard";
-import Sidebar from "../components/Sidebar";
+import QuestionCard from "../components/study/QuestionCard";
+import Sidebar from "../components/layout/Sidebar";
 import { QUESTION_SETS } from "../data";
-import { FrameworkIcon } from "../components/icons/FrameworkIcon";
+import { FrameworkIcon } from "../components/common/icons/FrameworkIcon";
 import { ErrorBoundary } from "../core/components/ErrorBoundary";
 import { useToast } from "../shared/hooks/useToast";
 import Toast from "../shared/components/Toast";
 import { useFrameworkManager } from "../hooks/useFrameworkManager";
 import { useQuestionNavigation } from "../hooks/useQuestionNavigation";
 import { useProgressManager } from "../hooks/useProgressManager";
+import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
 import { QuestionService } from "../services/QuestionService";
 import { SidebarProvider } from "../contexts/SidebarContext";
 import type { Question } from "../types";
@@ -21,7 +22,7 @@ export default function InterviewPage() {
   const { toasts, removeToast, success, warning } = useToast();
 
   // Framework management
-  const { selectedFramework, isValidFramework, enrichedQuestions, navigate } =
+  const { selectedFramework, isValidFramework, enrichedQuestions, navigate, isLoading, error } =
     useFrameworkManager();
 
   // Progress management
@@ -91,7 +92,7 @@ export default function InterviewPage() {
 
   const handleFrameworkChange = useCallback(
     (newFramework: string) => {
-      navigate(`/${newFramework}`);
+      navigate(`/study/${newFramework}`);
       success(`Switched to ${newFramework}! 🎉`);
     },
     [navigate, success]
@@ -101,9 +102,55 @@ export default function InterviewPage() {
     navigate("/");
   }, [navigate]);
 
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    onNextQuestion: handleNext,
+    onPreviousQuestion: handlePrev,
+    onToggleBookmark: handleToggleBookmark,
+    onRandomQuestion: () => {
+      const randomIndex = Math.floor(Math.random() * total);
+      setIndex(randomIndex);
+    },
+  });
+
   // Early return for invalid framework
   if (!isValidFramework) {
     return null; // Will redirect
+  }
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center">
+          <div className="mb-4 h-16 w-16 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            Loading {selectedFramework} questions...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center">
+          <div className="mb-4 text-6xl">😞</div>
+          <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+            Failed to Load Questions
+          </h2>
+          <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   // Sidebar context value

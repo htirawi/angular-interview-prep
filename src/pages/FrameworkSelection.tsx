@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { QUESTION_SETS } from "../data";
-import { FrameworkIcon } from "../components/icons/FrameworkIcon";
+import { FrameworkIcon } from "../components/common/icons/FrameworkIcon";
 
 export default function FrameworkSelection() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function FrameworkSelection() {
           {QUESTION_SETS.map((framework) => (
             <button
               key={framework.id}
-              onClick={() => navigate(`/${framework.id}`)}
+              onClick={() => navigate(`/study/${framework.id}`)}
               className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-8 text-center transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-2xl dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600"
             >
               {/* Icon */}

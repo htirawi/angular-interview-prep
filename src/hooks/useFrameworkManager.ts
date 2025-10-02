@@ -1,12 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { REDUX_QUESTIONS, QUESTION_SETS } from "../data";
-import { ANGULAR_ENHANCED_QUESTIONS } from "../data/angular-enhanced";
-import { REACT_ENHANCED_QUESTIONS } from "../data/react-enhanced";
-import { NEXTJS_ENHANCED_QUESTIONS } from "../data/nextjs-enhanced";
-import { RANDOM_ENHANCED_QUESTIONS } from "../data/random-enhanced";
+import { QUESTION_SETS } from "../data";
 import { enrichQuestions } from "../utils/questionMetadata";
-import type { FrameworkId } from "../types";
+import { QuestionService } from "../services/QuestionService";
+import type { FrameworkId, Question } from "../types";
 
 /**
  * Custom hook for managing framework-related logic
@@ -49,33 +46,41 @@ export function useFrameworkManager() {
     document.title = getFrameworkTitle(selectedFramework);
   }, [selectedFramework]);
 
-  // Get questions for selected framework
-  const allFrameworkQuestions = useMemo(() => {
-    switch (selectedFramework) {
-      case "angular":
-        return ANGULAR_ENHANCED_QUESTIONS;
-      case "nextjs":
-        return NEXTJS_ENHANCED_QUESTIONS;
-      case "react":
-        return REACT_ENHANCED_QUESTIONS;
-      case "redux":
-        return REDUX_QUESTIONS;
-      case "random":
-        return RANDOM_ENHANCED_QUESTIONS;
-      default:
-        return ANGULAR_ENHANCED_QUESTIONS;
-    }
+  // State for lazy-loaded questions
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Lazy load questions for selected framework
+  useEffect(() => {
+    const loadQuestions = async () => {
+      if (!selectedFramework) return;
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const loadedQuestions = await QuestionService.loadFrameworkQuestions(selectedFramework);
+        setQuestions(loadedQuestions);
+      } catch (err) {
+        console.error(`Failed to load questions for ${selectedFramework}:`, err);
+        setError(err instanceof Error ? err.message : "Failed to load questions");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadQuestions();
   }, [selectedFramework]);
 
-  const enrichedQuestions = useMemo(
-    () => enrichQuestions(allFrameworkQuestions),
-    [allFrameworkQuestions]
-  );
+  const enrichedQuestions = useMemo(() => enrichQuestions(questions), [questions]);
 
   return {
     selectedFramework,
     isValidFramework,
     enrichedQuestions,
     navigate,
+    isLoading,
+    error,
   };
 }
