@@ -118,12 +118,12 @@ function main() {
     "Strict unused variable detection"
   );
   if (unusedCheck.success) {
-    log('✅ No unused variables found in source code', "green");
+    log("✅ No unused variables found in source code", "green");
     checks.push({ success: true });
   } else {
-    log('❌ Found unused variables in source code:', "red");
-    log('🚫 Unused variables are not allowed! Please remove or use them.', "red");
-    checks.push({ success: false, error: 'Found unused variables in source code' });
+    log("❌ Found unused variables in source code:", "red");
+    log("🚫 Unused variables are not allowed! Please remove or use them.", "red");
+    checks.push({ success: false, error: "Found unused variables in source code" });
   }
 
   // 8. Console Statement Check (relaxed)
@@ -136,7 +136,7 @@ function main() {
     log("⚠️  Found console statements in source code:", "yellow");
     log(consoleCheck.output, "yellow");
     // Don't fail the build for console statements, just warn
-    log('ℹ️  Note: Console statements found but not blocking push (data files excluded)', "blue");
+    log("ℹ️  Note: Console statements found but not blocking push (data files excluded)", "blue");
     checks.push({ success: true });
   } else {
     log("✅ No console statements found in source code", "green");
@@ -150,12 +150,12 @@ function main() {
     "Strict unused import detection"
   );
   if (importCheck.success) {
-    log('✅ No unused imports found in source code', "green");
+    log("✅ No unused imports found in source code", "green");
     checks.push({ success: true });
   } else {
-    log('❌ Found unused imports in source code:', "red");
-    log('🚫 Unused imports are not allowed! Please remove them.', "red");
-    checks.push({ success: false, error: 'Found unused imports in source code' });
+    log("❌ Found unused imports in source code:", "red");
+    log("🚫 Unused imports are not allowed! Please remove them.", "red");
+    checks.push({ success: false, error: "Found unused imports in source code" });
   }
 
   // Summary

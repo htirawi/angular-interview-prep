@@ -70,10 +70,6 @@ export class InteractiveQuizService {
    * Complete the quiz and calculate results
    */
   static completeQuiz(session: InteractiveQuizSession): InteractiveQuizResult {
-    // console.log("InteractiveQuizService.completeQuiz called with session:", session);
-    // console.log("Session answers:", session.answers);
-    // console.log("Total questions:", session.questions.length);
-
     const endTime = new Date();
     const _timeSpent = Math.floor((endTime.getTime() - session.startTime.getTime()) / 1000);
 
@@ -83,11 +79,8 @@ export class InteractiveQuizService {
       isCompleted: true,
     };
 
-    // console.log("About to call calculateResults with completedSession:", completedSession);
-
     try {
       const result = this.calculateResults(completedSession);
-      // console.log("Quiz results calculated successfully:", result);
 
       // Save session
       this.saveSession(completedSession);
@@ -103,10 +96,6 @@ export class InteractiveQuizService {
    * Calculate quiz results
    */
   private static calculateResults(session: InteractiveQuizSession): InteractiveQuizResult {
-    // console.log("calculateResults called with session:", session);
-    // console.log("Session questions:", session.questions.length);
-    // console.log("Session answers:", session.answers);
-
     let score = 0;
     let totalPoints = 0;
     let correctAnswers = 0;
@@ -195,18 +184,6 @@ export class InteractiveQuizService {
     const timeSpent = session.endTime
       ? Math.floor((session.endTime.getTime() - session.startTime.getTime()) / 1000)
       : 0;
-
-    // console.log("Quiz results calculated:", {
-    //   score,
-    //   totalPoints,
-    //   percentage,
-    //   correctAnswers,
-    //   totalQuestions: session.questions.length,
-    //   timeSpent,
-    //   breakdown,
-    //   questionsProcessed: session.questions.length,
-    //   answersProvided: Object.keys(session.answers).length,
-    // });
 
     return {
       session,
@@ -302,9 +279,7 @@ export class InteractiveQuizService {
    */
   static async loadQuizData(): Promise<Record<string, Record<string, InteractiveQuizQuestion[]>>> {
     try {
-      // console.log("Loading interactive quiz data...");
       const data = await loadInteractiveQuizData();
-      // console.log("Interactive quiz data loaded successfully");
 
       // Transform the data to match expected format
       return {
@@ -322,7 +297,6 @@ export class InteractiveQuizService {
   static async preloadQuizData(): Promise<void> {
     try {
       await this.loadQuizData();
-      // console.log("Interactive quiz data preloaded");
     } catch (error) {
       console.warn("Failed to preload interactive quiz data:", error);
     }

@@ -81,15 +81,11 @@ export default function InteractiveQuizPage() {
   // Handle answer submission
   const handleAnswerSubmit = useCallback(
     (questionId: string, answer: string | string[]) => {
-      // console.log("handleAnswerSubmit called:", { questionId, answer });
       if (!session) {
-        // console.log("No session found in handleAnswerSubmit");
         return;
       }
 
-      // console.log("Session before submitAnswer:", session);
       const updatedSession = InteractiveQuizService.submitAnswer(session, questionId, answer);
-      // console.log("Session after submitAnswer:", updatedSession);
       setSession(updatedSession);
     },
     [session]
@@ -113,20 +109,14 @@ export default function InteractiveQuizPage() {
 
   // Handle quiz completion
   const handleCompleteQuiz = useCallback(() => {
-    // console.log("handleCompleteQuiz called, session:", session);
     if (!session) {
-      // console.log("No session found, returning");
       return;
     }
 
     try {
-      // console.log("Calling InteractiveQuizService.completeQuiz");
       const quizResult = InteractiveQuizService.completeQuiz(session);
-      // console.log("Quiz result:", quizResult);
       setResult(quizResult);
-      // console.log("Result state set to:", quizResult);
       setSession(null); // Clear session to stop timer
-      // console.log("Session cleared, should now show results page");
     } catch (error) {
       console.error("Error completing quiz:", error);
     }
