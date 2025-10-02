@@ -4,20 +4,17 @@
 
 import {
   QuizLevel,
-  QuizMode,
   QuizQuestion,
   QuizSession,
   QuizScore,
   QuizConfig,
   QuizResult,
   QuizStats,
-  LevelProgress,
   Achievement,
   DIFFICULTY_MAPPING,
   QUESTIONS_PER_LEVEL,
-  SCORING_WEIGHTS,
 } from "@/types/quiz";
-import type { Question, EnrichedQuestion } from "../types/question";
+import type { EnrichedQuestion } from "../types/question";
 
 export class QuizService {
   private static readonly STORAGE_KEY = "quiz_sessions";
@@ -296,7 +293,7 @@ export class QuizService {
     const sessions = localStorage.getItem(this.STORAGE_KEY);
     if (!sessions) return [];
 
-    return JSON.parse(sessions).map((s: any) => ({
+    return JSON.parse(sessions).map((s: Record<string, unknown>) => ({
       ...s,
       startTime: new Date(s.startTime),
       endTime: s.endTime ? new Date(s.endTime) : undefined,

@@ -5,7 +5,7 @@
 
 export interface CacheItem {
   key: string;
-  data: any;
+  data: unknown;
   timestamp: number;
   expiry: number;
 }
@@ -13,7 +13,7 @@ export interface CacheItem {
 export interface OfflineQueueItem {
   id: string;
   action: string;
-  data: any;
+  data: unknown;
   timestamp: number;
   retries: number;
 }
@@ -36,10 +36,10 @@ class OfflineService {
       navigator.serviceWorker
         .register("/sw.js")
         .then((registration) => {
-          console.log("Service Worker registered:", registration);
+          console.warn("Service Worker registered:", registration);
         })
         .catch((error) => {
-          console.log("Service Worker registration failed:", error);
+          console.error("Service Worker registration failed:", error);
         });
     }
   }
@@ -85,7 +85,7 @@ class OfflineService {
   /**
    * Cache data for offline access
    */
-  cacheData(key: string, data: any, expiryHours: number = 24): void {
+  cacheData(key: string, data: unknown, expiryHours: number = 24): void {
     const now = Date.now();
     const expiry = now + expiryHours * 60 * 60 * 1000;
 
@@ -103,7 +103,7 @@ class OfflineService {
   /**
    * Get cached data
    */
-  getCachedData(key: string): any | null {
+  getCachedData(key: string): unknown | null {
     const item = this.cache.get(key);
 
     if (!item) {
@@ -143,7 +143,7 @@ class OfflineService {
   /**
    * Add action to offline queue
    */
-  addToOfflineQueue(action: string, data: any): void {
+  addToOfflineQueue(action: string, data: unknown): void {
     const queueItem: OfflineQueueItem = {
       id: Date.now().toString(),
       action,
@@ -287,10 +287,10 @@ export const offlineService = new OfflineService();
 export function useOffline() {
   return {
     isOffline: () => offlineService.isOffline(),
-    cacheData: (key: string, data: any, expiryHours?: number) =>
+    cacheData: (key: string, data: unknown, expiryHours?: number) =>
       offlineService.cacheData(key, data, expiryHours),
     getCachedData: (key: string) => offlineService.getCachedData(key),
-    addToQueue: (action: string, data: any) => offlineService.addToOfflineQueue(action, data),
+    addToQueue: (action: string, data: unknown) => offlineService.addToOfflineQueue(action, data),
     getQueueStatus: () => offlineService.getQueueStatus(),
     getCacheStats: () => offlineService.getCacheStats(),
     clearExpiredCache: () => offlineService.clearExpiredCache(),

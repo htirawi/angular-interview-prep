@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import ModeSelection from "@pages/ModeSelection";
-import FrameworkSelection from "@pages/FrameworkSelection";
-import InterviewPage from "@pages/InterviewPage";
-import QuizSelection from "@pages/QuizSelection";
-import InteractiveQuizPage from "@pages/InteractiveQuizPage";
-import { ErrorBoundary } from "@core/components/ErrorBoundary";
-import { ThemeProvider } from "@contexts/ThemeContext";
-import { AccessibilityEnhancements } from "@components/common/AccessibilityEnhancements";
+import ModeSelection from "./pages/ModeSelection";
+import FrameworkSelection from "./pages/FrameworkSelection";
+import InterviewPage from "./pages/InterviewPage";
+import QuizSelection from "./pages/QuizSelection";
+import InteractiveQuizPage from "./pages/InteractiveQuizPage";
+import { ErrorBoundary } from "./core/components/ErrorBoundary";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { AccessibilityEnhancements } from "./components/common/AccessibilityEnhancements";
 
 export default function App() {
   return (

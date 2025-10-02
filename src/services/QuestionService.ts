@@ -175,15 +175,17 @@ export class QuestionService {
    */
   static async loadFrameworkQuestions(framework: FrameworkId): Promise<Question[]> {
     try {
-      console.log(`Loading questions for framework: ${framework}`);
+      console.warn(`Loading questions for framework: ${framework}`);
       const questions = await loadFrameworkData(framework);
-      console.log(`Loaded ${questions.length} questions for ${framework}`);
+      console.warn(`Loaded ${questions.length} questions for ${framework}`);
       return questions as Question[];
     } catch (error) {
       console.error(`Failed to load questions for ${framework}:`, error);
       // Fallback to basic questions if framework-specific loading fails
       const basicQuestions = await loadBasicQuestions();
-      return basicQuestions.filter((q: any) => q.framework === framework) as Question[];
+      return basicQuestions.filter(
+        (q: Record<string, unknown>) => q.framework === framework
+      ) as Question[];
     }
   }
 

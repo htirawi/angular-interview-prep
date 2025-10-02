@@ -63,7 +63,7 @@ export function parseRegularTable(tableRows: string[]): TableRow[] {
         cells.some((cell) => cell.includes("**")) || cells.every((cell) => cell.match(/^-+$/));
 
       return {
-        cells: cells, // Keep bold formatting for rendering
+        cells, // Keep bold formatting for rendering
         isHeader: isHeaderRow,
       };
     });

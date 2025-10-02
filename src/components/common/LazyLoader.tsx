@@ -35,7 +35,7 @@ export function createLazyComponent<T extends ComponentType<Record<string, unkno
   return function LazyComponentWrapper(props: Record<string, unknown>) {
     return (
       <LazyLoader fallback={fallback}>
-        <LazyComponent {...props} />
+        <LazyComponent {...(props as Record<string, unknown>)} />
       </LazyLoader>
     );
   };

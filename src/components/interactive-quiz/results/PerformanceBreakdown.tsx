@@ -11,7 +11,7 @@ export function PerformanceBreakdown({ breakdown }: PerformanceBreakdownProps) {
         Performance by Question Type
       </h3>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {Object.entries(breakdown).map(([type, data]: [string, any]) => (
+        {Object.entries(breakdown).map(([type, data]: [string, Record<string, unknown>]) => (
           <div key={type} className="rounded-xl bg-gray-50 p-4 text-center dark:bg-gray-700">
             <div className="text-lg font-bold text-gray-900 dark:text-white">
               {data.correct}/{data.total}

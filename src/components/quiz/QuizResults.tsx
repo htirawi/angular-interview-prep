@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect } from "react";
-import type { QuizResult, Achievement } from "../../types";
+import type { QuizResult } from "../../types";
 
 interface QuizResultsProps {
   result: QuizResult;

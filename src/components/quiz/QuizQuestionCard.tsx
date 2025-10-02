@@ -26,7 +26,7 @@ export default function QuizQuestionCard({
   onAnswerSubmit,
   onNext,
   onPrevious,
-  canGoNext,
+  canGoNext: _canGoNext,
   canGoPrevious,
   onComplete,
 }: QuizQuestionCardProps) {
@@ -34,7 +34,7 @@ export default function QuizQuestionCard({
   const [showHint, setShowHint] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const handleSubmit = () => {
+  const _handleSubmit = () => {
     if (answer.trim()) {
       onAnswerSubmit(answer.trim());
     }

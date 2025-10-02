@@ -41,7 +41,7 @@ export function MockInterviewMode({
           onComplete({
             totalQuestions: questionsAnswered + 1, // Estimate
             answeredQuestions: questionsAnswered,
-            correctAnswers: correctAnswers,
+            correctAnswers,
             accuracy: questionsAnswered > 0 ? (correctAnswers / questionsAnswered) * 100 : 0,
             timeSpent: duration * 60 - prev,
             averageTimePerQuestion:
@@ -62,7 +62,7 @@ export function MockInterviewMode({
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const handleAnswer = (correct: boolean) => {
+  const _handleAnswer = (correct: boolean) => {
     setQuestionsAnswered((prev) => prev + 1);
     if (correct) {
       setCorrectAnswers((prev) => prev + 1);
@@ -77,7 +77,7 @@ export function MockInterviewMode({
     onComplete({
       totalQuestions: questionsAnswered + 1,
       answeredQuestions: questionsAnswered,
-      correctAnswers: correctAnswers,
+      correctAnswers,
       accuracy: questionsAnswered > 0 ? (correctAnswers / questionsAnswered) * 100 : 0,
       timeSpent: duration * 60 - timeLeft,
       averageTimePerQuestion:

@@ -9,7 +9,7 @@ export default function FilterPanel({
   onDifficultyChange,
 }: FilterPanelProps) {
   const categories = useMemo(() => {
-    const cats = new Set(questions.map((q: any) => q.category).filter(Boolean));
+    const cats = new Set(questions.map((q: Record<string, unknown>) => q.category).filter(Boolean));
     return Array.from(cats).sort();
   }, [questions]);
 

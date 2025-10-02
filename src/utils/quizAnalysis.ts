@@ -18,11 +18,12 @@ export function analyzeAnswers(
     let correctAnswer: string | string[] = "";
 
     switch (question.type) {
-      case "multiple-choice":
+      case "multiple-choice": {
         const selectedOption = question.options?.find((opt) => opt.id === userAnswer);
         isCorrect = selectedOption?.isCorrect || false;
         correctAnswer = question.options?.find((opt) => opt.isCorrect)?.text || "";
         break;
+      }
 
       case "fill-blank":
         isCorrect =
@@ -31,7 +32,7 @@ export function analyzeAnswers(
         correctAnswer = question.correctAnswer || "";
         break;
 
-      case "multiple-checkbox":
+      case "multiple-checkbox": {
         const userAnswers = Array.isArray(userAnswer) ? userAnswer : [userAnswer];
         const correctAnswers = question.correctAnswers || [];
         isCorrect =
@@ -42,6 +43,7 @@ export function analyzeAnswers(
             ?.filter((opt) => correctAnswers.includes(opt.id))
             .map((opt) => opt.text) || [];
         break;
+      }
 
       case "true-false":
         isCorrect = userAnswer?.toString().toLowerCase() === question.correctAnswer?.toLowerCase();
