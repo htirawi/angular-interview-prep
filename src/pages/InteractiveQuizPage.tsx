@@ -199,14 +199,20 @@ export default function InteractiveQuizPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <div className="border-b border-gray-200 bg-white/80 backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="container mx-auto px-2 py-3 sm:px-4 sm:py-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            {/* Back button and tags on same line with proper spacing */}
+            <div className="flex min-w-0 flex-1 items-center gap-3">
               <button
                 onClick={handleBackToSelection}
-                className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                className="flex flex-shrink-0 items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 sm:gap-2 sm:px-4 sm:text-sm"
               >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="h-3 w-3 sm:h-4 sm:w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -217,32 +223,35 @@ export default function InteractiveQuizPage() {
                 <span>Back</span>
               </button>
 
-              <div className="flex items-center gap-3">
-                <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+              <div className="flex min-w-0 flex-1 items-center justify-center gap-1.5 sm:gap-3">
+                <span className="whitespace-nowrap rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200 sm:px-3 sm:text-sm">
                   {framework?.toUpperCase()}
                 </span>
-                <span className="rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                <span className="whitespace-nowrap rounded-full bg-purple-100 px-2 py-1 text-xs font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-200 sm:px-3 sm:text-sm">
                   {level?.toUpperCase() || "ALL"}
                 </span>
-                <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
+                <span className="whitespace-nowrap rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200 sm:px-3 sm:text-sm">
                   QUIZ
                 </span>
               </div>
             </div>
 
-            <QuizTimer
-              startTime={session.startTime}
-              onTimeUp={handleCompleteQuiz}
-              timeLimit={30}
-              isCompleted={!!result}
-            />
+            {/* Timer - right aligned with proper spacing */}
+            <div className="flex flex-shrink-0 justify-center sm:justify-end">
+              <QuizTimer
+                startTime={session.startTime}
+                onTimeUp={handleCompleteQuiz}
+                timeLimit={30}
+                isCompleted={!!result}
+              />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Progress Bar */}
       <div className="border-b border-gray-200 bg-white/50 backdrop-blur dark:border-gray-700 dark:bg-gray-800/50">
-        <div className="container mx-auto px-4 py-2">
+        <div className="container mx-auto px-2 py-2 sm:px-4 sm:py-2">
           <QuizProgress
             current={session.currentQuestionIndex + 1}
             total={session.questions.length}
@@ -252,7 +261,7 @@ export default function InteractiveQuizPage() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 py-4 sm:px-4 sm:py-8">
         <InteractiveQuizQuestionCard
           question={currentQuestion}
           questionNumber={session.currentQuestionIndex + 1}

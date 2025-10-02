@@ -7,7 +7,7 @@ export default function FrameworkSelection() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="w-full max-w-6xl">
+      <div className="w-full max-w-4xl px-4 sm:px-6 lg:max-w-6xl lg:px-8">
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-5xl font-bold text-gray-900 dark:text-white md:text-6xl">

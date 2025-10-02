@@ -30,10 +30,17 @@ export default function QuestionCard({
   const [isStudying, setIsStudying] = useState(false);
   const answerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to answer when revealed
+  // Auto-scroll to answer when revealed (with mobile-friendly behavior)
   useEffect(() => {
     if (isAnswerVisible && answerRef.current) {
-      answerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Use a small delay to ensure the answer is rendered
+      setTimeout(() => {
+        answerRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      }, 100);
     }
   }, [isAnswerVisible]);
 
@@ -67,9 +74,9 @@ export default function QuestionCard({
   };
 
   return (
-    <div className="relative mx-auto max-w-6xl">
-      {/* Keyboard shortcuts hint - subtle and non-intrusive */}
-      <div className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2">
+    <div className="relative w-full overflow-hidden px-2 sm:mx-auto sm:max-w-4xl sm:px-6 lg:max-w-6xl lg:px-8">
+      {/* Keyboard shortcuts hint - hidden on mobile, shown on desktop */}
+      <div className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 lg:block">
         <div className="rounded-lg bg-white/80 px-3 py-1 text-xs text-gray-500 shadow-lg backdrop-blur-sm dark:bg-gray-800/80 dark:text-gray-400">
           Use ← → arrow keys to navigate
         </div>

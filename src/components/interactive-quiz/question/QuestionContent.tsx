@@ -9,11 +9,11 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
     switch (question.type) {
       case "multiple-choice":
         return (
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {question.options?.map((option) => (
               <label
                 key={option.id}
-                className={`group flex cursor-pointer items-center gap-4 rounded-xl border-2 p-4 transition-all duration-200 hover:shadow-md ${
+                className={`group flex cursor-pointer items-center gap-3 rounded-xl border-2 p-3 transition-all duration-200 hover:shadow-md active:scale-[0.98] sm:gap-4 sm:p-4 ${
                   userAnswer === option.id
                     ? "border-blue-500 bg-blue-50 shadow-md dark:border-blue-400 dark:bg-blue-900/20"
                     : "border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-700"
@@ -25,23 +25,28 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
                   value={option.id}
                   checked={userAnswer === option.id}
                   onChange={(e) => onAnswerChange(e.target.value)}
-                  className="h-5 w-5 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-blue-400 dark:focus:ring-blue-400"
+                  className="h-4 w-4 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-blue-400 dark:focus:ring-blue-400 sm:h-5 sm:w-5"
+                  aria-label={`Select option: ${option.text}`}
                 />
-                <span className="flex-1 text-gray-800 dark:text-gray-200">{option.text}</span>
+                <span className="flex-1 text-sm text-gray-800 dark:text-gray-200 sm:text-base">
+                  {option.text}
+                </span>
                 {userAnswer === option.id && (
-                  <svg
-                    className="h-5 w-5 text-blue-600 dark:text-blue-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                  <div className="flex items-center justify-center">
+                    <svg
+                      className="animate-in zoom-in-50 h-4 w-4 text-blue-600 duration-200 dark:text-blue-400 sm:h-5 sm:w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
                 )}
               </label>
             ))}
@@ -64,6 +69,7 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
                     : "border-gray-200 focus:border-blue-500 focus:bg-blue-50/30 focus:ring-blue-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-blue-400 dark:focus:bg-blue-900/20 dark:focus:ring-blue-900/30"
                 }`}
                 aria-label="Answer input field"
+                aria-describedby="answer-hint"
               />
               {/* Input indicator */}
               <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -160,22 +166,25 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
                     }
                   }}
                   className="h-5 w-5 rounded border-2 border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-gray-600 dark:text-blue-400 dark:focus:ring-blue-400"
+                  aria-label={`Select option: ${option.text}`}
                 />
                 <span className="flex-1 text-gray-800 dark:text-gray-200">{option.text}</span>
                 {Array.isArray(userAnswer) && userAnswer.includes(option.id) && (
-                  <svg
-                    className="h-5 w-5 text-blue-600 dark:text-blue-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                  <div className="flex items-center justify-center">
+                    <svg
+                      className="animate-in zoom-in-50 h-5 w-5 text-blue-600 duration-200 dark:text-blue-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
                 )}
               </label>
             ))}
@@ -260,15 +269,15 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
   };
 
   return (
-    <div className="mb-8">
-      <h3 className="mb-8 text-2xl font-semibold leading-relaxed text-gray-900 dark:text-white">
+    <div className="mb-6 sm:mb-8">
+      <h3 className="mb-6 text-lg font-semibold leading-relaxed text-gray-900 dark:text-white sm:mb-8 sm:text-xl lg:text-2xl">
         {question.type === "fill-blank" ? (
           <span className="inline-block">
             {question.question.split("____").map((part, index) => (
               <span key={index}>
                 {part}
                 {index < question.question.split("____").length - 1 && (
-                  <span className="mx-2 inline-block min-w-[120px] border-b-2 border-dashed border-blue-400 bg-blue-50 px-3 py-1 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300">
+                  <span className="mx-1 inline-block min-w-[80px] border-b-2 border-dashed border-blue-400 bg-blue-50 px-2 py-1 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300 sm:mx-2 sm:min-w-[120px] sm:px-3">
                     [Your Answer]
                   </span>
                 )}

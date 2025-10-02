@@ -56,27 +56,27 @@ export function QuestionHeader({
   };
 
   return (
-    <div className="mb-6">
+    <div className="mb-4 sm:mb-6">
       {/* Question Info */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-600 font-bold text-white">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-600 font-bold text-white sm:h-12 sm:w-12">
             {questionNumber}
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="flex-1">
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white sm:text-xl">
               Question {questionNumber} of {totalQuestions}
             </h2>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
               <span
-                className={`rounded-full px-3 py-1 text-sm font-medium ${getDifficultyColor(question.difficulty)}`}
+                className={`rounded-full px-2 py-1 text-xs font-medium sm:px-3 sm:text-sm ${getDifficultyColor(question.difficulty)}`}
               >
                 {getDifficultyIcon(question.difficulty)} {question.difficulty.toUpperCase()}
               </span>
-              <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+              <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200 sm:px-3 sm:text-sm">
                 {getQuestionTypeIcon(question.type)} {question.type.replace("-", " ").toUpperCase()}
               </span>
-              <span className="rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+              <span className="rounded-full bg-purple-100 px-2 py-1 text-xs font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-200 sm:px-3 sm:text-sm">
                 {question.points === 1 ? "1pt" : `${question.points}pts`}
               </span>
             </div>
@@ -87,7 +87,7 @@ export function QuestionHeader({
         {onToggleBookmark && (
           <button
             onClick={onToggleBookmark}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 sm:gap-2 sm:px-4 sm:text-sm ${
               isBookmarked
                 ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400 dark:hover:bg-yellow-900/30"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600"
@@ -95,7 +95,7 @@ export function QuestionHeader({
             title={isBookmarked ? "Remove bookmark" : "Bookmark question"}
           >
             <svg
-              className="h-4 w-4"
+              className="h-3 w-3 sm:h-4 sm:w-4"
               fill={isBookmarked ? "currentColor" : "none"}
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -107,7 +107,7 @@ export function QuestionHeader({
                 d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
               />
             </svg>
-            {isBookmarked ? "Bookmarked" : "Bookmark"}
+            <span className="hidden sm:inline">{isBookmarked ? "Bookmarked" : "Bookmark"}</span>
           </button>
         )}
       </div>

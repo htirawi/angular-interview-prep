@@ -55,8 +55,8 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               {copiedBlocks.has(blockIndex) ? "✓ Copied!" : "Copy"}
             </button>
           </div>
-          <pre className="overflow-x-auto rounded-b-lg bg-gray-900 p-4 text-sm leading-relaxed text-gray-100">
-            <code>{code}</code>
+          <pre className="max-w-full overflow-x-auto rounded-b-lg bg-gray-900 p-2 text-xs leading-relaxed text-gray-100 sm:p-4 sm:text-sm">
+            <code className="whitespace-pre-wrap break-words">{code}</code>
           </pre>
         </div>
       );
@@ -183,7 +183,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
           return part;
         });
         elements.push(
-          <p key={index} className="mb-3 leading-relaxed text-gray-700 dark:text-gray-300">
+          <p
+            key={index}
+            className="mb-3 max-w-full overflow-hidden break-words leading-relaxed text-gray-700 dark:text-gray-300"
+          >
             {processedLine}
           </p>
         );
@@ -192,7 +195,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
 
       // Regular paragraph
       elements.push(
-        <p key={index} className="mb-3 leading-relaxed text-gray-700 dark:text-gray-300">
+        <p
+          key={index}
+          className="mb-3 max-w-full overflow-hidden break-words leading-relaxed text-gray-700 dark:text-gray-300"
+        >
           {line}
         </p>
       );

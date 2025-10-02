@@ -10,15 +10,15 @@ export function StudyQuestionContent({
   onRevealAnswer,
 }: QuestionContentProps) {
   return (
-    <div className="px-8 py-10">
-      <h2 className="mb-8 text-2xl font-semibold leading-relaxed text-gray-900 dark:text-white">
+    <div className="px-2 py-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+      <h2 className="mb-4 text-lg font-semibold leading-relaxed text-gray-900 dark:text-white sm:mb-8 sm:text-xl lg:text-2xl">
         {item.question}
       </h2>
 
       {!isAnswerVisible ? (
         <button
           onClick={onRevealAnswer}
-          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-white shadow-lg transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-xl"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2.5 text-sm font-medium text-white shadow-lg transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-xl sm:px-6 sm:py-3 sm:text-base"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

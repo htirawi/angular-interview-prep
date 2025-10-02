@@ -76,7 +76,7 @@ export function LoadingStates({
  */
 export function QuestionCardSkeleton() {
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-6xl lg:px-8">
       {/* Progress Bar Skeleton */}
       <div className="mb-8">
         <div className="mb-3 flex items-center justify-between">
