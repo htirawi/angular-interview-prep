@@ -27,7 +27,15 @@
 }
 
 /* Ensure all text content is responsive */
-h1, h2, h3, h4, h5, h6, p, span, div {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div {
   word-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
@@ -41,7 +49,7 @@ h1, h2, h3, h4, h5, h6, p, span, div {
     max-width: 100%;
     overflow-x: hidden;
   }
-  
+
   .prose pre {
     font-size: 0.75rem;
     padding: 0.75rem;
@@ -50,13 +58,13 @@ h1, h2, h3, h4, h5, h6, p, span, div {
     white-space: pre-wrap;
     word-break: break-all;
   }
-  
+
   .prose code {
     font-size: 0.75rem;
     word-break: break-all;
     overflow-wrap: break-word;
   }
-  
+
   /* Force all content to stay within viewport */
   * {
     max-width: 100%;
