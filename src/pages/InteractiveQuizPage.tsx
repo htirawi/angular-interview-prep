@@ -10,7 +10,11 @@ import InteractiveQuizQuestionCard from "@components/interactive-quiz/Interactiv
 import QuizProgress from "@components/quiz/QuizProgress";
 import QuizTimer from "@components/quiz/QuizTimer";
 import InteractiveQuizResults from "@components/interactive-quiz/InteractiveQuizResults";
-import type { InteractiveQuizSession, InteractiveQuizResult } from "@/types/interactive-quiz";
+import type {
+  InteractiveQuizQuestion,
+  InteractiveQuizSession,
+  InteractiveQuizResult,
+} from "@/types/interactive-quiz";
 
 export default function InteractiveQuizPage() {
   const { framework, level } = useParams<{
@@ -47,7 +51,7 @@ export default function InteractiveQuizPage() {
         }
 
         // Get questions for the specific level
-        let quizQuestions: any[] = [];
+        let quizQuestions: InteractiveQuizQuestion[] = [];
         if (level && frameworkData[level as keyof typeof frameworkData]) {
           quizQuestions = frameworkData[level as keyof typeof frameworkData];
         } else {
@@ -177,7 +181,7 @@ export default function InteractiveQuizPage() {
   if (result) {
     return (
       <InteractiveQuizResults
-        result={result as any}
+        result={result}
         onRestart={handleRestart}
         onBackToSelection={handleBackToSelection}
       />

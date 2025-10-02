@@ -9,26 +9,31 @@ import { PerformanceService } from "../services/PerformanceService";
 export const loadFrameworkData = async (framework: string) => {
   return await PerformanceService.measureAsync(`load_framework_${framework}`, async () => {
     switch (framework.toLowerCase()) {
-      case "angular":
+      case "angular": {
         const { default: angularData } = await import("./angular-enhanced");
         PerformanceService.trackDataLoad(`angular_enhanced`, 0, angularData.length);
         return angularData;
-      case "react":
+      }
+      case "react": {
         const { default: reactData } = await import("./react-enhanced");
         PerformanceService.trackDataLoad(`react_enhanced`, 0, reactData.length);
         return reactData;
-      case "nextjs":
+      }
+      case "nextjs": {
         const { default: nextjsData } = await import("./nextjs-enhanced");
         PerformanceService.trackDataLoad(`nextjs_enhanced`, 0, nextjsData.length);
         return nextjsData;
-      case "redux":
+      }
+      case "redux": {
         const { default: reduxData } = await import("./redux");
         PerformanceService.trackDataLoad(`redux`, 0, reduxData.length);
         return reduxData;
-      case "random":
+      }
+      case "random": {
         const { default: randomData } = await import("./random-enhanced");
         PerformanceService.trackDataLoad(`random_enhanced`, 0, randomData.length);
         return randomData;
+      }
       default:
         throw new Error(`Framework ${framework} not found`);
     }
@@ -51,8 +56,8 @@ export const loadInteractiveQuizData = async () => {
 // Lazy loading for basic question data (smaller files)
 export const loadBasicQuestions = async () => {
   return await PerformanceService.measureAsync("load_basic_questions", async () => {
-    const { ALL_QUESTIONS } = await import("./questions");
-    PerformanceService.trackDataLoad("basic_questions", 0, ALL_QUESTIONS.length);
-    return ALL_QUESTIONS;
+    const { QUESTIONS } = await import("./questions");
+    PerformanceService.trackDataLoad("basic_questions", 0, QUESTIONS.length);
+    return QUESTIONS;
   });
 };

@@ -28,7 +28,7 @@ export default function InteractiveQuizQuestionCard({
   onToggleBookmark?: () => void;
 }) {
   const [localAnswer, setLocalAnswer] = useState<string | string[]>("");
-  const [hasAnswered, setHasAnswered] = useState(false);
+  const [_hasAnswered, setHasAnswered] = useState(false);
 
   // Reset local state when question changes or when userAnswer prop changes
   useEffect(() => {

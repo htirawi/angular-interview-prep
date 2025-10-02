@@ -3,7 +3,7 @@
  * Uses smaller, focused components for better maintainability
  */
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { QuestionCardProps } from "../../types";
 import { StudyQuestionHeader } from "./StudyQuestionHeader";
 import { StudyQuestionContent } from "./StudyQuestionContent";
@@ -22,8 +22,8 @@ export default function QuestionCard({
   isBookmarked = false,
   isCompleted = false,
   onToggleBookmark,
-  note = "",
-  onSaveNote,
+  note: _note = "",
+  onSaveNote: _onSaveNote,
 }: QuestionCardProps) {
   const [isAnswerVisible, setIsAnswerVisible] = useState(false);
   const [studyTime, setStudyTime] = useState(0);
@@ -60,9 +60,9 @@ export default function QuestionCard({
     setIsStudying(false); // Stop study timer when answer is revealed
   };
 
-  const handleSaveNote = (note: string) => {
-    if (onSaveNote) {
-      onSaveNote(note);
+  const _handleSaveNote = (note: string) => {
+    if (_onSaveNote) {
+      _onSaveNote(note);
     }
   };
 

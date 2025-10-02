@@ -6,7 +6,6 @@ import type {
   InteractiveQuizQuestion,
   InteractiveQuizSession,
   InteractiveQuizResult,
-  QuestionType,
 } from "../types/interactive-quiz";
 import { loadInteractiveQuizData } from "@data/lazyLoaders";
 
@@ -76,7 +75,7 @@ export class InteractiveQuizService {
     // console.log("Total questions:", session.questions.length);
 
     const endTime = new Date();
-    const timeSpent = Math.floor((endTime.getTime() - session.startTime.getTime()) / 1000);
+    const _timeSpent = Math.floor((endTime.getTime() - session.startTime.getTime()) / 1000);
 
     const completedSession: InteractiveQuizSession = {
       ...session,
@@ -140,24 +139,27 @@ export class InteractiveQuizService {
       let isCorrect = false;
 
       switch (question.type) {
-        case "multiple-choice":
+        case "multiple-choice": {
           const selectedOption = question.options?.find((opt) => opt.id === userAnswer);
           isCorrect = selectedOption?.isCorrect || false;
           break;
+        }
 
-        case "fill-blank":
+        case "fill-blank": {
           isCorrect =
             userAnswer.toString().toLowerCase().trim() ===
             question.correctAnswer?.toLowerCase().trim();
           break;
+        }
 
-        case "multiple-checkbox":
+        case "multiple-checkbox": {
           const userAnswers = Array.isArray(userAnswer) ? userAnswer : [userAnswer];
           const correctAnswersArr = question.correctAnswers || [];
           isCorrect =
             userAnswers.length === correctAnswersArr.length &&
             userAnswers.every((answer) => correctAnswersArr.includes(answer));
           break;
+        }
 
         case "true-false":
           isCorrect = userAnswer.toString().toLowerCase() === question.correctAnswer?.toLowerCase();
@@ -207,7 +209,7 @@ export class InteractiveQuizService {
     // });
 
     return {
-      session: session,
+      session,
       score,
       totalPoints,
       percentage,
@@ -222,7 +224,10 @@ export class InteractiveQuizService {
   /**
    * Generate recommendations based on performance
    */
-  private static generateRecommendations(percentage: number, breakdown: any): string[] {
+  private static generateRecommendations(
+    percentage: number,
+    breakdown: Record<string, { correct: number; total: number; percentage: number }>
+  ): string[] {
     const recommendations: string[] = [];
 
     if (percentage >= 90) {
@@ -284,10 +289,10 @@ export class InteractiveQuizService {
     const sessions = localStorage.getItem(this.STORAGE_KEY);
     if (!sessions) return [];
 
-    return JSON.parse(sessions).map((s: any) => ({
+    return JSON.parse(sessions).map((s: Record<string, unknown>) => ({
       ...s,
-      startTime: new Date(s.startTime),
-      endTime: s.endTime ? new Date(s.endTime) : undefined,
+      startTime: new Date(s.startTime as string),
+      endTime: s.endTime ? new Date(s.endTime as string) : undefined,
     }));
   }
 
@@ -295,7 +300,7 @@ export class InteractiveQuizService {
    * Lazy load interactive quiz data
    * This reduces initial bundle size by loading data only when needed
    */
-  static async loadQuizData(): Promise<any> {
+  static async loadQuizData(): Promise<Record<string, Record<string, InteractiveQuizQuestion[]>>> {
     try {
       // console.log("Loading interactive quiz data...");
       const data = await loadInteractiveQuizData();

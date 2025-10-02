@@ -21,7 +21,7 @@ export default function InteractiveQuizResults({
 }: QuizResultsProps) {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
-  const [showDetails, setShowDetails] = useState(false);
+  const [_showDetails, setShowDetails] = useState(false);
   const [selectedTab, setSelectedTab] = useState<"overview" | "analysis">("overview");
 
   const {

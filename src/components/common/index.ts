@@ -5,13 +5,7 @@
 export { AccessibilityEnhancements } from "./AccessibilityEnhancements";
 export { LoadingStates } from "./LoadingStates";
 export { MarkdownRenderer } from "./MarkdownRenderer";
-export {
-  LazyLoader,
-  createLazyComponent,
-  LazyStudyAnalytics,
-  LazyMockInterviewMode,
-  LazyQuizResults,
-} from "./LazyLoader";
+export { LazyLoader, createLazyComponent } from "./LazyLoader";
 
 // Icons
 export { FrameworkIcon } from "./icons/FrameworkIcon";

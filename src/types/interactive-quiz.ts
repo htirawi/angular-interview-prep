@@ -45,10 +45,10 @@ export interface InteractiveQuizResult {
   totalQuestions: number;
   timeSpent: number;
   breakdown: {
-    multipleChoice: { correct: number; total: number };
-    fillBlank: { correct: number; total: number };
-    multipleCheckbox: { correct: number; total: number };
-    trueFalse: { correct: number; total: number };
+    multipleChoice: { correct: number; total: number; percentage: number };
+    fillBlank: { correct: number; total: number; percentage: number };
+    multipleCheckbox: { correct: number; total: number; percentage: number };
+    trueFalse: { correct: number; total: number; percentage: number };
   };
   recommendations: string[];
 }

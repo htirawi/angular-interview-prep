@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { REDUX_QUESTIONS, QUESTION_SETS } from "../data";
+import { QUESTION_SETS } from "../data";
 import { enrichQuestions } from "../utils/questionMetadata";
 import { QuestionService } from "../services/QuestionService";
 import type { FrameworkId, Question } from "../types";

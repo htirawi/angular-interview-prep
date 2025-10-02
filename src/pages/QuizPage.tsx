@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import type { EnrichedQuestion } from "@/types/question";
 import { QuizService } from "@/services/QuizService";
+import { ALL_QUESTIONS } from "@/data";
 import QuizQuestionCard from "../components/quiz/QuizQuestionCard";
 import QuizProgress from "../components/quiz/QuizProgress";
 import QuizTimer from "../components/quiz/QuizTimer";
