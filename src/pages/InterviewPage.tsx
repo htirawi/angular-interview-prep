@@ -53,8 +53,25 @@ export default function InterviewPage() {
     currentQuestionList,
   } = useQuestionNavigation(enrichedQuestions, bookmarks, mode);
 
-  // UI state
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // UI state - start with sidebar closed on mobile, open on desktop
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Auto-open sidebar on desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setSidebarOpen(true);
+      } else {
+        setSidebarOpen(false);
+      }
+    };
+
+    // Set initial state
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Calculate current question and safe index
   const total = currentQuestionList.length;
@@ -227,8 +244,8 @@ export default function InterviewPage() {
             </div>
           </Sidebar>
 
-          <main className="min-h-screen flex-1 lg:ml-80">
-            <div className="mx-auto max-w-6xl px-4 py-8">
+          <main className="min-h-screen flex-1 overflow-hidden lg:ml-80">
+            <div className="w-full overflow-hidden px-2 py-2 sm:mx-auto sm:max-w-4xl sm:px-6 sm:py-6 lg:max-w-6xl lg:px-8 lg:py-8">
               {item ? (
                 <QuestionCard
                   item={item}

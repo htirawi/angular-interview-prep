@@ -52,9 +52,9 @@ export default function InteractiveQuizQuestionCard({
   };
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto w-full max-w-4xl px-2 sm:px-4">
       {/* Question Card */}
-      <div className="rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200/50 dark:bg-gray-800 dark:ring-gray-700/50">
+      <div className="rounded-xl bg-white p-4 shadow-lg ring-1 ring-gray-200/50 dark:bg-gray-800 dark:ring-gray-700/50 sm:rounded-2xl sm:p-6 lg:p-8 lg:shadow-xl">
         {/* Question Header */}
         <QuestionHeader
           questionNumber={questionNumber}

@@ -64,6 +64,15 @@ export default function Sidebar({ isOpen, onToggle, children }: SidebarProps) {
         </svg>
       </button>
 
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          onClick={onToggle}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={`fixed left-0 top-0 z-40 h-screen w-80 transform overflow-y-auto border-r border-gray-200 bg-white transition-transform duration-300 dark:border-gray-800 dark:bg-gray-900 ${

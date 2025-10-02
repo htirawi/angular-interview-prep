@@ -47,7 +47,16 @@ export default function QuizTimer({ startTime, onTimeUp, timeLimit, isCompleted 
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const getTimerColor = () => {
+  const getTimerBgColor = () => {
+    if (!timeLimit || !timeRemaining) return "bg-blue-100 dark:bg-blue-900/20";
+
+    const percentage = (timeRemaining / (timeLimit * 60)) * 100;
+    if (percentage > 50) return "bg-green-100 dark:bg-green-900/20";
+    if (percentage > 25) return "bg-yellow-100 dark:bg-yellow-900/20";
+    return "bg-red-100 dark:bg-red-900/20 ring-2 ring-red-200 dark:ring-red-800";
+  };
+
+  const getTimerTextColor = () => {
     if (!timeLimit || !timeRemaining) return "text-blue-600 dark:text-blue-400";
 
     const percentage = (timeRemaining / (timeLimit * 60)) * 100;
@@ -56,19 +65,28 @@ export default function QuizTimer({ startTime, onTimeUp, timeLimit, isCompleted 
     return "text-red-600 dark:text-red-400";
   };
 
-  const getTimerBgColor = () => {
-    if (!timeLimit || !timeRemaining) return "bg-blue-100 dark:bg-blue-900/20";
-
-    const percentage = (timeRemaining / (timeLimit * 60)) * 100;
-    if (percentage > 50) return "bg-green-100 dark:bg-green-900/20";
-    if (percentage > 25) return "bg-yellow-100 dark:bg-yellow-900/20";
-    return "bg-red-100 dark:bg-red-900/20";
-  };
+  const isUrgent = timeLimit && timeRemaining !== null && timeRemaining <= timeLimit * 5; // Last 5 minutes
+  const isCritical = timeLimit && timeRemaining !== null && timeRemaining <= timeLimit * 2; // Last 2 minutes
 
   return (
-    <div className={`flex items-center gap-3 rounded-lg px-4 py-2 ${getTimerBgColor()}`}>
-      <div className="flex items-center gap-2">
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div
+      className={`flex items-center gap-2 rounded-lg px-3 py-2 transition-all duration-300 sm:gap-3 sm:px-4 ${getTimerBgColor()} ${
+        isCritical
+          ? "animate-pulse ring-2 ring-red-300 dark:ring-red-600"
+          : isUrgent
+            ? "animate-pulse"
+            : ""
+      }`}
+    >
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        <svg
+          className={`h-4 w-4 sm:h-5 sm:w-5 ${
+            isCritical ? "animate-spin text-red-500" : isUrgent ? "animate-pulse" : ""
+          }`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -76,7 +94,7 @@ export default function QuizTimer({ startTime, onTimeUp, timeLimit, isCompleted 
             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <span className={`text-lg font-bold ${getTimerColor()}`}>
+        <span className={`text-base font-bold sm:text-lg ${getTimerTextColor()}`}>
           {timeRemaining !== null
             ? formatTime(Math.max(0, timeRemaining))
             : formatTime(timeElapsed)}
@@ -84,8 +102,8 @@ export default function QuizTimer({ startTime, onTimeUp, timeLimit, isCompleted 
       </div>
 
       {timeLimit && timeRemaining !== null && (
-        <div className="flex items-center gap-2">
-          <div className="h-2 w-16 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="h-1.5 w-12 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 sm:h-2 sm:w-16">
             <div
               className={`h-full transition-all duration-1000 ${
                 timeRemaining > timeLimit * 30
@@ -97,7 +115,7 @@ export default function QuizTimer({ startTime, onTimeUp, timeLimit, isCompleted 
               style={{ width: `${Math.max(0, (timeRemaining / (timeLimit * 60)) * 100)}%` }}
             />
           </div>
-          <span className="text-xs text-gray-500 dark:text-gray-400">
+          <span className="hidden text-xs text-gray-500 dark:text-gray-400 sm:inline">
             {timeRemaining > 0 ? "remaining" : "time up!"}
           </span>
         </div>

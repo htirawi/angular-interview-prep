@@ -8,9 +8,68 @@
   color-scheme: light dark;
 }
 
+/* Mobile-first responsive text and content */
+.prose {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 .prose pre,
 .prose code {
   font-family: theme("fontFamily.mono");
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Ensure all text content is responsive */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 640px) {
+  .prose {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .prose pre {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+    overflow-x: auto;
+    max-width: 100%;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .prose code {
+    font-size: 0.75rem;
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+
+  /* Force all content to stay within viewport */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 /* Custom scrollbar for modern browsers */
