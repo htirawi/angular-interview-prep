@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import SearchBar from "../forms/SearchBar";
 import FilterPanel from "../forms/FilterPanel";
 import StatsPanel from "../features/StatsPanel";
+import { FrameworkIcon } from "../common/icons/FrameworkIcon";
 import { useSidebarContext } from "../../contexts/SidebarContext";
 import { FrameworkService } from "../../services/FrameworkService";
 
@@ -81,12 +82,35 @@ export default function Sidebar({ isOpen, onToggle, children }: SidebarProps) {
         <div className="p-6">
           {/* Header */}
           <div className="mb-6">
-            <h1 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
-              {FrameworkService.getDisplayName(currentFramework)}
-            </h1>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              {totalQuestions} Senior-Level Questions
-            </p>
+            <div className="mb-3 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-600">
+                <FrameworkIcon framework={currentFramework} size={20} />
+              </div>
+              <div className="flex-1">
+                <h1 className="text-lg font-bold text-gray-900 dark:text-white">
+                  {FrameworkService.getDisplayName(currentFramework)}
+                </h1>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Interview Prep</p>
+              </div>
+            </div>
+            <div className="rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 p-3 dark:from-blue-900/20 dark:to-purple-900/20">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                    {totalQuestions} Questions
+                  </p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Senior-Level Content</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-medium text-blue-600 dark:text-blue-400">
+                    {Math.round((completed / totalQuestions) * 100)}% Complete
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-500">
+                    {completed}/{totalQuestions}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Stats */}

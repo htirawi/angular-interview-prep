@@ -15,7 +15,7 @@ export default function StatsPanel({ total, completed, bookmarked }: StatsPanelP
       </div>
       <div className="text-center">
         <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">{bookmarked}</div>
-        <div className="text-xs text-gray-600 dark:text-gray-400">Bookmarked</div>
+        <div className="whitespace-nowrap text-xs text-gray-600 dark:text-gray-400">Bookmarked</div>
       </div>
     </div>
   );
