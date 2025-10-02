@@ -1999,7 +1999,7 @@ export const REACT_ENHANCED_QUESTIONS = {
   junior: [
     {
       id: "react-junior-1",
-      question: "React Junior Question 1: What is React?",
+      question: "What is React?",
       type: "multiple-choice",
       options: [
         {
@@ -2025,22 +2025,21 @@ export const REACT_ENHANCED_QUESTIONS = {
       ],
       explanation:
         "React is a JavaScript library for building user interfaces, particularly web applications.",
-      category: "React Junior",
+      category: "React Basics",
       difficulty: "easy",
-      tags: ["react", "junior"],
+      tags: ["react", "basics"],
       points: 1,
     },
     {
       id: "react-junior-2",
-      question:
-        "React Junior Question 2: _____ is used to perform side effects in React components.",
+      question: "_____ is used to perform side effects in React components.",
       type: "fill-blank",
       correctAnswer: "useEffect",
       explanation:
-        'The correct answer is "useEffect". This is an important React concept for junior level developers.',
-      category: "React Junior",
+        "useEffect is the hook used to perform side effects in React functional components, such as data fetching, subscriptions, or manually changing the DOM.",
+      category: "React Hooks",
       difficulty: "easy",
-      tags: ["react", "junior"],
+      tags: ["react", "hooks", "useEffect"],
       points: 1,
     },
     {
@@ -2223,7 +2222,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-11",
-      question: "React Junior Question 11: Which are React Hooks?",
+      question: "Which are React Hooks?",
       type: "multiple-checkbox",
       options: [
         {
@@ -2248,31 +2247,33 @@ export const REACT_ENHANCED_QUESTIONS = {
         },
       ],
       correctAnswers: ["a", "b", "c"],
-      explanation: "These are the correct React concepts for junior level development.",
-      category: "React Junior",
+      explanation:
+        "useState, useEffect, and useContext are all valid React hooks. useProps is not a real React hook.",
+      category: "React Hooks",
       difficulty: "easy",
-      tags: ["react", "junior"],
+      tags: ["react", "hooks"],
       points: 1,
     },
     {
       id: "react-junior-12",
-      question: "React Junior Question 12: JSX is required to write React components.",
+      question: "JSX is required to write React components.",
       type: "true-false",
       correctAnswer: "false",
-      explanation: "This statement is false. This is an important React concept.",
-      category: "React Junior",
+      explanation:
+        "JSX is not required to write React components. You can use React.createElement() or other methods, though JSX is the recommended approach for readability.",
+      category: "React JSX",
       difficulty: "easy",
-      tags: ["react", "junior"],
+      tags: ["react", "jsx"],
       points: 1,
     },
     {
       id: "react-junior-13",
-      question: "React Junior Question 13: What is a React component?",
+      question: "What is a React component?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "A reusable piece of UI",
+          text: "A reusable piece of UI that can accept inputs and return React elements",
           isCorrect: true,
         },
         {
@@ -2287,15 +2288,15 @@ export const REACT_ENHANCED_QUESTIONS = {
         },
         {
           id: "d",
-          text: "A JavaScript function",
+          text: "A JavaScript function that always returns JSX",
           isCorrect: false,
         },
       ],
       explanation:
-        "A React component is a reusable piece of UI that can accept inputs and return React elements.",
-      category: "React Junior",
+        "A React component is a reusable piece of UI that can accept inputs (props) and return React elements. Components can be functional or class-based.",
+      category: "React Components",
       difficulty: "easy",
-      tags: ["react", "junior"],
+      tags: ["react", "components"],
       points: 1,
     },
     {
