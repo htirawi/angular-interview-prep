@@ -88,6 +88,6 @@ export const analytics = new Analytics();
 // TypeScript global declaration for gtag
 declare global {
   interface Window {
-    gtag?: (...args: unknown[]) => void;
+    gtag?: (..._args: unknown[]) => void;
   }
 }

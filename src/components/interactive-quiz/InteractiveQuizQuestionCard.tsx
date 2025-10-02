@@ -28,22 +28,18 @@ export default function InteractiveQuizQuestionCard({
   onToggleBookmark?: () => void;
 }) {
   const [localAnswer, setLocalAnswer] = useState<string | string[]>("");
-  const [_hasAnswered, setHasAnswered] = useState(false);
 
   // Reset local state when question changes or when userAnswer prop changes
   useEffect(() => {
     if (userAnswer !== undefined && userAnswer !== null && userAnswer !== "") {
       setLocalAnswer(userAnswer);
-      setHasAnswered(true);
     } else {
       setLocalAnswer("");
-      setHasAnswered(false);
     }
   }, [question.id, userAnswer]);
 
   const handleAnswerChange = (answer: string | string[]) => {
     setLocalAnswer(answer);
-    setHasAnswered(true);
     onAnswerSubmit(question.id, answer);
   };
 

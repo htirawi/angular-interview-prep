@@ -9,9 +9,7 @@ interface ScoreDisplayPropsInternal extends ScoreDisplayProps {
 }
 
 export function ScoreDisplay({
-  animatedScore: _animatedScore,
   animatedPercentage,
-  totalPoints: _totalPoints,
   correctAnswers,
   totalQuestions,
   performance,

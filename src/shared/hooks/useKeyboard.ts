@@ -1,6 +1,6 @@
 import { useEffect, type DependencyList } from "react";
 
-type KeyHandler = (event: KeyboardEvent) => void;
+type KeyHandler = (_event: KeyboardEvent) => void;
 
 type KeyMap = {
   [key: string]: KeyHandler;

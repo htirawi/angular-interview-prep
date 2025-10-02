@@ -23,7 +23,6 @@ export default function Sidebar({ isOpen, onToggle, children }: SidebarProps) {
     bookmarked,
     mode,
     onModeChange,
-    searchQuery: _searchQuery,
     onSearchChange,
     questions,
     selectedCategory,

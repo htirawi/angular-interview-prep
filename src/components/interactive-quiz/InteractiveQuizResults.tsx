@@ -22,7 +22,6 @@ export default function InteractiveQuizResults({
 }: QuizResultsProps) {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
-  const [_showDetails, setShowDetails] = useState(false);
   const [selectedTab, setSelectedTab] = useState<"overview" | "analysis">("overview");
 
   const {
@@ -63,7 +62,6 @@ export default function InteractiveQuizResults({
 
       if (currentStep >= steps) {
         clearInterval(timer);
-        setTimeout(() => setShowDetails(true), 500);
       }
     }, stepDuration);
 

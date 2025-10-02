@@ -111,19 +111,19 @@ function main() {
     checks.push({ success: true });
   }
 
-  // 7. Unused Variable Check (relaxed)
-  logSection("Unused Variable Detection");
+  // 7. Strict Unused Variable Check
+  logSection("Strict Unused Variable Detection");
   const unusedCheck = runCommand(
-    'npx eslint src/ --ext ts,tsx --rule "no-unused-vars: warn" --quiet',
-    "Unused variable detection (warnings only)"
+    'npx eslint src/ --ext ts,tsx --rule "no-unused-vars: error" --quiet',
+    "Strict unused variable detection"
   );
-  // Don't fail the build for unused variables, just warn
   if (unusedCheck.success) {
-    log('✅ Unused variable check completed', "green");
+    log('✅ No unused variables found in source code', "green");
     checks.push({ success: true });
   } else {
-    log('⚠️  Unused variables found (non-blocking)', "yellow");
-    checks.push({ success: true });
+    log('❌ Found unused variables in source code:', "red");
+    log('🚫 Unused variables are not allowed! Please remove or use them.', "red");
+    checks.push({ success: false, error: 'Found unused variables in source code' });
   }
 
   // 8. Console Statement Check (relaxed)
@@ -143,19 +143,19 @@ function main() {
     checks.push({ success: true });
   }
 
-  // 9. Import/Export Check (relaxed)
-  logSection("Import/Export Validation");
+  // 9. Strict Import/Export Check
+  logSection("Strict Import/Export Validation");
   const importCheck = runCommand(
-    'npx eslint src/ --ext ts,tsx --rule "no-unused-vars: warn" --quiet',
-    "Unused import detection (warnings only)"
+    'npx eslint src/ --ext ts,tsx --rule "no-unused-vars: error" --quiet',
+    "Strict unused import detection"
   );
-  // Don't fail the build for unused imports, just warn
   if (importCheck.success) {
-    log('✅ Import/export check completed', "green");
+    log('✅ No unused imports found in source code', "green");
     checks.push({ success: true });
   } else {
-    log('⚠️  Unused imports found (non-blocking)', "yellow");
-    checks.push({ success: true });
+    log('❌ Found unused imports in source code:', "red");
+    log('🚫 Unused imports are not allowed! Please remove them.', "red");
+    checks.push({ success: false, error: 'Found unused imports in source code' });
   }
 
   // Summary
