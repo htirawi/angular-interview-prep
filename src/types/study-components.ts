@@ -11,7 +11,7 @@ export interface StudyQuestionCardProps extends QuestionCardProps {
 }
 
 export interface QuestionHeaderProps {
-  item: Record<string, unknown>; // TODO: Replace with proper Question type
+  item: QuestionCardProps["item"];
   index: number;
   total: number;
   isBookmarked: boolean;
@@ -20,19 +20,19 @@ export interface QuestionHeaderProps {
 }
 
 export interface QuestionContentProps {
-  item: Record<string, unknown>; // TODO: Replace with proper Question type
+  item: QuestionCardProps["item"];
   isAnswerVisible: boolean;
   onRevealAnswer: () => void;
 }
 
 export interface QuestionAnswerProps {
-  item: Record<string, unknown>; // TODO: Replace with proper Question type
+  item: QuestionCardProps["item"];
   isAnswerVisible: boolean;
   answerRef: React.RefObject<HTMLDivElement>;
 }
 
 export interface StudyAnalyticsProps {
-  item: Record<string, unknown>; // TODO: Replace with proper Question type
+  item: QuestionCardProps["item"];
   studyTime: number;
   isVisible: boolean;
   onClose: () => void;

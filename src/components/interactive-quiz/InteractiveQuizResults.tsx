@@ -13,6 +13,7 @@ import { Recommendations } from "./results/Recommendations";
 import { AnswerAnalysis } from "./results/AnswerAnalysis";
 import { ActionButtons } from "./results/ActionButtons";
 import { analyzeAnswers, getPerformanceMessage } from "../../utils/quizAnalysis";
+import type { InteractiveQuizQuestion } from "../../types/interactive-quiz";
 
 export default function InteractiveQuizResults({
   result,
@@ -37,7 +38,10 @@ export default function InteractiveQuizResults({
   } = result;
 
   // Analyze answers using utility function
-  const answerAnalysis = analyzeAnswers(session.questions, session.answers);
+  const answerAnalysis = analyzeAnswers(
+    (session as Record<string, unknown>).questions as InteractiveQuizQuestion[],
+    (session as Record<string, unknown>).answers as Record<string, string | string[]>
+  );
   const performance = getPerformanceMessage(percentage);
 
   useEffect(() => {

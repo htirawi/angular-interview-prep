@@ -26,7 +26,7 @@ export function LazyLoader({ fallback, children }: LazyLoaderProps) {
 /**
  * Create a lazy-loaded component with loading fallback
  */
-export function createLazyComponent<T extends ComponentType<Record<string, unknown>>>(
+export function createLazyComponent<T extends ComponentType<unknown>>(
   importFunc: () => Promise<{ default: T }>,
   fallback?: ReactNode
 ) {
@@ -35,7 +35,7 @@ export function createLazyComponent<T extends ComponentType<Record<string, unkno
   return function LazyComponentWrapper(props: Record<string, unknown>) {
     return (
       <LazyLoader fallback={fallback}>
-        <LazyComponent {...(props as Record<string, unknown>)} />
+        <LazyComponent {...props} />
       </LazyLoader>
     );
   };

@@ -38,7 +38,7 @@ export interface PerformanceMessage {
 
 export interface QuizResultsProps {
   result: {
-    session: Record<string, unknown>;
+    session: unknown;
     score: number;
     totalPoints: number;
     percentage: number;

@@ -295,8 +295,8 @@ export class QuizService {
 
     return JSON.parse(sessions).map((s: Record<string, unknown>) => ({
       ...s,
-      startTime: new Date(s.startTime),
-      endTime: s.endTime ? new Date(s.endTime) : undefined,
+      startTime: new Date(s.startTime as string),
+      endTime: s.endTime ? new Date(s.endTime as string) : undefined,
     }));
   }
 
