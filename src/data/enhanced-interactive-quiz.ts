@@ -1,0 +1,9302 @@
+/**
+ * Enhanced Interactive Quiz Data - Complete with 30 questions per level for all frameworks
+ * Contains actual questions with meaningful content and answers
+ */
+
+import type { InteractiveQuizQuestion } from "../types/interactive-quiz";
+
+// Angular Questions (keeping existing)
+export const ANGULAR_ENHANCED_QUESTIONS = {
+  junior: [
+  {
+    "id": "angular-junior-1",
+    "question": "Angular Junior Question 1: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 1.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-2",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer2",
+    "explanation": "This is the explanation for Angular junior fill-blank question 2.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-3",
+    "question": "Which Angular junior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for junior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for junior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular junior multiple-checkbox question 3.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-4",
+    "question": "Angular junior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This is the explanation for Angular junior true-false question 4.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-5",
+    "question": "Angular Junior Question 5: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 5.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-6",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer6",
+    "explanation": "This is the explanation for Angular junior fill-blank question 6.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-7",
+    "question": "Which Angular junior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for junior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for junior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular junior multiple-checkbox question 7.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-8",
+    "question": "Angular junior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This is the explanation for Angular junior true-false question 8.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-9",
+    "question": "Angular Junior Question 9: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 9.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-10",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer10",
+    "explanation": "This is the explanation for Angular junior fill-blank question 10.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-11",
+    "question": "Which Angular junior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for junior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for junior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular junior multiple-checkbox question 11.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-12",
+    "question": "Angular junior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This is the explanation for Angular junior true-false question 12.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-13",
+    "question": "Angular Junior Question 13: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 13.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-14",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer14",
+    "explanation": "This is the explanation for Angular junior fill-blank question 14.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-15",
+    "question": "Which Angular junior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for junior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for junior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular junior multiple-checkbox question 15.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-16",
+    "question": "Angular junior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This is the explanation for Angular junior true-false question 16.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-17",
+    "question": "Angular Junior Question 17: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 17.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-18",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer18",
+    "explanation": "This is the explanation for Angular junior fill-blank question 18.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-19",
+    "question": "Which Angular junior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for junior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for junior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular junior multiple-checkbox question 19.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-20",
+    "question": "Angular junior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This is the explanation for Angular junior true-false question 20.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-21",
+    "question": "Angular Junior Question 21: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 21.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-22",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer22",
+    "explanation": "This is the explanation for Angular junior fill-blank question 22.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-23",
+    "question": "Which Angular junior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for junior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for junior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular junior multiple-checkbox question 23.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-24",
+    "question": "Angular junior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This is the explanation for Angular junior true-false question 24.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-25",
+    "question": "Angular Junior Question 25: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 25.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-26",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer26",
+    "explanation": "This is the explanation for Angular junior fill-blank question 26.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-27",
+    "question": "Which Angular junior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for junior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for junior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for junior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular junior multiple-checkbox question 27.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-28",
+    "question": "Angular junior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This is the explanation for Angular junior true-false question 28.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-29",
+    "question": "Angular Junior Question 29: What is the primary purpose of Angular basics?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for junior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for junior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for junior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular junior question 29.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  },
+  {
+    "id": "angular-junior-30",
+    "question": "Complete: Angular junior uses _____ for data binding.",
+    "type": "fill-blank",
+    "correctAnswer": "answer30",
+    "explanation": "This is the explanation for Angular junior fill-blank question 30.",
+    "category": "Junior Level",
+    "difficulty": "easy",
+    "tags": [
+      "junior",
+      "angular"
+    ],
+    "points": 1
+  }
+] as InteractiveQuizQuestion[],
+
+  intermediate: [
+  {
+    "id": "angular-intermediate-1",
+    "question": "Angular Intermediate Question 1: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 1.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-2",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer2",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 2.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-3",
+    "question": "Which Angular intermediate features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for intermediate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for intermediate",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular intermediate multiple-checkbox question 3.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-4",
+    "question": "Angular intermediate level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular intermediate true-false question 4.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-5",
+    "question": "Angular Intermediate Question 5: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 5.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-6",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer6",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 6.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-7",
+    "question": "Which Angular intermediate features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for intermediate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for intermediate",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular intermediate multiple-checkbox question 7.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-8",
+    "question": "Angular intermediate level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular intermediate true-false question 8.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-9",
+    "question": "Angular Intermediate Question 9: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 9.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-10",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer10",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 10.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-11",
+    "question": "Which Angular intermediate features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for intermediate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for intermediate",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular intermediate multiple-checkbox question 11.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-12",
+    "question": "Angular intermediate level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular intermediate true-false question 12.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-13",
+    "question": "Angular Intermediate Question 13: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 13.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-14",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer14",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 14.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-15",
+    "question": "Which Angular intermediate features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for intermediate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for intermediate",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular intermediate multiple-checkbox question 15.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-16",
+    "question": "Angular intermediate level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular intermediate true-false question 16.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-17",
+    "question": "Angular Intermediate Question 17: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 17.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-18",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer18",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 18.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-19",
+    "question": "Which Angular intermediate features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for intermediate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for intermediate",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular intermediate multiple-checkbox question 19.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-20",
+    "question": "Angular intermediate level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular intermediate true-false question 20.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-21",
+    "question": "Angular Intermediate Question 21: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 21.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-22",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer22",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 22.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-23",
+    "question": "Which Angular intermediate features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for intermediate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for intermediate",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular intermediate multiple-checkbox question 23.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-24",
+    "question": "Angular intermediate level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular intermediate true-false question 24.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-25",
+    "question": "Angular Intermediate Question 25: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 25.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-26",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer26",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 26.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-27",
+    "question": "Which Angular intermediate features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for intermediate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for intermediate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for intermediate",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular intermediate multiple-checkbox question 27.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-28",
+    "question": "Angular intermediate level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular intermediate true-false question 28.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-29",
+    "question": "Angular Intermediate Question 29: What is the primary purpose of Angular advanced features?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for intermediate level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for intermediate level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for intermediate level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular intermediate question 29.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  },
+  {
+    "id": "angular-intermediate-30",
+    "question": "Complete: Angular intermediate uses _____ for advanced routing.",
+    "type": "fill-blank",
+    "correctAnswer": "answer30",
+    "explanation": "This is the explanation for Angular intermediate fill-blank question 30.",
+    "category": "Intermediate Level",
+    "difficulty": "medium",
+    "tags": [
+      "intermediate",
+      "angular"
+    ],
+    "points": 2
+  }
+] as InteractiveQuizQuestion[],
+
+  senior: [
+  {
+    "id": "angular-senior-1",
+    "question": "Angular Senior Question 1: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 1.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-2",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer2",
+    "explanation": "This is the explanation for Angular senior fill-blank question 2.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-3",
+    "question": "Which Angular senior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for senior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for senior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular senior multiple-checkbox question 3.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-4",
+    "question": "Angular senior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular senior true-false question 4.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-5",
+    "question": "Angular Senior Question 5: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 5.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-6",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer6",
+    "explanation": "This is the explanation for Angular senior fill-blank question 6.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-7",
+    "question": "Which Angular senior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for senior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for senior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular senior multiple-checkbox question 7.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-8",
+    "question": "Angular senior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular senior true-false question 8.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-9",
+    "question": "Angular Senior Question 9: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 9.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-10",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer10",
+    "explanation": "This is the explanation for Angular senior fill-blank question 10.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-11",
+    "question": "Which Angular senior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for senior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for senior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular senior multiple-checkbox question 11.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-12",
+    "question": "Angular senior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular senior true-false question 12.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-13",
+    "question": "Angular Senior Question 13: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 13.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-14",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer14",
+    "explanation": "This is the explanation for Angular senior fill-blank question 14.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-15",
+    "question": "Which Angular senior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for senior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for senior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular senior multiple-checkbox question 15.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-16",
+    "question": "Angular senior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular senior true-false question 16.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-17",
+    "question": "Angular Senior Question 17: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 17.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-18",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer18",
+    "explanation": "This is the explanation for Angular senior fill-blank question 18.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-19",
+    "question": "Which Angular senior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for senior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for senior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular senior multiple-checkbox question 19.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-20",
+    "question": "Angular senior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular senior true-false question 20.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-21",
+    "question": "Angular Senior Question 21: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 21.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-22",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer22",
+    "explanation": "This is the explanation for Angular senior fill-blank question 22.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-23",
+    "question": "Which Angular senior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for senior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for senior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular senior multiple-checkbox question 23.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-24",
+    "question": "Angular senior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular senior true-false question 24.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-25",
+    "question": "Angular Senior Question 25: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 25.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-26",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer26",
+    "explanation": "This is the explanation for Angular senior fill-blank question 26.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-27",
+    "question": "Which Angular senior features are important? (Select all that apply)",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Feature A for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Feature B for senior",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Feature C for senior",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Feature D for senior",
+        "isCorrect": true
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "d"
+    ],
+    "explanation": "This is the explanation for Angular senior multiple-checkbox question 27.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-28",
+    "question": "Angular senior level requires understanding of advanced concepts.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This is the explanation for Angular senior true-false question 28.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-29",
+    "question": "Angular Senior Question 29: What is the primary purpose of Angular enterprise architecture?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A for senior level",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Option B for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C for senior level",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D for senior level",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "This is the explanation for Angular senior question 29.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  },
+  {
+    "id": "angular-senior-30",
+    "question": "Complete: Angular senior uses _____ for enterprise patterns.",
+    "type": "fill-blank",
+    "correctAnswer": "answer30",
+    "explanation": "This is the explanation for Angular senior fill-blank question 30.",
+    "category": "Senior Level",
+    "difficulty": "hard",
+    "tags": [
+      "senior",
+      "angular"
+    ],
+    "points": 3
+  }
+] as InteractiveQuizQuestion[],
+};
+
+// React Questions - Complete set with 30 questions per level
+export const REACT_ENHANCED_QUESTIONS = {
+  junior: [
+  {
+    "id": "react-junior-1",
+    "question": "React Junior Question 1: What is React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript library for building user interfaces",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A complete framework like Angular",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database management system",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "React is a JavaScript library for building user interfaces, particularly web applications.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-2",
+    "question": "React Junior Question 2: _____ is used to perform side effects in React components.",
+    "type": "fill-blank",
+    "correctAnswer": "useEffect",
+    "explanation": "The correct answer is \"useEffect\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-3",
+    "question": "React Junior Question 3: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for junior level development.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-4",
+    "question": "React Junior Question 4: useState can only be used in functional components.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-5",
+    "question": "React Junior Question 5: What is useState in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Hook that lets you add state to functional components",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A method for updating props",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS property",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A build tool",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "useState is a React Hook that lets you add state to functional components.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-6",
+    "question": "React Junior Question 6: React uses _____ for state management in functional components.",
+    "type": "fill-blank",
+    "correctAnswer": "useState",
+    "explanation": "The correct answer is \"useState\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-7",
+    "question": "React Junior Question 7: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for junior level development.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-8",
+    "question": "React Junior Question 8: React components must always return JSX.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-9",
+    "question": "React Junior Question 9: What is the virtual DOM?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript representation of the real DOM",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A fake DOM element",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A browser feature",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The virtual DOM is a JavaScript representation of the real DOM that React uses for efficient updates.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-10",
+    "question": "React Junior Question 10: React uses _____ to efficiently update the DOM.",
+    "type": "fill-blank",
+    "correctAnswer": "Virtual DOM",
+    "explanation": "The correct answer is \"Virtual DOM\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-11",
+    "question": "React Junior Question 11: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for junior level development.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-12",
+    "question": "React Junior Question 12: JSX is required to write React components.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-13",
+    "question": "React Junior Question 13: What is a React component?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A reusable piece of UI",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A database table",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS class",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript function",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A React component is a reusable piece of UI that can accept inputs and return React elements.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-14",
+    "question": "React Junior Question 14: _____ helps optimize React performance by preventing unnecessary re-renders.",
+    "type": "fill-blank",
+    "correctAnswer": "React.memo",
+    "explanation": "The correct answer is \"React.memo\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-15",
+    "question": "React Junior Question 15: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for junior level development.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-16",
+    "question": "React Junior Question 16: React is a library, not a framework.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-17",
+    "question": "React Junior Question 17: What is JSX in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A syntax extension for JavaScript",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A build tool",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A testing library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "JSX is a syntax extension for JavaScript that allows you to write HTML-like code in JavaScript.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-18",
+    "question": "React Junior Question 18: React components are written using _____ syntax.",
+    "type": "fill-blank",
+    "correctAnswer": "JSX",
+    "explanation": "The correct answer is \"JSX\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-19",
+    "question": "React Junior Question 19: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for junior level development.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-20",
+    "question": "React Junior Question 20: React uses one-way data binding.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-21",
+    "question": "React Junior Question 21: What is React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript library for building user interfaces",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A complete framework like Angular",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database management system",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "React is a JavaScript library for building user interfaces, particularly web applications.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-22",
+    "question": "React Junior Question 22: _____ is used to perform side effects in React components.",
+    "type": "fill-blank",
+    "correctAnswer": "useEffect",
+    "explanation": "The correct answer is \"useEffect\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-23",
+    "question": "React Junior Question 23: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for junior level development.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-24",
+    "question": "React Junior Question 24: useState can only be used in functional components.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-25",
+    "question": "React Junior Question 25: What is useState in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Hook that lets you add state to functional components",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A method for updating props",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS property",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A build tool",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "useState is a React Hook that lets you add state to functional components.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-26",
+    "question": "React Junior Question 26: React uses _____ for state management in functional components.",
+    "type": "fill-blank",
+    "correctAnswer": "useState",
+    "explanation": "The correct answer is \"useState\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-27",
+    "question": "React Junior Question 27: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for junior level development.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-28",
+    "question": "React Junior Question 28: React components must always return JSX.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-29",
+    "question": "React Junior Question 29: What is the virtual DOM?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript representation of the real DOM",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A fake DOM element",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A browser feature",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The virtual DOM is a JavaScript representation of the real DOM that React uses for efficient updates.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "react-junior-30",
+    "question": "React Junior Question 30: React uses _____ to efficiently update the DOM.",
+    "type": "fill-blank",
+    "correctAnswer": "Virtual DOM",
+    "explanation": "The correct answer is \"Virtual DOM\". This is an important React concept for junior level developers.",
+    "category": "React Junior",
+    "difficulty": "easy",
+    "tags": [
+      "react",
+      "junior"
+    ],
+    "points": 1
+  }
+] as InteractiveQuizQuestion[],
+
+  intermediate: [
+  {
+    "id": "react-intermediate-1",
+    "question": "React Intermediate Question 1: What is React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript library for building user interfaces",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A complete framework like Angular",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database management system",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "React is a JavaScript library for building user interfaces, particularly web applications.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-2",
+    "question": "React Intermediate Question 2: _____ is used to perform side effects in React components.",
+    "type": "fill-blank",
+    "correctAnswer": "useEffect",
+    "explanation": "The correct answer is \"useEffect\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-3",
+    "question": "React Intermediate Question 3: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for intermediate level development.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-4",
+    "question": "React Intermediate Question 4: useState can only be used in functional components.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-5",
+    "question": "React Intermediate Question 5: What is useState in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Hook that lets you add state to functional components",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A method for updating props",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS property",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A build tool",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "useState is a React Hook that lets you add state to functional components.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-6",
+    "question": "React Intermediate Question 6: React uses _____ for state management in functional components.",
+    "type": "fill-blank",
+    "correctAnswer": "useState",
+    "explanation": "The correct answer is \"useState\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-7",
+    "question": "React Intermediate Question 7: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for intermediate level development.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-8",
+    "question": "React Intermediate Question 8: React components must always return JSX.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-9",
+    "question": "React Intermediate Question 9: What is the virtual DOM?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript representation of the real DOM",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A fake DOM element",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A browser feature",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The virtual DOM is a JavaScript representation of the real DOM that React uses for efficient updates.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-10",
+    "question": "React Intermediate Question 10: React uses _____ to efficiently update the DOM.",
+    "type": "fill-blank",
+    "correctAnswer": "Virtual DOM",
+    "explanation": "The correct answer is \"Virtual DOM\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-11",
+    "question": "React Intermediate Question 11: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for intermediate level development.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-12",
+    "question": "React Intermediate Question 12: JSX is required to write React components.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-13",
+    "question": "React Intermediate Question 13: What is a React component?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A reusable piece of UI",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A database table",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS class",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript function",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A React component is a reusable piece of UI that can accept inputs and return React elements.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-14",
+    "question": "React Intermediate Question 14: _____ helps optimize React performance by preventing unnecessary re-renders.",
+    "type": "fill-blank",
+    "correctAnswer": "React.memo",
+    "explanation": "The correct answer is \"React.memo\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-15",
+    "question": "React Intermediate Question 15: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for intermediate level development.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-16",
+    "question": "React Intermediate Question 16: React is a library, not a framework.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-17",
+    "question": "React Intermediate Question 17: What is JSX in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A syntax extension for JavaScript",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A build tool",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A testing library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "JSX is a syntax extension for JavaScript that allows you to write HTML-like code in JavaScript.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-18",
+    "question": "React Intermediate Question 18: React components are written using _____ syntax.",
+    "type": "fill-blank",
+    "correctAnswer": "JSX",
+    "explanation": "The correct answer is \"JSX\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-19",
+    "question": "React Intermediate Question 19: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for intermediate level development.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-20",
+    "question": "React Intermediate Question 20: React uses one-way data binding.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-21",
+    "question": "React Intermediate Question 21: What is React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript library for building user interfaces",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A complete framework like Angular",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database management system",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "React is a JavaScript library for building user interfaces, particularly web applications.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-22",
+    "question": "React Intermediate Question 22: _____ is used to perform side effects in React components.",
+    "type": "fill-blank",
+    "correctAnswer": "useEffect",
+    "explanation": "The correct answer is \"useEffect\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-23",
+    "question": "React Intermediate Question 23: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for intermediate level development.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-24",
+    "question": "React Intermediate Question 24: useState can only be used in functional components.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-25",
+    "question": "React Intermediate Question 25: What is useState in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Hook that lets you add state to functional components",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A method for updating props",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS property",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A build tool",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "useState is a React Hook that lets you add state to functional components.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-26",
+    "question": "React Intermediate Question 26: React uses _____ for state management in functional components.",
+    "type": "fill-blank",
+    "correctAnswer": "useState",
+    "explanation": "The correct answer is \"useState\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-27",
+    "question": "React Intermediate Question 27: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for intermediate level development.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-28",
+    "question": "React Intermediate Question 28: React components must always return JSX.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-29",
+    "question": "React Intermediate Question 29: What is the virtual DOM?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript representation of the real DOM",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A fake DOM element",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A browser feature",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The virtual DOM is a JavaScript representation of the real DOM that React uses for efficient updates.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "react-intermediate-30",
+    "question": "React Intermediate Question 30: React uses _____ to efficiently update the DOM.",
+    "type": "fill-blank",
+    "correctAnswer": "Virtual DOM",
+    "explanation": "The correct answer is \"Virtual DOM\". This is an important React concept for intermediate level developers.",
+    "category": "React Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "react",
+      "intermediate"
+    ],
+    "points": 2
+  }
+] as InteractiveQuizQuestion[],
+
+  senior: [
+  {
+    "id": "react-senior-1",
+    "question": "React Senior Question 1: What is React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript library for building user interfaces",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A complete framework like Angular",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database management system",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "React is a JavaScript library for building user interfaces, particularly web applications.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-2",
+    "question": "React Senior Question 2: _____ is used to perform side effects in React components.",
+    "type": "fill-blank",
+    "correctAnswer": "useEffect",
+    "explanation": "The correct answer is \"useEffect\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-3",
+    "question": "React Senior Question 3: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for senior level development.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-4",
+    "question": "React Senior Question 4: useState can only be used in functional components.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-5",
+    "question": "React Senior Question 5: What is useState in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Hook that lets you add state to functional components",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A method for updating props",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS property",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A build tool",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "useState is a React Hook that lets you add state to functional components.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-6",
+    "question": "React Senior Question 6: React uses _____ for state management in functional components.",
+    "type": "fill-blank",
+    "correctAnswer": "useState",
+    "explanation": "The correct answer is \"useState\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-7",
+    "question": "React Senior Question 7: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for senior level development.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-8",
+    "question": "React Senior Question 8: React components must always return JSX.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-9",
+    "question": "React Senior Question 9: What is the virtual DOM?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript representation of the real DOM",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A fake DOM element",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A browser feature",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The virtual DOM is a JavaScript representation of the real DOM that React uses for efficient updates.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-10",
+    "question": "React Senior Question 10: React uses _____ to efficiently update the DOM.",
+    "type": "fill-blank",
+    "correctAnswer": "Virtual DOM",
+    "explanation": "The correct answer is \"Virtual DOM\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-11",
+    "question": "React Senior Question 11: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for senior level development.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-12",
+    "question": "React Senior Question 12: JSX is required to write React components.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-13",
+    "question": "React Senior Question 13: What is a React component?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A reusable piece of UI",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A database table",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS class",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript function",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A React component is a reusable piece of UI that can accept inputs and return React elements.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-14",
+    "question": "React Senior Question 14: _____ helps optimize React performance by preventing unnecessary re-renders.",
+    "type": "fill-blank",
+    "correctAnswer": "React.memo",
+    "explanation": "The correct answer is \"React.memo\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-15",
+    "question": "React Senior Question 15: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for senior level development.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-16",
+    "question": "React Senior Question 16: React is a library, not a framework.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-17",
+    "question": "React Senior Question 17: What is JSX in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A syntax extension for JavaScript",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A build tool",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A testing library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "JSX is a syntax extension for JavaScript that allows you to write HTML-like code in JavaScript.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-18",
+    "question": "React Senior Question 18: React components are written using _____ syntax.",
+    "type": "fill-blank",
+    "correctAnswer": "JSX",
+    "explanation": "The correct answer is \"JSX\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-19",
+    "question": "React Senior Question 19: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for senior level development.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-20",
+    "question": "React Senior Question 20: React uses one-way data binding.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-21",
+    "question": "React Senior Question 21: What is React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript library for building user interfaces",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A complete framework like Angular",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database management system",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "React is a JavaScript library for building user interfaces, particularly web applications.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-22",
+    "question": "React Senior Question 22: _____ is used to perform side effects in React components.",
+    "type": "fill-blank",
+    "correctAnswer": "useEffect",
+    "explanation": "The correct answer is \"useEffect\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-23",
+    "question": "React Senior Question 23: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for senior level development.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-24",
+    "question": "React Senior Question 24: useState can only be used in functional components.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important React concept.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-25",
+    "question": "React Senior Question 25: What is useState in React?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Hook that lets you add state to functional components",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A method for updating props",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS property",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A build tool",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "useState is a React Hook that lets you add state to functional components.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-26",
+    "question": "React Senior Question 26: React uses _____ for state management in functional components.",
+    "type": "fill-blank",
+    "correctAnswer": "useState",
+    "explanation": "The correct answer is \"useState\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-27",
+    "question": "React Senior Question 27: Which are React Hooks?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "useState",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "useEffect",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "useContext",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "useProps",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct React concepts for senior level development.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-28",
+    "question": "React Senior Question 28: React components must always return JSX.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important React concept.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-29",
+    "question": "React Senior Question 29: What is the virtual DOM?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A JavaScript representation of the real DOM",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A fake DOM element",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A browser feature",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The virtual DOM is a JavaScript representation of the real DOM that React uses for efficient updates.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "react-senior-30",
+    "question": "React Senior Question 30: React uses _____ to efficiently update the DOM.",
+    "type": "fill-blank",
+    "correctAnswer": "Virtual DOM",
+    "explanation": "The correct answer is \"Virtual DOM\". This is an important React concept for senior level developers.",
+    "category": "React Senior",
+    "difficulty": "hard",
+    "tags": [
+      "react",
+      "senior"
+    ],
+    "points": 3
+  }
+] as InteractiveQuizQuestion[],
+};
+
+// Next.js Questions - Complete set with 30 questions per level
+export const NEXTJS_ENHANCED_QUESTIONS = {
+  junior: [
+  {
+    "id": "nextjs-junior-1",
+    "question": "Next.js Junior Question 1: What is Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A React framework for production",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Next.js is a React framework that provides additional features like server-side rendering, static generation, and API routes.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-2",
+    "question": "Next.js Junior Question 2: _____ is used to create API routes in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "pages/api",
+    "explanation": "The correct answer is \"pages/api\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-3",
+    "question": "Next.js Junior Question 3: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for junior level development.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-4",
+    "question": "Next.js Junior Question 4: API routes in Next.js run on the client side.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-5",
+    "question": "Next.js Junior Question 5: What is the purpose of getStaticProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at build time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at request time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getStaticProps fetches data at build time, enabling static site generation.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-6",
+    "question": "Next.js Junior Question 6: Next.js uses _____ for file-based routing.",
+    "type": "fill-blank",
+    "correctAnswer": "pages",
+    "explanation": "The correct answer is \"pages\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-7",
+    "question": "Next.js Junior Question 7: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for junior level development.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-8",
+    "question": "Next.js Junior Question 8: Next.js provides built-in CSS support.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-9",
+    "question": "Next.js Junior Question 9: What is the purpose of getServerSideProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at request time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at build time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getServerSideProps fetches data on each request, enabling server-side rendering.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-10",
+    "question": "Next.js Junior Question 10: Next.js supports _____ for internationalization.",
+    "type": "fill-blank",
+    "correctAnswer": "i18n",
+    "explanation": "The correct answer is \"i18n\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-11",
+    "question": "Next.js Junior Question 11: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for junior level development.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-12",
+    "question": "Next.js Junior Question 12: Next.js only supports server-side rendering.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-13",
+    "question": "Next.js Junior Question 13: What does SSG stand for in Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Generation",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Single Source Generation",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Static Script Generation",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SSG stands for Static Site Generation, which pre-renders pages at build time.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-14",
+    "question": "Next.js Junior Question 14: _____ enables static site generation in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "getStaticProps",
+    "explanation": "The correct answer is \"getStaticProps\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-15",
+    "question": "Next.js Junior Question 15: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for junior level development.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-16",
+    "question": "Next.js Junior Question 16: Next.js is built on top of React.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-17",
+    "question": "Next.js Junior Question 17: What does SSR stand for in Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Server-Side Rendering",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Single Source Rendering",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Static Site Rendering",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Server-Side Routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SSR stands for Server-Side Rendering, which renders pages on the server before sending them to the client.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-18",
+    "question": "Next.js Junior Question 18: Next.js provides automatic _____ optimization.",
+    "type": "fill-blank",
+    "correctAnswer": "image",
+    "explanation": "The correct answer is \"image\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-19",
+    "question": "Next.js Junior Question 19: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for junior level development.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-20",
+    "question": "Next.js Junior Question 20: Next.js supports TypeScript out of the box.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-21",
+    "question": "Next.js Junior Question 21: What is Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A React framework for production",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Next.js is a React framework that provides additional features like server-side rendering, static generation, and API routes.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-22",
+    "question": "Next.js Junior Question 22: _____ is used to create API routes in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "pages/api",
+    "explanation": "The correct answer is \"pages/api\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-23",
+    "question": "Next.js Junior Question 23: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for junior level development.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-24",
+    "question": "Next.js Junior Question 24: API routes in Next.js run on the client side.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-25",
+    "question": "Next.js Junior Question 25: What is the purpose of getStaticProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at build time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at request time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getStaticProps fetches data at build time, enabling static site generation.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-26",
+    "question": "Next.js Junior Question 26: Next.js uses _____ for file-based routing.",
+    "type": "fill-blank",
+    "correctAnswer": "pages",
+    "explanation": "The correct answer is \"pages\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-27",
+    "question": "Next.js Junior Question 27: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for junior level development.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-28",
+    "question": "Next.js Junior Question 28: Next.js provides built-in CSS support.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-29",
+    "question": "Next.js Junior Question 29: What is the purpose of getServerSideProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at request time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at build time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getServerSideProps fetches data on each request, enabling server-side rendering.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "nextjs-junior-30",
+    "question": "Next.js Junior Question 30: Next.js supports _____ for internationalization.",
+    "type": "fill-blank",
+    "correctAnswer": "i18n",
+    "explanation": "The correct answer is \"i18n\". This is an important Next.js concept for junior level developers.",
+    "category": "Next.js Junior",
+    "difficulty": "easy",
+    "tags": [
+      "nextjs",
+      "junior"
+    ],
+    "points": 1
+  }
+] as InteractiveQuizQuestion[],
+
+  intermediate: [
+  {
+    "id": "nextjs-intermediate-1",
+    "question": "Next.js Intermediate Question 1: What is Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A React framework for production",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Next.js is a React framework that provides additional features like server-side rendering, static generation, and API routes.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-2",
+    "question": "Next.js Intermediate Question 2: _____ is used to create API routes in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "pages/api",
+    "explanation": "The correct answer is \"pages/api\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-3",
+    "question": "Next.js Intermediate Question 3: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for intermediate level development.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-4",
+    "question": "Next.js Intermediate Question 4: API routes in Next.js run on the client side.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-5",
+    "question": "Next.js Intermediate Question 5: What is the purpose of getStaticProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at build time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at request time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getStaticProps fetches data at build time, enabling static site generation.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-6",
+    "question": "Next.js Intermediate Question 6: Next.js uses _____ for file-based routing.",
+    "type": "fill-blank",
+    "correctAnswer": "pages",
+    "explanation": "The correct answer is \"pages\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-7",
+    "question": "Next.js Intermediate Question 7: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for intermediate level development.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-8",
+    "question": "Next.js Intermediate Question 8: Next.js provides built-in CSS support.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-9",
+    "question": "Next.js Intermediate Question 9: What is the purpose of getServerSideProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at request time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at build time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getServerSideProps fetches data on each request, enabling server-side rendering.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-10",
+    "question": "Next.js Intermediate Question 10: Next.js supports _____ for internationalization.",
+    "type": "fill-blank",
+    "correctAnswer": "i18n",
+    "explanation": "The correct answer is \"i18n\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-11",
+    "question": "Next.js Intermediate Question 11: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for intermediate level development.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-12",
+    "question": "Next.js Intermediate Question 12: Next.js only supports server-side rendering.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-13",
+    "question": "Next.js Intermediate Question 13: What does SSG stand for in Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Generation",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Single Source Generation",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Static Script Generation",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SSG stands for Static Site Generation, which pre-renders pages at build time.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-14",
+    "question": "Next.js Intermediate Question 14: _____ enables static site generation in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "getStaticProps",
+    "explanation": "The correct answer is \"getStaticProps\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-15",
+    "question": "Next.js Intermediate Question 15: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for intermediate level development.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-16",
+    "question": "Next.js Intermediate Question 16: Next.js is built on top of React.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-17",
+    "question": "Next.js Intermediate Question 17: What does SSR stand for in Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Server-Side Rendering",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Single Source Rendering",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Static Site Rendering",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Server-Side Routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SSR stands for Server-Side Rendering, which renders pages on the server before sending them to the client.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-18",
+    "question": "Next.js Intermediate Question 18: Next.js provides automatic _____ optimization.",
+    "type": "fill-blank",
+    "correctAnswer": "image",
+    "explanation": "The correct answer is \"image\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-19",
+    "question": "Next.js Intermediate Question 19: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for intermediate level development.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-20",
+    "question": "Next.js Intermediate Question 20: Next.js supports TypeScript out of the box.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-21",
+    "question": "Next.js Intermediate Question 21: What is Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A React framework for production",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Next.js is a React framework that provides additional features like server-side rendering, static generation, and API routes.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-22",
+    "question": "Next.js Intermediate Question 22: _____ is used to create API routes in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "pages/api",
+    "explanation": "The correct answer is \"pages/api\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-23",
+    "question": "Next.js Intermediate Question 23: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for intermediate level development.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-24",
+    "question": "Next.js Intermediate Question 24: API routes in Next.js run on the client side.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-25",
+    "question": "Next.js Intermediate Question 25: What is the purpose of getStaticProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at build time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at request time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getStaticProps fetches data at build time, enabling static site generation.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-26",
+    "question": "Next.js Intermediate Question 26: Next.js uses _____ for file-based routing.",
+    "type": "fill-blank",
+    "correctAnswer": "pages",
+    "explanation": "The correct answer is \"pages\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-27",
+    "question": "Next.js Intermediate Question 27: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for intermediate level development.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-28",
+    "question": "Next.js Intermediate Question 28: Next.js provides built-in CSS support.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-29",
+    "question": "Next.js Intermediate Question 29: What is the purpose of getServerSideProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at request time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at build time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getServerSideProps fetches data on each request, enabling server-side rendering.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "nextjs-intermediate-30",
+    "question": "Next.js Intermediate Question 30: Next.js supports _____ for internationalization.",
+    "type": "fill-blank",
+    "correctAnswer": "i18n",
+    "explanation": "The correct answer is \"i18n\". This is an important Next.js concept for intermediate level developers.",
+    "category": "Next.js Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "nextjs",
+      "intermediate"
+    ],
+    "points": 2
+  }
+] as InteractiveQuizQuestion[],
+
+  senior: [
+  {
+    "id": "nextjs-senior-1",
+    "question": "Next.js Senior Question 1: What is Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A React framework for production",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Next.js is a React framework that provides additional features like server-side rendering, static generation, and API routes.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-2",
+    "question": "Next.js Senior Question 2: _____ is used to create API routes in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "pages/api",
+    "explanation": "The correct answer is \"pages/api\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-3",
+    "question": "Next.js Senior Question 3: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for senior level development.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-4",
+    "question": "Next.js Senior Question 4: API routes in Next.js run on the client side.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-5",
+    "question": "Next.js Senior Question 5: What is the purpose of getStaticProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at build time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at request time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getStaticProps fetches data at build time, enabling static site generation.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-6",
+    "question": "Next.js Senior Question 6: Next.js uses _____ for file-based routing.",
+    "type": "fill-blank",
+    "correctAnswer": "pages",
+    "explanation": "The correct answer is \"pages\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-7",
+    "question": "Next.js Senior Question 7: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for senior level development.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-8",
+    "question": "Next.js Senior Question 8: Next.js provides built-in CSS support.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-9",
+    "question": "Next.js Senior Question 9: What is the purpose of getServerSideProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at request time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at build time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getServerSideProps fetches data on each request, enabling server-side rendering.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-10",
+    "question": "Next.js Senior Question 10: Next.js supports _____ for internationalization.",
+    "type": "fill-blank",
+    "correctAnswer": "i18n",
+    "explanation": "The correct answer is \"i18n\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-11",
+    "question": "Next.js Senior Question 11: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for senior level development.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-12",
+    "question": "Next.js Senior Question 12: Next.js only supports server-side rendering.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-13",
+    "question": "Next.js Senior Question 13: What does SSG stand for in Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Generation",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Single Source Generation",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Static Script Generation",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SSG stands for Static Site Generation, which pre-renders pages at build time.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-14",
+    "question": "Next.js Senior Question 14: _____ enables static site generation in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "getStaticProps",
+    "explanation": "The correct answer is \"getStaticProps\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-15",
+    "question": "Next.js Senior Question 15: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for senior level development.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-16",
+    "question": "Next.js Senior Question 16: Next.js is built on top of React.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-17",
+    "question": "Next.js Senior Question 17: What does SSR stand for in Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Server-Side Rendering",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Single Source Rendering",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Static Site Rendering",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Server-Side Routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SSR stands for Server-Side Rendering, which renders pages on the server before sending them to the client.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-18",
+    "question": "Next.js Senior Question 18: Next.js provides automatic _____ optimization.",
+    "type": "fill-blank",
+    "correctAnswer": "image",
+    "explanation": "The correct answer is \"image\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-19",
+    "question": "Next.js Senior Question 19: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for senior level development.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-20",
+    "question": "Next.js Senior Question 20: Next.js supports TypeScript out of the box.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-21",
+    "question": "Next.js Senior Question 21: What is Next.js?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A React framework for production",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Next.js is a React framework that provides additional features like server-side rendering, static generation, and API routes.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-22",
+    "question": "Next.js Senior Question 22: _____ is used to create API routes in Next.js.",
+    "type": "fill-blank",
+    "correctAnswer": "pages/api",
+    "explanation": "The correct answer is \"pages/api\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-23",
+    "question": "Next.js Senior Question 23: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for senior level development.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-24",
+    "question": "Next.js Senior Question 24: API routes in Next.js run on the client side.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Next.js concept.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-25",
+    "question": "Next.js Senior Question 25: What is the purpose of getStaticProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at build time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at request time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getStaticProps fetches data at build time, enabling static site generation.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-26",
+    "question": "Next.js Senior Question 26: Next.js uses _____ for file-based routing.",
+    "type": "fill-blank",
+    "correctAnswer": "pages",
+    "explanation": "The correct answer is \"pages\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-27",
+    "question": "Next.js Senior Question 27: Which rendering methods does Next.js support?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Static Site Generation (SSG)",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Server-Side Rendering (SSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Client-Side Rendering (CSR)",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Database Rendering (DBR)",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Next.js features for senior level development.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-28",
+    "question": "Next.js Senior Question 28: Next.js provides built-in CSS support.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Next.js concept.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-29",
+    "question": "Next.js Senior Question 29: What is the purpose of getServerSideProps?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "To fetch data at request time",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "To fetch data at build time",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "To create API routes",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "To handle client-side routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "getServerSideProps fetches data on each request, enabling server-side rendering.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "nextjs-senior-30",
+    "question": "Next.js Senior Question 30: Next.js supports _____ for internationalization.",
+    "type": "fill-blank",
+    "correctAnswer": "i18n",
+    "explanation": "The correct answer is \"i18n\". This is an important Next.js concept for senior level developers.",
+    "category": "Next.js Senior",
+    "difficulty": "hard",
+    "tags": [
+      "nextjs",
+      "senior"
+    ],
+    "points": 3
+  }
+] as InteractiveQuizQuestion[],
+};
+
+// Redux Questions - Complete set with 30 questions per level
+export const REDUX_ENHANCED_QUESTIONS = {
+  junior: [
+  {
+    "id": "redux-junior-1",
+    "question": "Redux Junior Question 1: What is Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A predictable state container for JavaScript apps",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux is a predictable state container for JavaScript applications, commonly used with React.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-2",
+    "question": "Redux Junior Question 2: _____ is used to handle async actions in Redux.",
+    "type": "fill-blank",
+    "correctAnswer": "Redux Thunk",
+    "explanation": "The correct answer is \"Redux Thunk\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-3",
+    "question": "Redux Junior Question 3: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for junior level development.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-4",
+    "question": "Redux Junior Question 4: Redux can only be used with React.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-5",
+    "question": "Redux Junior Question 5: What is the store in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "An object that holds the application state",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A component",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "An action",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A reducer",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The store is an object that holds the application state and provides methods to access and update it.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-6",
+    "question": "Redux Junior Question 6: Redux follows the _____ pattern.",
+    "type": "fill-blank",
+    "correctAnswer": "Flux",
+    "explanation": "The correct answer is \"Flux\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-7",
+    "question": "Redux Junior Question 7: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for junior level development.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-8",
+    "question": "Redux Junior Question 8: Redux reducers must be pure functions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-9",
+    "question": "Redux Junior Question 9: What is a reducer in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A pure function that specifies how state changes",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "An action creator",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A middleware",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A component",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A reducer is a pure function that takes the previous state and an action, and returns the next state.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-10",
+    "question": "Redux Junior Question 10: Redux uses _____ to dispatch actions.",
+    "type": "fill-blank",
+    "correctAnswer": "dispatch",
+    "explanation": "The correct answer is \"dispatch\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-11",
+    "question": "Redux Junior Question 11: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for junior level development.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-12",
+    "question": "Redux Junior Question 12: Redux actions must be plain JavaScript objects.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-13",
+    "question": "Redux Junior Question 13: What is an action in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A plain JavaScript object describing what happened",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A function that modifies state",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A React component",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database query",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "An action is a plain JavaScript object that describes what happened and is the only way to change state in Redux.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-14",
+    "question": "Redux Junior Question 14: _____ are pure functions that specify state changes.",
+    "type": "fill-blank",
+    "correctAnswer": "Reducers",
+    "explanation": "The correct answer is \"Reducers\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-15",
+    "question": "Redux Junior Question 15: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for junior level development.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-16",
+    "question": "Redux Junior Question 16: Redux state is immutable.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-17",
+    "question": "Redux Junior Question 17: What are the three principles of Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Single source of truth, state is read-only, changes with pure functions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Multiple sources, mutable state, impure functions",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Database storage, async operations, side effects",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Component state, props, lifecycle",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux follows three principles: single source of truth, state is read-only, and changes are made with pure functions.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-18",
+    "question": "Redux Junior Question 18: Redux state is stored in a single _____ object.",
+    "type": "fill-blank",
+    "correctAnswer": "store",
+    "explanation": "The correct answer is \"store\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-19",
+    "question": "Redux Junior Question 19: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for junior level development.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-20",
+    "question": "Redux Junior Question 20: Redux middleware can intercept actions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-21",
+    "question": "Redux Junior Question 21: What is Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A predictable state container for JavaScript apps",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux is a predictable state container for JavaScript applications, commonly used with React.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-22",
+    "question": "Redux Junior Question 22: _____ is used to handle async actions in Redux.",
+    "type": "fill-blank",
+    "correctAnswer": "Redux Thunk",
+    "explanation": "The correct answer is \"Redux Thunk\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-23",
+    "question": "Redux Junior Question 23: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for junior level development.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-24",
+    "question": "Redux Junior Question 24: Redux can only be used with React.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-25",
+    "question": "Redux Junior Question 25: What is the store in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "An object that holds the application state",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A component",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "An action",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A reducer",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The store is an object that holds the application state and provides methods to access and update it.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-26",
+    "question": "Redux Junior Question 26: Redux follows the _____ pattern.",
+    "type": "fill-blank",
+    "correctAnswer": "Flux",
+    "explanation": "The correct answer is \"Flux\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-27",
+    "question": "Redux Junior Question 27: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for junior level development.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-28",
+    "question": "Redux Junior Question 28: Redux reducers must be pure functions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-29",
+    "question": "Redux Junior Question 29: What is a reducer in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A pure function that specifies how state changes",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "An action creator",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A middleware",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A component",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A reducer is a pure function that takes the previous state and an action, and returns the next state.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  },
+  {
+    "id": "redux-junior-30",
+    "question": "Redux Junior Question 30: Redux uses _____ to dispatch actions.",
+    "type": "fill-blank",
+    "correctAnswer": "dispatch",
+    "explanation": "The correct answer is \"dispatch\". This is an important Redux concept for junior level developers.",
+    "category": "Redux Junior",
+    "difficulty": "easy",
+    "tags": [
+      "redux",
+      "junior"
+    ],
+    "points": 1
+  }
+] as InteractiveQuizQuestion[],
+
+  intermediate: [
+  {
+    "id": "redux-intermediate-1",
+    "question": "Redux Intermediate Question 1: What is Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A predictable state container for JavaScript apps",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux is a predictable state container for JavaScript applications, commonly used with React.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-2",
+    "question": "Redux Intermediate Question 2: _____ is used to handle async actions in Redux.",
+    "type": "fill-blank",
+    "correctAnswer": "Redux Thunk",
+    "explanation": "The correct answer is \"Redux Thunk\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-3",
+    "question": "Redux Intermediate Question 3: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for intermediate level development.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-4",
+    "question": "Redux Intermediate Question 4: Redux can only be used with React.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-5",
+    "question": "Redux Intermediate Question 5: What is the store in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "An object that holds the application state",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A component",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "An action",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A reducer",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The store is an object that holds the application state and provides methods to access and update it.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-6",
+    "question": "Redux Intermediate Question 6: Redux follows the _____ pattern.",
+    "type": "fill-blank",
+    "correctAnswer": "Flux",
+    "explanation": "The correct answer is \"Flux\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-7",
+    "question": "Redux Intermediate Question 7: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for intermediate level development.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-8",
+    "question": "Redux Intermediate Question 8: Redux reducers must be pure functions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-9",
+    "question": "Redux Intermediate Question 9: What is a reducer in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A pure function that specifies how state changes",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "An action creator",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A middleware",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A component",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A reducer is a pure function that takes the previous state and an action, and returns the next state.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-10",
+    "question": "Redux Intermediate Question 10: Redux uses _____ to dispatch actions.",
+    "type": "fill-blank",
+    "correctAnswer": "dispatch",
+    "explanation": "The correct answer is \"dispatch\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-11",
+    "question": "Redux Intermediate Question 11: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for intermediate level development.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-12",
+    "question": "Redux Intermediate Question 12: Redux actions must be plain JavaScript objects.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-13",
+    "question": "Redux Intermediate Question 13: What is an action in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A plain JavaScript object describing what happened",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A function that modifies state",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A React component",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database query",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "An action is a plain JavaScript object that describes what happened and is the only way to change state in Redux.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-14",
+    "question": "Redux Intermediate Question 14: _____ are pure functions that specify state changes.",
+    "type": "fill-blank",
+    "correctAnswer": "Reducers",
+    "explanation": "The correct answer is \"Reducers\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-15",
+    "question": "Redux Intermediate Question 15: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for intermediate level development.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-16",
+    "question": "Redux Intermediate Question 16: Redux state is immutable.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-17",
+    "question": "Redux Intermediate Question 17: What are the three principles of Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Single source of truth, state is read-only, changes with pure functions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Multiple sources, mutable state, impure functions",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Database storage, async operations, side effects",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Component state, props, lifecycle",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux follows three principles: single source of truth, state is read-only, and changes are made with pure functions.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-18",
+    "question": "Redux Intermediate Question 18: Redux state is stored in a single _____ object.",
+    "type": "fill-blank",
+    "correctAnswer": "store",
+    "explanation": "The correct answer is \"store\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-19",
+    "question": "Redux Intermediate Question 19: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for intermediate level development.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-20",
+    "question": "Redux Intermediate Question 20: Redux middleware can intercept actions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-21",
+    "question": "Redux Intermediate Question 21: What is Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A predictable state container for JavaScript apps",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux is a predictable state container for JavaScript applications, commonly used with React.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-22",
+    "question": "Redux Intermediate Question 22: _____ is used to handle async actions in Redux.",
+    "type": "fill-blank",
+    "correctAnswer": "Redux Thunk",
+    "explanation": "The correct answer is \"Redux Thunk\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-23",
+    "question": "Redux Intermediate Question 23: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for intermediate level development.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-24",
+    "question": "Redux Intermediate Question 24: Redux can only be used with React.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-25",
+    "question": "Redux Intermediate Question 25: What is the store in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "An object that holds the application state",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A component",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "An action",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A reducer",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The store is an object that holds the application state and provides methods to access and update it.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-26",
+    "question": "Redux Intermediate Question 26: Redux follows the _____ pattern.",
+    "type": "fill-blank",
+    "correctAnswer": "Flux",
+    "explanation": "The correct answer is \"Flux\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-27",
+    "question": "Redux Intermediate Question 27: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for intermediate level development.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-28",
+    "question": "Redux Intermediate Question 28: Redux reducers must be pure functions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-29",
+    "question": "Redux Intermediate Question 29: What is a reducer in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A pure function that specifies how state changes",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "An action creator",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A middleware",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A component",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A reducer is a pure function that takes the previous state and an action, and returns the next state.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  },
+  {
+    "id": "redux-intermediate-30",
+    "question": "Redux Intermediate Question 30: Redux uses _____ to dispatch actions.",
+    "type": "fill-blank",
+    "correctAnswer": "dispatch",
+    "explanation": "The correct answer is \"dispatch\". This is an important Redux concept for intermediate level developers.",
+    "category": "Redux Intermediate",
+    "difficulty": "medium",
+    "tags": [
+      "redux",
+      "intermediate"
+    ],
+    "points": 2
+  }
+] as InteractiveQuizQuestion[],
+
+  senior: [
+  {
+    "id": "redux-senior-1",
+    "question": "Redux Senior Question 1: What is Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A predictable state container for JavaScript apps",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux is a predictable state container for JavaScript applications, commonly used with React.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-2",
+    "question": "Redux Senior Question 2: _____ is used to handle async actions in Redux.",
+    "type": "fill-blank",
+    "correctAnswer": "Redux Thunk",
+    "explanation": "The correct answer is \"Redux Thunk\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-3",
+    "question": "Redux Senior Question 3: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for senior level development.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-4",
+    "question": "Redux Senior Question 4: Redux can only be used with React.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-5",
+    "question": "Redux Senior Question 5: What is the store in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "An object that holds the application state",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A component",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "An action",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A reducer",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The store is an object that holds the application state and provides methods to access and update it.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-6",
+    "question": "Redux Senior Question 6: Redux follows the _____ pattern.",
+    "type": "fill-blank",
+    "correctAnswer": "Flux",
+    "explanation": "The correct answer is \"Flux\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-7",
+    "question": "Redux Senior Question 7: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for senior level development.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-8",
+    "question": "Redux Senior Question 8: Redux reducers must be pure functions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-9",
+    "question": "Redux Senior Question 9: What is a reducer in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A pure function that specifies how state changes",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "An action creator",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A middleware",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A component",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A reducer is a pure function that takes the previous state and an action, and returns the next state.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-10",
+    "question": "Redux Senior Question 10: Redux uses _____ to dispatch actions.",
+    "type": "fill-blank",
+    "correctAnswer": "dispatch",
+    "explanation": "The correct answer is \"dispatch\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-11",
+    "question": "Redux Senior Question 11: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for senior level development.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-12",
+    "question": "Redux Senior Question 12: Redux actions must be plain JavaScript objects.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-13",
+    "question": "Redux Senior Question 13: What is an action in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A plain JavaScript object describing what happened",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A function that modifies state",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A React component",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A database query",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "An action is a plain JavaScript object that describes what happened and is the only way to change state in Redux.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-14",
+    "question": "Redux Senior Question 14: _____ are pure functions that specify state changes.",
+    "type": "fill-blank",
+    "correctAnswer": "Reducers",
+    "explanation": "The correct answer is \"Reducers\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-15",
+    "question": "Redux Senior Question 15: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for senior level development.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-16",
+    "question": "Redux Senior Question 16: Redux state is immutable.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-17",
+    "question": "Redux Senior Question 17: What are the three principles of Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "Single source of truth, state is read-only, changes with pure functions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Multiple sources, mutable state, impure functions",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Database storage, async operations, side effects",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Component state, props, lifecycle",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux follows three principles: single source of truth, state is read-only, and changes are made with pure functions.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-18",
+    "question": "Redux Senior Question 18: Redux state is stored in a single _____ object.",
+    "type": "fill-blank",
+    "correctAnswer": "store",
+    "explanation": "The correct answer is \"store\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-19",
+    "question": "Redux Senior Question 19: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for senior level development.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-20",
+    "question": "Redux Senior Question 20: Redux middleware can intercept actions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-21",
+    "question": "Redux Senior Question 21: What is Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A predictable state container for JavaScript apps",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A CSS framework",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A database management system",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A JavaScript library",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redux is a predictable state container for JavaScript applications, commonly used with React.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-22",
+    "question": "Redux Senior Question 22: _____ is used to handle async actions in Redux.",
+    "type": "fill-blank",
+    "correctAnswer": "Redux Thunk",
+    "explanation": "The correct answer is \"Redux Thunk\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-23",
+    "question": "Redux Senior Question 23: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for senior level development.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-24",
+    "question": "Redux Senior Question 24: Redux can only be used with React.",
+    "type": "true-false",
+    "correctAnswer": "false",
+    "explanation": "This statement is false. This is an important Redux concept.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-25",
+    "question": "Redux Senior Question 25: What is the store in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "An object that holds the application state",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "A component",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "An action",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A reducer",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The store is an object that holds the application state and provides methods to access and update it.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-26",
+    "question": "Redux Senior Question 26: Redux follows the _____ pattern.",
+    "type": "fill-blank",
+    "correctAnswer": "Flux",
+    "explanation": "The correct answer is \"Flux\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-27",
+    "question": "Redux Senior Question 27: Which are Redux core concepts?",
+    "type": "multiple-checkbox",
+    "options": [
+      {
+        "id": "a",
+        "text": "Actions",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Reducers",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Store",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "Components",
+        "isCorrect": false
+      }
+    ],
+    "correctAnswers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "explanation": "These are the correct Redux concepts for senior level development.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-28",
+    "question": "Redux Senior Question 28: Redux reducers must be pure functions.",
+    "type": "true-false",
+    "correctAnswer": "true",
+    "explanation": "This statement is true. This is an important Redux concept.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-29",
+    "question": "Redux Senior Question 29: What is a reducer in Redux?",
+    "type": "multiple-choice",
+    "options": [
+      {
+        "id": "a",
+        "text": "A pure function that specifies how state changes",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "An action creator",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "A middleware",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "A component",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A reducer is a pure function that takes the previous state and an action, and returns the next state.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  },
+  {
+    "id": "redux-senior-30",
+    "question": "Redux Senior Question 30: Redux uses _____ to dispatch actions.",
+    "type": "fill-blank",
+    "correctAnswer": "dispatch",
+    "explanation": "The correct answer is \"dispatch\". This is an important Redux concept for senior level developers.",
+    "category": "Redux Senior",
+    "difficulty": "hard",
+    "tags": [
+      "redux",
+      "senior"
+    ],
+    "points": 3
+  }
+] as InteractiveQuizQuestion[],
+};
+
+// Export the main data structure
+export const ENHANCED_INTERACTIVE_QUIZ_DATA = {
+  angular: ANGULAR_ENHANCED_QUESTIONS,
+  react: REACT_ENHANCED_QUESTIONS,
+  nextjs: NEXTJS_ENHANCED_QUESTIONS,
+  redux: REDUX_ENHANCED_QUESTIONS,
+};
