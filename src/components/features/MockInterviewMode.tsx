@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 interface MockInterviewModeProps {
   isActive: boolean;
   duration: number; // in minutes
-  onComplete: (results: MockInterviewResults) => void;
+  onComplete: (_results: MockInterviewResults) => void;
   onCancel: () => void;
 }
 

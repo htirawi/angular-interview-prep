@@ -81,15 +81,11 @@ export default function InteractiveQuizPage() {
   // Handle answer submission
   const handleAnswerSubmit = useCallback(
     (questionId: string, answer: string | string[]) => {
-      // console.log("handleAnswerSubmit called:", { questionId, answer });
       if (!session) {
-        // console.log("No session found in handleAnswerSubmit");
         return;
       }
 
-      // console.log("Session before submitAnswer:", session);
       const updatedSession = InteractiveQuizService.submitAnswer(session, questionId, answer);
-      // console.log("Session after submitAnswer:", updatedSession);
       setSession(updatedSession);
     },
     [session]
@@ -113,20 +109,14 @@ export default function InteractiveQuizPage() {
 
   // Handle quiz completion
   const handleCompleteQuiz = useCallback(() => {
-    // console.log("handleCompleteQuiz called, session:", session);
     if (!session) {
-      // console.log("No session found, returning");
       return;
     }
 
     try {
-      // console.log("Calling InteractiveQuizService.completeQuiz");
       const quizResult = InteractiveQuizService.completeQuiz(session);
-      // console.log("Quiz result:", quizResult);
       setResult(quizResult);
-      // console.log("Result state set to:", quizResult);
       setSession(null); // Clear session to stop timer
-      // console.log("Session cleared, should now show results page");
     } catch (error) {
       console.error("Error completing quiz:", error);
     }
@@ -192,8 +182,9 @@ export default function InteractiveQuizPage() {
     return null;
   }
 
-  const currentQuestion = session.questions[session.currentQuestionIndex];
-  const progress = ((session.currentQuestionIndex + 1) / session.questions.length) * 100;
+  const { questions, currentQuestionIndex, answers } = session;
+  const currentQuestion = questions[currentQuestionIndex];
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -253,8 +244,8 @@ export default function InteractiveQuizPage() {
       <div className="border-b border-gray-200 bg-white/50 backdrop-blur dark:border-gray-700 dark:bg-gray-800/50">
         <div className="container mx-auto px-2 py-2 sm:px-4 sm:py-2">
           <QuizProgress
-            current={session.currentQuestionIndex + 1}
-            total={session.questions.length}
+            current={currentQuestionIndex + 1}
+            total={questions.length}
             progress={progress}
           />
         </div>
@@ -264,20 +255,16 @@ export default function InteractiveQuizPage() {
       <div className="container mx-auto px-2 py-4 sm:px-4 sm:py-8">
         <InteractiveQuizQuestionCard
           question={currentQuestion}
-          questionNumber={session.currentQuestionIndex + 1}
-          totalQuestions={session.questions.length}
-          userAnswer={session.answers[currentQuestion.id]}
+          questionNumber={currentQuestionIndex + 1}
+          totalQuestions={questions.length}
+          userAnswer={answers[currentQuestion.id]}
           onAnswerSubmit={handleAnswerSubmit}
           onNext={handleNext}
           onPrevious={handlePrevious}
-          canGoNext={
-            session.currentQuestionIndex < session.questions.length - 1 &&
-            !!session.answers[currentQuestion.id]
-          }
-          canGoPrevious={session.currentQuestionIndex > 0}
+          canGoNext={currentQuestionIndex < questions.length - 1 && !!answers[currentQuestion.id]}
+          canGoPrevious={currentQuestionIndex > 0}
           canComplete={
-            session.currentQuestionIndex === session.questions.length - 1 &&
-            !!session.answers[currentQuestion.id]
+            currentQuestionIndex === questions.length - 1 && !!answers[currentQuestion.id]
           }
           onComplete={handleCompleteQuiz}
         />

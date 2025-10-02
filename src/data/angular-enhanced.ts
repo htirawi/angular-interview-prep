@@ -5657,7 +5657,7 @@ export const ANGULAR_ENHANCED_QUESTIONS: QA[] = [
       "    private route: ActivatedRoute\n" +
       "  ) {\n" +
       "    // ❌ BAD - @Input not available yet\n" +
-      "    // console.log(this.userId);\n\n" +
+      "    // this.userId is not available yet\n\n" +
       "    // ✅ GOOD - Simple setup\n" +
       "    this.userId = 0;\n" +
       "  }\n" +

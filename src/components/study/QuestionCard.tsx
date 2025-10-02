@@ -4,6 +4,7 @@
  */
 
 import React, { useEffect, useRef, useState } from "react";
+
 import type { QuestionCardProps } from "../../types";
 import { StudyQuestionHeader } from "./StudyQuestionHeader";
 import { StudyQuestionContent } from "./StudyQuestionContent";

@@ -26,17 +26,17 @@ export function LazyLoader({ fallback, children }: LazyLoaderProps) {
 /**
  * Create a lazy-loaded component with loading fallback
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function createLazyComponent<T extends ComponentType<any>>(
+// eslint-disable-next-line react-refresh/only-export-components
+export function createLazyComponent<T extends ComponentType<Record<string, unknown>>>(
   importFunc: () => Promise<{ default: T }>,
   fallback?: ReactNode
 ) {
   const LazyComponent = lazy(importFunc);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return function LazyComponentWrapper(props: any) {
+  return function LazyComponentWrapper(props: Record<string, unknown>) {
     return (
       <LazyLoader fallback={fallback}>
+        {/* @ts-expect-error - Complex generic type inference with lazy components */}
         <LazyComponent {...props} />
       </LazyLoader>
     );

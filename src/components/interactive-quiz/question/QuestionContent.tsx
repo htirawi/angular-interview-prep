@@ -273,16 +273,19 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
       <h3 className="mb-6 text-lg font-semibold leading-relaxed text-gray-900 dark:text-white sm:mb-8 sm:text-xl lg:text-2xl">
         {question.type === "fill-blank" ? (
           <span className="inline-block">
-            {question.question.split("____").map((part, index) => (
-              <span key={index}>
-                {part}
-                {index < question.question.split("____").length - 1 && (
-                  <span className="mx-1 inline-block min-w-[80px] border-b-2 border-dashed border-blue-400 bg-blue-50 px-2 py-1 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300 sm:mx-2 sm:min-w-[120px] sm:px-3">
-                    [Your Answer]
-                  </span>
-                )}
-              </span>
-            ))}
+            {(() => {
+              const questionParts = question.question.split("____");
+              return questionParts.map((part, index) => (
+                <span key={index}>
+                  {part}
+                  {index < questionParts.length - 1 && (
+                    <span className="mx-1 inline-block min-w-[80px] border-b-2 border-dashed border-blue-400 bg-blue-50 px-2 py-1 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300 sm:mx-2 sm:min-w-[120px] sm:px-3">
+                      [Your Answer]
+                    </span>
+                  )}
+                </span>
+              ));
+            })()}
           </span>
         ) : (
           question.question

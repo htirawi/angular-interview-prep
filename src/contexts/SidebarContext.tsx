@@ -7,6 +7,7 @@ export function SidebarProvider({ children, value }: SidebarProviderProps) {
   return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useSidebarContext(): SidebarContextValue {
   const context = useContext(SidebarContext);
   if (!context) {

@@ -12,7 +12,7 @@ interface QuestionRatingProps {
  * Allows users to rate question quality from 1-5 stars
  */
 export function QuestionRating({
-  questionId,
+  questionId: _questionId,
   initialRating = 0,
   onRate,
   compact = false,
@@ -22,7 +22,7 @@ export function QuestionRating({
 
   const handleRate = (newRating: number) => {
     setRating(newRating);
-    onRate(questionId, newRating);
+    onRate(_questionId, newRating);
   };
 
   const StarIcon = ({

@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 interface ThemeContextType {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
-  setDarkMode: (dark: boolean) => void;
+  setDarkMode: (isDark: boolean) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -34,8 +34,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setIsDarkMode((prev: boolean) => !prev);
   };
 
-  const setDarkMode = (dark: boolean) => {
-    setIsDarkMode(dark);
+  const setDarkMode = (isDark: boolean) => {
+    setIsDarkMode(isDark);
   };
 
   return (
@@ -45,6 +45,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (context === undefined) {
