@@ -114,7 +114,7 @@ function main() {
   // 7. Strict Unused Variable Check
   logSection("Strict Unused Variable Detection");
   const unusedCheck = runCommand(
-    'npx eslint src/ --ext ts,tsx --rule "no-unused-vars: error" --quiet',
+    'npx eslint src/ --ext ts,tsx --rule "@typescript-eslint/no-unused-vars: error" --quiet',
     "Strict unused variable detection"
   );
   if (unusedCheck.success) {
@@ -146,7 +146,7 @@ function main() {
   // 9. Strict Import/Export Check
   logSection("Strict Import/Export Validation");
   const importCheck = runCommand(
-    'npx eslint src/ --ext ts,tsx --rule "no-unused-vars: error" --quiet',
+    'npx eslint src/ --ext ts,tsx --rule "@typescript-eslint/no-unused-vars: error" --quiet',
     "Strict unused import detection"
   );
   if (importCheck.success) {
