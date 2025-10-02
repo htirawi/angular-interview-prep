@@ -7,28 +7,36 @@ import {
 
 // Mock component to test the hook
 const TestComponent = () => {
-  const announce = useScreenReaderAnnouncement();
+  const { announce } = useScreenReaderAnnouncement();
 
   return (
     <div>
-      <button onClick={() => announce && announce("Test announcement")}>Announce</button>
+      <button onClick={() => announce("Test announcement")}>Announce</button>
     </div>
   );
 };
 
 describe("AccessibilityEnhancements", () => {
   it("renders accessibility enhancements component", () => {
-    render(<AccessibilityEnhancements />);
+    render(
+      <AccessibilityEnhancements>
+        <div>Test</div>
+      </AccessibilityEnhancements>
+    );
 
     // Check if the component renders without errors
-    expect(document.body).toBeInTheDocument();
+    expect(screen.getByText("Test")).toBeInTheDocument();
   });
 
-  it("renders with custom className", () => {
-    render(<AccessibilityEnhancements className="custom-class" />);
+  it("renders children correctly", () => {
+    render(
+      <AccessibilityEnhancements>
+        <div>Test Content</div>
+      </AccessibilityEnhancements>
+    );
 
     // Check if the component renders without errors
-    expect(document.body).toBeInTheDocument();
+    expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 });
 

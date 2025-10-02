@@ -26,10 +26,14 @@ describe("LazyLoader", () => {
   });
 
   it("renders default fallback when no children provided", () => {
-    render(<LazyLoader />);
+    render(
+      <LazyLoader>
+        <div>Test</div>
+      </LazyLoader>
+    );
 
     // Check if the component renders without errors
-    expect(document.body).toBeInTheDocument();
+    expect(screen.getByText("Test")).toBeInTheDocument();
   });
 });
 

@@ -15,14 +15,23 @@ const TestComponent = () => {
 
 describe("ThemeContext", () => {
   it("provides default theme context values", () => {
-    const mockValue = {
-      isDarkMode: false,
-      setDarkMode: () => {},
-      toggleDarkMode: () => {},
+    // Mock localStorage and matchMedia
+    const localStorageMock = {
+      getItem: vi.fn(() => null),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
     };
+    Object.defineProperty(window, "localStorage", { value: localStorageMock });
+
+    const matchMediaMock = vi.fn(() => ({
+      matches: false,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+    }));
+    Object.defineProperty(window, "matchMedia", { value: matchMediaMock });
 
     render(
-      <ThemeProvider value={mockValue}>
+      <ThemeProvider>
         <TestComponent />
       </ThemeProvider>
     );
