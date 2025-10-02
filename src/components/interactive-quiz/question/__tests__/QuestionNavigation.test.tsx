@@ -198,7 +198,7 @@ describe("QuestionNavigation", () => {
     // Should show a friendly reminder message
     expect(
       screen.getByText(
-        /Unicorns believe in you|Pick your answer|Houston, we need an answer|Answer is floating away|No trophy for skipping|Don't be shy|Every answer is art|Roll the dice|Coffee break's over|Luck favors the bold|Pick an answer|Make a choice|Feed me an answer/
+        /🤔 Pick an answer!|🎭 Make a choice!|🍕 Feed me an answer!|🐱 Even my cat could answer this!|🎪 Step right up!|🚀 Houston, we need an answer!|🎲 Roll the dice!|🦄 Unicorns believe in you!|☕ Coffee break's over!|🎨 Every answer is art!|🏆 No trophy for skipping!|🎵 Don't be shy!|🎈 Answer is floating away!|🍀 Luck favors the bold!|🎪 Pick your answer!/
       )
     ).toBeInTheDocument();
   });
@@ -220,7 +220,7 @@ describe("QuestionNavigation", () => {
     // Should show a final question message
     expect(
       screen.getByText(
-        /Make it count|Trophy waiting|Launch sequence|Roll the dice|Coffee break's over|Luck favors the bold|Last question|Almost there|Final boss|Gold medal answer/
+        /🎯 Last question!|🏁 Almost there!|🎉 Final boss!|🥇 Gold medal answer!|🎊 Make it count!|🚀 Launch sequence!|🎭 Final act!|🏆 Trophy waiting!/
       )
     ).toBeInTheDocument();
   });
