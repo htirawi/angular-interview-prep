@@ -95,15 +95,16 @@ function main() {
   const testCheck = runCommand("npm run test", "Test suite execution");
   checks.push(testCheck);
 
-  // 6. Custom Any Type Check
-  logSection("Custom Any Type Detection");
+  // 6. Strict Any Type Check
+  logSection("Strict Any Type Detection");
   const anyCheck = runCommand(
-    'grep -r "any" src/ --include="*.ts" --include="*.tsx" | grep -v "// eslint-disable" | grep -v "example" | grep -v "snippet" || true',
-    "Any type detection"
+    'grep -r ": any" src/ --include="*.ts" --include="*.tsx" | grep -v "// eslint-disable" | grep -v "data/" | grep -v "expect.any" || true',
+    "Strict any type detection"
   );
   if (anyCheck.success && anyCheck.output.trim()) {
-    log('⚠️  Found potential "any" types:', "yellow");
-    log(anyCheck.output, "yellow");
+    log('❌ Found "any" types in source code:', "red");
+    log(anyCheck.output, "red");
+    log('🚫 "any" types are not allowed! Please replace with proper TypeScript types.', "red");
     checks.push({ success: false, error: 'Found "any" types in source code' });
   } else {
     log('✅ No "any" types found in source code', "green");
