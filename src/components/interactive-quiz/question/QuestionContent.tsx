@@ -64,7 +64,7 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
                 onChange={(e) => onAnswerChange(e.target.value)}
                 placeholder="Enter your answer..."
                 className={`w-full rounded-xl border-2 bg-white p-4 text-lg font-medium text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-300 focus:outline-none focus:ring-4 ${
-                  userAnswer && (userAnswer as string).trim()
+                  userAnswer && typeof userAnswer === "string" && userAnswer.trim()
                     ? "border-green-500 bg-green-50/30 focus:border-green-500 focus:ring-green-100 dark:border-green-400 dark:bg-green-900/20 dark:focus:border-green-400 dark:focus:ring-green-900/30"
                     : "border-gray-200 focus:border-blue-500 focus:bg-blue-50/30 focus:ring-blue-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-blue-400 dark:focus:bg-blue-900/20 dark:focus:ring-blue-900/30"
                 }`}
