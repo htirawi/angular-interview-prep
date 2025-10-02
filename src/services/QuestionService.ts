@@ -184,7 +184,7 @@ export class QuestionService {
       // Fallback to basic questions if framework-specific loading fails
       const basicQuestions = await loadBasicQuestions();
       return basicQuestions.filter(
-        (q) => (q as Record<string, unknown>).framework === framework
+        (q) => (q as unknown as Record<string, unknown>).framework === framework
       ) as Question[];
     }
   }
