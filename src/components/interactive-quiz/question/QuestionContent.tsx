@@ -73,7 +73,7 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
               />
               {/* Input indicator */}
               <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                {userAnswer && (userAnswer as string).trim() ? (
+                {userAnswer && typeof userAnswer === "string" && userAnswer.trim() ? (
                   <svg
                     className="h-6 w-6 text-green-600 dark:text-green-400"
                     fill="none"
@@ -108,12 +108,12 @@ export function QuestionContent({ question, userAnswer, onAnswerChange }: Questi
             {/* Character count and validation feedback */}
             <div className="flex items-center justify-between text-sm">
               <div className="text-gray-500 dark:text-gray-400">
-                {userAnswer && (userAnswer as string).trim()
+                {userAnswer && typeof userAnswer === "string" && userAnswer.trim()
                   ? "Answer provided ✓"
                   : "Please enter your answer"}
               </div>
               <div className="text-gray-400 dark:text-gray-500">
-                {(userAnswer as string)?.length || 0} characters
+                {typeof userAnswer === "string" ? userAnswer.length : 0} characters
               </div>
             </div>
 
