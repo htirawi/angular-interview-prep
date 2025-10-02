@@ -2044,7 +2044,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-3",
-      question: "React Junior Question 3: Which are React Hooks?",
+      question: "Which are React Hooks?",
       type: "multiple-checkbox",
       options: [
         {
@@ -2077,7 +2077,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-4",
-      question: "React Junior Question 4: useState can only be used in functional components.",
+      question: "useState can only be used in functional components.",
       type: "true-false",
       correctAnswer: "true",
       explanation: "This statement is true. This is an important React concept.",
@@ -2088,7 +2088,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-5",
-      question: "React Junior Question 5: What is useState in React?",
+      question: "What is useState in React?",
       type: "multiple-choice",
       options: [
         {
@@ -2120,8 +2120,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-6",
-      question:
-        "React Junior Question 6: React uses _____ for state management in functional components.",
+      question: "React uses _____ for state management in functional components.",
       type: "fill-blank",
       correctAnswer: "useState",
       explanation:
@@ -2133,7 +2132,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-7",
-      question: "React Junior Question 7: Which are React Hooks?",
+      question: "Which are React Hooks?",
       type: "multiple-checkbox",
       options: [
         {
@@ -2166,7 +2165,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-8",
-      question: "React Junior Question 8: React components must always return JSX.",
+      question: "React components must always return JSX.",
       type: "true-false",
       correctAnswer: "false",
       explanation: "This statement is false. This is an important React concept.",
@@ -2177,7 +2176,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-9",
-      question: "React Junior Question 9: What is the virtual DOM?",
+      question: "What is the virtual DOM?",
       type: "multiple-choice",
       options: [
         {
@@ -2210,7 +2209,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-10",
-      question: "React Junior Question 10: React uses _____ to efficiently update the DOM.",
+      question: "React uses _____ to efficiently update the DOM.",
       type: "fill-blank",
       correctAnswer: "Virtual DOM",
       explanation:
@@ -2301,8 +2300,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-14",
-      question:
-        "React Junior Question 14: _____ helps optimize React performance by preventing unnecessary re-renders.",
+      question: "_____ helps optimize React performance by preventing unnecessary re-renders.",
       type: "fill-blank",
       correctAnswer: "React.memo",
       explanation:
@@ -2314,7 +2312,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-15",
-      question: "React Junior Question 15: Which are React Hooks?",
+      question: "Which are React Hooks?",
       type: "multiple-checkbox",
       options: [
         {
@@ -2347,7 +2345,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-16",
-      question: "React Junior Question 16: React is a library, not a framework.",
+      question: "React is a library, not a framework.",
       type: "true-false",
       correctAnswer: "true",
       explanation: "This statement is true. This is an important React concept.",
@@ -2358,7 +2356,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-17",
-      question: "React Junior Question 17: What is JSX in React?",
+      question: "What is JSX in React?",
       type: "multiple-choice",
       options: [
         {
@@ -2391,7 +2389,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-18",
-      question: "React Junior Question 18: React components are written using _____ syntax.",
+      question: "React components are written using _____ syntax.",
       type: "fill-blank",
       correctAnswer: "JSX",
       explanation:
@@ -2403,7 +2401,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-19",
-      question: "React Junior Question 19: Which are React Hooks?",
+      question: "Which are React Hooks?",
       type: "multiple-checkbox",
       options: [
         {
@@ -2436,7 +2434,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-20",
-      question: "React Junior Question 20: React uses one-way data binding.",
+      question: "React uses one-way data binding.",
       type: "true-false",
       correctAnswer: "true",
       explanation: "This statement is true. This is an important React concept.",
@@ -2447,7 +2445,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-21",
-      question: "React Junior Question 21: What is React?",
+      question: "What is React?",
       type: "multiple-choice",
       options: [
         {
@@ -2480,8 +2478,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-22",
-      question:
-        "React Junior Question 22: _____ is used to perform side effects in React components.",
+      question: "_____ is used to perform side effects in React components.",
       type: "fill-blank",
       correctAnswer: "useEffect",
       explanation:
@@ -2493,7 +2490,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-23",
-      question: "React Junior Question 23: Which are React Hooks?",
+      question: "Which are React Hooks?",
       type: "multiple-checkbox",
       options: [
         {
@@ -2518,26 +2515,28 @@ export const REACT_ENHANCED_QUESTIONS = {
         },
       ],
       correctAnswers: ["a", "b", "c"],
-      explanation: "These are the correct React concepts for junior level development.",
-      category: "React Junior",
+      explanation:
+        "useState, useEffect, and useContext are all valid React hooks. useProps is not a real React hook.",
+      category: "React Hooks",
       difficulty: "easy",
-      tags: ["react", "junior"],
+      tags: ["react", "hooks"],
       points: 1,
     },
     {
       id: "react-junior-24",
-      question: "React Junior Question 24: useState can only be used in functional components.",
+      question: "useState can only be used in functional components.",
       type: "true-false",
       correctAnswer: "true",
-      explanation: "This statement is true. This is an important React concept.",
-      category: "React Junior",
+      explanation:
+        "useState is a React hook that can only be used in functional components. Class components use this.state instead.",
+      category: "React Hooks",
       difficulty: "easy",
-      tags: ["react", "junior"],
+      tags: ["react", "hooks", "useState"],
       points: 1,
     },
     {
       id: "react-junior-25",
-      question: "React Junior Question 25: What is useState in React?",
+      question: "What is useState in React?",
       type: "multiple-choice",
       options: [
         {
@@ -2569,8 +2568,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-26",
-      question:
-        "React Junior Question 26: React uses _____ for state management in functional components.",
+      question: "React uses _____ for state management in functional components.",
       type: "fill-blank",
       correctAnswer: "useState",
       explanation:
@@ -2582,7 +2580,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-27",
-      question: "React Junior Question 27: Which are React Hooks?",
+      question: "Which are React Hooks?",
       type: "multiple-checkbox",
       options: [
         {
@@ -2615,7 +2613,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-28",
-      question: "React Junior Question 28: React components must always return JSX.",
+      question: "React components must always return JSX.",
       type: "true-false",
       correctAnswer: "false",
       explanation: "This statement is false. This is an important React concept.",
@@ -2626,7 +2624,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-29",
-      question: "React Junior Question 29: What is the virtual DOM?",
+      question: "What is the virtual DOM?",
       type: "multiple-choice",
       options: [
         {
@@ -2659,7 +2657,7 @@ export const REACT_ENHANCED_QUESTIONS = {
     },
     {
       id: "react-junior-30",
-      question: "React Junior Question 30: React uses _____ to efficiently update the DOM.",
+      question: "React uses _____ to efficiently update the DOM.",
       type: "fill-blank",
       correctAnswer: "Virtual DOM",
       explanation:
