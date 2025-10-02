@@ -72,18 +72,20 @@ export default function InteractiveQuizResults({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 py-4 sm:px-4 sm:py-8">
         {/* Header */}
-        <div className="mb-8 text-center">
-          <h1 className="mb-2 text-4xl font-bold text-gray-900 dark:text-white">
+        <div className="mb-4 text-center sm:mb-8">
+          <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white sm:text-4xl">
             Quiz Complete! 🎯
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">Here's how you performed</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400 sm:text-lg">
+            Here's how you performed
+          </p>
         </div>
 
         {/* Main Score Card */}
-        <div className="mx-auto mb-8 max-w-4xl">
-          <div className="rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-800">
+        <div className="mx-auto mb-4 max-w-4xl sm:mb-8">
+          <div className="rounded-2xl bg-white p-4 shadow-2xl dark:bg-gray-800 sm:rounded-3xl sm:p-8">
             {/* Score Display */}
             <ScoreDisplay
               animatedScore={animatedScore}
@@ -106,7 +108,7 @@ export default function InteractiveQuizResults({
 
             {/* Tab Content */}
             {selectedTab === "overview" && (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <PerformanceBreakdown breakdown={breakdown} />
                 <Recommendations recommendations={recommendations} />
               </div>
@@ -117,7 +119,9 @@ export default function InteractiveQuizResults({
         </div>
 
         {/* Action Buttons */}
-        <ActionButtons onRestart={onRestart} onBackToSelection={onBackToSelection} />
+        <div className="px-2 sm:px-0">
+          <ActionButtons onRestart={onRestart} onBackToSelection={onBackToSelection} />
+        </div>
       </div>
     </div>
   );
