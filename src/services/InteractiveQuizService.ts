@@ -280,11 +280,7 @@ export class InteractiveQuizService {
   static async loadQuizData(): Promise<Record<string, Record<string, InteractiveQuizQuestion[]>>> {
     try {
       const data = await loadInteractiveQuizData();
-
-      // Transform the data to match expected format
-      return {
-        angular: data,
-      };
+      return data;
     } catch (error) {
       console.error("Failed to load interactive quiz data:", error);
       throw error;

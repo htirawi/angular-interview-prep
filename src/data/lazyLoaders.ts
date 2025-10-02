@@ -43,13 +43,13 @@ export const loadFrameworkData = async (framework: string) => {
 // Lazy loading for interactive quiz data
 export const loadInteractiveQuizData = async () => {
   return await PerformanceService.measureAsync("load_interactive_quiz_data", async () => {
-    const { ANGULAR_ENHANCED_QUESTIONS } = await import("./enhanced-interactive-quiz-complete");
+    const { ENHANCED_INTERACTIVE_QUIZ_DATA } = await import("./enhanced-interactive-quiz");
     PerformanceService.trackDataLoad(
       "interactive_quiz",
       0,
-      Object.keys(ANGULAR_ENHANCED_QUESTIONS).length
+      Object.keys(ENHANCED_INTERACTIVE_QUIZ_DATA).length
     );
-    return ANGULAR_ENHANCED_QUESTIONS;
+    return ENHANCED_INTERACTIVE_QUIZ_DATA;
   });
 };
 
