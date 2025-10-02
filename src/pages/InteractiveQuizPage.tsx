@@ -5,16 +5,16 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 
-import { InteractiveQuizService } from "@services/InteractiveQuizService";
-import InteractiveQuizQuestionCard from "@components/interactive-quiz/InteractiveQuizQuestionCard";
-import QuizProgress from "@components/quiz/QuizProgress";
-import QuizTimer from "@components/quiz/QuizTimer";
-import InteractiveQuizResults from "@components/interactive-quiz/InteractiveQuizResults";
+import { InteractiveQuizService } from "../services/InteractiveQuizService";
+import InteractiveQuizQuestionCard from "../components/interactive-quiz/InteractiveQuizQuestionCard";
+import QuizProgress from "../components/quiz/QuizProgress";
+import QuizTimer from "../components/quiz/QuizTimer";
+import InteractiveQuizResults from "../components/interactive-quiz/InteractiveQuizResults";
 import type {
   InteractiveQuizQuestion,
   InteractiveQuizSession,
   InteractiveQuizResult,
-} from "@/types/interactive-quiz";
+} from "../types/interactive-quiz";
 
 export default function InteractiveQuizPage() {
   const { framework, level } = useParams<{

@@ -7,7 +7,7 @@ import type {
   InteractiveQuizSession,
   InteractiveQuizResult,
 } from "../types/interactive-quiz";
-import { loadInteractiveQuizData } from "@data/lazyLoaders";
+import { loadInteractiveQuizData } from "../data/lazyLoaders";
 
 export class InteractiveQuizService {
   private static readonly STORAGE_KEY = "interactive_quiz_sessions";
