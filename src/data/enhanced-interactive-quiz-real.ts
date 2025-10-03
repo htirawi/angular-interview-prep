@@ -7483,134 +7483,138 @@ export const NEXTJS_ENHANCED_QUESTIONS = {
     },
     {
       id: "nextjs-senior-19",
-      question: "How would you implement advanced microservices architecture with Next.js?",
+      question:
+        "Your Next.js application has grown to 15 microservices, but you're experiencing service discovery issues and inconsistent API responses. Services can't find each other reliably, and load balancing is failing. What's the most critical architectural component missing?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using API Gateway, service discovery, and inter-service communication",
+          text: "Service mesh with centralized service discovery and API gateway",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only API Gateway",
+          text: "More powerful individual servers",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only service discovery",
+          text: "Additional database connections",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only inter-service communication",
+          text: "Client-side service routing",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced microservices involve API Gateway for routing, service discovery for locating services, and efficient inter-service communication patterns.",
-      category: "Architecture",
+        "A service mesh with centralized service discovery and API gateway provides reliable service-to-service communication, load balancing, and consistent API management across microservices.",
+      category: "Microservices Architecture",
       difficulty: "hard",
-      tags: ["microservices", "api-gateway", "service-discovery", "communication"],
+      tags: ["microservices", "service-mesh", "api-gateway", "service-discovery"],
       points: 3,
     },
     {
       id: "nextjs-senior-20",
-      question: "How would you implement advanced GraphQL integration in Next.js?",
+      question:
+        "Your Next.js application is experiencing N+1 query problems with GraphQL. The client is making 50+ requests for a single page load, causing slow performance. The GraphQL schema has proper relationships defined. What's the most likely cause?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Apollo Client, schema stitching, and query optimization",
+          text: "Missing DataLoader implementation for batch loading and caching",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Apollo Client",
+          text: "Incorrect GraphQL schema design",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only schema stitching",
+          text: "Client-side caching issues",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only query optimization",
+          text: "Database connection pool problems",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced GraphQL integration involves Apollo Client for caching, schema stitching for federation, and query optimization for performance.",
-      category: "GraphQL",
+        "N+1 queries occur when GraphQL resolvers fetch related data individually instead of batching. DataLoader solves this by batching and caching database queries, reducing 50+ requests to 2-3 optimized queries.",
+      category: "GraphQL Performance",
       difficulty: "hard",
-      tags: ["graphql", "apollo", "schema-stitching", "optimization"],
+      tags: ["graphql", "dataloader", "n+1-queries", "performance"],
       points: 3,
     },
     {
       id: "nextjs-senior-21",
-      question: "How would you implement advanced WebAssembly integration in Next.js?",
+      question:
+        "Your Next.js application needs to process large datasets (10MB+ JSON files) in the browser for data visualization. The current JavaScript implementation is causing UI freezes and poor user experience. What's the most effective solution?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using WASM modules, Web Workers, and performance optimization",
+          text: "Implement WebAssembly modules for CPU-intensive data processing",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only WASM modules",
+          text: "Use Web Workers with JavaScript only",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only Web Workers",
+          text: "Process data on the server instead",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only performance optimization",
+          text: "Reduce dataset size by sampling",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced WebAssembly integration involves WASM modules for high-performance code, Web Workers for background processing, and optimization for better performance.",
-      category: "WebAssembly",
+        "WebAssembly provides near-native performance for CPU-intensive tasks like data processing. It can handle large datasets without blocking the UI thread, significantly improving user experience.",
+      category: "WebAssembly Performance",
       difficulty: "hard",
-      tags: ["wasm", "web-workers", "performance", "optimization"],
+      tags: ["webassembly", "performance", "data-processing", "ui-blocking"],
       points: 3,
     },
     {
       id: "nextjs-senior-22",
-      question: "How would you implement advanced edge computing with Next.js?",
+      question:
+        "Your Next.js application serves users globally, but users in Asia are experiencing 2-3 second load times while users in the US have sub-1 second loads. The application uses traditional CDN caching. What's the most effective solution?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Edge Functions, CDN optimization, and geographic distribution",
+          text: "Implement Edge Functions with regional deployment and edge caching",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Edge Functions",
+          text: "Increase CDN cache duration",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only CDN optimization",
+          text: "Use a single global server",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only geographic distribution",
+          text: "Compress images more aggressively",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced edge computing involves Edge Functions for serverless computing, CDN optimization for content delivery, and geographic distribution for global performance.",
+        "Edge Functions with regional deployment bring compute closer to users, reducing latency from 2-3 seconds to sub-1 second by processing requests at edge locations worldwide.",
       category: "Edge Computing",
       difficulty: "hard",
-      tags: ["edge", "cdn", "geographic", "distribution"],
+      tags: ["edge-functions", "global-deployment", "latency", "performance"],
       points: 3,
     },
     {
