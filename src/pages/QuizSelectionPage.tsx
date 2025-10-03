@@ -346,7 +346,7 @@ const QuizCardComponent = ({
       aria-label={`Start ${card.title} quiz`}
     >
       <div
-        className={`relative flex h-80 flex-col overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 ${
+        className={`relative flex h-96 flex-col overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 ${
           isHovered
             ? "-translate-y-2 scale-[1.02] border-blue-400 shadow-xl"
             : "border-gray-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg"
@@ -376,7 +376,7 @@ const QuizCardComponent = ({
         </div>
 
         {/* Title and Subtitle */}
-        <div className="mb-4 flex-grow">
+        <div className="mb-4">
           <h3
             className={`text-lg font-bold transition-colors duration-300 ${
               isHovered ? "text-blue-700" : "text-gray-900 group-hover:text-blue-600"
@@ -394,7 +394,7 @@ const QuizCardComponent = ({
         </div>
 
         {/* Skills */}
-        <div className="mb-4">
+        <div className="mb-4 flex-grow">
           <div
             className={`mb-2 text-xs font-semibold uppercase tracking-wide transition-colors duration-300 ${
               isHovered ? "text-blue-500" : "text-gray-500 group-hover:text-blue-400"
@@ -466,7 +466,7 @@ const QuizCardComponent = ({
 
         {/* Start Quiz Button - Always Visible */}
         <div className="mt-auto">
-          <div className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-blue-700 hover:shadow-lg active:scale-95">
+          <div className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-blue-700 hover:shadow-lg active:scale-95">
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
