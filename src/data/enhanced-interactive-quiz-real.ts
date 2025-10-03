@@ -7381,101 +7381,104 @@ export const NEXTJS_ENHANCED_QUESTIONS = {
     },
     {
       id: "nextjs-senior-16",
-      question: "How would you implement advanced real-time features in Next.js?",
+      question:
+        "Your Next.js chat application needs to support 10,000 concurrent users with real-time messaging. The current polling approach causes high server load and delays. What's the most effective solution?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Socket.io, Server-Sent Events, and WebSocket connections",
+          text: "Implement WebSocket connections with Socket.io for bidirectional communication",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Socket.io",
+          text: "Increase polling frequency to reduce delays",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only Server-Sent Events",
+          text: "Use only Server-Sent Events for one-way communication",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only WebSocket connections",
+          text: "Store all messages in localStorage for instant access",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced real-time features involve Socket.io for bidirectional communication, Server-Sent Events for one-way updates, and WebSocket for low-latency connections.",
-      category: "Real-time",
+        "WebSocket connections with Socket.io provide efficient bidirectional real-time communication, eliminating polling overhead and reducing server load while maintaining low latency for 10,000+ concurrent users.",
+      category: "Real-time Communication",
       difficulty: "hard",
-      tags: ["real-time", "socket.io", "sse", "websockets"],
+      tags: ["websockets", "socketio", "realtime", "scalability"],
       points: 3,
     },
     {
       id: "nextjs-senior-17",
-      question: "How would you implement advanced analytics in Next.js?",
+      question:
+        "Your Next.js e-commerce site needs to track user behavior and conversion funnels. The current analytics setup only captures page views. What's the most critical missing component for meaningful insights?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Google Analytics, custom events, and performance tracking",
+          text: "Event tracking for user interactions and custom conversion goals",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Google Analytics",
+          text: "More detailed page view tracking",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only custom events",
+          text: "User session recording only",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only performance tracking",
+          text: "Server-side analytics only",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced analytics involves Google Analytics for user behavior, custom events for business metrics, and performance tracking for optimization.",
-      category: "Analytics",
+        "Event tracking captures user interactions (clicks, form submissions, purchases) and enables conversion funnel analysis. This provides actionable insights beyond basic page views.",
+      category: "Analytics & Tracking",
       difficulty: "hard",
-      tags: ["analytics", "google-analytics", "events", "performance"],
+      tags: ["analytics", "event-tracking", "conversion", "user-behavior"],
       points: 3,
     },
     {
       id: "nextjs-senior-18",
-      question: "How would you implement advanced monitoring and logging in Next.js?",
+      question:
+        "Your Next.js application is experiencing production errors that are difficult to debug. Error logs are scattered across multiple services, and you can't trace user sessions. What's the most effective debugging strategy?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Sentry, structured logging, and error tracking",
+          text: "Implement centralized logging with request tracing and error correlation",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Sentry",
+          text: "Add more console.log statements throughout the code",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only structured logging",
+          text: "Use only client-side error tracking",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only error tracking",
+          text: "Restart servers more frequently",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced monitoring involves Sentry for error tracking, structured logging for debugging, and comprehensive error tracking for reliability.",
-      category: "Monitoring",
+        "Centralized logging with request tracing and error correlation provides end-to-end visibility into user sessions, making it possible to trace errors from client to database.",
+      category: "Monitoring & Debugging",
       difficulty: "hard",
-      tags: ["monitoring", "sentry", "logging", "error-tracking"],
+      tags: ["logging", "monitoring", "debugging", "tracing"],
       points: 3,
     },
     {
