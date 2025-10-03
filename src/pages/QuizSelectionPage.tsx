@@ -346,8 +346,10 @@ const QuizCardComponent = ({
       aria-label={`Start ${card.title} quiz`}
     >
       <div
-        className={`relative flex h-80 flex-col overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-          isHovered ? "-translate-y-1 border-blue-400 shadow-xl" : "border-gray-200"
+        className={`relative flex h-80 flex-col overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 ${
+          isHovered
+            ? "-translate-y-2 scale-[1.02] border-blue-400 shadow-xl"
+            : "border-gray-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg"
         }`}
       >
         {/* Header with Icons */}
@@ -355,12 +357,18 @@ const QuizCardComponent = ({
           <div className="flex items-center gap-3">
             <div
               className={`rounded-lg p-2 transition-all duration-300 ${
-                isHovered ? "scale-110 bg-blue-100" : "bg-blue-50"
+                isHovered
+                  ? "scale-110 bg-blue-100 shadow-md"
+                  : "bg-blue-50 group-hover:scale-105 group-hover:bg-blue-100"
               }`}
             >
               <FrameworkIcon framework={card.icon} size={24} />
             </div>
-            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+            <div
+              className={`text-xs font-semibold uppercase tracking-wide transition-colors duration-300 ${
+                isHovered ? "text-blue-600" : "text-gray-500 group-hover:text-blue-500"
+              }`}
+            >
               {card.framework.toUpperCase()}
             </div>
           </div>
@@ -371,17 +379,27 @@ const QuizCardComponent = ({
         <div className="mb-4 flex-grow">
           <h3
             className={`text-lg font-bold transition-colors duration-300 ${
-              isHovered ? "text-blue-700" : "text-gray-900"
+              isHovered ? "text-blue-700" : "text-gray-900 group-hover:text-blue-600"
             }`}
           >
             {card.title}
           </h3>
-          <p className="mt-1 text-sm text-gray-600">{card.subtitle}</p>
+          <p
+            className={`mt-1 text-sm transition-colors duration-300 ${
+              isHovered ? "text-blue-600" : "text-gray-600 group-hover:text-gray-700"
+            }`}
+          >
+            {card.subtitle}
+          </p>
         </div>
 
         {/* Skills */}
         <div className="mb-4">
-          <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+          <div
+            className={`mb-2 text-xs font-semibold uppercase tracking-wide transition-colors duration-300 ${
+              isHovered ? "text-blue-500" : "text-gray-500 group-hover:text-blue-400"
+            }`}
+          >
             Tested Skills
           </div>
           <div className="flex flex-wrap gap-1">
@@ -389,7 +407,9 @@ const QuizCardComponent = ({
               <span
                 key={index}
                 className={`rounded-full px-2 py-1 text-xs transition-all duration-300 ${
-                  isHovered ? "scale-105 bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
+                  isHovered
+                    ? "scale-105 bg-blue-100 text-blue-700 shadow-sm"
+                    : "bg-gray-100 text-gray-700 group-hover:scale-102 group-hover:bg-blue-50 group-hover:text-blue-600"
                 }`}
                 style={{ transitionDelay: `${index * 50}ms` }}
               >
@@ -399,7 +419,9 @@ const QuizCardComponent = ({
             {card.skills.length > 3 && (
               <span
                 className={`rounded-full px-2 py-1 text-xs font-semibold transition-all duration-300 ${
-                  isHovered ? "scale-105 bg-blue-200 text-blue-800" : "bg-blue-100 text-blue-700"
+                  isHovered
+                    ? "scale-105 bg-blue-200 text-blue-800 shadow-sm"
+                    : "group-hover:bg-blue-150 bg-blue-100 text-blue-700 group-hover:scale-102 group-hover:text-blue-800"
                 }`}
               >
                 +{card.skills.length - 3}
@@ -409,8 +431,12 @@ const QuizCardComponent = ({
         </div>
 
         {/* Duration and Evaluation */}
-        <div className="mb-4 flex items-center justify-between text-xs text-gray-500">
-          <div className="flex items-center gap-1">
+        <div className="mb-4 flex items-center justify-between text-xs">
+          <div
+            className={`flex items-center gap-1 transition-colors duration-300 ${
+              isHovered ? "text-blue-600" : "text-gray-500 group-hover:text-blue-500"
+            }`}
+          >
             <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -421,7 +447,11 @@ const QuizCardComponent = ({
             </svg>
             <span>{card.duration}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div
+            className={`flex items-center gap-1 transition-colors duration-300 ${
+              isHovered ? "text-blue-600" : "text-gray-500 group-hover:text-blue-500"
+            }`}
+          >
             <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -437,10 +467,12 @@ const QuizCardComponent = ({
         {/* Start Quiz Button */}
         <div
           className={`transition-all duration-300 ${
-            isHovered ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+            isHovered
+              ? "translate-y-0 opacity-100"
+              : "translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
           }`}
         >
-          <div className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
+          <div className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-blue-700 hover:shadow-lg">
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -464,7 +496,7 @@ const QuizCardComponent = ({
         {/* Hover Gradient Overlay - Behind content */}
         <div
           className={`absolute inset-0 -z-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 transition-opacity duration-300 ${
-            isHovered ? "opacity-100" : ""
+            isHovered ? "opacity-100" : "group-hover:opacity-50"
           }`}
         />
       </div>
