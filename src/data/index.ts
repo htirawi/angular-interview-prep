@@ -37,7 +37,7 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "nextjs",
     name: "Next.js",
-    count: 50, // Updated count after adding 21 more comprehensive questions
+    count: 100, // Updated count - all 100 questions from nextjs-enhanced.ts
     icon: "nextjs",
   },
   {
@@ -49,7 +49,7 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "redux",
     name: "Redux",
-    count: 100,
+    count: 110, // Updated count after adding 10 comprehensive Redux Toolkit questions
     icon: "redux",
   },
   {

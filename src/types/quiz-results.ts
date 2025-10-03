@@ -80,8 +80,8 @@ export interface RecommendationsProps {
 }
 
 export interface TabNavigationProps {
-  selectedTab: "overview" | "analysis";
-  onTabChange: (tab: "overview" | "analysis") => void;
+  selectedTab: "overview" | "analysis" | "dashboard";
+  onTabChange: (tab: "overview" | "analysis" | "dashboard") => void;
 }
 
 export interface ActionButtonsProps {

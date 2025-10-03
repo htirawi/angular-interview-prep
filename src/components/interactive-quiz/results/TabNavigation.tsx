@@ -7,7 +7,7 @@ import type { TabNavigationProps } from "../../../types/quiz-results";
 export function TabNavigation({ selectedTab, onTabChange }: TabNavigationProps) {
   return (
     <div className="mb-4 flex justify-center sm:mb-6">
-      <div className="flex w-full max-w-md rounded-xl bg-gray-100 p-1 dark:bg-gray-700 sm:w-auto">
+      <div className="flex w-full max-w-2xl rounded-xl bg-gray-100 p-1 dark:bg-gray-700 sm:w-auto">
         <button
           onClick={() => onTabChange("overview")}
           className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 sm:flex-none sm:px-6 ${
@@ -20,6 +20,20 @@ export function TabNavigation({ selectedTab, onTabChange }: TabNavigationProps) 
             <span className="text-lg">📊</span>
             <span className="hidden sm:inline">Overview</span>
             <span className="sm:hidden">Overview</span>
+          </span>
+        </button>
+        <button
+          onClick={() => onTabChange("dashboard")}
+          className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 sm:flex-none sm:px-6 ${
+            selectedTab === "dashboard"
+              ? "bg-white text-gray-900 shadow-sm dark:bg-gray-600 dark:text-white"
+              : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+          }`}
+        >
+          <span className="flex items-center justify-center gap-2">
+            <span className="text-lg">📈</span>
+            <span className="hidden sm:inline">Dashboard</span>
+            <span className="sm:hidden">Dashboard</span>
           </span>
         </button>
         <button

@@ -594,5 +594,739 @@ export const REDUX_QUESTIONS: QA[] = [
     answer:
       "Use injectEndpoints for modularity; share baseQuery and tags while keeping domains isolated.",
   },
+  {
+    id: 101,
+    question: "What is Redux Toolkit, and how does it simplify Redux?",
+    answer: `Redux Toolkit (RTK) is the official, recommended way to write Redux code. It reduces boilerplate and encourages best practices by default.
+
+**Key Features:**
+- **createSlice**: Combines reducers and actions in one place
+- **configureStore**: Easy middleware setup with good defaults
+- **Immutability**: Uses Immer.js for safe "mutating" logic
+- **Built-in DevTools**: Automatic Redux DevTools integration
+- **TypeScript Support**: Full type safety out of the box
+
+**Example:**
+\`\`\`javascript
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: 0,
+  reducers: {
+    increment: (state) => state + 1,
+    decrement: (state) => state - 1,
+    incrementByAmount: (state, action) => state + action.payload
+  }
+});
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export default counterSlice.reducer;
+\`\`\`
+
+**Benefits:**
+- Reduces boilerplate by ~70%
+- Prevents common mistakes
+- Encourages immutable updates
+- Automatic action type generation`,
+    category: "Redux Toolkit",
+    difficulty: "intermediate",
+    tags: ["redux-toolkit", "createSlice", "boilerplate", "immer"],
+  },
+  {
+    id: 102,
+    question: "What is a thunk and how does redux-thunk work?",
+    answer: `A thunk is a function that returns another function. It allows you to write async logic that interacts with the Redux store.
+
+**How redux-thunk works:**
+1. Intercepts functions instead of plain objects
+2. Calls the function with \`dispatch\` and \`getState\` as arguments
+3. Allows async operations before dispatching actions
+
+**Example:**
+\`\`\`javascript
+// Thunk action creator
+const fetchUser = (userId) => async (dispatch, getState) => {
+  dispatch(setLoading(true));
+  
+  try {
+    const response = await fetch(\`/api/users/\${userId}\`);
+    const userData = await response.json();
+    dispatch(setUser(userData));
+  } catch (error) {
+    dispatch(setError(error.message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+// Usage in component
+const dispatch = useDispatch();
+useEffect(() => {
+  dispatch(fetchUser(123));
+}, [dispatch]);
+\`\`\`
+
+**Key Benefits:**
+- Handle async operations
+- Access current state via \`getState\`
+- Dispatch multiple actions
+- Error handling capabilities
+- Loading state management`,
+    category: "Redux Thunks",
+    difficulty: "intermediate",
+    tags: ["thunks", "async", "redux-thunk", "middleware"],
+  },
+  {
+    id: 103,
+    question: "What is createSlice() and how is it different from manual reducers?",
+    answer: `createSlice() combines reducers and action creators in one place, significantly reducing boilerplate.
+
+**Key Differences:**
+
+**Manual Redux (Old Way):**
+\`\`\`javascript
+// Action types
+const INCREMENT = 'counter/increment';
+const DECREMENT = 'counter/decrement';
+
+// Action creators
+const increment = () => ({ type: INCREMENT });
+const decrement = () => ({ type: DECREMENT });
+
+// Reducer
+const counterReducer = (state = 0, action) => {
+  switch (action.type) {
+    case INCREMENT:
+      return state + 1;
+    case DECREMENT:
+      return state - 1;
+    default:
+      return state;
+  }
+};
+\`\`\`
+
+**Redux Toolkit (Modern Way):**
+\`\`\`javascript
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: 0,
+  reducers: {
+    increment: (state) => state + 1,
+    decrement: (state) => state - 1,
+    incrementByAmount: (state, action) => state + action.payload
+  }
+});
+
+// Auto-generated action creators
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export default counterSlice.reducer;
+\`\`\`
+
+**Benefits:**
+- **Auto-generates action types** (e.g., 'counter/increment')
+- **Uses Immer** for safe "mutating" logic
+- **Co-locates** related code
+- **Reduces boilerplate** by ~70%
+- **TypeScript support** out of the box`,
+    category: "Redux Toolkit",
+    difficulty: "intermediate",
+    tags: ["createSlice", "reducers", "actions", "immer", "boilerplate"],
+  },
+  {
+    id: 104,
+    question: "What is configureStore()?",
+    answer: `configureStore() is Redux Toolkit's replacement for createStore(). It provides sensible defaults and reduces configuration complexity.
+
+**Key Features:**
+- **Automatic middleware**: Includes redux-thunk by default
+- **DevTools integration**: Automatic Redux DevTools setup
+- **Multiple reducers**: Built-in combineReducers functionality
+- **Development checks**: Immutability and serializability checks
+- **TypeScript support**: Full type safety
+
+**Example:**
+\`\`\`javascript
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './counterSlice';
+import userReducer from './userSlice';
+
+const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+    user: userReducer,
+    // Automatically combines reducers
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST'],
+      },
+    }),
+  devTools: process.env.NODE_ENV !== 'production',
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+\`\`\`
+
+**vs createStore():**
+- **Less configuration** required
+- **Better defaults** for production
+- **Automatic middleware** setup
+- **Built-in DevTools** integration
+- **Type safety** improvements`,
+    category: "Redux Toolkit",
+    difficulty: "intermediate",
+    tags: ["configureStore", "store", "middleware", "devtools"],
+  },
+  {
+    id: 105,
+    question: "What are selectors and why are they useful?",
+    answer: `Selectors are functions that extract specific pieces of state from the Redux store. They provide a clean abstraction layer for accessing state.
+
+**Why Use Selectors:**
+- **Performance**: Memoization prevents unnecessary re-renders
+- **Abstraction**: Hide state shape complexity
+- **Reusability**: Share logic across components
+- **Testing**: Easy to unit test in isolation
+- **Maintainability**: Centralized state access logic
+
+**Basic Selector:**
+\`\`\`javascript
+// Simple selector
+const selectCartItems = (state) => state.cart.items;
+const selectCartTotal = (state) => state.cart.total;
+
+// Usage in component
+const cartItems = useSelector(selectCartItems);
+const cartTotal = useSelector(selectCartTotal);
+\`\`\`
+
+**Memoized Selectors with Reselect:**
+\`\`\`javascript
+import { createSelector } from '@reduxjs/toolkit';
+
+// Input selectors
+const selectCartItems = (state) => state.cart.items;
+const selectTaxRate = (state) => state.settings.taxRate;
+
+// Memoized selector
+const selectCartTotal = createSelector(
+  [selectCartItems, selectTaxRate],
+  (items, taxRate) => {
+    const subtotal = items.reduce((sum, item) => sum + item.price, 0);
+    return subtotal * (1 + taxRate);
+  }
+);
+
+// Complex derived state
+const selectCartSummary = createSelector(
+  [selectCartItems, selectCartTotal],
+  (items, total) => ({
+    itemCount: items.length,
+    total,
+    isEmpty: items.length === 0
+  })
+);
+\`\`\`
+
+**Benefits:**
+- **Prevents unnecessary calculations**
+- **Improves component performance**
+- **Clean separation of concerns**
+- **Easy to test and maintain**`,
+    category: "Redux Selectors",
+    difficulty: "intermediate",
+    tags: ["selectors", "reselect", "memoization", "performance"],
+  },
+  {
+    id: 106,
+    question: "How do you persist Redux state across reloads?",
+    answer: `Use redux-persist to save Redux state to localStorage (or AsyncStorage in React Native) and restore it on app reload.
+
+**Setup:**
+\`\`\`javascript
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { configureStore } from '@reduxjs/toolkit';
+
+// Persist configuration
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user', 'cart'], // Only persist these reducers
+  blacklist: ['ui'], // Don't persist these reducers
+};
+
+// Create persisted reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// Configure store
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+      },
+    }),
+});
+
+// Create persistor
+const persistor = persistStore(store);
+
+export { store, persistor };
+\`\`\`
+
+**App Setup:**
+\`\`\`javascript
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
+
+function App() {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+        <YourApp />
+      </PersistGate>
+    </Provider>
+  );
+}
+\`\`\`
+
+**Advanced Configuration:**
+\`\`\`javascript
+const persistConfig = {
+  key: 'root',
+  storage,
+  transforms: [
+    // Encrypt sensitive data
+    encryptTransform({
+      secretKey: 'my-secret-key',
+    }),
+  ],
+  migrate: createMigrate({
+    1: (state) => {
+      // Handle state migration
+      return { ...state, version: 1 };
+    },
+  }),
+};
+\`\`\`
+
+**Benefits:**
+- **User experience**: Maintains state across sessions
+- **Performance**: Reduces initial data loading
+- **Flexibility**: Choose what to persist
+- **Security**: Optional encryption support`,
+    category: "Redux Persistence",
+    difficulty: "intermediate",
+    tags: ["redux-persist", "localStorage", "state-persistence", "rehydration"],
+  },
+  {
+    id: 107,
+    question: "How do you handle multiple reducers in Redux Toolkit?",
+    answer: `Redux Toolkit provides several ways to handle multiple reducers, with configureStore being the most common approach.
+
+**Method 1: configureStore (Recommended)**
+\`\`\`javascript
+import { configureStore } from '@reduxjs/toolkit';
+import authSlice from './features/auth/authSlice';
+import cartSlice from './features/cart/cartSlice';
+import productsSlice from './features/products/productsSlice';
+
+const store = configureStore({
+  reducer: {
+    auth: authSlice.reducer,
+    cart: cartSlice.reducer,
+    products: productsSlice.reducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+\`\`\`
+
+**Method 2: combineReducers (Manual)**
+\`\`\`javascript
+import { combineReducers } from '@reduxjs/toolkit';
+import authReducer from './authReducer';
+import cartReducer from './cartReducer';
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  cart: cartReducer,
+});
+
+const store = configureStore({
+  reducer: rootReducer,
+});
+\`\`\`
+
+**Method 3: Feature-based Structure**
+\`\`\`javascript
+// store/index.ts
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from '../features/auth/authSlice';
+import cartReducer from '../features/cart/cartSlice';
+
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    cart: cartReducer,
+  },
+});
+
+// features/auth/authSlice.ts
+export const authSlice = createSlice({
+  name: 'auth',
+  initialState: { user: null, isAuthenticated: false },
+  reducers: {
+    login: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
+    logout: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+    },
+  },
+});
+\`\`\`
+
+**Best Practices:**
+- **Feature-based organization**: Group related slices together
+- **Single responsibility**: Each slice handles one domain
+- **Consistent naming**: Use descriptive slice names
+- **Type safety**: Export RootState and AppDispatch types`,
+    category: "Redux Architecture",
+    difficulty: "intermediate",
+    tags: ["multiple-reducers", "configureStore", "combineReducers", "architecture"],
+  },
+  {
+    id: 108,
+    question: "What are extraReducers in Redux Toolkit?",
+    answer: `extraReducers allows a slice to respond to actions not defined in its own reducers. This is essential for handling async thunks and cross-slice actions.
+
+**When to Use extraReducers:**
+- **Async thunks**: Handle loading, success, and error states
+- **Cross-slice actions**: Respond to actions from other slices
+- **External actions**: Handle actions from libraries or legacy code
+
+**Example with Async Thunk:**
+\`\`\`javascript
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+// Async thunk
+export const fetchUser = createAsyncThunk(
+  'user/fetchUser',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await fetch(\`/api/users/\${userId}\`);
+      if (!response.ok) throw new Error('Failed to fetch user');
+      return await response.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearUser: (state) => {
+      state.data = null;
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+\`\`\`
+
+**Cross-Slice Actions:**
+\`\`\`javascript
+// authSlice.ts
+export const logout = createAction('auth/logout');
+
+// cartSlice.ts
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: { items: [] },
+  reducers: {
+    addItem: (state, action) => {
+      state.items.push(action.payload);
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, (state) => {
+      state.items = []; // Clear cart on logout
+    });
+  },
+});
+\`\`\`
+
+**Benefits:**
+- **Clean separation**: Keep async logic separate from sync reducers
+- **Reusability**: Handle common patterns across slices
+- **Type safety**: Full TypeScript support
+- **Predictable**: Follows Redux patterns`,
+    category: "Redux Toolkit",
+    difficulty: "intermediate",
+    tags: ["extraReducers", "async-thunks", "cross-slice", "createAsyncThunk"],
+  },
+  {
+    id: 109,
+    question: "What's the difference between mapStateToProps and useSelector()?",
+    answer: `mapStateToProps is the legacy approach used with connect() in class components, while useSelector() is the modern hook-based approach for functional components.
+
+**mapStateToProps (Legacy):**
+\`\`\`javascript
+import { connect } from 'react-redux';
+
+class UserProfile extends Component {
+  render() {
+    const { user, loading, error } = this.props;
+    // Component logic
+  }
+}
+
+const mapStateToProps = (state) => ({
+  user: state.user.data,
+  loading: state.user.loading,
+  error: state.user.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchUser: (id) => dispatch(fetchUser(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+\`\`\`
+
+**useSelector() (Modern):**
+\`\`\`javascript
+import { useSelector, useDispatch } from 'react-redux';
+
+function UserProfile() {
+  const user = useSelector((state) => state.user.data);
+  const loading = useSelector((state) => state.user.loading);
+  const error = useSelector((state) => state.user.error);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser(userId));
+  }, [dispatch, userId]);
+
+  // Component logic
+}
+\`\`\`
+
+**Key Differences:**
+
+| Feature | mapStateToProps | useSelector() |
+|---------|----------------|---------------|
+| **Component Type** | Class components | Functional components |
+| **Boilerplate** | High (HOC wrapper) | Low (direct hook usage) |
+| **Performance** | Manual optimization | Automatic optimization |
+| **TypeScript** | Complex typing | Simple typing |
+| **Testing** | Harder to test | Easier to test |
+| **Reusability** | Limited | High |
+
+**Performance Comparison:**
+\`\`\`javascript
+// mapStateToProps - manual optimization needed
+const mapStateToProps = (state, ownProps) => {
+  // Manual memoization required
+  return {
+    expensiveData: expensiveSelector(state, ownProps.id),
+  };
+};
+
+// useSelector - automatic optimization
+const expensiveData = useSelector((state) => 
+  expensiveSelector(state, userId)
+);
+\`\`\`
+
+**Recommendation:**
+- ✅ **Use useSelector()** for new projects
+- ✅ **Migrate from mapStateToProps** when refactoring
+- ❌ **Avoid mapStateToProps** unless maintaining legacy code`,
+    category: "React Redux",
+    difficulty: "intermediate",
+    tags: ["useSelector", "mapStateToProps", "connect", "hooks", "legacy"],
+  },
+  {
+    id: 110,
+    question: "How would you structure a large Redux app?",
+    answer: `A well-structured Redux app follows feature-based organization with clear separation of concerns and scalable patterns.
+
+**Recommended Structure:**
+\`\`\`
+/src
+  /store
+    index.ts              # Store configuration
+    rootReducer.ts        # Root reducer (if needed)
+  /features
+    /auth
+      authSlice.ts        # Auth reducer + actions
+      authAPI.ts          # Auth async thunks
+      authSelectors.ts    # Auth selectors
+      authTypes.ts        # Auth TypeScript types
+    /cart
+      cartSlice.ts
+      cartSelectors.ts
+      cartTypes.ts
+    /products
+      productsSlice.ts
+      productsAPI.ts
+      productsSelectors.ts
+      productsTypes.ts
+  /shared
+    /components           # Reusable components
+    /hooks               # Custom hooks
+    /utils               # Utility functions
+    /types               # Global types
+\`\`\`
+
+**Store Configuration:**
+\`\`\`javascript
+// store/index.ts
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from '../features/auth/authSlice';
+import cartReducer from '../features/cart/cartSlice';
+import productsReducer from '../features/products/productsSlice';
+
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    cart: cartReducer,
+    products: productsReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST'],
+      },
+    }),
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+\`\`\`
+
+**Feature Slice Example:**
+\`\`\`javascript
+// features/auth/authSlice.ts
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+      return await response.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: {
+    user: null,
+    token: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.error = null;
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+
+export const { logout, clearError } = authSlice.actions;
+export default authSlice.reducer;
+\`\`\`
+
+**Selectors:**
+\`\`\`javascript
+// features/auth/authSelectors.ts
+import { createSelector } from '@reduxjs/toolkit';
+
+const selectAuthState = (state) => state.auth;
+
+export const selectUser = createSelector(
+  [selectAuthState],
+  (auth) => auth.user
+);
+
+export const selectIsAuthenticated = createSelector(
+  [selectUser],
+  (user) => !!user
+);
+
+export const selectAuthLoading = createSelector(
+  [selectAuthState],
+  (auth) => auth.loading
+);
+\`\`\`
+
+**Best Practices:**
+- **Feature isolation**: Each feature is self-contained
+- **Consistent naming**: Use descriptive, consistent names
+- **Type safety**: Export and use TypeScript types
+- **Separation of concerns**: Keep API logic separate from UI logic
+- **Reusable patterns**: Create shared utilities and hooks`,
+    category: "Redux Architecture",
+    difficulty: "senior",
+    tags: ["architecture", "structure", "features", "scalability", "best-practices"],
+  },
 ];
 export default REDUX_QUESTIONS;
