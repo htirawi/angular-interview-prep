@@ -6010,67 +6010,70 @@ export const NEXTJS_ENHANCED_QUESTIONS = {
     },
     {
       id: "nextjs-intermediate-5",
-      question: "How do you implement API routes in Next.js?",
+      question:
+        "Your Next.js blog has 10,000 articles and you need to implement API routes for a search feature. The current setup uses pages/api. What's the main performance concern you should address?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "By creating files in the pages/api directory",
+          text: "Implement proper caching and pagination to avoid memory issues",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "By creating files in the api directory",
+          text: "Move API routes to a separate server",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "By creating files in the routes directory",
+          text: "Use only static generation for all articles",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "By creating files in the server directory",
-          isCorrect: false,
-        },
-      ],
-      explanation: "API routes in Next.js are created by adding files to the pages/api directory.",
-      category: "API Routes",
-      difficulty: "medium",
-      tags: ["api-routes", "pages", "api"],
-      points: 2,
-    },
-    {
-      id: "nextjs-intermediate-6",
-      question: "What is the purpose of the next/image component?",
-      type: "multiple-choice",
-      options: [
-        {
-          id: "a",
-          text: "To optimize images automatically with lazy loading and responsive sizing",
-          isCorrect: true,
-        },
-        {
-          id: "b",
-          text: "To create image galleries",
-          isCorrect: false,
-        },
-        {
-          id: "c",
-          text: "To edit images",
-          isCorrect: false,
-        },
-        {
-          id: "d",
-          text: "To store images",
+          text: "Disable API routes completely",
           isCorrect: false,
         },
       ],
       explanation:
-        "The next/image component provides automatic image optimization, lazy loading, and responsive sizing.",
+        "With large datasets, API routes need proper caching strategies and pagination to prevent memory issues and improve response times. This is crucial for search functionality.",
+      category: "API Routes",
+      difficulty: "medium",
+      tags: ["api-routes", "performance", "caching", "pagination"],
+      points: 2,
+    },
+    {
+      id: "nextjs-intermediate-6",
+      question:
+        "Your e-commerce site's product images are causing slow page loads. The LCP (Largest Contentful Paint) is 3.8 seconds. You're currently using regular img tags. What's the most effective immediate solution?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "Replace img tags with next/image and add priority prop to above-the-fold images",
+          isCorrect: true,
+        },
+        {
+          id: "b",
+          text: "Compress all images manually",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "Move images to a CDN",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "Remove all product images",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "next/image provides automatic optimization, WebP conversion, lazy loading, and responsive sizing. The priority prop ensures above-the-fold images load immediately, significantly improving LCP.",
       category: "Performance",
       difficulty: "medium",
-      tags: ["image-optimization", "performance", "lazy-loading"],
+      tags: ["next-image", "lcp", "optimization", "priority"],
       points: 2,
     },
     {
@@ -7132,101 +7135,104 @@ export const NEXTJS_ENHANCED_QUESTIONS = {
     },
     {
       id: "nextjs-senior-9",
-      question: "How would you implement advanced SEO optimization in Next.js?",
+      question:
+        "Your Next.js e-commerce site has poor Core Web Vitals scores. The LCP is 4.2s and CLS is 0.25. Which optimization strategy should you prioritize first?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using structured data, sitemaps, and meta tags optimization",
+          text: "Implement image optimization with next/image and WebP format",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only structured data",
+          text: "Add more CSS animations for better user experience",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only sitemaps",
+          text: "Increase bundle size with more JavaScript libraries",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only meta tags",
+          text: "Disable server-side rendering to improve performance",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced SEO involves structured data for rich snippets, sitemaps for crawling, and optimized meta tags for better search visibility.",
-      category: "SEO",
+        "Image optimization is the most impactful for LCP improvement. Using next/image with WebP format, proper sizing, and lazy loading can reduce LCP by 50-70%.",
+      category: "Performance",
       difficulty: "hard",
-      tags: ["seo", "structured-data", "sitemaps", "meta-tags"],
+      tags: ["performance", "core-web-vitals", "lcp", "image-optimization"],
       points: 3,
     },
     {
       id: "nextjs-senior-10",
-      question: "How would you implement advanced accessibility features in Next.js?",
+      question:
+        "A client reports that their Next.js app's accessibility score dropped from 95 to 78 after adding dynamic content. Screen readers can't announce new content updates. What's the most likely cause?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using ARIA attributes, keyboard navigation, and screen reader support",
+          text: "Missing aria-live regions for dynamic content announcements",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only ARIA attributes",
+          text: "Images don't have alt attributes",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only keyboard navigation",
+          text: "Forms lack proper labels",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only screen reader support",
+          text: "Color contrast is insufficient",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced accessibility involves proper ARIA attributes, keyboard navigation support, and screen reader compatibility.",
+        "Dynamic content updates require aria-live regions to announce changes to screen readers. Without proper aria-live attributes, users with screen readers won't be notified of content changes.",
       category: "Accessibility",
       difficulty: "hard",
-      tags: ["accessibility", "aria", "keyboard", "screen-readers"],
+      tags: ["accessibility", "aria-live", "screen-readers", "dynamic-content"],
       points: 3,
     },
     {
       id: "nextjs-senior-11",
-      question: "How would you implement advanced internationalization in Next.js?",
+      question:
+        "Your Next.js application needs to support 15 different languages with RTL support for Arabic and Hebrew. The current i18n setup only handles basic translations. What's the most critical missing piece?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using next-i18next, dynamic locale loading, and pluralization",
+          text: "Locale-based routing with proper RTL layout detection",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only next-i18next",
+          text: "Adding more translation files",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only dynamic locale loading",
+          text: "Installing a translation library",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only pluralization",
+          text: "Creating language-specific CSS files",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced i18n involves next-i18next for translations, dynamic locale loading for performance, and pluralization for proper grammar.",
+        "For comprehensive i18n with RTL support, you need locale-based routing to handle different URL structures and automatic RTL layout detection. This ensures proper content flow and navigation for RTL languages.",
       category: "Internationalization",
       difficulty: "hard",
-      tags: ["i18n", "next-i18next", "locales", "pluralization"],
+      tags: ["i18n", "rtl", "routing", "locale", "arabic", "hebrew"],
       points: 3,
     },
     {
