@@ -21,7 +21,7 @@ export default function FrameworkSelection() {
                 Interview Prep Platform
               </h1>
               <p className="text-xl text-slate-600 dark:text-slate-300 md:text-2xl lg:text-3xl">
-                Master <span className="font-bold text-blue-600 dark:text-blue-400">559+</span>{" "}
+                Master <span className="font-bold text-blue-600 dark:text-blue-400">569+</span>{" "}
                 senior-level questions across{" "}
                 <span className="font-bold text-indigo-600 dark:text-indigo-400">4 frameworks</span>
               </p>

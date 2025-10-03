@@ -49,7 +49,7 @@ export const QUESTION_SETS: FrameworkMetadata[] = [
   {
     id: "redux",
     name: "Redux",
-    count: 100,
+    count: 110, // Updated count after adding 10 comprehensive Redux Toolkit questions
     icon: "redux",
   },
   {
