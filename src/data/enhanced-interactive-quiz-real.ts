@@ -6871,167 +6871,172 @@ export const NEXTJS_ENHANCED_QUESTIONS = {
   senior: [
     {
       id: "nextjs-senior-1",
-      question: "How would you implement custom server middleware in Next.js?",
+      question:
+        "Your Next.js e-commerce application is experiencing slow page loads due to large product images. The LCP (Largest Contentful Paint) is 4.2 seconds. What's the most effective immediate solution?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using middleware.ts file in the root directory",
+          text: "Implement next/image with priority loading and WebP format",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using getServerSideProps",
+          text: "Use regular img tags with lazy loading",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using getStaticProps",
+          text: "Compress images using external tools only",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using API routes",
+          text: "Move all images to a CDN without optimization",
           isCorrect: false,
         },
       ],
       explanation:
-        "Custom server middleware in Next.js is implemented using the middleware.ts file in the root directory.",
-      category: "Middleware",
+        "next/image provides automatic optimization, WebP conversion, lazy loading, and priority loading for above-the-fold content, making it the most effective solution for improving LCP.",
+      category: "Performance Optimization",
       difficulty: "hard",
-      tags: ["middleware", "server", "advanced"],
+      tags: ["performance", "images", "lcp", "next-image"],
       points: 3,
     },
     {
       id: "nextjs-senior-2",
-      question: "How would you implement advanced caching strategies in Next.js?",
+      question:
+        "A client reports that their Next.js app's accessibility score dropped from 95 to 78 after adding dynamic content. Screen readers can't announce new content updates. What's the most likely cause?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using ISR, SWR, and custom cache headers",
+          text: "Missing aria-live regions for dynamic content updates",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only ISR",
+          text: "Incorrect color contrast ratios",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only SWR",
+          text: "Missing alt text on images",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only cache headers",
+          text: "Incorrect heading hierarchy",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced caching in Next.js involves ISR for static content, SWR for client-side caching, and custom cache headers for API responses.",
-      category: "Performance",
+        "Dynamic content updates require aria-live regions to announce changes to screen readers. Without proper aria-live implementation, screen readers won't know about content changes.",
+      category: "Accessibility",
       difficulty: "hard",
-      tags: ["caching", "isr", "swr", "performance"],
+      tags: ["accessibility", "aria-live", "screen-readers", "dynamic-content"],
       points: 3,
     },
     {
       id: "nextjs-senior-3",
-      question: "How would you implement advanced error boundaries in Next.js?",
+      question:
+        "Your Next.js application needs to support 15 different languages with RTL support for Arabic and Hebrew. The current i18n setup only handles basic translations. What's the most critical missing piece?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using error.js files, global error handlers, and custom error components",
+          text: "RTL layout direction configuration and locale-specific routing",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only error.js files",
+          text: "Additional translation files",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only global error handlers",
+          text: "More language detection logic",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only custom error components",
+          text: "Additional font loading",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced error handling involves error.js files for page-level errors, global error handlers, and custom error boundary components.",
-      category: "Error Handling",
+        "RTL support requires specific layout direction configuration, CSS direction properties, and locale-specific routing to properly handle right-to-left languages like Arabic and Hebrew.",
+      category: "Internationalization",
       difficulty: "hard",
-      tags: ["error-boundaries", "error-handling", "recovery"],
+      tags: ["i18n", "rtl", "localization", "routing"],
       points: 3,
     },
     {
       id: "nextjs-senior-4",
-      question: "How would you implement advanced performance monitoring in Next.js?",
+      question:
+        "Your Next.js blog has 10,000 articles and you need to implement API routes for a search feature. The current setup uses pages/api. What's the main performance concern you should address?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Web Vitals, custom metrics, and performance APIs",
+          text: "Database query optimization and caching strategies",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Web Vitals",
+          text: "Moving to App Router API routes",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only custom metrics",
+          text: "Adding more API endpoints",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only performance APIs",
+          text: "Implementing pagination only",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced performance monitoring involves Web Vitals for Core Web Vitals, custom metrics for business KPIs, and Performance APIs for detailed analysis.",
-      category: "Monitoring",
+        "With 10,000 articles, the main concern is database performance. You need query optimization, proper indexing, caching strategies, and efficient search algorithms to handle the scale.",
+      category: "API Performance",
       difficulty: "hard",
-      tags: ["performance", "web-vitals", "monitoring", "metrics"],
+      tags: ["api", "performance", "database", "caching", "search"],
       points: 3,
     },
     {
       id: "nextjs-senior-5",
-      question: "How would you implement advanced security measures in Next.js?",
+      question:
+        "Your e-commerce site's product images are causing slow page loads. The LCP (Largest Contentful Paint) is 3.8 seconds. You're currently using regular img tags. What's the most effective immediate solution?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using CSP headers, authentication middleware, and input validation",
+          text: "Replace with next/image component with priority loading",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only CSP headers",
+          text: "Add lazy loading to existing img tags",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only authentication middleware",
+          text: "Compress images manually",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only input validation",
+          text: "Move images to a CDN",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced security involves Content Security Policy headers, authentication middleware, and comprehensive input validation.",
-      category: "Security",
+        "next/image provides automatic optimization, WebP conversion, lazy loading, and priority loading. It's the most effective solution for improving LCP scores.",
+      category: "Performance Optimization",
       difficulty: "hard",
-      tags: ["security", "csp", "authentication", "validation"],
+      tags: ["performance", "images", "lcp", "next-image"],
       points: 3,
     },
     {
