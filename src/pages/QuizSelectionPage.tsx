@@ -346,15 +346,22 @@ const QuizCardComponent = ({
       aria-label={`Start ${card.title} quiz`}
     >
       <div
-        className={`relative flex h-80 flex-col overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${
-          isHovered ? "border-blue-400 shadow-xl" : "border-gray-200"
+        className={`relative flex h-80 flex-col overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+          isHovered ? "-translate-y-1 border-blue-400 shadow-xl" : "border-gray-200"
         }`}
       >
         {/* Header with Icons */}
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-blue-50 p-2">
+            <div
+              className={`rounded-lg p-2 transition-all duration-300 ${
+                isHovered ? "scale-110 bg-blue-100" : "bg-blue-50"
+              }`}
+            >
               <FrameworkIcon framework={card.icon} size={24} />
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+              {card.framework.toUpperCase()}
             </div>
           </div>
           <DifficultyIndicator level={card.level} />
@@ -362,10 +369,14 @@ const QuizCardComponent = ({
 
         {/* Title and Subtitle */}
         <div className="mb-4 flex-grow">
-          <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-700">
+          <h3
+            className={`text-lg font-bold transition-colors duration-300 ${
+              isHovered ? "text-blue-700" : "text-gray-900"
+            }`}
+          >
             {card.title}
           </h3>
-          <p className="text-sm text-gray-600">{card.subtitle}</p>
+          <p className="mt-1 text-sm text-gray-600">{card.subtitle}</p>
         </div>
 
         {/* Skills */}
@@ -377,16 +388,76 @@ const QuizCardComponent = ({
             {card.skills.slice(0, 3).map((skill, index) => (
               <span
                 key={index}
-                className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700"
+                className={`rounded-full px-2 py-1 text-xs transition-all duration-300 ${
+                  isHovered ? "scale-105 bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
+                }`}
+                style={{ transitionDelay: `${index * 50}ms` }}
               >
                 {skill}
               </span>
             ))}
             {card.skills.length > 3 && (
-              <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-700">
+              <span
+                className={`rounded-full px-2 py-1 text-xs font-semibold transition-all duration-300 ${
+                  isHovered ? "scale-105 bg-blue-200 text-blue-800" : "bg-blue-100 text-blue-700"
+                }`}
+              >
                 +{card.skills.length - 3}
               </span>
             )}
+          </div>
+        </div>
+
+        {/* Duration and Evaluation */}
+        <div className="mb-4 flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center gap-1">
+            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>{card.duration}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>{card.evaluation}</span>
+          </div>
+        </div>
+
+        {/* Start Quiz Button */}
+        <div
+          className={`transition-all duration-300 ${
+            isHovered ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+          }`}
+        >
+          <div className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m6-6a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Start Quiz
+            <svg
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </div>
         </div>
 
@@ -606,6 +677,9 @@ export default function QuizSelectionPage() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFramework, setSelectedFramework] = useState<string>("all");
+  const [selectedLevel, setSelectedLevel] = useState<string>("all");
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   // Check if mobile on mount and resize
@@ -682,35 +756,231 @@ export default function QuizSelectionPage() {
     setHoveredCard(null);
   };
 
+  // Filter cards based on search and filters
+  const filteredCards = QUIZ_CARDS.filter((card) => {
+    const matchesSearch =
+      card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card.subtitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card.skills.some((skill) => skill.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const matchesFramework = selectedFramework === "all" || card.framework === selectedFramework;
+    const matchesLevel = selectedLevel === "all" || card.level === selectedLevel;
+
+    return matchesSearch && matchesFramework && matchesLevel;
+  });
+
+  // Get unique frameworks and levels for filter options
+  const frameworks = Array.from(new Set(QUIZ_CARDS.map((card) => card.framework)));
+  const levels = Array.from(new Set(QUIZ_CARDS.map((card) => card.level)));
+
   return (
     <div className="min-h-screen bg-gray-50 py-12">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-gray-900">Developer Quiz Selection</h1>
-          <p className="text-lg text-gray-600">
-            Choose your quiz level and framework to test your skills
-          </p>
+        {/* Enhanced Header */}
+        <div className="mb-12">
+          {/* Main Title Section */}
+          <div className="mb-8 text-center">
+            <div className="mb-4 flex items-center justify-center gap-3">
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 p-3">
+                <svg
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <h1 className="text-4xl font-bold text-gray-900 lg:text-5xl">
+                Developer Quiz Selection
+              </h1>
+            </div>
+            <p className="text-lg text-gray-600 lg:text-xl">
+              Choose your quiz level and framework to test your skills
+            </p>
+            <div className="mt-4 flex items-center justify-center gap-6 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                <span>12 Quizzes Available</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+                <span>4 Frameworks</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                <span>3 Difficulty Levels</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Search and Filter Section */}
+          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              {/* Search Bar */}
+              <div className="relative flex-1">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search quizzes by title, skills, or framework..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pl-10 pr-4 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                />
+              </div>
+
+              {/* Filters */}
+              <div className="flex gap-3">
+                {/* Framework Filter */}
+                <select
+                  value={selectedFramework}
+                  onChange={(e) => setSelectedFramework(e.target.value)}
+                  className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                >
+                  <option value="all">All Frameworks</option>
+                  {frameworks.map((framework) => (
+                    <option key={framework} value={framework}>
+                      {framework.charAt(0).toUpperCase() + framework.slice(1)}
+                    </option>
+                  ))}
+                </select>
+
+                {/* Level Filter */}
+                <select
+                  value={selectedLevel}
+                  onChange={(e) => setSelectedLevel(e.target.value)}
+                  className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                >
+                  <option value="all">All Levels</option>
+                  {levels.map((level) => (
+                    <option key={level} value={level}>
+                      {level.charAt(0).toUpperCase() + level.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Results Summary */}
+            <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
+              <span>
+                Showing {filteredCards.length} of {QUIZ_CARDS.length} quizzes
+              </span>
+              {(searchTerm || selectedFramework !== "all" || selectedLevel !== "all") && (
+                <button
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSelectedFramework("all");
+                    setSelectedLevel("all");
+                  }}
+                  className="font-medium text-blue-600 hover:text-blue-700"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Quiz Cards Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {QUIZ_CARDS.map((card) => (
-            <div
-              key={card.id}
-              ref={(el) => {
-                cardRefs.current[card.id] = el;
-              }}
-            >
-              <QuizCardComponent
-                card={card}
-                isHovered={hoveredCard === card.id}
-                onMouseEnter={() => handleCardHover(card.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => handleCardClick(card)}
-              />
+          {filteredCards.length > 0 ? (
+            filteredCards.map((card, index) => (
+              <div
+                key={card.id}
+                ref={(el) => {
+                  cardRefs.current[card.id] = el;
+                }}
+                className="transform transition-all duration-300 hover:scale-105"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                  animation: "fadeInUp 0.6s ease-out forwards",
+                  opacity: 0,
+                }}
+              >
+                <QuizCardComponent
+                  card={card}
+                  isHovered={hoveredCard === card.id}
+                  onMouseEnter={() => handleCardHover(card.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  onClick={() => handleCardClick(card)}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full py-12 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                <svg
+                  className="h-8 w-8 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+              <h3 className="mb-2 text-lg font-semibold text-gray-900">No quizzes found</h3>
+              <p className="mb-4 text-gray-600">Try adjusting your search terms or filters</p>
+              <button
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedFramework("all");
+                  setSelectedLevel("all");
+                }}
+                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                Reset Filters
+              </button>
             </div>
-          ))}
+          )}
         </div>
 
         {/* Details Popup */}
