@@ -10,9 +10,9 @@ export default {
         mono: ["ui-monospace", "SFMono-Regular", "monospace"],
       },
       scale: {
-        '102': '1.02',
-        '105': '1.05',
-        '110': '1.10',
+        102: "1.02",
+        105: "1.05",
+        110: "1.10",
       },
     },
   },
