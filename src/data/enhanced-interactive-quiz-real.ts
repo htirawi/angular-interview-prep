@@ -10809,10 +10809,501 @@ export const REDUX_ENHANCED_QUESTIONS = {
           isCorrect: false,
         },
       ],
-      explanation: "createReducer creates reducers with Immer for immutable updates",
+    },
+    {
+      id: "redux-senior-31",
+      question: "Which library provides the official binding for using Redux with React?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "redux-react",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "react-bind",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "react-redux",
+          isCorrect: true,
+        },
+        {
+          id: "d",
+          text: "redux-bridge",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "react-redux is the official library that provides bindings for using Redux with React components.",
+      category: "Redux React Integration",
+      difficulty: "hard",
+      tags: ["react-redux", "bindings", "integration"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-32",
+      question: "What is the purpose of the Provider component in Redux?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "To provide components with action creators",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "To inject middleware into the Redux process",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "To make the Redux store available to any nested components",
+          isCorrect: true,
+        },
+        {
+          id: "d",
+          text: "To provide a theme for the application",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "The Provider component makes the Redux store available to any nested components that have been wrapped in the connect() function or use hooks.",
+      category: "Redux React Integration",
+      difficulty: "hard",
+      tags: ["provider", "store", "context"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-33",
+      question: "Which hook allows you to extract data from the Redux store?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "useDispatch",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "useSelector",
+          isCorrect: true,
+        },
+        {
+          id: "c",
+          text: "useRedux",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "useStore",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "useSelector is the hook that allows you to extract data from the Redux store state.",
+      category: "Redux Hooks",
+      difficulty: "hard",
+      tags: ["useSelector", "hooks", "state"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-34",
+      question: "What does useDispatch return?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "The current state",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "A reference to the dispatch function",
+          isCorrect: true,
+        },
+        {
+          id: "c",
+          text: "A selector function",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "A reference to the Redux store",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "useDispatch returns a reference to the dispatch function from the Redux store, which is used to dispatch actions.",
+      category: "Redux Hooks",
+      difficulty: "hard",
+      tags: ["useDispatch", "dispatch", "actions"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-35",
+      question: "What does the redux-logger middleware do?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "Logs actions and state changes in a formatted way",
+          isCorrect: true,
+        },
+        {
+          id: "b",
+          text: "Logs React component render cycles",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "Shows a visual representation of the Redux store",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "Debugs asynchronous operations",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "redux-logger is a middleware that logs every action and the resulting state change in a formatted way to the console.",
+      category: "Redux Middleware",
+      difficulty: "hard",
+      tags: ["redux-logger", "middleware", "debugging"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-36",
+      question: "Why is it recommended to conditionally include logger middleware?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "It improves application performance",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "It's required for the production build process",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "It avoids exposing internal logic to users",
+          isCorrect: true,
+        },
+        {
+          id: "d",
+          text: "It ensures error-free operation",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "Logger middleware should be conditionally included to avoid exposing internal application logic and state to users in production.",
+      category: "Redux Middleware",
+      difficulty: "hard",
+      tags: ["logger", "production", "security"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-37",
+      question: "What is the main advantage of using createSlice in Redux Toolkit?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "It allows direct database integration",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "It replaces the need for actions",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "It co-locates reducers with their actions and reduces boilerplate",
+          isCorrect: true,
+        },
+        {
+          id: "d",
+          text: "It integrates third-party libraries automatically",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "createSlice co-locates reducers with their actions and automatically generates action creators, significantly reducing boilerplate code.",
       category: "Redux Toolkit",
       difficulty: "hard",
-      tags: ["redux-toolkit", "reducers"],
+      tags: ["createSlice", "boilerplate", "actions"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-38",
+      question: "What does combineReducers do in Redux?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "Merges multiple reducers into a single reducer",
+          isCorrect: true,
+        },
+        {
+          id: "b",
+          text: "Combines multiple actions into a single action",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "Merges multiple stores into a single store",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "Compresses the Redux codebase",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "combineReducers merges multiple reducers into a single reducer function that can be passed to createStore.",
+      category: "Redux Core",
+      difficulty: "hard",
+      tags: ["combineReducers", "reducers", "store"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-39",
+      question:
+        "When using Redux Toolkit's createSlice, which method is used to automatically generate action creators?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "createActions",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "createAction",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "createReducer",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "None, action creators are automatically generated",
+          isCorrect: true,
+        },
+      ],
+      explanation:
+        "createSlice automatically generates action creators based on the reducer names defined in the reducers object.",
+      category: "Redux Toolkit",
+      difficulty: "hard",
+      tags: ["createSlice", "action-creators", "automatic"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-40",
+      question: "How can you access the current state inside a Redux action creator?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "Using getState parameter in thunks",
+          isCorrect: true,
+        },
+        {
+          id: "b",
+          text: "Using store.state",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "Passing the state as an argument to the action creator",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "Using useState()",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "In Redux thunks, you can access the current state using the getState parameter provided by the thunk middleware.",
+      category: "Redux Thunks",
+      difficulty: "hard",
+      tags: ["thunks", "getState", "action-creators"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-41",
+      question: "The Redux principle 'Changes are made with pure functions' refers to:",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "Action creators",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "Store enhancers",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "Reducers",
+          isCorrect: true,
+        },
+        {
+          id: "d",
+          text: "Middleware",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "Reducers are pure functions that specify how the application's state changes in response to actions sent to the store.",
+      category: "Redux Principles",
+      difficulty: "hard",
+      tags: ["reducers", "pure-functions", "principles"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-42",
+      question: "What does the payload property in a typical Redux action represent?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "The action's type",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "Additional data associated with the action",
+          isCorrect: true,
+        },
+        {
+          id: "c",
+          text: "An error message if the action failed",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "The action's ID",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "The payload property contains additional data that describes what happened and is used by the reducer to update the state.",
+      category: "Redux Actions",
+      difficulty: "hard",
+      tags: ["actions", "payload", "data"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-43",
+      question: "What is an action in Redux?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "A function that returns a new state",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "An object that describes a change in state",
+          isCorrect: true,
+        },
+        {
+          id: "c",
+          text: "A middleware that logs state changes",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "A component that renders state",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "Actions are plain JavaScript objects that describe what happened and contain a type property and optional payload.",
+      category: "Redux Actions",
+      difficulty: "hard",
+      tags: ["actions", "objects", "state-changes"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-44",
+      question: "What is the primary purpose of the Redux store?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "To define component structure",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "To hold the application's state",
+          isCorrect: true,
+        },
+        {
+          id: "c",
+          text: "To render user interfaces",
+          isCorrect: false,
+        },
+        {
+          id: "d",
+          text: "To connect to APIs",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "The Redux store holds the complete state tree of your application and provides methods to access the state and dispatch actions.",
+      category: "Redux Store",
+      difficulty: "hard",
+      tags: ["store", "state", "application-state"],
+      points: 3,
+    },
+    {
+      id: "redux-senior-45",
+      question: "What is the purpose of middleware in Redux?",
+      type: "multiple-choice",
+      options: [
+        {
+          id: "a",
+          text: "To change the state directly",
+          isCorrect: false,
+        },
+        {
+          id: "b",
+          text: "To define the application's structure",
+          isCorrect: false,
+        },
+        {
+          id: "c",
+          text: "To handle asynchronous actions and perform side effects",
+          isCorrect: true,
+        },
+        {
+          id: "d",
+          text: "To render React components",
+          isCorrect: false,
+        },
+      ],
+      explanation:
+        "Middleware provides a third-party extension point between dispatching an action and the moment it reaches the reducer, enabling async operations and side effects.",
+      category: "Redux Middleware",
+      difficulty: "hard",
+      tags: ["middleware", "async", "side-effects"],
       points: 3,
     },
   ] as InteractiveQuizQuestion[],
