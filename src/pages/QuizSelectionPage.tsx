@@ -303,13 +303,13 @@ const DifficultyIndicator = ({ level }: { level: "junior" | "intermediate" | "se
         {[1, 2, 3].map((bar) => (
           <div
             key={bar}
-            className={`h-3 w-1 rounded-full transition-colors duration-200 ${
+            className={`h-4 w-1.5 rounded-full transition-colors duration-200 ${
               bar <= bars ? "bg-green-500" : "bg-gray-200"
             }`}
           />
         ))}
       </div>
-      <span className="text-xs font-semibold text-green-600">{label}</span>
+      <span className="text-sm font-bold text-green-600">{label}</span>
     </div>
   );
 };
@@ -346,7 +346,7 @@ const QuizCardComponent = ({
       aria-label={`Start ${card.title} quiz`}
     >
       <div
-        className={`relative overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${
+        className={`relative flex h-80 flex-col overflow-hidden rounded-xl border-2 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${
           isHovered ? "border-blue-400 shadow-xl" : "border-gray-200"
         }`}
       >
@@ -356,12 +356,12 @@ const QuizCardComponent = ({
             <div className="rounded-lg bg-blue-50 p-2">
               <FrameworkIcon framework={card.icon} size={24} />
             </div>
-            <DifficultyIndicator level={card.level} />
           </div>
+          <DifficultyIndicator level={card.level} />
         </div>
 
         {/* Title and Subtitle */}
-        <div className="mb-4">
+        <div className="mb-4 flex-grow">
           <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-700">
             {card.title}
           </h3>
@@ -390,9 +390,9 @@ const QuizCardComponent = ({
           </div>
         </div>
 
-        {/* Hover Gradient Overlay */}
+        {/* Hover Gradient Overlay - Behind content */}
         <div
-          className={`absolute inset-0 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 transition-opacity duration-300 ${
+          className={`absolute inset-0 -z-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 transition-opacity duration-300 ${
             isHovered ? "opacity-100" : ""
           }`}
         />
@@ -416,6 +416,12 @@ const QuizDetailsPopup = ({
 }) => {
   if (!card || !isVisible) return null;
 
+  // Determine arrow direction based on popup position
+  const isLeftPosition = position.x < window.innerWidth / 2;
+  const arrowClass = isLeftPosition
+    ? "absolute -left-2 top-1/2 h-4 w-4 -translate-y-1/2 rotate-45 border-b border-l border-gray-200 bg-white"
+    : "absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rotate-45 border-t border-r border-gray-200 bg-white";
+
   return (
     <>
       {/* Mobile Overlay */}
@@ -423,7 +429,7 @@ const QuizDetailsPopup = ({
 
       {/* Desktop Popup */}
       <div
-        className="fixed z-50 hidden w-96 rounded-xl border border-gray-200 bg-white p-6 shadow-2xl lg:block"
+        className="fixed z-50 hidden w-[28rem] max-w-[90vw] rounded-xl border border-gray-200 bg-white p-6 shadow-2xl lg:block"
         style={{
           left: position.x,
           top: position.y,
@@ -431,7 +437,7 @@ const QuizDetailsPopup = ({
         }}
       >
         {/* Arrow pointing to card */}
-        <div className="absolute -left-2 top-1/2 h-4 w-4 -translate-y-1/2 rotate-45 border-b border-l border-gray-200 bg-white" />
+        <div className={arrowClass} />
 
         {/* Header */}
         <div className="mb-4">
@@ -633,10 +639,29 @@ export default function QuizSelectionPage() {
     const cardElement = cardRefs.current[cardId];
     if (cardElement) {
       const rect = cardElement.getBoundingClientRect();
-      setPopupPosition({
-        x: rect.right + 20,
-        y: rect.top + rect.height / 2,
-      });
+      const popupWidth = 448; // 28rem = 448px
+      const popupHeight = 400; // Estimated popup height
+
+      // Calculate position with screen boundary checks
+      let x = rect.right + 20;
+      let y = rect.top + rect.height / 2;
+
+      // Check if popup would go off right edge
+      if (x + popupWidth > window.innerWidth) {
+        x = rect.left - popupWidth - 20; // Position to the left instead
+      }
+
+      // Check if popup would go off bottom edge
+      if (y + popupHeight / 2 > window.innerHeight) {
+        y = window.innerHeight - popupHeight / 2 - 20;
+      }
+
+      // Check if popup would go off top edge
+      if (y - popupHeight / 2 < 20) {
+        y = popupHeight / 2 + 20;
+      }
+
+      setPopupPosition({ x, y });
     }
   };
 
