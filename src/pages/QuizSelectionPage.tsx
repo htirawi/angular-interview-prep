@@ -464,15 +464,9 @@ const QuizCardComponent = ({
           </div>
         </div>
 
-        {/* Start Quiz Button */}
-        <div className="relative z-10">
-          <div
-            className={`flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-all duration-300 ${
-              isHovered
-                ? "translate-y-0 bg-blue-600 opacity-100 hover:scale-105 hover:bg-blue-700 hover:shadow-lg active:scale-95"
-                : "translate-y-1 bg-gray-400 opacity-60 group-hover:translate-y-0 group-hover:bg-blue-600 group-hover:opacity-100"
-            }`}
-          >
+        {/* Start Quiz Button - Always Visible */}
+        <div className="mt-auto">
+          <div className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-blue-700 hover:shadow-lg active:scale-95">
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
