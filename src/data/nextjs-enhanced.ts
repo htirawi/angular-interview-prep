@@ -8376,6 +8376,312 @@ export const NEXTJS_ENHANCED_QUESTIONS: QA[] = [
     difficulty: "intermediate",
     tags: ["testing", "jest", "react-testing-library", "playwright", "e2e"],
   },
+  {
+    id: 51,
+    question:
+      "Next.js App Router vs Pages Router - Understanding the differences and migration strategies.",
+    answer:
+      "Next.js App Router introduces a new routing system with improved performance, better developer experience, and enhanced features like Server Components, Streaming, and improved layouts. Understanding the differences helps in making informed decisions about migration and new project architecture.",
+  },
+  {
+    id: 52,
+    question: "Server Components vs Client Components - When to use each and best practices.",
+    answer:
+      "Server Components run on the server and can directly access backend resources, while Client Components run in the browser and provide interactivity. Understanding when to use each type is crucial for optimal performance and user experience.",
+  },
+  {
+    id: 53,
+    question: "Streaming and Suspense in Next.js - Implementing progressive loading experiences.",
+    answer:
+      "Streaming allows you to send parts of a page to the client as they become ready, while Suspense provides fallback UI during loading. Together, they create smooth, progressive loading experiences that improve perceived performance.",
+  },
+  {
+    id: 54,
+    question:
+      "Next.js Middleware - Implementing authentication, redirects, and request modification.",
+    answer:
+      "Next.js Middleware runs before a request is completed, allowing you to modify the request or response, implement authentication, handle redirects, and add custom logic at the edge. It's essential for modern web applications.",
+  },
+  {
+    id: 55,
+    question: "Dynamic Imports and Code Splitting - Optimizing bundle size and performance.",
+    answer:
+      "Dynamic imports allow you to load code on demand, reducing initial bundle size and improving performance. Understanding how to implement code splitting effectively is crucial for large applications.",
+  },
+  {
+    id: 56,
+    question:
+      "Next.js Image Optimization - Implementing responsive images and performance best practices.",
+    answer:
+      "Next.js provides built-in image optimization with automatic format selection, responsive sizing, and lazy loading. Proper implementation ensures fast loading times and optimal user experience across devices.",
+  },
+  {
+    id: 57,
+    question: "API Routes and Server Actions - Building backend functionality in Next.js.",
+    answer:
+      "Next.js provides multiple ways to build backend functionality: API Routes for REST APIs and Server Actions for form handling and mutations. Understanding when to use each approach is key to building efficient applications.",
+  },
+  {
+    id: 58,
+    question: "Next.js Caching Strategies - Implementing effective caching for performance.",
+    answer:
+      "Next.js provides multiple caching layers including Request Memoization, Data Cache, and Full Route Cache. Understanding how to implement and configure caching strategies is essential for optimal performance.",
+  },
+  {
+    id: 59,
+    question: "Error Handling and Error Boundaries - Implementing robust error management.",
+    answer:
+      "Proper error handling ensures your application remains stable and provides good user experience even when things go wrong. Error boundaries catch JavaScript errors and display fallback UI.",
+  },
+  {
+    id: 60,
+    question: "Next.js Deployment and Performance Monitoring - Production-ready applications.",
+    answer:
+      "Deploying Next.js applications requires understanding of build optimization, environment configuration, and performance monitoring. Proper deployment practices ensure reliable, fast applications in production.",
+  },
+  {
+    id: 61,
+    question: "Next.js Internationalization (i18n) - Implementing multi-language support.",
+    answer:
+      "Next.js provides built-in internationalization support for creating multi-language applications. Understanding how to implement i18n properly ensures your application can serve users in different languages and regions.",
+  },
+  {
+    id: 62,
+    question:
+      "Next.js Security Best Practices - Protecting applications from common vulnerabilities.",
+    answer:
+      "Security is crucial for web applications. Next.js provides several built-in security features, but understanding additional security measures and best practices is essential for protecting your application and users.",
+  },
+  {
+    id: 63,
+    question: "Next.js Performance Optimization - Techniques for faster applications.",
+    answer:
+      "Performance optimization is key to providing excellent user experience. Next.js provides many built-in optimizations, but understanding additional techniques and monitoring tools helps create truly fast applications.",
+  },
+  {
+    id: 64,
+    question: "Next.js SEO Optimization - Improving search engine visibility.",
+    answer:
+      "Search engine optimization is crucial for web applications. Next.js provides excellent SEO capabilities out of the box, but understanding advanced techniques helps maximize search engine visibility.",
+  },
+  {
+    id: 65,
+    question: "Next.js Database Integration - Connecting to various database systems.",
+    answer:
+      "Most applications require database connectivity. Next.js works well with various database systems, and understanding how to integrate them properly is essential for building data-driven applications.",
+  },
+  {
+    id: 66,
+    question: "Next.js Authentication and Authorization - Implementing user management.",
+    answer:
+      "User authentication and authorization are fundamental features of most web applications. Understanding how to implement secure authentication in Next.js is crucial for protecting user data and application resources.",
+  },
+  {
+    id: 67,
+    question: "Next.js State Management - Managing application state effectively.",
+    answer:
+      "State management is crucial for complex applications. While Next.js provides server-side state management, understanding client-side state management patterns helps build interactive applications.",
+  },
+  {
+    id: 68,
+    question: "Next.js Testing Strategies - Comprehensive testing approaches.",
+    answer:
+      "Testing is essential for maintaining code quality and preventing bugs. Next.js applications can be tested at multiple levels, and understanding comprehensive testing strategies ensures reliable applications.",
+  },
+  {
+    id: 69,
+    question: "Next.js Monitoring and Analytics - Tracking application performance and usage.",
+    answer:
+      "Monitoring and analytics provide insights into application performance and user behavior. Understanding how to implement comprehensive monitoring helps maintain and improve application quality.",
+  },
+  {
+    id: 70,
+    question: "Next.js Advanced Patterns - Complex application architectures.",
+    answer:
+      "Advanced Next.js patterns help build complex, scalable applications. Understanding these patterns enables developers to create sophisticated applications that can handle real-world requirements.",
+  },
+  {
+    id: 71,
+    question: "Next.js Edge Runtime - Running code at the edge for better performance.",
+    answer:
+      "The Edge Runtime allows Next.js applications to run closer to users, reducing latency and improving performance. Understanding how to use Edge Runtime effectively is crucial for global applications.",
+  },
+  {
+    id: 72,
+    question: "Next.js Static Site Generation (SSG) - Pre-rendering pages for optimal performance.",
+    answer:
+      "Static Site Generation pre-renders pages at build time, providing excellent performance and SEO benefits. Understanding when and how to use SSG effectively is key to building fast applications.",
+  },
+  {
+    id: 73,
+    question:
+      "Next.js Incremental Static Regeneration (ISR) - Combining static and dynamic content.",
+    answer:
+      "ISR allows you to update static content without rebuilding the entire site. Understanding how to implement ISR effectively helps maintain performance while keeping content fresh.",
+  },
+  {
+    id: 74,
+    question: "Next.js Server-Side Rendering (SSR) - Rendering pages on the server.",
+    answer:
+      "Server-Side Rendering generates pages on the server for each request, providing dynamic content and SEO benefits. Understanding when to use SSR is crucial for applications with frequently changing content.",
+  },
+  {
+    id: 75,
+    question: "Next.js Client-Side Rendering (CSR) - Rendering pages in the browser.",
+    answer:
+      "Client-Side Rendering generates pages in the browser, providing rich interactivity. Understanding when to use CSR and how to optimize it is essential for interactive applications.",
+  },
+  {
+    id: 76,
+    question: "Next.js Hybrid Rendering - Combining multiple rendering strategies.",
+    answer:
+      "Hybrid rendering combines different rendering strategies to optimize performance and user experience. Understanding how to implement hybrid rendering effectively is key to building modern applications.",
+  },
+  {
+    id: 77,
+    question: "Next.js Data Fetching Patterns - Efficient data loading strategies.",
+    answer:
+      "Data fetching is crucial for dynamic applications. Next.js provides multiple data fetching patterns, and understanding when to use each approach is essential for optimal performance.",
+  },
+  {
+    id: 78,
+    question: "Next.js Layout Patterns - Organizing page structure and shared components.",
+    answer:
+      "Layouts help organize page structure and share components across routes. Understanding how to implement effective layout patterns is crucial for maintaining consistent UI and code organization.",
+  },
+  {
+    id: 79,
+    question: "Next.js Route Groups - Organizing routes without affecting URLs.",
+    answer:
+      "Route groups allow you to organize routes without affecting the URL structure. Understanding how to use route groups effectively helps maintain clean code organization and URL structure.",
+  },
+  {
+    id: 80,
+    question: "Next.js Parallel Routes - Rendering multiple pages simultaneously.",
+    answer:
+      "Parallel routes allow you to render multiple pages simultaneously, improving user experience and performance. Understanding how to implement parallel routes effectively is key to building complex applications.",
+  },
+  {
+    id: 81,
+    question: "Next.js Intercepting Routes - Modifying route behavior dynamically.",
+    answer:
+      "Intercepting routes allow you to modify route behavior dynamically, enabling features like modal overlays and dynamic page updates. Understanding how to implement intercepting routes effectively enhances user experience.",
+  },
+  {
+    id: 82,
+    question: "Next.js Loading UI - Creating smooth loading experiences.",
+    answer:
+      "Loading UI provides visual feedback during page transitions and data loading. Understanding how to implement effective loading states improves perceived performance and user experience.",
+  },
+  {
+    id: 83,
+    question: "Next.js Error Handling - Managing errors gracefully.",
+    answer:
+      "Error handling ensures your application remains stable and provides good user experience even when things go wrong. Understanding how to implement comprehensive error handling is crucial for production applications.",
+  },
+  {
+    id: 84,
+    question: "Next.js Not Found Pages - Handling missing routes and content.",
+    answer:
+      "Not Found pages handle cases where routes or content don't exist. Understanding how to implement effective 404 pages improves user experience and helps with SEO.",
+  },
+  {
+    id: 85,
+    question: "Next.js Metadata API - Optimizing SEO and social sharing.",
+    answer:
+      "The Metadata API provides a powerful way to manage page metadata for SEO and social sharing. Understanding how to implement metadata effectively improves search engine visibility and social media presence.",
+  },
+  {
+    id: 86,
+    question: "Next.js Font Optimization - Improving typography performance.",
+    answer:
+      "Font optimization is crucial for performance and user experience. Next.js provides built-in font optimization features that help reduce layout shift and improve loading times.",
+  },
+  {
+    id: 87,
+    question: "Next.js Script Optimization - Loading third-party scripts efficiently.",
+    answer:
+      "Third-party scripts can significantly impact performance. Next.js provides the Script component for optimized script loading, helping maintain good performance while using external libraries.",
+  },
+  {
+    id: 88,
+    question: "Next.js Web Vitals - Measuring and optimizing Core Web Vitals.",
+    answer:
+      "Core Web Vitals are crucial metrics for user experience and SEO. Understanding how to measure and optimize these metrics in Next.js applications is essential for building high-quality web experiences.",
+  },
+  {
+    id: 89,
+    question: "Next.js Bundle Analysis - Understanding and optimizing bundle size.",
+    answer:
+      "Bundle size directly impacts application performance. Understanding how to analyze and optimize bundle size in Next.js applications is crucial for maintaining fast loading times.",
+  },
+  {
+    id: 90,
+    question: "Next.js Progressive Web App (PWA) - Building app-like experiences.",
+    answer:
+      "Progressive Web Apps provide app-like experiences in the browser. Understanding how to implement PWA features in Next.js applications enhances user engagement and provides offline capabilities.",
+  },
+  {
+    id: 91,
+    question: "Next.js Advanced Caching - Implementing sophisticated caching strategies.",
+    answer:
+      "Advanced caching strategies help optimize performance and reduce server load. Understanding how to implement sophisticated caching patterns in Next.js applications is crucial for high-traffic applications.",
+  },
+  {
+    id: 92,
+    question: "Next.js Microservices Integration - Connecting with microservices architecture.",
+    answer:
+      "Microservices architecture provides scalability and maintainability benefits. Understanding how to integrate Next.js applications with microservices helps build scalable, maintainable systems.",
+  },
+  {
+    id: 93,
+    question: "Next.js Real-time Features - Implementing WebSocket and real-time updates.",
+    answer:
+      "Real-time features enhance user experience by providing instant updates. Understanding how to implement WebSocket connections and real-time features in Next.js applications is essential for interactive applications.",
+  },
+  {
+    id: 94,
+    question: "Next.js Advanced Routing - Complex routing patterns and dynamic routes.",
+    answer:
+      "Advanced routing patterns enable complex application structures and dynamic content. Understanding how to implement sophisticated routing patterns in Next.js applications is key to building flexible applications.",
+  },
+  {
+    id: 95,
+    question:
+      "Next.js SEO-Friendly Pagination - Implementing proper pagination that search engines can crawl and index effectively.",
+    answer:
+      "SEO-friendly pagination is essential for ensuring that search engines can properly crawl and index all pages of your content. This involves using proper HTML link relationships, canonical URLs, meaningful page titles and meta descriptions, and implementing pagination patterns that help search engines understand the structure of your content.",
+  },
+  {
+    id: 96,
+    question: "Avoid duplicate fetch across layouts.",
+    answer:
+      "Avoiding duplicate fetch across layouts is crucial for performance and user experience. This involves implementing proper data fetching strategies that prevent unnecessary API calls, optimize data sharing between components, and ensure efficient data flow throughout your application.",
+  },
+  {
+    id: 97,
+    question: "Image CDN configuration gotchas.",
+    answer:
+      "Image CDN configuration requires careful attention to avoid common pitfalls that can impact performance, security, and user experience. Understanding these gotchas helps ensure optimal image delivery and prevents potential issues with caching, format support, and domain restrictions.",
+  },
+  {
+    id: 98,
+    question: "Regional deployment considerations.",
+    answer:
+      "Regional deployment considerations are crucial for optimizing performance, reducing latency, and ensuring compliance with data regulations. Understanding how to configure Next.js applications for multi-region deployment helps deliver better user experiences and meet business requirements.",
+  },
+  {
+    id: 99,
+    question: "SaaS multitenancy in Next.js.",
+    answer:
+      "SaaS multitenancy in Next.js requires careful architecture to ensure data isolation, security, and scalability. Implementing proper tenant separation involves namespace routing, scoped caching, isolated secrets, and tenant-specific configurations to maintain security and performance.",
+  },
+  {
+    id: 100,
+    question: "Streaming product page skeleton design.",
+    answer:
+      "Streaming product page skeleton design involves creating progressive loading experiences that enhance user perception of performance. By strategically splitting content into Suspense boundaries and streaming critical content first, you can create engaging product pages that load incrementally and provide immediate visual feedback.",
+  },
 ];
 
 export default NEXTJS_ENHANCED_QUESTIONS;
