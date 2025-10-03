@@ -670,12 +670,12 @@ export default function QuizSelectionPage() {
       // On mobile, show details modal instead of navigating directly
       setHoveredCard(card.id);
     } else {
-      navigate(`/quiz/${card.framework}/${card.level}/interactive`);
+      navigate(`/quiz/${card.framework}/${card.level}`);
     }
   };
 
   const handleStartQuiz = (card: QuizCard) => {
-    navigate(`/quiz/${card.framework}/${card.level}/interactive`);
+    navigate(`/quiz/${card.framework}/${card.level}`);
   };
 
   const closePopup = () => {
