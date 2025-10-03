@@ -7041,101 +7041,104 @@ export const NEXTJS_ENHANCED_QUESTIONS = {
     },
     {
       id: "nextjs-senior-6",
-      question: "How would you implement advanced state management in Next.js?",
+      question:
+        "Your Next.js application is experiencing memory leaks in production. The heap usage grows from 200MB to 2GB over 24 hours. Which debugging approach should you prioritize first?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Zustand, Redux Toolkit, and React Query",
+          text: "Analyze heap snapshots and identify retained objects in Chrome DevTools",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Zustand",
+          text: "Add more console.log statements throughout the code",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only Redux Toolkit",
+          text: "Restart the server every few hours",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only React Query",
+          text: "Increase server memory allocation",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced state management in Next.js involves Zustand for client state, Redux Toolkit for complex state, and React Query for server state.",
-      category: "State Management",
+        "Memory leak debugging requires heap snapshot analysis to identify retained objects and memory references that aren't being garbage collected properly.",
+      category: "Debugging & Performance",
       difficulty: "hard",
-      tags: ["state-management", "zustand", "redux", "react-query"],
+      tags: ["memory-leaks", "debugging", "heap-snapshots", "performance"],
       points: 3,
     },
     {
       id: "nextjs-senior-7",
-      question: "How would you implement advanced testing strategies in Next.js?",
+      question:
+        "A client's Next.js app has inconsistent test coverage across components. Some components have 95% coverage while others have only 30%. What's the most effective strategy to improve overall test quality?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Jest, React Testing Library, and Playwright",
+          text: "Implement test-driven development with mandatory coverage thresholds",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Jest",
+          text: "Write tests only for new components",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only React Testing Library",
+          text: "Focus on testing only critical business logic",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only Playwright",
+          text: "Use automated test generation tools",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced testing involves Jest for unit tests, React Testing Library for component tests, and Playwright for end-to-end tests.",
-      category: "Testing",
+        "TDD with coverage thresholds ensures consistent test quality across all components and prevents regression in test coverage over time.",
+      category: "Testing Strategy",
       difficulty: "hard",
-      tags: ["testing", "jest", "rtl", "playwright"],
+      tags: ["testing", "tdd", "coverage", "quality-assurance"],
       points: 3,
     },
     {
       id: "nextjs-senior-8",
-      question: "How would you implement advanced deployment strategies in Next.js?",
+      question:
+        "Your Next.js application needs to deploy to multiple environments (dev, staging, production) with different configurations. The current deployment process is manual and error-prone. What's the most critical improvement needed?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Vercel, Docker, and CI/CD pipelines",
+          text: "Implement CI/CD pipeline with environment-specific configuration management",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Vercel",
+          text: "Use Docker containers for all environments",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only Docker",
+          text: "Create separate codebases for each environment",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only CI/CD pipelines",
+          text: "Deploy everything to production first",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced deployment involves Vercel for optimized hosting, Docker for containerization, and CI/CD pipelines for automated deployment.",
-      category: "Deployment",
+        "CI/CD pipelines with proper environment configuration management eliminate manual errors and ensure consistent deployments across environments.",
+      category: "DevOps & Deployment",
       difficulty: "hard",
-      tags: ["deployment", "vercel", "docker", "ci-cd"],
+      tags: ["cicd", "deployment", "environments", "automation"],
       points: 3,
     },
     {
@@ -7242,134 +7245,138 @@ export const NEXTJS_ENHANCED_QUESTIONS = {
     },
     {
       id: "nextjs-senior-12",
-      question: "How would you implement advanced API optimization in Next.js?",
+      question:
+        "Your Next.js API routes are experiencing high latency (800ms average response time) and occasional timeouts. The database queries are fast, but the API responses are slow. What's the most likely bottleneck?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using request caching, response compression, and rate limiting",
+          text: "Missing response caching and inefficient data serialization",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only request caching",
+          text: "Database connection pool size",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only response compression",
+          text: "Server memory allocation",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only rate limiting",
+          text: "Network bandwidth limitations",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced API optimization involves request caching for performance, response compression for bandwidth, and rate limiting for security.",
-      category: "API Optimization",
+        "High API latency with fast database queries typically indicates missing response caching and inefficient JSON serialization. Caching responses and optimizing data serialization can reduce response times by 60-80%.",
+      category: "API Performance",
       difficulty: "hard",
-      tags: ["api", "caching", "compression", "rate-limiting"],
+      tags: ["api", "performance", "caching", "serialization", "latency"],
       points: 3,
     },
     {
       id: "nextjs-senior-13",
-      question: "How would you implement advanced bundle optimization in Next.js?",
+      question:
+        "Your Next.js application's initial bundle size is 2.1MB, causing slow page loads. The bundle analyzer shows that 40% of the code is unused libraries. What's the most effective optimization strategy?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using code splitting, tree shaking, and bundle analysis",
+          text: "Implement dynamic imports and remove unused dependencies",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only code splitting",
+          text: "Compress all images to reduce bundle size",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only tree shaking",
+          text: "Move all components to separate files",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only bundle analysis",
+          text: "Use a different bundler like Webpack",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced bundle optimization involves code splitting for lazy loading, tree shaking for removing unused code, and bundle analysis for optimization.",
+        "Dynamic imports enable code splitting and lazy loading, while removing unused dependencies eliminates dead code. This combination can reduce bundle size by 50-70%.",
       category: "Bundle Optimization",
       difficulty: "hard",
-      tags: ["bundle", "code-splitting", "tree-shaking", "analysis"],
+      tags: ["bundle", "optimization", "dynamic-imports", "tree-shaking"],
       points: 3,
     },
     {
       id: "nextjs-senior-14",
-      question: "How would you implement advanced database integration in Next.js?",
+      question:
+        "Your Next.js application is experiencing database connection timeouts during peak traffic (1000+ concurrent users). The database server is healthy, but connections are failing. What's the most likely cause?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using Prisma, connection pooling, and query optimization",
+          text: "Insufficient connection pool size and missing connection reuse",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only Prisma",
+          text: "Database server memory issues",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only connection pooling",
+          text: "Network latency between app and database",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only query optimization",
+          text: "Incorrect database credentials",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced database integration involves Prisma for type-safe queries, connection pooling for performance, and query optimization for efficiency.",
-      category: "Database",
+        "Connection timeouts during high traffic typically indicate insufficient connection pool size. The pool can't handle the concurrent load, causing new connections to timeout while waiting for available connections.",
+      category: "Database Performance",
       difficulty: "hard",
-      tags: ["database", "prisma", "connection-pooling", "optimization"],
+      tags: ["database", "connection-pooling", "performance", "scalability"],
       points: 3,
     },
     {
       id: "nextjs-senior-15",
-      question: "How would you implement advanced authentication in Next.js?",
+      question:
+        "A client's Next.js application has security vulnerabilities where users can access other users' data by manipulating URLs. The authentication system is working, but authorization checks are missing. What's the most critical fix needed?",
       type: "multiple-choice",
       options: [
         {
           id: "a",
-          text: "Using NextAuth.js, JWT tokens, and session management",
+          text: "Implement server-side authorization checks in API routes and middleware",
           isCorrect: true,
         },
         {
           id: "b",
-          text: "Using only NextAuth.js",
+          text: "Add client-side route protection only",
           isCorrect: false,
         },
         {
           id: "c",
-          text: "Using only JWT tokens",
+          text: "Encrypt all user data in the database",
           isCorrect: false,
         },
         {
           id: "d",
-          text: "Using only session management",
+          text: "Use longer JWT tokens",
           isCorrect: false,
         },
       ],
       explanation:
-        "Advanced authentication involves NextAuth.js for OAuth providers, JWT tokens for stateless auth, and proper session management.",
-      category: "Authentication",
+        "Authorization vulnerabilities require server-side checks in API routes and middleware to prevent unauthorized data access. Client-side protection alone is insufficient as it can be bypassed.",
+      category: "Security & Authorization",
       difficulty: "hard",
-      tags: ["authentication", "nextauth", "jwt", "sessions"],
+      tags: ["security", "authorization", "api-routes", "middleware"],
       points: 3,
     },
     {
